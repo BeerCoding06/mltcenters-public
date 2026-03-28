@@ -38,7 +38,9 @@ function useSpeechRecognition(onResult: (text: string) => void) {
     return () => {
       try {
         recognitionRef.current?.abort();
-      } catch {}
+      } catch {
+        /* ignore */
+      }
     };
   }, [onResult]);
 
@@ -126,7 +128,9 @@ export default function EnglishAssessmentPage() {
         const hist = JSON.parse(localStorage.getItem(XP_STORAGE_KEY) || '[]');
         hist.push({ xp: r.totalXP, at: Date.now() });
         localStorage.setItem(XP_STORAGE_KEY, JSON.stringify(hist.slice(-20)));
-      } catch {}
+      } catch {
+        /* ignore storage errors */
+      }
       navigate('/assessment/dashboard', { state: { result: r }, replace: true });
     },
     [navigate]

@@ -28,7 +28,9 @@ export default function AssessmentDashboard() {
     try {
       const raw = localStorage.getItem(ASSESSMENT_STORAGE_KEY);
       if (raw) data = JSON.parse(raw) as AssessmentResult;
-    } catch {}
+    } catch {
+      /* ignore invalid JSON */
+    }
   }
 
   if (!data) {

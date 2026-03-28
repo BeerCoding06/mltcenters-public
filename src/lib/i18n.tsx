@@ -502,7 +502,11 @@ export const I18nProvider = ({ children }: { children: ReactNode }) => {
 
   const setLang = (l: Lang) => {
     setLangState(l);
-    try { localStorage.setItem('lang', l); } catch {}
+    try {
+      localStorage.setItem('lang', l);
+    } catch {
+      /* ignore quota / private mode */
+    }
   };
 
   return (
