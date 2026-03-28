@@ -52,5 +52,12 @@ docker build -t mltcenters .
 docker run -p 3000:3000 -e OPENAI_API_KEY=sk-... mltcenters
 ```
 
+**Docker Compose** (ไฟล์ `docker-compose.yml` ใช้ `Dockerfile.prod`):
+
+```sh
+# สร้างไฟล์ .env ที่รูท: OPENAI_API_KEY=sk-... (optional ถ้าไม่ใช้ assessment)
+docker compose up --build
+# เปิด http://localhost:3000
+```
+
 บน **Dockploy**: ผูก repo แล้วให้ใช้ Dockerfile ที่รูท, ตั้งค่า environment **`OPENAI_API_KEY`** (บังคับสำหรับ assessment) และถ้าแพลตฟอร์มกำหนดพอร์ต ให้ตั้ง **`PORT`** ให้ตรงกับที่ reverse proxy ชี้เข้ามา (ค่าเริ่มต้นของคอนเทนเนอร์คือ `3000`)
-# mltcenters-public
