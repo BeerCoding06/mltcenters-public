@@ -2,7 +2,7 @@ import { useI18n } from '@/lib/i18n';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { toast } from 'sonner';
-import registerBg from '@/assets/hero-pastel.jpg';
+import brandLogo from '@/assets/img-design/tree-only.png';
 
 const RegisterPage = () => {
   const { lang, t } = useI18n();
@@ -16,19 +16,13 @@ const RegisterPage = () => {
 
   const inputClass = "w-full px-4 py-3 rounded-xl bg-muted border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all";
 
-  const registerBgAlt = lang === 'en' ? 'Soft background for registration' : 'พื้นหลังหน้าการลงทะเบียน';
-
   return (
     <div className="relative py-16 min-h-screen overflow-hidden">
-      {/* Soft background image */}
-      <div className="absolute inset-0 -z-10">
-        <img
-          src={registerBg}
-          alt={registerBgAlt}
-          className="w-full h-full object-cover object-center img-pastel-tone"
-        />
-        <div className="absolute inset-0 img-pastel-overlay" />
-        <div className="absolute inset-0 bg-background/85" />
+      <div className="absolute inset-0 -z-10 bg-gradient-to-br from-primary/10 via-background to-secondary/10">
+        <div className="absolute inset-0 flex items-center justify-center opacity-[0.14] pointer-events-none" aria-hidden>
+          <img src={brandLogo} alt="" className="w-[min(100%,28rem)] object-contain" />
+        </div>
+        <div className="absolute inset-0 bg-background/88" />
       </div>
       <div className="container mx-auto px-6">
         <motion.div
