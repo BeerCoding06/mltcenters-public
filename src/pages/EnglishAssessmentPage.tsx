@@ -182,7 +182,7 @@ export default function EnglishAssessmentPage() {
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-3xl md:text-4xl font-bold text-center mb-2 bg-gradient-to-r from-[#5BC0FF] to-[#6EE7B7] bg-clip-text text-transparent"
+          className="text-3xl md:text-4xl font-bold text-center md:leading-[1.3] mb-2 bg-gradient-to-r from-[#5BC0FF] to-[#6EE7B7] bg-clip-text text-transparent"
         >
           {t.assessmentPage.title[lang]}
         </motion.h1>

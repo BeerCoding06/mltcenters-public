@@ -68,7 +68,7 @@ const HomePage = () => {
               transition={{ duration: 0.6, delay: 0.15 }}
               className="bg-white/70 backdrop-blur-md rounded-2xl shadow-xl px-8 py-10 sm:px-10 sm:py-12 border border-white/50"
             >
-              <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-[1.3] mb-6 bg-gradient-to-r from-[#5BC0FF] via-[#6EE7B7] to-[#5BC0FF] bg-clip-text text-transparent">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold md:!leading-[1.3] mb-6 bg-gradient-to-r from-[#5BC0FF] via-[#6EE7B7] to-[#5BC0FF] bg-clip-text text-transparent">
                 {t.hero.headline[lang]}
               </h1>
               <p className="text-lg sm:text-xl text-muted-foreground mb-10 leading-relaxed">

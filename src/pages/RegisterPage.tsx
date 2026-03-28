@@ -36,7 +36,7 @@ const RegisterPage = () => {
           animate={{ opacity: 1, y: 0 }}
           className="max-w-lg mx-auto"
         >
-          <h1 className="text-4xl md:text-5xl font-bold gradient-text-pastel text-center mb-3">
+          <h1 className="text-4xl md:text-5xl md:!leading-[1.3] font-bold gradient-text-pastel text-center mb-3">
             {t.registerPage.title[lang]}
           </h1>
           <p className="text-center text-muted-foreground mb-10">
