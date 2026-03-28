@@ -1,0 +1,19 @@
+# Multi-stage: build Vite app, then run Express + static (same origin /api).
+# Used by Dockploy when the build is set to Dockerfile.prod
+FROM node:20-alpine AS frontend
+WORKDIR /app
+COPY package.json package-lock.json ./
+RUN npm ci
+COPY . .
+RUN npm run build
+
+FROM node:20-alpine AS runner
+WORKDIR /app
+COPY server/package.json ./server/
+RUN cd server && npm install --omit=dev
+COPY server ./server
+COPY --from=frontend /app/dist ./dist
+ENV NODE_ENV=production
+EXPOSE 3000
+WORKDIR /app/server
+CMD ["node", "index.js"]

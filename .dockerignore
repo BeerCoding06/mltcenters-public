@@ -1,0 +1,13 @@
+node_modules
+dist
+.git
+.gitignore
+*.md
+.env
+.env.*
+!.env.example
+server/node_modules
+coverage
+.vscode
+.cursor
+**/*.log
