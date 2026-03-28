@@ -25,7 +25,7 @@ const Navbar = () => {
     <nav className="sticky top-0 z-50 bg-card/80 backdrop-blur-lg border-b border-border/50 shadow-sm">
       <div className="container mx-auto flex items-center justify-between px-4 py-3 lg:px-6">
         <Link to="/" className="flex items-center gap-2">
-          <div className="w-9 h-9 gradient-btn flex items-center justify-center text-lg">
+          <div className="w-9 h-9 flex items-center justify-center text-lg">
             <img
               src={treeOnlyLogo}
               alt="MLTCENTERS"
