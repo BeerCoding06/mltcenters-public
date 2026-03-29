@@ -5,7 +5,10 @@ import { ChevronDown, X } from 'lucide-react';
 import { useState } from 'react';
 import { useParallax } from '@/hooks/useParallax';
 
-import brandLogo from '@/assets/img-design/tree-only.png';
+// Hero / about: ไฟล์ใน public/assets/img-design → หลัง build อยู่ที่ dist/assets/img-design (URL คงที่)
+const designUrl = (file: string) => `${import.meta.env.BASE_URL}assets/img-design/${file}`;
+const heroImg = designUrl('imgdd.png');
+const aboutImages = [designUrl('5545.png'), designUrl('5546.png'), designUrl('esrwtsry.png')];
 // Gallery: รูปจาก src/assets/ ปรับโทนสีให้เข้ากับหน้าเว็บ (pastel)
 import gal1 from '@/assets/img01.jpg';
 import gal2 from '@/assets/img02.jpg';
@@ -20,8 +23,6 @@ const heroAlt = {
   en: 'Learn languages through technology',
   th: 'เรียนภาษาผ่านเทคโนโลยี',
 };
-
-const aboutImages = [brandLogo, brandLogo, brandLogo];
 
 const galleryImages = [
   { src: gal1, altEn: 'Workshop activity', altTh: 'บรรยากาศกิจกรรม' },
@@ -86,12 +87,13 @@ const HomePage = () => {
             className="flex-1 order-1 md:order-2 w-full max-w-lg mx-auto md:max-w-xl transition-transform duration-100 will-change-transform"
             style={{ transform: `translate3d(0, ${parallax.image}px, 0)` }}
           >
-            <div className="relative rounded-2xl shadow-xl overflow-hidden aspect-[4/3] md:aspect-[5/4] group bg-muted/50 flex items-center justify-center p-8 md:p-12">
+            <div className="relative rounded-2xl shadow-xl overflow-hidden aspect-[4/3] md:aspect-[5/4] group">
               <img
-                src={brandLogo}
+                src={heroImg}
                 alt={heroAlt[lang]}
-                className="w-full h-full max-h-[min(100%,320px)] object-contain object-center group-hover:scale-105 transition-transform duration-500"
+                className="w-full h-full object-cover object-center img-design-style group-hover:scale-105 transition-transform duration-500"
               />
+              <div className="absolute inset-0 img-pastel-overlay pointer-events-none" aria-hidden />
             </div>
           </motion.div>
         </div>
@@ -113,11 +115,12 @@ const HomePage = () => {
         <section id="about-value" className="relative py-20 overflow-hidden">
           {/* พื้นหลัง: gradient + ภาพโปร่ง + blob */}
           <div className="absolute inset-0 bg-gradient-to-br from-[#5BC0FF]/15 via-[#6EE7B7]/10 to-[#FFE66D]/10" aria-hidden />
-          <div className="absolute inset-0 opacity-[0.06] flex items-center justify-center pointer-events-none" aria-hidden>
+          <div className="absolute inset-0 opacity-[0.07]">
             <img
-              src={brandLogo}
+              src={heroImg}
               alt=""
-              className="w-[min(100%,480px)] h-auto object-contain opacity-80"
+              className="w-full h-full object-cover object-center scale-105"
+              aria-hidden
             />
           </div>
           <div className="absolute inset-0 pointer-events-none overflow-hidden">
@@ -156,13 +159,15 @@ const HomePage = () => {
                   whileHover={{ y: -8, scale: 1.02 }}
                   className="group rounded-2xl bg-white/90 backdrop-blur-sm shadow-xl hover:shadow-2xl hover:shadow-[#5BC0FF]/15 border border-white/80 overflow-hidden transition-all duration-300"
                 >
-                  <div className="relative aspect-[4/3] overflow-hidden bg-muted/40 flex items-center justify-center p-6">
+                  <div className="relative aspect-[4/3] overflow-hidden">
                     <img
                       src={aboutImages[i]}
                       alt={item.title[lang]}
                       loading="lazy"
-                      className="w-full h-full max-h-[200px] object-contain object-center group-hover:scale-110 transition-transform duration-700"
+                      className="w-full h-full object-cover object-center img-design-style group-hover:scale-110 transition-transform duration-700"
                     />
+                    <div className="absolute inset-0 img-pastel-overlay pointer-events-none" aria-hidden />
+                    <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" aria-hidden />
                   </div>
                   <div className="p-6 lg:p-7">
                     <h3 className="text-xl font-bold text-foreground mb-3">{item.title[lang]}</h3>
