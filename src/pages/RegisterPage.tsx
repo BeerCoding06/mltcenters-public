@@ -36,7 +36,11 @@ const RegisterPage = () => {
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) {
-        throw new Error(data.error || t.registerPage.error[lang]);
+        const msg =
+          lang === 'th' && data.errorTh
+            ? data.errorTh
+            : data.error || t.registerPage.error[lang];
+        throw new Error(msg);
       }
       toast.success(t.registerPage.success[lang]);
       setForm(emptyForm);

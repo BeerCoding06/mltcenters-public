@@ -11,11 +11,15 @@ import { existsSync } from 'fs';
 import { fileURLToPath } from 'url';
 import express from 'express';
 import cors from 'cors';
+import dotenv from 'dotenv';
 import OpenAI from 'openai';
 import nodemailer from 'nodemailer';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const distPath = path.join(__dirname, '../dist');
+
+dotenv.config({ path: path.join(__dirname, '.env') });
+dotenv.config({ path: path.join(__dirname, '../.env') });
 
 const REGISTER_TO_EMAIL = process.env.REGISTER_TO_EMAIL || 'mltcenterth@gmail.com';
 const SMTP_HOST = process.env.SMTP_HOST || 'smtp.gmail.com';
@@ -23,6 +27,7 @@ const SMTP_PORT = Number(process.env.SMTP_PORT || 587);
 const SMTP_USER = process.env.SMTP_USER || '';
 const SMTP_PASS = process.env.SMTP_PASS || '';
 const SMTP_FROM = process.env.SMTP_FROM || SMTP_USER;
+const USE_GMAIL_SERVICE = !process.env.SMTP_HOST;
 
 const app = express();
 app.use(cors({ origin: true }));
@@ -34,12 +39,19 @@ const openai = process.env.OPENAI_API_KEY
 
 const mailTransport =
   SMTP_USER && SMTP_PASS
-    ? nodemailer.createTransport({
-        host: SMTP_HOST,
-        port: SMTP_PORT,
-        secure: SMTP_PORT === 465,
-        auth: { user: SMTP_USER, pass: SMTP_PASS },
-      })
+    ? nodemailer.createTransport(
+        USE_GMAIL_SERVICE
+          ? {
+              service: 'gmail',
+              auth: { user: SMTP_USER, pass: SMTP_PASS },
+            }
+          : {
+              host: SMTP_HOST,
+              port: SMTP_PORT,
+              secure: SMTP_PORT === 465,
+              auth: { user: SMTP_USER, pass: SMTP_PASS },
+            }
+      )
     : null;
 
 const REGISTER_FIELDS = [
@@ -85,7 +97,10 @@ function buildRegistrationEmail(body) {
 app.post('/api/register', async (req, res) => {
   if (!mailTransport) {
     return res.status(503).json({
-      error: 'Email is not configured. Set SMTP_USER and SMTP_PASS on the server.',
+      error:
+        'Email is not configured. Set SMTP_USER and SMTP_PASS (Gmail App Password) in server/.env or project .env.',
+      errorTh:
+        'ยังไม่ได้ตั้งค่าอีเมล กรุณาใส่ SMTP_USER และ SMTP_PASS (รหัส App Password ของ Gmail) ในไฟล์ .env',
     });
   }
 
@@ -168,4 +183,14 @@ const PORT = process.env.PORT || 3000;
 const host = process.env.HOST || '0.0.0.0';
 app.listen(PORT, host, () => {
   console.log(`Server listening on http://${host}:${PORT}`);
+  if (mailTransport) {
+    mailTransport
+      .verify()
+      .then(() => console.log(`Registration email ready → ${REGISTER_TO_EMAIL}`))
+      .catch((err) => console.error('SMTP verify failed:', err.message));
+  } else {
+    console.warn(
+      'Registration email disabled: set SMTP_USER + SMTP_PASS in .env (see .env.example)'
+    );
+  }
 });

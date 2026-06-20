@@ -10,4 +10,11 @@ services:
       NODE_ENV: production
       PORT: "3000"
       OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      REGISTER_TO_EMAIL: ${REGISTER_TO_EMAIL:-mltcenterth@gmail.com}
+      SMTP_USER: ${SMTP_USER:-}
+      SMTP_PASS: ${SMTP_PASS:-}
+      SMTP_HOST: ${SMTP_HOST:-smtp.gmail.com}
+      SMTP_PORT: ${SMTP_PORT:-587}
+    env_file:
+      - .env
     restart: unless-stopped
