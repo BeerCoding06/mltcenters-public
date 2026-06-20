@@ -1,7 +1,7 @@
 import { useI18n } from '@/lib/i18n';
 import { motion } from 'framer-motion';
 import { PastelImage } from '@/components/PastelImage';
-import aboutWorkshopImg from '@/assets/img01.jpg';
+import aboutWorkshopImg from '@/assets/254ewr.jpg';
 
 const aboutImgAlt = {
   en: 'Workshop activity: students learning with technology',
@@ -40,6 +40,7 @@ const AboutPage = () => {
             alt={aboutImgAlt[lang]}
             overlay
             aspectRatio="video"
+            className="object-top"
             wrapperClassName="hover:scale-[1.02] shadow-xl"
           />
         </motion.div>

@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 type Lang = 'en' | 'th';
 
@@ -102,6 +102,22 @@ export const translations = {
       { en: "Think critically", th: "คิดวิเคราะห์ดีขึ้น" },
       { en: "Improve teamwork", th: "ทำงานทีมได้ดี" },
     ],
+  },
+  homeContact: {
+    title: { en: "Get in Touch", th: "ติดต่อเรา" },
+    sub: {
+      en: "Scan our LINE QR or reach us through any channel below.",
+      th: "สแกน QR LINE เพื่อติดต่อทันที หรือเลือกช่องทางอื่นด้านล่าง",
+    },
+    scanLine: { en: "Scan to add LINE", th: "สแกนเพื่อเพิ่มเพื่อน LINE" },
+    lineLive: { en: "LINE Official QR", th: "QR LINE ทางการ" },
+    lineHint: {
+      en: "Fast replies for workshop & registration inquiries",
+      th: "ตอบไว สอบถามเวิร์กช็อปและลงทะเบียนได้เลย",
+    },
+    orContact: { en: "Other channels", th: "ช่องทางอื่นๆ" },
+    viewContact: { en: "View contact page", th: "ดูหน้าติดต่อทั้งหมด" },
+    register: { en: "Register online", th: "ลงทะเบียนออนไลน์" },
   },
   testimonials: {
     title: { en: "What Students Say", th: "เสียงจากผู้เข้าร่วม" },
@@ -363,80 +379,184 @@ export const translations = {
     ],
   },
   schedule: {
-    title: { en: "Workshop Schedule", th: "กำหนดการ" },
-    items: [
-      {
-        time: "09:00",
-        title: { en: "Ice Breaking & Introduction", th: "กิจกรรมทำความรู้จัก" },
-        desc: {
-          en: "Fun activities to get everyone comfortable and ready to learn.",
-          th: "กิจกรรมสนุกๆ เพื่อให้ทุกคนผ่อนคลายและพร้อมเรียนรู้",
-        },
+    title: { en: "Program Schedule", th: "กำหนดการ" },
+    sub: {
+      en: "Two signature programs from MLTCENTERS — learn languages through real experiences, at home and abroad.",
+      th: "สองโปรแกรมหลักของ MLTCENTERS — เรียนรู้ภาษาจากประสบการณ์จริง ทั้งในและต่างประเทศ",
+    },
+    travel: {
+      badge: { en: "International Tours", th: "ท่องเที่ยวต่างประเทศ" },
+      intro: {
+        en: "Study-travel programs that combine sightseeing with daily English missions — speak, explore, and grow confident abroad.",
+        th: "โปรแกรมทัศนศึกษาผสานการท่องเที่ยวกับภารกิจใช้ภาษาอังกฤษทุกวัน — ได้เที่ยว ได้ฝึกพูด ได้สร้างความมั่นใจในต่างแดน",
       },
-      {
-        time: "10:00",
-        title: { en: "AI Conversation Practice", th: "ฝึกสนทนาด้วย AI" },
-        desc: {
-          en: "Hands-on session with AI chatbot partners.",
-          th: "ลงมือฝึกสนทนากับ AI Chatbot",
+      programs: [
+        {
+          period: { en: "Jul – Aug 2026", th: "ก.ค. – ส.ค. 2569" },
+          title: { en: "Singapore · Malaysia Language Journey", th: "ทริปสิงคโปร์ · มาเลเซีย เรียนรู้ผ่านการเดินทาง" },
+          destination: { en: "Singapore · Kuala Lumpur", th: "สิงคโปร์ · มาเลเซีย" },
+          desc: {
+            en: "5 days — airport & hotel English, city missions, night market conversations, and a final group presentation.",
+            th: "5 วัน — ภาษาอังกฤษที่สนามบินและโรงแรม ภารกิจในเมือง สนทนาในตลาดกลางคืน และนำเสนอผลงานปิดท้าย",
+          },
         },
+        {
+          period: { en: "Oct 2026", th: "ต.ค. 2569" },
+          title: { en: "Japan Culture & Communication Tour", th: "ทัวร์ญี่ปุ่น วัฒนธรรมและการสื่อสาร" },
+          destination: { en: "Tokyo · Osaka", th: "โตเกียว · โอซาก้า" },
+          desc: {
+            en: "6 days — train travel phrases, shrine visits, team challenges, and confidence-building photo-story projects.",
+            th: "6 วัน — ประโยคใช้บนรถไฟ เที่ยววัดศาลเจ้า กิจกรรมทีม และโปรเจกต์เล่าเรื่องด้วยภาพเพื่อสร้างความมั่นใจ",
+          },
+        },
+        {
+          period: { en: "Dec 2026 – Jan 2027", th: "ธ.ค. 2569 – ม.ค. 2570" },
+          title: { en: "Winter English Camp Abroad", th: "ค่ายภาษาอังกฤษฤดูหนาว ต่างประเทศ" },
+          destination: { en: "Seoul · Busan", th: "โซล · Busan" },
+          desc: {
+            en: "7 days — K-culture immersion, shopping & café dialogues, and a farewell showcase with certificates.",
+            th: "7 วัน — แชร์วัฒนธรรมเกาหลี สนทนาในห้างและคาเฟ่ และงาน Showcase ปิดท้ายพร้อมเกียรติบัตร",
+          },
+        },
+      ],
+      tripOutline: {
+        title: { en: "Typical trip flow", th: "ลำดับกิจกรรมโดยทั่วไป" },
+        days: [
+          {
+            label: { en: "Day 1", th: "วัน 1" },
+            desc: {
+              en: "Briefing, airport English, hotel check-in & orientation walk",
+              th: "ปฐมนิเทศ ภาษาอังกฤษที่สนามบิน เช็คอินโรงแรม และเดินทำความรู้จักพื้นที่",
+            },
+          },
+          {
+            label: { en: "Day 2–3", th: "วัน 2–3" },
+            desc: {
+              en: "City missions, market conversations & team language games",
+              th: "ภารกิจในเมือง สนทนาในตลาด และเกมภาษาแบบทีม",
+            },
+          },
+          {
+            label: { en: "Day 4–5", th: "วัน 4–5" },
+            desc: {
+              en: "Cultural visits, free exploration tasks & group presentation",
+              th: "เที่ยววัฒนธรรม ภารกิจสำรวจอิสระ และนำเสนอผลงานกลุ่ม",
+            },
+          },
+          {
+            label: { en: "Final day", th: "วันสุดท้าย" },
+            desc: {
+              en: "Reflection, certificates & departure",
+              th: "สรุปบทเรียน มอบเกียรติบัตร และเดินทางกลับ",
+            },
+          },
+        ],
       },
-      {
-        time: "11:30",
-        title: { en: "Language Apps Exploration", th: "สำรวจแอปเรียนภาษา" },
-        desc: {
-          en: "Discover and practice with top language apps.",
-          th: "ค้นพบและฝึกใช้แอปเรียนภาษาชั้นนำ",
-        },
+    },
+    hotel: {
+      badge: { en: "Hotel Confidence Workshop", th: "Workshop โรงแรม Boost ความมั่นใจ" },
+      intro: {
+        en: "One-day workshops at partner hotels — practice real hospitality English in elegant settings and leave speaking with confidence.",
+        th: "เวิร์กช็อป 1 วัน ณ โรงแรมพันธมิตร — ฝึกภาษาอังกฤษสถานการณ์จริงในบรรยากาศโรงแรม ออกไปด้วยความมั่นใจในการพูด",
       },
-      {
-        time: "12:00",
-        title: { en: "Lunch Break", th: "พักรับประทานอาหารกลางวัน" },
-        desc: {
-          en: "Enjoy lunch and network with fellow participants.",
-          th: "รับประทานอาหารกลางวันและพูดคุยกับเพื่อนๆ",
-        },
+      recurring: {
+        en: "Every last Saturday of the month · 09:00 – 16:30",
+        th: "ทุกวันเสาร์สุดท้ายของเดือน · 09:00 – 16:30 น.",
       },
-      {
-        time: "13:00",
-        title: { en: "Team Language Games", th: "เกมภาษาแบบทีม" },
-        desc: {
-          en: "Compete in exciting language challenges.",
-          th: "แข่งขันเกมภาษาสุดตื่นเต้น",
-        },
+      venue: {
+        en: "Partner hotels in Bangkok & Samut Prakan (venue announced before each session)",
+        th: "โรงแรมพันธมิตร กรุงเทพฯ และสมุทรปราการ (ประกาศสถานที่ก่อนแต่ละรอบ)",
       },
-      {
-        time: "14:30",
-        title: {
-          en: "Digital Presentation Workshop",
-          th: "เวิร์คช็อปการนำเสนอดิจิทัล",
+      sessions: [
+        {
+          period: { en: "Mar 2026", th: "มี.ค. 2569" },
+          title: { en: "Front Desk & Guest Welcome", th: "ต้อนรับแขก & Front Desk" },
+          desc: {
+            en: "Role-play check-in, handling requests, and polite small talk in the lobby.",
+            th: "สวมบทบาทเช็คอิน ตอบคำขอแขก และ Small talk สุภาพในล็อบบี้โรงแรม",
+          },
         },
-        desc: {
-          en: "Create your own digital presentation.",
-          th: "สร้างผลงานการนำเสนอดิจิทัลของคุณเอง",
+        {
+          period: { en: "Apr 2026", th: "เม.ย. 2569" },
+          title: { en: "Restaurant & Banquet English", th: "ภาษาอังกฤษร้านอาหาร & ห้องจัดเลี้ยง" },
+          desc: {
+            en: "Menu vocabulary, recommending dishes, and presenting at a banquet table.",
+            th: "คำศัพท์เมนู แนะนำอาหาร และนำเสนอในห้องจัดเลี้ยง",
+          },
         },
-      },
-      {
-        time: "15:30",
-        title: { en: "Group Presentations", th: "นำเสนอผลงานกลุ่ม" },
-        desc: {
-          en: "Show off your work and receive feedback.",
-          th: "นำเสนอผลงานและรับฟังความคิดเห็น",
+        {
+          period: { en: "May 2026", th: "พ.ค. 2569" },
+          title: { en: "Meetings & Presentation Confidence", th: "ประชุม & ความมั่นใจในการนำเสนอ" },
+          desc: {
+            en: "Hotel meeting-room scenarios, slide-free pitching, and feedback circles.",
+            th: "สถานการณ์ในห้องประชุมโรงแรม Pitch โดยไม่พึ่งสไลด์ และวง Feedback",
+          },
         },
-      },
-      {
-        time: "16:30",
-        title: { en: "Closing & Certificates", th: "ปิดงานและมอบเกียรติบัตร" },
-        desc: {
-          en: "Wrap up and receive your certificate!",
-          th: "สรุปกิจกรรมและรับเกียรติบัตร!",
+      ],
+      dayPlan: [
+        {
+          time: "09:00",
+          title: { en: "Welcome at the Hotel", th: "ต้อนรับ ณ โรงแรม" },
+          desc: {
+            en: "Registration, ice breaking & confidence warm-up in the lobby lounge.",
+            th: "ลงทะเบียน กิจกรรมทำความรู้จัก และ Warm-up สร้างความมั่นใจ",
+          },
         },
-      },
-    ],
+        {
+          time: "10:00",
+          title: { en: "Real Hotel Role-Play", th: "Role-play สถานการณ์โรงแรม" },
+          desc: {
+            en: "Check-in, concierge, and guest-service dialogues with coaches.",
+            th: "สนทนาเช็คอิน Concierge และบริการแขก กับ Coach ประจำรอบ",
+          },
+        },
+        {
+          time: "12:00",
+          title: { en: "Lunch & Networking", th: "อาหารกลางวัน & Networking" },
+          desc: {
+            en: "Practice ordering and casual English over lunch at the hotel restaurant.",
+            th: "ฝึกสั่งอาหารและคุยภาษาอังกฤษแบบเป็นกันเอง มื้อกลางวันที่ร้านโรงแรม",
+          },
+        },
+        {
+          time: "13:30",
+          title: { en: "Confidence Boost Lab", th: "Confidence Boost Lab" },
+          desc: {
+            en: "Voice, posture, eye contact & handling nervous moments.",
+            th: "เสียง ท่าทาง สบตา และจัดการความประหม่า",
+          },
+        },
+        {
+          time: "15:00",
+          title: { en: "Mini Showcase", th: "Mini Showcase" },
+          desc: {
+            en: "Short presentations in front of peers — celebrate progress together.",
+            th: "นำเสนอสั้นๆ ต่อหน้าเพื่อนๆ — ฉลองความก้าวหน้าร่วมกัน",
+          },
+        },
+        {
+          time: "16:30",
+          title: { en: "Closing & Certificate", th: "ปิดงาน & เกียรติบัตร" },
+          desc: {
+            en: "Group photo, feedback, and certificate ceremony in the function room.",
+            th: "ถ่ายรูปหมู่ รับ Feedback และมอบเกียรติบัตรในห้อง Function",
+          },
+        },
+      ],
+    },
+    note: {
+      en: "Dates and venues may be updated. Contact us or scan LINE QR for the latest schedule and seat availability.",
+      th: "วันและสถานที่อาจมีการปรับเปลี่ยน ติดต่อเราหรือสแกน LINE QR เพื่อดูกำหนดการและที่นั่งล่าสุด",
+    },
+    ctaRegister: { en: "Register now", th: "ลงทะเบียน" },
+    ctaContact: { en: "Ask about schedule", th: "สอบถามกำหนดการ" },
   },
   gallery: {
     title: { en: "Gallery", th: "แกลเลอรี" },
     sub: { en: "Moments from our workshops", th: "ภาพบรรยากาศจากกิจกรรม" },
+    prev: { en: "Previous", th: "ก่อนหน้า" },
+    next: { en: "Next", th: "ถัดไป" },
+    pageInfo: { en: "Page {page} of {total}", th: "หน้า {page} จาก {total}" },
   },
   registerPage: {
     title: { en: "Register", th: "ลงทะเบียน" },
@@ -444,29 +564,52 @@ export const translations = {
       en: "Ready to Upgrade Your Skills?",
       th: "พร้อมพัฒนาทักษะของคุณแล้วหรือยัง?",
     },
-    name: { en: "Full Name", th: "ชื่อ-นามสกุล" },
-    school: { en: "School / University", th: "โรงเรียน / มหาวิทยาลัย" },
-    grade: { en: "Grade Level", th: "ระดับชั้น" },
+    firstName: { en: "First Name", th: "ชื่อ" },
+    lastName: { en: "Last Name", th: "นามสกุล" },
+    nickname: { en: "Nickname", th: "ชื่อเล่น" },
+    company: { en: "Company", th: "บริษัท / องค์กร" },
+    position: { en: "Position", th: "ตำแหน่ง" },
+    educationLevel: { en: "Education Level", th: "ระดับการศึกษา" },
     phone: { en: "Phone", th: "เบอร์โทรศัพท์" },
+    lineId: { en: "Line ID", th: "Line ID" },
     email: { en: "Email", th: "อีเมล" },
     submit: { en: "Submit Registration", th: "ลงทะเบียน" },
-    gradeOptions: [
+    submitting: { en: "Submitting…", th: "กำลังส่ง…" },
+    success: { en: "Registration submitted! We will contact you soon.", th: "ลงทะเบียนสำเร็จ! เราจะติดต่อกลับโดยเร็ว" },
+    error: { en: "Could not submit registration. Please try again.", th: "ส่งข้อมูลไม่สำเร็จ กรุณาลองใหม่อีกครั้ง" },
+    educationOptions: [
       { en: "High School", th: "มัธยมศึกษา" },
-      { en: "University Year 1-2", th: "มหาวิทยาลัย ปี 1-2" },
-      { en: "University Year 3-4", th: "มหาวิทยาลัย ปี 3-4" },
+      { en: "Vocational / Diploma", th: "ประกาศนียบัตรวิชาชีพ / อนุปริญญา" },
+      { en: "Bachelor's Degree", th: "ปริญญาตรี" },
+      { en: "Master's Degree", th: "ปริญญาโท" },
+      { en: "Doctorate", th: "ปริญญาเอก" },
       { en: "Other", th: "อื่นๆ" },
     ],
   },
   contactPage: {
     title: { en: "Contact Us", th: "ติดต่อเรา" },
-    email: "hello@MLTCENTERS-workshop.com",
-    phone: "+66 2 123 4567",
+    sub: {
+      en: "Reach MLTCENTERS — we're happy to help with workshops and registration.",
+      th: "ติดต่อ MLTCENTERS ได้ทุกช่องทาง ยินดีให้คำปรึกษาเรื่องเวิร์กช็อปและการลงทะเบียน",
+    },
+    posterAlt: {
+      en: "MLTCENTERS — Modern Language Training Center",
+      th: "MLTCENTERS — Modern Language Training Center",
+    },
+    posterCaption: {
+      en: "Modern Language Training Center",
+      th: "ศูนย์ฝึกอบรมภาษาสมัยใหม่",
+    },
+    email: "mltcenterth@gmail.com",
+    phone: "094-852-1188",
     address: {
-      en: "456 Learning Avenue, Bangkok, Thailand 10330",
-      th: "456 ถนนการเรียนรู้ กรุงเทพฯ 10330",
+      en: "157/160-161 Moo.9 Teparuk KM.18 Bangpla, Bangpli, Samutprakan 10540",
+      th: "157/160-161 หมู่ที่ 9 เทพารักษ์ กม.18 ต.บางพลา อ.บางพลี จ.สมุทรปราการ 10540",
     },
     social: { en: "Follow Us", th: "ติดตามเรา" },
     mapTitle: { en: "Find Us", th: "แผนที่" },
+    mapUrl: "https://goo.gl/maps/FkR7BQL2cycZTmiy6?g_st=al",
+    openInMaps: { en: "Open in Google Maps", th: "เปิดใน Google Maps" },
   },
   footer: {
     rights: {
@@ -494,11 +637,15 @@ export const I18nProvider = ({ children }: { children: ReactNode }) => {
   const [lang, setLangState] = useState<Lang>(() => {
     try {
       const stored = localStorage.getItem('lang');
-      return (stored === 'th' || stored === 'en') ? stored : 'en';
+      return (stored === 'th' || stored === 'en') ? stored : 'th';
     } catch {
-      return 'en';
+      return 'th';
     }
   });
+
+  useEffect(() => {
+    document.documentElement.lang = lang;
+  }, [lang]);
 
   const setLang = (l: Lang) => {
     setLangState(l);

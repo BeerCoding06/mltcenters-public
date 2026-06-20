@@ -1,32 +1,38 @@
 import { useI18n } from '@/lib/i18n';
+import { galleryImages } from '@/lib/gallery-images';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState } from 'react';
-import { X } from 'lucide-react';
-import img01 from '@/assets/img01.jpg';
-import img02 from '@/assets/img02.jpg';
-import img03 from '@/assets/img03.jpg';
-import img04 from '@/assets/img04.jpg';
-import img05 from '@/assets/img05.jpg';
-import img06 from '@/assets/img06.jpg';
-import img07 from '@/assets/img07.jpg';
-import img08 from '@/assets/img08.jpg';
-import img09 from '@/assets/img09.jpg';
+import { useEffect, useMemo, useState } from 'react';
+import { ChevronLeft, ChevronRight, X } from 'lucide-react';
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+} from '@/components/ui/pagination';
 
-const galleryImages = [
-  { src: img01, altEn: 'Workshop activity', altTh: 'บรรยากาศกิจกรรม' },
-  { src: img02, altEn: 'Language learning session', altTh: 'การเรียนภาษา' },
-  { src: img03, altEn: 'Team collaboration', altTh: 'ทำงานเป็นทีม' },
-  { src: img04, altEn: 'Digital tools in use', altTh: 'ใช้เครื่องมือดิจิทัล' },
-  { src: img05, altEn: 'Presentation practice', altTh: 'ฝึกนำเสนอ' },
-  { src: img06, altEn: 'Group discussion', altTh: 'อภิปรายกลุ่ม' },
-  { src: img07, altEn: 'Hands-on workshop', altTh: 'เวิร์กช็อปเชิงปฏิบัติ' },
-  { src: img08, altEn: 'Learning together', altTh: 'เรียนรู้ร่วมกัน' },
-  { src: img09, altEn: 'Workshop moment', altTh: 'บรรยากาศในงาน' },
-];
+const PAGE_SIZE = 20;
 
 const GalleryPage = () => {
   const { lang, t } = useI18n();
   const [selected, setSelected] = useState<number | null>(null);
+  const [page, setPage] = useState(1);
+
+  const totalPages = Math.ceil(galleryImages.length / PAGE_SIZE);
+
+  const pageImages = useMemo(() => {
+    const start = (page - 1) * PAGE_SIZE;
+    return galleryImages.slice(start, start + PAGE_SIZE);
+  }, [page]);
+
+  const pageStartIndex = (page - 1) * PAGE_SIZE;
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [page]);
+
+  const pageInfo = t.gallery.pageInfo[lang]
+    .replace('{page}', String(page))
+    .replace('{total}', String(totalPages));
 
   return (
     <div className="py-16 min-h-screen">
@@ -42,35 +48,91 @@ const GalleryPage = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.2 }}
-          className="text-muted-foreground text-center mb-14"
+          className="text-muted-foreground text-center mb-10"
         >
           {t.gallery.sub[lang]}
         </motion.p>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 max-w-5xl mx-auto">
-          {galleryImages.map((img, i) => (
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 max-w-6xl mx-auto">
+          {pageImages.map((img, i) => (
             <motion.button
-              key={i}
+              key={img.src}
               type="button"
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.06 }}
-              whileHover={{ scale: 1.05 }}
-              onClick={() => setSelected(i)}
-              className="aspect-square rounded-2xl overflow-hidden border border-border/50 shadow-lg hover:shadow-xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary/50"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: Math.min(i * 0.03, 0.35) }}
+              whileHover={{ scale: 1.03 }}
+              onClick={() => setSelected(pageStartIndex + i)}
+              className="relative aspect-square rounded-2xl overflow-hidden border border-border/50 shadow-md hover:shadow-xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary/50"
             >
               <img
                 src={img.src}
                 alt={lang === 'en' ? img.altEn : img.altTh}
+                loading="lazy"
                 className="w-full h-full object-cover img-pastel-tone"
               />
+              <div className="absolute inset-0 img-pastel-overlay pointer-events-none" aria-hidden />
             </motion.button>
           ))}
         </div>
+
+        {totalPages > 1 && (
+          <div className="mt-10 space-y-4">
+            <p className="text-center text-sm text-muted-foreground">{pageInfo}</p>
+            <Pagination>
+              <PaginationContent>
+                <PaginationItem>
+                  <PaginationLink
+                    href="#"
+                    size="default"
+                    aria-disabled={page === 1}
+                    className={`gap-1 pl-2.5 ${page === 1 ? 'pointer-events-none opacity-40' : ''}`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      if (page > 1) setPage(page - 1);
+                    }}
+                  >
+                    <ChevronLeft className="h-4 w-4" />
+                    <span>{t.gallery.prev[lang]}</span>
+                  </PaginationLink>
+                </PaginationItem>
+
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
+                  <PaginationItem key={p}>
+                    <PaginationLink
+                      href="#"
+                      isActive={p === page}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setPage(p);
+                      }}
+                    >
+                      {p}
+                    </PaginationLink>
+                  </PaginationItem>
+                ))}
+
+                <PaginationItem>
+                  <PaginationLink
+                    href="#"
+                    size="default"
+                    aria-disabled={page === totalPages}
+                    className={`gap-1 pr-2.5 ${page === totalPages ? 'pointer-events-none opacity-40' : ''}`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      if (page < totalPages) setPage(page + 1);
+                    }}
+                  >
+                    <span>{t.gallery.next[lang]}</span>
+                    <ChevronRight className="h-4 w-4" />
+                  </PaginationLink>
+                </PaginationItem>
+              </PaginationContent>
+            </Pagination>
+          </div>
+        )}
       </div>
 
-      {/* Lightbox */}
       <AnimatePresence>
         {selected !== null && (
           <motion.div
@@ -86,13 +148,14 @@ const GalleryPage = () => {
               exit={{ scale: 0.9, opacity: 0 }}
               transition={{ type: 'spring', damping: 25 }}
               onClick={(e) => e.stopPropagation()}
-              className="relative w-full max-w-3xl rounded-2xl overflow-hidden shadow-xl border border-border/50 bg-card"
+              className="relative w-full max-w-4xl rounded-2xl overflow-hidden shadow-xl border border-border/50 bg-card"
             >
               <img
                 src={galleryImages[selected].src}
                 alt={lang === 'en' ? galleryImages[selected].altEn : galleryImages[selected].altTh}
                 className="w-full h-auto max-h-[85vh] object-contain img-pastel-tone"
               />
+              <div className="absolute inset-0 img-pastel-overlay pointer-events-none" aria-hidden />
               <button
                 type="button"
                 onClick={() => setSelected(null)}

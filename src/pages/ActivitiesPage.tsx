@@ -1,12 +1,14 @@
 import { useI18n } from '@/lib/i18n';
 import { motion } from 'framer-motion';
 import { PastelImage } from '@/components/PastelImage';
-import actImg1 from '@/assets/img02.jpg';
-import actImg2 from '@/assets/img05.jpg';
-import actImg3 from '@/assets/img07.jpg';
-import actImg4 from '@/assets/img08.jpg';
+import { getGalleryImage } from '@/lib/gallery-images';
 
-const activityImages = [actImg1, actImg2, actImg3, actImg4];
+const activityImages = [
+  getGalleryImage(12).src,
+  getGalleryImage(38).src,
+  getGalleryImage(64).src,
+  getGalleryImage(90).src,
+];
 
 const activityImgAlts: Record<string, { en: string; th: string }> = {
   0: { en: 'AI conversation practice', th: 'ฝึกสนทนาด้วย AI' },
@@ -51,6 +53,7 @@ const ActivitiesPage = () => {
                 <PastelImage
                   src={activityImages[i]}
                   alt={activityImgAlts[i]?.[lang] ?? item.title[lang]}
+                  overlay
                   aspectRatio="video"
                   wrapperClassName="rounded-t-2xl rounded-b-none shadow-none hover:scale-105 hover:shadow-lg"
                 />

@@ -4,36 +4,21 @@ import { Link } from 'react-router-dom';
 import { ChevronDown, X } from 'lucide-react';
 import { useState } from 'react';
 import { useParallax } from '@/hooks/useParallax';
+import { galleryPreviewImages } from '@/lib/gallery-images';
+import HomeContactSection from '@/components/HomeContactSection';
 
-// Hero / about: ไฟล์ใน public/assets/img-design → หลัง build อยู่ที่ dist/assets/img-design (URL คงที่)
+import heroImg from '@/assets/banner-main.png';
+
+// About cards: ไฟล์ใน public/assets/img-design
 const designUrl = (file: string) => `${import.meta.env.BASE_URL}assets/img-design/${file}`;
-const heroImg = designUrl('imgdd.png');
 const aboutImages = [designUrl('5545.png'), designUrl('5546.png'), designUrl('esrwtsry.png')];
-// Gallery: รูปจาก src/assets/ ปรับโทนสีให้เข้ากับหน้าเว็บ (pastel)
-import gal1 from '@/assets/img01.jpg';
-import gal2 from '@/assets/img02.jpg';
-import gal3 from '@/assets/img03.jpg';
-import gal4 from '@/assets/img04.jpg';
-import gal5 from '@/assets/img05.jpg';
-import gal6 from '@/assets/img06.jpg';
-import gal7 from '@/assets/img07.jpg';
-import gal8 from '@/assets/img08.jpg';
 
 const heroAlt = {
   en: 'Learn languages through technology',
   th: 'เรียนภาษาผ่านเทคโนโลยี',
 };
 
-const galleryImages = [
-  { src: gal1, altEn: 'Workshop activity', altTh: 'บรรยากาศกิจกรรม' },
-  { src: gal2, altEn: 'Learning session', altTh: 'การเรียนในห้อง' },
-  { src: gal3, altEn: 'Team work', altTh: 'ทำงานเป็นทีม' },
-  { src: gal4, altEn: 'Hands-on', altTh: 'ลงมือปฏิบัติ' },
-  { src: gal5, altEn: 'Presentation', altTh: 'นำเสนอ' },
-  { src: gal6, altEn: 'Discussion', altTh: 'อภิปราย' },
-  { src: gal7, altEn: 'Workshop moment', altTh: 'บรรยากาศในงาน' },
-  { src: gal8, altEn: 'Group activity', altTh: 'กิจกรรมกลุ่ม' },
-];
+const galleryImages = galleryPreviewImages;
 
 const HomePage = () => {
   const { lang, t } = useI18n();
@@ -252,6 +237,8 @@ const HomePage = () => {
             </div>
           </div>
         </section>
+
+        <HomeContactSection />
 
         {/* 6) BIG CTA */}
         <section className="py-24 relative overflow-hidden">

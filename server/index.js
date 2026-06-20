@@ -1,7 +1,10 @@
 /**
- * Backend proxy for OpenAI – keeps API key server-side.
+ * Backend: OpenAI assessment proxy + registration email.
  * Run: npm install && OPENAI_API_KEY=sk-... npm start
- * Dev: listens on PORT (default 3000). With ../dist present, also serves the Vite SPA.
+ * Registration email (set on server):
+ *   REGISTER_TO_EMAIL=mltcenterth@gmail.com
+ *   SMTP_HOST=smtp.gmail.com  SMTP_PORT=587
+ *   SMTP_USER=your@gmail.com  SMTP_PASS=app-password
  */
 import path from 'path';
 import { existsSync } from 'fs';
@@ -9,9 +12,17 @@ import { fileURLToPath } from 'url';
 import express from 'express';
 import cors from 'cors';
 import OpenAI from 'openai';
+import nodemailer from 'nodemailer';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const distPath = path.join(__dirname, '../dist');
+
+const REGISTER_TO_EMAIL = process.env.REGISTER_TO_EMAIL || 'mltcenterth@gmail.com';
+const SMTP_HOST = process.env.SMTP_HOST || 'smtp.gmail.com';
+const SMTP_PORT = Number(process.env.SMTP_PORT || 587);
+const SMTP_USER = process.env.SMTP_USER || '';
+const SMTP_PASS = process.env.SMTP_PASS || '';
+const SMTP_FROM = process.env.SMTP_FROM || SMTP_USER;
 
 const app = express();
 app.use(cors({ origin: true }));
@@ -20,6 +31,96 @@ app.use(express.json());
 const openai = process.env.OPENAI_API_KEY
   ? new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
   : null;
+
+const mailTransport =
+  SMTP_USER && SMTP_PASS
+    ? nodemailer.createTransport({
+        host: SMTP_HOST,
+        port: SMTP_PORT,
+        secure: SMTP_PORT === 465,
+        auth: { user: SMTP_USER, pass: SMTP_PASS },
+      })
+    : null;
+
+const REGISTER_FIELDS = [
+  'firstName',
+  'lastName',
+  'nickname',
+  'company',
+  'position',
+  'educationLevel',
+  'phone',
+  'lineId',
+  'email',
+];
+
+const FIELD_LABELS = {
+  firstName: 'First Name',
+  lastName: 'Last Name',
+  nickname: 'Nickname',
+  company: 'Company',
+  position: 'Position',
+  educationLevel: 'Education Level',
+  phone: 'Phone',
+  lineId: 'Line ID',
+  email: 'Email',
+};
+
+function buildRegistrationEmail(body) {
+  const lines = REGISTER_FIELDS.map((key) => `${FIELD_LABELS[key]}: ${body[key] ?? ''}`);
+  const text = ['New MLTCENTERS Workshop Registration', '', ...lines, '', `Submitted at: ${new Date().toISOString()}`].join('\n');
+  const html = `
+    <h2>New MLTCENTERS Workshop Registration</h2>
+    <table cellpadding="6" cellspacing="0" style="border-collapse:collapse;">
+      ${REGISTER_FIELDS.map(
+        (key) =>
+          `<tr><td style="font-weight:600;padding-right:12px;">${FIELD_LABELS[key]}</td><td>${String(body[key] ?? '').replace(/</g, '&lt;')}</td></tr>`
+      ).join('')}
+    </table>
+    <p style="color:#666;margin-top:16px;">Submitted at: ${new Date().toISOString()}</p>
+  `;
+  return { text, html };
+}
+
+app.post('/api/register', async (req, res) => {
+  if (!mailTransport) {
+    return res.status(503).json({
+      error: 'Email is not configured. Set SMTP_USER and SMTP_PASS on the server.',
+    });
+  }
+
+  const body = req.body || {};
+  const missing = REGISTER_FIELDS.filter((key) => !String(body[key] ?? '').trim());
+  if (missing.length) {
+    return res.status(400).json({ error: `Missing fields: ${missing.join(', ')}` });
+  }
+
+  const email = String(body.email).trim();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    return res.status(400).json({ error: 'Invalid email address.' });
+  }
+
+  const payload = Object.fromEntries(
+    REGISTER_FIELDS.map((key) => [key, String(body[key]).trim()])
+  );
+
+  const { text, html } = buildRegistrationEmail(payload);
+
+  try {
+    await mailTransport.sendMail({
+      from: SMTP_FROM,
+      to: REGISTER_TO_EMAIL,
+      replyTo: email,
+      subject: `[MLTCENTERS] Registration – ${payload.firstName} ${payload.lastName}`,
+      text,
+      html,
+    });
+    return res.json({ ok: true });
+  } catch (err) {
+    console.error('Registration email failed:', err);
+    return res.status(500).json({ error: err.message || 'Failed to send registration email.' });
+  }
+});
 
 const SYSTEM_PROMPT = `You are having a normal, friendly greeting conversation in English to understand the person's level. Act like someone saying hi and making small talk—not a test, just natural chat.
 Rules:

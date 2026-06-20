@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Globe } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import treeOnlyLogo from '@/assets/img-design/tree-only.png';
+import brandLogo from '@/assets/logo-new.png';
 
 const Navbar = () => {
   const { lang, setLang, t } = useI18n();
@@ -25,9 +25,9 @@ const Navbar = () => {
     <nav className="sticky top-0 z-50 bg-card/80 backdrop-blur-lg border-b border-border/50 shadow-sm">
       <div className="container mx-auto flex items-center justify-between px-4 py-3 lg:px-6">
         <Link to="/" className="flex items-center gap-2">
-          <div className="w-9 h-9 flex items-center justify-center text-lg">
+          <div className="w-9 h-9 flex items-center justify-center text-lg bg-[#29303d] rounded-[5px]">
             <img
-              src={treeOnlyLogo}
+              src={brandLogo}
               alt="MLTCENTERS"
               className="w-full h-full object-contain"
             />

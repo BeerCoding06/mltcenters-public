@@ -40,10 +40,7 @@ export function PastelImage({
       <img
         src={src}
         alt={alt}
-        className={cn(
-          '',
-          className
-        )}
+        className={cn('w-full h-full object-cover img-pastel-tone', className)}
         loading="lazy"
         {...props}
       />
