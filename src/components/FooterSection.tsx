@@ -1,6 +1,7 @@
 import { useI18n } from '@/lib/i18n';
 import { socialLinks } from '@/lib/social-links';
 import { Mail, Phone, MapPin } from 'lucide-react';
+import brandLogo from '@/assets/logo-new.png';
 
 const FooterSection = () => {
   const { lang, t } = useI18n();
@@ -10,9 +11,11 @@ const FooterSection = () => {
       <div className="container mx-auto px-6">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-xl gradient-btn flex items-center justify-center text-sm">🌐</div>
+            <div className="w-8 h-8 flex items-center justify-center bg-[#29303d] rounded-[5px] shrink-0">
+              <img src={brandLogo} alt="MLTCENTERS" className="w-full h-full object-contain" />
+            </div>
             <div>
-              <span className="font-bold text-foreground">Lang<span className="text-primary">Tech</span></span>
+              <span className="font-bold text-foreground">MLT<span className="text-primary">CENTERS</span></span>
               <p className="text-xs text-muted-foreground">{t.footer.tagline[lang]}</p>
             </div>
           </div>
