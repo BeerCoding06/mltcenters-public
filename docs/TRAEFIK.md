@@ -27,7 +27,7 @@ Required routing (also under `deploy.labels` for Swarm/Dokploy):
 ```yaml
 traefik.enable=true
 traefik.docker.network=dokploy-network
-traefik.http.routers.mltcenters.rule=Host(`mltcenters.com`) || Host(`www.mltcenters.com`)
+traefik.http.routers.mltcenters.rule=Host(`mltcenters.com`,`www.mltcenters.com`)
 traefik.http.routers.mltcenters.entrypoints=websecure
 traefik.http.routers.mltcenters.tls=true
 traefik.http.routers.mltcenters.tls.certresolver=letsencrypt
