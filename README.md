@@ -43,21 +43,33 @@ npm run build
 npm run preview
 ```
 
-## Docker / Dockploy
+## Docker / Dokploy / Traefik
 
-รูทโปรเจกต์มี `Dockerfile` และ **`Dockerfile.prod`** (เนื้อหาเดียวกัน — Dockploy มักชี้ไฟล์หลัง) — build แอป Vite แล้วรัน Express ที่เสิร์ฟทั้ง static จาก `dist` และ `POST /api/assess` บนพอร์ตเดียวกัน
+รูทโปรเจกต์มี `Dockerfile` และ **`Dockerfile.prod`** — build แอป Vite แล้วรัน Express ที่เสิร์ฟทั้ง static จาก `dist` และ `/api` บนพอร์ต **3000** (ภายใน Docker เท่านั้น)
+
+### Production (Traefik + Dokploy)
+
+ใช้ **`docker-compose.yml`** — มี Traefik labels สำหรับ `www.mltcenters.com` และ network **`dokploy-network`**
 
 ```sh
-docker build -t mltcenters .
+# บนเซิร์ฟเวอร์ Dokploy: deploy compose จาก repo นี้ (ไม่ publish พอร์ต 3000 ออก host)
+# ตั้งค่า .env: OPENAI_API_KEY, SMTP_USER, SMTP_PASS, ...
+```
+
+เอกสาร routing / ตรวจสอบ 404: **[docs/TRAEFIK.md](docs/TRAEFIK.md)**
+
+### Local Docker (ไม่ใช้ Traefik)
+
+```sh
+docker compose -f docker-compose.yml -f docker-compose.local.yml up --build
+# http://localhost:3000
+```
+
+### Build image อย่างเดียว
+
+```sh
+docker build -f Dockerfile.prod -t mltcenters .
 docker run -p 3000:3000 -e OPENAI_API_KEY=sk-... mltcenters
 ```
 
-**Docker Compose** (ไฟล์ `docker-compose.yml` ใช้ `Dockerfile.prod`):
-
-```sh
-# สร้างไฟล์ .env ที่รูท: OPENAI_API_KEY=sk-... (optional ถ้าไม่ใช้ assessment)
-docker compose up --build
-# เปิด http://localhost:3000
-```
-
-บน **Dockploy**: ผูก repo แล้วให้ใช้ Dockerfile ที่รูท, ตั้งค่า environment **`OPENAI_API_KEY`** (บังคับสำหรับ assessment) และถ้าแพลตฟอร์มกำหนดพอร์ต ให้ตั้ง **`PORT`** ให้ตรงกับที่ reverse proxy ชี้เข้ามา (ค่าเริ่มต้นของคอนเทนเนอร์คือ `3000`)
+บน **Dokploy**: ผูก repo, ใช้ **`Dockerfile.prod`** หรือ **Compose** จาก `docker-compose.yml`, ตั้ง environment (`OPENAI_API_KEY`, `SMTP_*`, …) แล้ว redeploy หลังแก้ Traefik labels

@@ -1,0 +1,17 @@
+# Local Docker testing only (publish port 3000, no Traefik).
+# Usage: docker compose -f docker-compose.yml -f docker-compose.local.yml up --build
+services:
+  web:
+    ports:
+      - "3000:3000"
+    networks:
+      - default
+    labels: []
+    deploy:
+      replicas: 1
+      labels: []
+
+networks:
+  default:
+  dokploy-network:
+    external: false
