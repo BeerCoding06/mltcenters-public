@@ -1,5 +1,5 @@
 # MLTCENTERS production stack (Vite + Express on port 3000).
-# Dokploy / Docker Swarm + Traefik v2.11 on dokploy-network.
+# Docker Swarm / Dokploy: Traefik labels MUST be under deploy.labels (not top-level labels).
 services:
   web:
     build:
@@ -29,7 +29,6 @@ services:
         - traefik.http.routers.mltcenters.entrypoints=websecure
         - traefik.http.routers.mltcenters.tls=true
         - traefik.http.routers.mltcenters.tls.certresolver=letsencrypt
-        - traefik.http.routers.mltcenters.service=mltcenters
         - traefik.http.services.mltcenters.loadbalancer.server.port=3000
 
 networks:

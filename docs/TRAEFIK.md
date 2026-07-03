@@ -31,7 +31,6 @@ traefik.http.routers.mltcenters.rule=Host(`mltcenters.com`,`www.mltcenters.com`)
 traefik.http.routers.mltcenters.entrypoints=websecure
 traefik.http.routers.mltcenters.tls=true
 traefik.http.routers.mltcenters.tls.certresolver=letsencrypt
-traefik.http.routers.mltcenters.service=mltcenters
 traefik.http.services.mltcenters.loadbalancer.server.port=3000
 ```
 
