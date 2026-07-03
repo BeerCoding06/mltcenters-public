@@ -1,0 +1,11 @@
+# Append to /root/Caddyfile on the Dokploy server (Caddy owns ports 80/443).
+# Requires: docker network connect <mltcenters-network> caddy
+# Service name from: docker service ls | grep -i mltcenter
+
+www.mltcenters.com {
+	reverse_proxy mltcenters-frontendmltcenter-ib2evs:3000
+}
+
+mltcenters.com {
+	redir https://www.mltcenters.com{uri}
+}

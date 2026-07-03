@@ -15,8 +15,8 @@
 | **Image** | Built from `Dockerfile.prod` (Vite static + Express API) |
 | **Internal port** | `3000` |
 | **Network** | `dokploy-network` (same as Traefik) |
-| **Traefik router** | `mltcenters-web` |
-| **Traefik service** | `mltcenters-web` → `loadbalancer.server.port=3000` |
+| **Traefik router** | `mltcenters` |
+| **Traefik service** | `mltcenters` → `loadbalancer.server.port=3000` |
 
 This is the **only** frontend in this repository. Other frontends on the server are unrelated — do not change their labels.
 
@@ -27,15 +27,13 @@ Required routing (also under `deploy.labels` for Swarm/Dokploy):
 ```yaml
 traefik.enable=true
 traefik.docker.network=dokploy-network
-traefik.http.routers.mltcenters-web.rule=Host(`www.mltcenters.com`)
-traefik.http.routers.mltcenters-web.entrypoints=websecure
-traefik.http.routers.mltcenters-web.tls=true
-traefik.http.routers.mltcenters-web.tls.certresolver=letsencrypt
-traefik.http.routers.mltcenters-web.service=mltcenters-web
-traefik.http.services.mltcenters-web.loadbalancer.server.port=3000
+traefik.http.routers.mltcenters.rule=Host(`mltcenters.com`) || Host(`www.mltcenters.com`)
+traefik.http.routers.mltcenters.entrypoints=websecure
+traefik.http.routers.mltcenters.tls=true
+traefik.http.routers.mltcenters.tls.certresolver=letsencrypt
+traefik.http.routers.mltcenters.service=mltcenters
+traefik.http.services.mltcenters.loadbalancer.server.port=3000
 ```
-
-Also included: HTTP→HTTPS, `mltcenters.com` → `www.mltcenters.com`.
 
 ## Deploy on Dokploy
 
@@ -69,7 +67,7 @@ curl -sI https://www.mltcenters.com/ | grep -E 'HTTP|content-type'
 curl -sI https://mltcenters.com/ | grep -i location
 ```
 
-Traefik dashboard (if enabled): confirm routers **`mltcenters-web`**, **`mltcenters-web-http`**, **`mltcenters-apex`** are **enabled** and service **`mltcenters-web`** shows the MLTCENTERS task IP on port **3000**.
+Traefik dashboard (if enabled): confirm router **`mltcenters`** is **enabled** and service **`mltcenters`** shows the MLTCENTERS task IP on port **3000**.
 
 ## Local Docker (no Traefik)
 

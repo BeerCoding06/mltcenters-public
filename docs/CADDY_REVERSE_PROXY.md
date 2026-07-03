@@ -146,3 +146,28 @@ curl -sI --resolve www.mltcenters.com:80:127.0.0.1 http://www.mltcenters.com/
 ---
 
 *เอกสารนี้อ้างอิงการติดตั้งจริง: Caddy + Dokploy บน `dokploy-network`, แอป MLTCENTERS ที่ service `mltcenters-frontendmltcenter-ib2evs:3000`.*
+
+## 9) อาการ `404 page not found` (Traefik)
+
+ถ้า `curl https://www.mltcenters.com/` ได้ body ว่า **`404 page not found`** (19 ตัวอักษร) = **Traefik ไม่มี router** สำหรับโดเมนนี้ ไม่ใช่แอป React/Express พัง
+
+บนเซิร์ฟเวอร์นี้ **Caddy ยึดพอร์ต 80/443** — การตั้ง Domain ใน Dokploy อย่างเดียวอาจไม่พอ ต้องมีบล็อกใน **Caddyfile** ด้วย
+
+Snippet ใน repo: [`deploy/caddy/mltcenters.snippet.caddy`](../deploy/caddy/mltcenters.snippet.caddy)
+
+```bash
+# บนเซิร์ฟเวอร์
+bash scripts/check-production.sh   # หรือ copy ไปรันบน SSH
+
+NW=$(docker service inspect mltcenters-frontendmltcenter-ib2evs --format '{{range .Spec.TaskTemplate.Networks}}{{.Target}}{{break}}{{end}}')
+docker network connect "$NW" caddy 2>/dev/null || true
+
+nano /root/Caddyfile   # เพิ่มบล็อก www.mltcenters.com + mltcenters.com
+
+docker exec caddy caddy validate --config /etc/caddy/Caddyfile
+docker exec caddy caddy reload --config /etc/caddy/Caddyfile
+
+curl -sI --resolve www.mltcenters.com:443:127.0.0.1 https://www.mltcenters.com/ | head -5
+```
+
+ควรได้ **HTTP/2 200** และ `content-type: text/html`

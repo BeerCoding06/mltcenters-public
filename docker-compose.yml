@@ -1,6 +1,6 @@
 # MLTCENTERS production stack (Vite + Express on port 3000).
 # Deploy on Dokploy / Docker Swarm with Traefik v2.11 on dokploy-network.
-# Traefik routes https://www.mltcenters.com → this service (no host port publish).
+# Traefik routes https://mltcenters.com + www → this service (no host port publish).
 services:
   web:
     build:
@@ -21,74 +21,26 @@ services:
       - .env
     networks:
       - dokploy-network
-    # Swarm (Dokploy): Traefik reads deploy.labels on the task/container
     deploy:
       replicas: 1
       labels:
         - traefik.enable=true
         - traefik.docker.network=dokploy-network
-
-        # www.mltcenters.com → Express :3000
-        - traefik.http.routers.mltcenters-web.rule=Host(`www.mltcenters.com`)
-        - traefik.http.routers.mltcenters-web.entrypoints=websecure
-        - traefik.http.routers.mltcenters-web.tls=true
-        - traefik.http.routers.mltcenters-web.tls.certresolver=letsencrypt
-        - traefik.http.routers.mltcenters-web.service=mltcenters-web
-        - traefik.http.services.mltcenters-web.loadbalancer.server.port=3000
-
-        # HTTP → HTTPS (www)
-        - traefik.http.routers.mltcenters-web-http.rule=Host(`www.mltcenters.com`)
-        - traefik.http.routers.mltcenters-web-http.entrypoints=web
-        - traefik.http.routers.mltcenters-web-http.middlewares=mltcenters-https
-        - traefik.http.middlewares.mltcenters-https.redirectscheme.scheme=https
-        - traefik.http.middlewares.mltcenters-https.redirectscheme.permanent=true
-
-        # apex → www (HTTPS)
-        - traefik.http.routers.mltcenters-apex.rule=Host(`mltcenters.com`)
-        - traefik.http.routers.mltcenters-apex.entrypoints=websecure
-        - traefik.http.routers.mltcenters-apex.tls=true
-        - traefik.http.routers.mltcenters-apex.tls.certresolver=letsencrypt
-        - traefik.http.routers.mltcenters-apex.middlewares=mltcenters-www
-        - traefik.http.middlewares.mltcenters-www.redirectregex.regex=^https://mltcenters\.com/(.*)
-        - traefik.http.middlewares.mltcenters-www.redirectregex.replacement=https://www.mltcenters.com/$${1}
-        - traefik.http.middlewares.mltcenters-www.redirectregex.permanent=true
-
-        # apex HTTP → www HTTPS
-        - traefik.http.routers.mltcenters-apex-http.rule=Host(`mltcenters.com`)
-        - traefik.http.routers.mltcenters-apex-http.entrypoints=web
-        - traefik.http.routers.mltcenters-apex-http.middlewares=mltcenters-apex-to-www
-        - traefik.http.middlewares.mltcenters-apex-to-www.redirectregex.regex=^http://mltcenters\.com/(.*)
-        - traefik.http.middlewares.mltcenters-apex-to-www.redirectregex.replacement=https://www.mltcenters.com/$${1}
-        - traefik.http.middlewares.mltcenters-apex-to-www.redirectregex.permanent=true
-    # Non-Swarm (docker compose up): same labels for local Traefik testing
+        - traefik.http.routers.mltcenters.rule=Host(`mltcenters.com`) || Host(`www.mltcenters.com`)
+        - traefik.http.routers.mltcenters.entrypoints=websecure
+        - traefik.http.routers.mltcenters.tls=true
+        - traefik.http.routers.mltcenters.tls.certresolver=letsencrypt
+        - traefik.http.routers.mltcenters.service=mltcenters
+        - traefik.http.services.mltcenters.loadbalancer.server.port=3000
     labels:
       - traefik.enable=true
       - traefik.docker.network=dokploy-network
-      - traefik.http.routers.mltcenters-web.rule=Host(`www.mltcenters.com`)
-      - traefik.http.routers.mltcenters-web.entrypoints=websecure
-      - traefik.http.routers.mltcenters-web.tls=true
-      - traefik.http.routers.mltcenters-web.tls.certresolver=letsencrypt
-      - traefik.http.routers.mltcenters-web.service=mltcenters-web
-      - traefik.http.services.mltcenters-web.loadbalancer.server.port=3000
-      - traefik.http.routers.mltcenters-web-http.rule=Host(`www.mltcenters.com`)
-      - traefik.http.routers.mltcenters-web-http.entrypoints=web
-      - traefik.http.routers.mltcenters-web-http.middlewares=mltcenters-https
-      - traefik.http.middlewares.mltcenters-https.redirectscheme.scheme=https
-      - traefik.http.middlewares.mltcenters-https.redirectscheme.permanent=true
-      - traefik.http.routers.mltcenters-apex.rule=Host(`mltcenters.com`)
-      - traefik.http.routers.mltcenters-apex.entrypoints=websecure
-      - traefik.http.routers.mltcenters-apex.tls=true
-      - traefik.http.routers.mltcenters-apex.tls.certresolver=letsencrypt
-      - traefik.http.routers.mltcenters-apex.middlewares=mltcenters-www
-      - traefik.http.middlewares.mltcenters-www.redirectregex.regex=^https://mltcenters\.com/(.*)
-      - traefik.http.middlewares.mltcenters-www.redirectregex.replacement=https://www.mltcenters.com/$${1}
-      - traefik.http.middlewares.mltcenters-www.redirectregex.permanent=true
-      - traefik.http.routers.mltcenters-apex-http.rule=Host(`mltcenters.com`)
-      - traefik.http.routers.mltcenters-apex-http.entrypoints=web
-      - traefik.http.routers.mltcenters-apex-http.middlewares=mltcenters-apex-to-www
-      - traefik.http.middlewares.mltcenters-apex-to-www.redirectregex.regex=^http://mltcenters\.com/(.*)
-      - traefik.http.middlewares.mltcenters-apex-to-www.redirectregex.replacement=https://www.mltcenters.com/$${1}
-      - traefik.http.middlewares.mltcenters-apex-to-www.redirectregex.permanent=true
+      - traefik.http.routers.mltcenters.rule=Host(`mltcenters.com`) || Host(`www.mltcenters.com`)
+      - traefik.http.routers.mltcenters.entrypoints=websecure
+      - traefik.http.routers.mltcenters.tls=true
+      - traefik.http.routers.mltcenters.tls.certresolver=letsencrypt
+      - traefik.http.routers.mltcenters.service=mltcenters
+      - traefik.http.services.mltcenters.loadbalancer.server.port=3000
 
 networks:
   dokploy-network:
