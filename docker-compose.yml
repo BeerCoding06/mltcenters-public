@@ -1,6 +1,5 @@
 # MLTCENTERS production stack (Vite + Express on port 3000).
-# Deploy on Dokploy / Docker Swarm with Traefik v2.11 on dokploy-network.
-# Traefik routes https://mltcenters.com + www → this service (no host port publish).
+# Dokploy / Docker Swarm + Traefik v2.11 on dokploy-network.
 services:
   web:
     build:
@@ -26,21 +25,12 @@ services:
       labels:
         - traefik.enable=true
         - traefik.docker.network=dokploy-network
-        - traefik.http.routers.mltcenters.rule=Host(`mltcenters.com`) || Host(`www.mltcenters.com`)
+        - "traefik.http.routers.mltcenters.rule=Host(`mltcenters.com`) || Host(`www.mltcenters.com`)"
         - traefik.http.routers.mltcenters.entrypoints=websecure
         - traefik.http.routers.mltcenters.tls=true
         - traefik.http.routers.mltcenters.tls.certresolver=letsencrypt
         - traefik.http.routers.mltcenters.service=mltcenters
         - traefik.http.services.mltcenters.loadbalancer.server.port=3000
-    labels:
-      - traefik.enable=true
-      - traefik.docker.network=dokploy-network
-      - traefik.http.routers.mltcenters.rule=Host(`mltcenters.com`) || Host(`www.mltcenters.com`)
-      - traefik.http.routers.mltcenters.entrypoints=websecure
-      - traefik.http.routers.mltcenters.tls=true
-      - traefik.http.routers.mltcenters.tls.certresolver=letsencrypt
-      - traefik.http.routers.mltcenters.service=mltcenters
-      - traefik.http.services.mltcenters.loadbalancer.server.port=3000
 
 networks:
   dokploy-network:
