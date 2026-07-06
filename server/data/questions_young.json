@@ -2,11 +2,11 @@
   {
     "question": "What color is the apple?",
     "options": [
-      "gray",
       "pink",
-      "red"
+      "red",
+      "gray"
     ],
-    "correct_index": 2,
+    "correct_index": 1,
     "explanation": "Many apples are red.",
     "band": "young",
     "image": "🍎"
@@ -15,8 +15,8 @@
     "question": "Find the color: red",
     "options": [
       "red",
-      "run",
-      "seven"
+      "seven",
+      "run"
     ],
     "correct_index": 0,
     "explanation": "red is a color.",
@@ -26,11 +26,11 @@
   {
     "question": "What color is the sky?",
     "options": [
-      "blue",
       "pink",
+      "blue",
       "gray"
     ],
-    "correct_index": 0,
+    "correct_index": 1,
     "explanation": "The sky is blue.",
     "band": "young",
     "image": "🌤️"
@@ -38,11 +38,11 @@
   {
     "question": "Find the color: blue",
     "options": [
+      "run",
       "seven",
-      "blue",
-      "run"
+      "blue"
     ],
-    "correct_index": 1,
+    "correct_index": 2,
     "explanation": "blue is a color.",
     "band": "young",
     "image": "🔵"
@@ -50,11 +50,11 @@
   {
     "question": "What color is the grass?",
     "options": [
+      "green",
       "pink",
-      "gray",
-      "green"
+      "gray"
     ],
-    "correct_index": 2,
+    "correct_index": 0,
     "explanation": "Grass is green.",
     "band": "young",
     "image": "🌿"
@@ -62,11 +62,11 @@
   {
     "question": "Find the color: green",
     "options": [
+      "run",
       "green",
-      "seven",
-      "run"
+      "seven"
     ],
-    "correct_index": 0,
+    "correct_index": 1,
     "explanation": "green is a color.",
     "band": "young",
     "image": "🟢"
@@ -74,11 +74,11 @@
   {
     "question": "What color is the sun?",
     "options": [
-      "yellow",
+      "pink",
       "gray",
-      "pink"
+      "yellow"
     ],
-    "correct_index": 0,
+    "correct_index": 2,
     "explanation": "The sun is yellow.",
     "band": "young",
     "image": "☀️"
@@ -86,11 +86,11 @@
   {
     "question": "Find the color: yellow",
     "options": [
+      "yellow",
       "seven",
-      "run",
-      "yellow"
+      "run"
     ],
-    "correct_index": 2,
+    "correct_index": 0,
     "explanation": "yellow is a color.",
     "band": "young",
     "image": "🟡"
@@ -122,11 +122,11 @@
   {
     "question": "What color is the flower?",
     "options": [
+      "blue",
       "gray",
-      "pink",
-      "blue"
+      "pink"
     ],
-    "correct_index": 1,
+    "correct_index": 2,
     "explanation": "Some flowers are pink.",
     "band": "young",
     "image": "🌸"
@@ -134,11 +134,11 @@
   {
     "question": "Find the color: pink",
     "options": [
-      "pink",
       "run",
-      "seven"
+      "seven",
+      "pink"
     ],
-    "correct_index": 0,
+    "correct_index": 2,
     "explanation": "pink is a color.",
     "band": "young",
     "image": "💗"
@@ -146,11 +146,11 @@
   {
     "question": "What color is the grape?",
     "options": [
+      "gray",
       "pink",
-      "purple",
-      "gray"
+      "purple"
     ],
-    "correct_index": 1,
+    "correct_index": 2,
     "explanation": "Grapes can be purple.",
     "band": "young",
     "image": "🍇"
@@ -158,11 +158,11 @@
   {
     "question": "Find the color: purple",
     "options": [
-      "run",
       "purple",
-      "seven"
+      "seven",
+      "run"
     ],
-    "correct_index": 1,
+    "correct_index": 0,
     "explanation": "purple is a color.",
     "band": "young",
     "image": "🟣"
@@ -170,8 +170,8 @@
   {
     "question": "What color is the bear?",
     "options": [
-      "gray",
       "pink",
+      "gray",
       "brown"
     ],
     "correct_index": 2,
@@ -182,8 +182,8 @@
   {
     "question": "Find the color: brown",
     "options": [
-      "run",
       "seven",
+      "run",
       "brown"
     ],
     "correct_index": 2,
@@ -206,11 +206,11 @@
   {
     "question": "Find the color: black",
     "options": [
-      "seven",
+      "black",
       "run",
-      "black"
+      "seven"
     ],
-    "correct_index": 2,
+    "correct_index": 0,
     "explanation": "black is a color.",
     "band": "young",
     "image": "⚫"
@@ -230,11 +230,11 @@
   {
     "question": "Find the color: white",
     "options": [
-      "white",
       "seven",
-      "run"
+      "run",
+      "white"
     ],
-    "correct_index": 0,
+    "correct_index": 2,
     "explanation": "white is a color.",
     "band": "young",
     "image": "⚪"
@@ -242,11 +242,11 @@
   {
     "question": "Ball color?",
     "options": [
-      "eat",
       "red",
-      "jump"
+      "jump",
+      "eat"
     ],
-    "correct_index": 1,
+    "correct_index": 0,
     "explanation": "A ball can be red.",
     "image": "/assets/image-game/Ball-color.webp",
     "band": "young"
@@ -266,11 +266,11 @@
   {
     "question": "Fire truck color?",
     "options": [
+      "soft",
       "red",
-      "slow",
-      "soft"
+      "slow"
     ],
-    "correct_index": 0,
+    "correct_index": 1,
     "explanation": "Fire trucks are red.",
     "image": "/assets/image-game/Fire-truck-color.webp",
     "band": "young"
@@ -278,11 +278,11 @@
   {
     "question": "Snow color?",
     "options": [
+      "fast",
       "big",
-      "white",
-      "fast"
+      "white"
     ],
-    "correct_index": 1,
+    "correct_index": 2,
     "explanation": "Snow is white.",
     "image": "/assets/image-game/Snow-color.webp",
     "band": "young"
@@ -290,11 +290,11 @@
   {
     "question": "Chocolate color?",
     "options": [
-      "fly",
       "brown",
+      "fly",
       "sing"
     ],
-    "correct_index": 1,
+    "correct_index": 0,
     "explanation": "Chocolate is brown.",
     "image": "/assets/image-game/Chocolate-color.webp",
     "band": "young"
@@ -315,8 +315,8 @@
     "question": "Is a cat an animal?",
     "options": [
       "yes",
-      "no",
-      "maybe"
+      "maybe",
+      "no"
     ],
     "correct_index": 0,
     "explanation": "A cat is an animal.",
@@ -326,8 +326,8 @@
   {
     "question": "Which animal says \"woof\"?",
     "options": [
-      "fish",
       "bug",
+      "fish",
       "dog"
     ],
     "correct_index": 2,
@@ -338,8 +338,8 @@
   {
     "question": "Is a dog an animal?",
     "options": [
-      "no",
       "maybe",
+      "no",
       "yes"
     ],
     "correct_index": 2,
@@ -350,11 +350,11 @@
   {
     "question": "Which animal says \"moo\"?",
     "options": [
-      "bug",
       "cow",
+      "bug",
       "fish"
     ],
-    "correct_index": 1,
+    "correct_index": 0,
     "explanation": "Cows say moo.",
     "image": "/assets/image-game/icons/animal-cow.png",
     "band": "young"
@@ -362,11 +362,11 @@
   {
     "question": "Is a cow an animal?",
     "options": [
-      "no",
+      "yes",
       "maybe",
-      "yes"
+      "no"
     ],
-    "correct_index": 2,
+    "correct_index": 0,
     "explanation": "A cow is an animal.",
     "image": "/assets/image-game/icons/animal-cow.png",
     "band": "young"
@@ -374,11 +374,11 @@
   {
     "question": "Which animal says \"quack\"?",
     "options": [
-      "duck",
       "bug",
+      "duck",
       "fish"
     ],
-    "correct_index": 0,
+    "correct_index": 1,
     "explanation": "Ducks say quack.",
     "image": "/assets/image-game/icons/animal-duck.png",
     "band": "young"
@@ -386,11 +386,11 @@
   {
     "question": "Is a duck an animal?",
     "options": [
-      "yes",
       "maybe",
+      "yes",
       "no"
     ],
-    "correct_index": 0,
+    "correct_index": 1,
     "explanation": "A duck is an animal.",
     "image": "/assets/image-game/icons/animal-duck.png",
     "band": "young"
@@ -398,11 +398,11 @@
   {
     "question": "Which animal says \"baa\"?",
     "options": [
+      "fish",
       "sheep",
-      "bug",
-      "fish"
+      "bug"
     ],
-    "correct_index": 0,
+    "correct_index": 1,
     "explanation": "Sheep say baa.",
     "image": "/assets/image-game/icons/animal-sheep.png",
     "band": "young"
@@ -410,11 +410,11 @@
   {
     "question": "Is a sheep an animal?",
     "options": [
-      "no",
       "maybe",
-      "yes"
+      "yes",
+      "no"
     ],
-    "correct_index": 2,
+    "correct_index": 1,
     "explanation": "A sheep is an animal.",
     "image": "/assets/image-game/icons/animal-sheep.png",
     "band": "young"
@@ -422,11 +422,11 @@
   {
     "question": "Which animal says \"oink\"?",
     "options": [
-      "fish",
       "pig",
-      "bug"
+      "bug",
+      "fish"
     ],
-    "correct_index": 1,
+    "correct_index": 0,
     "explanation": "Pigs say oink.",
     "image": "/assets/image-game/icons/animal-pig.png",
     "band": "young"
@@ -434,11 +434,11 @@
   {
     "question": "Is a pig an animal?",
     "options": [
-      "no",
       "maybe",
-      "yes"
+      "yes",
+      "no"
     ],
-    "correct_index": 2,
+    "correct_index": 1,
     "explanation": "A pig is an animal.",
     "image": "/assets/image-game/icons/animal-pig.png",
     "band": "young"
@@ -446,11 +446,11 @@
   {
     "question": "Which animal says \"tweet\"?",
     "options": [
-      "bird",
       "fish",
+      "bird",
       "bug"
     ],
-    "correct_index": 0,
+    "correct_index": 1,
     "explanation": "Birds say tweet.",
     "image": "/assets/image-game/icons/animal-bird.png",
     "band": "young"
@@ -459,8 +459,8 @@
     "question": "Is a bird an animal?",
     "options": [
       "yes",
-      "maybe",
-      "no"
+      "no",
+      "maybe"
     ],
     "correct_index": 0,
     "explanation": "A bird is an animal.",
@@ -470,11 +470,11 @@
   {
     "question": "Which animal says \"ribbit\"?",
     "options": [
-      "frog",
+      "fish",
       "bug",
-      "fish"
+      "frog"
     ],
-    "correct_index": 0,
+    "correct_index": 2,
     "explanation": "Frogs say ribbit.",
     "image": "/assets/image-game/icons/animal-frog.png",
     "band": "young"
@@ -482,11 +482,11 @@
   {
     "question": "Is a frog an animal?",
     "options": [
-      "yes",
       "no",
-      "maybe"
+      "maybe",
+      "yes"
     ],
-    "correct_index": 0,
+    "correct_index": 2,
     "explanation": "A frog is an animal.",
     "image": "/assets/image-game/icons/animal-frog.png",
     "band": "young"
@@ -494,11 +494,11 @@
   {
     "question": "Which animal says \"neigh\"?",
     "options": [
-      "horse",
+      "bug",
       "fish",
-      "bug"
+      "horse"
     ],
-    "correct_index": 0,
+    "correct_index": 2,
     "explanation": "Horses say neigh.",
     "image": "/assets/image-game/icons/animal-horse.png",
     "band": "young"
@@ -506,11 +506,11 @@
   {
     "question": "Is a horse an animal?",
     "options": [
-      "yes",
       "maybe",
-      "no"
+      "no",
+      "yes"
     ],
-    "correct_index": 0,
+    "correct_index": 2,
     "explanation": "A horse is an animal.",
     "image": "/assets/image-game/icons/animal-horse.png",
     "band": "young"
@@ -518,11 +518,11 @@
   {
     "question": "Which animal says \"roar\"?",
     "options": [
-      "lion",
       "bug",
-      "fish"
+      "fish",
+      "lion"
     ],
-    "correct_index": 0,
+    "correct_index": 2,
     "explanation": "Lions say roar.",
     "image": "/assets/image-game/icons/animal-lion.png",
     "band": "young"
@@ -531,10 +531,10 @@
     "question": "Is a lion an animal?",
     "options": [
       "no",
-      "yes",
-      "maybe"
+      "maybe",
+      "yes"
     ],
-    "correct_index": 1,
+    "correct_index": 2,
     "explanation": "A lion is an animal.",
     "image": "/assets/image-game/icons/animal-lion.png",
     "band": "young"
@@ -542,11 +542,11 @@
   {
     "question": "Fish live in ___",
     "options": [
+      "fire",
       "sky",
-      "water",
-      "fire"
+      "water"
     ],
-    "correct_index": 1,
+    "correct_index": 2,
     "explanation": "Fish live in water.",
     "image": "/assets/image-game/Fish-live-in.webp",
     "band": "young"
@@ -554,11 +554,11 @@
   {
     "question": "Birds can ___",
     "options": [
-      "fly",
       "drive",
-      "cook"
+      "cook",
+      "fly"
     ],
-    "correct_index": 0,
+    "correct_index": 2,
     "explanation": "Birds can fly.",
     "image": "/assets/image-game/Birds-can.webp",
     "band": "young"
@@ -566,8 +566,8 @@
   {
     "question": "A baby cat is a ___",
     "options": [
-      "puppy",
       "calf",
+      "puppy",
       "kitten"
     ],
     "correct_index": 2,
@@ -578,11 +578,11 @@
   {
     "question": "A baby dog is a ___",
     "options": [
+      "puppy",
       "kitten",
-      "chick",
-      "puppy"
+      "chick"
     ],
-    "correct_index": 2,
+    "correct_index": 0,
     "explanation": "A baby dog is a puppy.",
     "image": "/assets/image-game/A-baby-dog-is-a.webp",
     "band": "young"
@@ -591,8 +591,8 @@
     "question": "Elephant is ___",
     "options": [
       "big",
-      "tiny",
-      "cold"
+      "cold",
+      "tiny"
     ],
     "correct_index": 0,
     "explanation": "Elephants are big.",
@@ -603,10 +603,10 @@
     "question": "Ant is ___",
     "options": [
       "huge",
-      "loud",
-      "small"
+      "small",
+      "loud"
     ],
-    "correct_index": 2,
+    "correct_index": 1,
     "explanation": "Ants are small.",
     "image": "/assets/image-game/Ant-is.webp",
     "band": "young"
@@ -615,10 +615,10 @@
     "question": "Bee makes ___",
     "options": [
       "rice",
-      "honey",
-      "shoes"
+      "shoes",
+      "honey"
     ],
-    "correct_index": 1,
+    "correct_index": 2,
     "explanation": "Bees make honey.",
     "image": "/assets/image-game/Bee-makes.webp",
     "band": "young"
@@ -626,11 +626,11 @@
   {
     "question": "Where is the fish?",
     "options": [
-      "water",
       "cloud",
+      "water",
       "tree"
     ],
-    "correct_index": 0,
+    "correct_index": 1,
     "explanation": "Fish are in water.",
     "image": "/assets/image-game/Where-is-the-fish.webp",
     "band": "young"
@@ -650,11 +650,11 @@
   {
     "question": "Monkey likes ___",
     "options": [
+      "ice",
       "book",
-      "banana",
-      "ice"
+      "banana"
     ],
-    "correct_index": 1,
+    "correct_index": 2,
     "explanation": "Monkeys like bananas.",
     "image": "/assets/image-game/Monkey-likes.webp",
     "band": "young"
@@ -662,11 +662,11 @@
   {
     "question": "How many eyes?",
     "options": [
-      "two",
       "zero",
+      "two",
       "five"
     ],
-    "correct_index": 0,
+    "correct_index": 1,
     "explanation": "We have two eyes.",
     "band": "young",
     "image": "👀"
@@ -674,9 +674,9 @@
   {
     "question": "How many ears?",
     "options": [
-      "five",
+      "zero",
       "two",
-      "zero"
+      "five"
     ],
     "correct_index": 1,
     "explanation": "We have two ears.",
@@ -686,11 +686,11 @@
   {
     "question": "How many nose?",
     "options": [
-      "five",
       "one",
-      "zero"
+      "zero",
+      "five"
     ],
-    "correct_index": 1,
+    "correct_index": 0,
     "explanation": "We have one nose.",
     "band": "young",
     "image": "👃"
@@ -698,11 +698,11 @@
   {
     "question": "How many mouth?",
     "options": [
-      "one",
       "five",
-      "zero"
+      "zero",
+      "one"
     ],
-    "correct_index": 0,
+    "correct_index": 2,
     "explanation": "We have one mouth.",
     "band": "young",
     "image": "👄"
@@ -710,11 +710,11 @@
   {
     "question": "How many hands?",
     "options": [
+      "five",
       "zero",
-      "two",
-      "five"
+      "two"
     ],
-    "correct_index": 1,
+    "correct_index": 2,
     "explanation": "We have two hands.",
     "band": "young",
     "image": "🤲"
@@ -734,11 +734,11 @@
   {
     "question": "How many fingers?",
     "options": [
-      "ten",
       "zero",
+      "ten",
       "five"
     ],
-    "correct_index": 0,
+    "correct_index": 1,
     "explanation": "We have ten fingers.",
     "band": "young",
     "image": "🖐️"
@@ -782,9 +782,9 @@
   {
     "question": "You smell with your ___",
     "options": [
-      "foot",
+      "arm",
       "nose",
-      "arm"
+      "foot"
     ],
     "correct_index": 1,
     "explanation": "You smell with your nose.",
@@ -794,11 +794,11 @@
   {
     "question": "You eat with your ___",
     "options": [
+      "mouth",
       "leg",
-      "elbow",
-      "mouth"
+      "elbow"
     ],
-    "correct_index": 2,
+    "correct_index": 0,
     "explanation": "You eat with your mouth.",
     "image": "/assets/image-game/You-eat-with-your.webp",
     "band": "young"
@@ -819,8 +819,8 @@
     "question": "Clap your ___",
     "options": [
       "hands",
-      "road",
-      "cloud"
+      "cloud",
+      "road"
     ],
     "correct_index": 0,
     "explanation": "You clap your hands.",
@@ -830,11 +830,11 @@
   {
     "question": "Stomp your ___",
     "options": [
-      "star",
       "feet",
+      "star",
       "moon"
     ],
-    "correct_index": 1,
+    "correct_index": 0,
     "explanation": "You stomp your feet.",
     "image": "/assets/image-game/Stomp-your.webp",
     "band": "young"
@@ -842,11 +842,11 @@
   {
     "question": "Hair is on your ___",
     "options": [
-      "cup",
       "shoe",
-      "head"
+      "head",
+      "cup"
     ],
-    "correct_index": 2,
+    "correct_index": 1,
     "explanation": "Hair is on your head.",
     "image": "/assets/image-game/Hair-is-on-your.webp",
     "band": "young"
@@ -854,11 +854,11 @@
   {
     "question": "Teeth are in your ___",
     "options": [
-      "knee",
       "ear",
-      "mouth"
+      "mouth",
+      "knee"
     ],
-    "correct_index": 2,
+    "correct_index": 1,
     "explanation": "Teeth are in your mouth.",
     "image": "/assets/image-game/Teeth-are-in-your.webp",
     "band": "young"
@@ -866,11 +866,11 @@
   {
     "question": "Tummy is also called ___",
     "options": [
-      "door",
+      "belly",
       "wheel",
-      "belly"
+      "door"
     ],
-    "correct_index": 2,
+    "correct_index": 0,
     "explanation": "Tummy means belly.",
     "image": "/assets/image-game/Tummy-is-also-called.webp",
     "band": "young"
@@ -879,10 +879,10 @@
     "question": "Mom and ___",
     "options": [
       "ball",
-      "bus",
-      "dad"
+      "dad",
+      "bus"
     ],
-    "correct_index": 2,
+    "correct_index": 1,
     "explanation": "Mom and dad are family.",
     "image": "/assets/image-game/Mom-and.webp",
     "band": "young"
@@ -891,10 +891,10 @@
     "question": "Your mom is your ___",
     "options": [
       "teacher",
-      "doctor",
-      "mother"
+      "mother",
+      "doctor"
     ],
-    "correct_index": 2,
+    "correct_index": 1,
     "explanation": "Mom is your mother.",
     "image": "/assets/image-game/Your-mom-is-your.webp",
     "band": "young"
@@ -902,11 +902,11 @@
   {
     "question": "Your dad is your ___",
     "options": [
-      "cloud",
       "table",
-      "father"
+      "father",
+      "cloud"
     ],
-    "correct_index": 2,
+    "correct_index": 1,
     "explanation": "Dad is your father.",
     "image": "/assets/image-game/Your-dad-is-your.webp",
     "band": "young"
@@ -915,10 +915,10 @@
     "question": "Baby says ___",
     "options": [
       "vroom",
-      "mama",
-      "beep"
+      "beep",
+      "mama"
     ],
-    "correct_index": 1,
+    "correct_index": 2,
     "explanation": "Babies often say mama.",
     "image": "/assets/image-game/Baby-says.webp",
     "band": "young"
@@ -926,11 +926,11 @@
   {
     "question": "Grandma is mom's ___",
     "options": [
+      "toy",
       "mother",
-      "car",
-      "toy"
+      "car"
     ],
-    "correct_index": 0,
+    "correct_index": 1,
     "explanation": "Grandma is mother of mom or dad.",
     "image": "/assets/image-game/Grandma-is-mom.webp",
     "band": "young"
@@ -938,11 +938,11 @@
   {
     "question": "Brother is a ___",
     "options": [
-      "color",
       "boy",
+      "color",
       "fruit"
     ],
-    "correct_index": 1,
+    "correct_index": 0,
     "explanation": "A brother is a boy in family.",
     "image": "/assets/image-game/Brother-is-a.webp",
     "band": "young"
@@ -950,11 +950,11 @@
   {
     "question": "Sister is a ___",
     "options": [
-      "truck",
       "girl",
-      "rain"
+      "rain",
+      "truck"
     ],
-    "correct_index": 1,
+    "correct_index": 0,
     "explanation": "A sister is a girl in family.",
     "image": "/assets/image-game/Sister-is-a.webp",
     "band": "young"
@@ -962,8 +962,8 @@
   {
     "question": "I love my ___",
     "options": [
-      "rock",
       "shoe",
+      "rock",
       "family"
     ],
     "correct_index": 2,
@@ -974,11 +974,11 @@
   {
     "question": "Dad gives a big ___",
     "options": [
+      "jump",
       "run",
-      "hug",
-      "jump"
+      "hug"
     ],
-    "correct_index": 1,
+    "correct_index": 2,
     "explanation": "Dad can give a hug.",
     "image": "/assets/image-game/Dad-gives-a-big.webp",
     "band": "young"
@@ -986,11 +986,11 @@
   {
     "question": "Mom reads a ___",
     "options": [
-      "car",
+      "book",
       "shoe",
-      "book"
+      "car"
     ],
-    "correct_index": 2,
+    "correct_index": 0,
     "explanation": "Mom can read a book.",
     "image": "/assets/image-game/Mom-reads-a.webp",
     "band": "young"
@@ -998,11 +998,11 @@
   {
     "question": "Baby drinks ___",
     "options": [
-      "stone",
+      "milk",
       "sand",
-      "milk"
+      "stone"
     ],
-    "correct_index": 2,
+    "correct_index": 0,
     "explanation": "Babies drink milk.",
     "image": "/assets/image-game/Baby-drinks.webp",
     "band": "young"
@@ -1010,11 +1010,11 @@
   {
     "question": "Family eats together at ___",
     "options": [
-      "star",
+      "table",
       "moon",
-      "table"
+      "star"
     ],
-    "correct_index": 2,
+    "correct_index": 0,
     "explanation": "We eat at the table.",
     "image": "/assets/image-game/Family-eats-together-at.webp",
     "band": "young"
@@ -1034,11 +1034,11 @@
   {
     "question": "Baby sleeps in a ___",
     "options": [
-      "tree",
       "crib",
-      "bus"
+      "bus",
+      "tree"
     ],
-    "correct_index": 1,
+    "correct_index": 0,
     "explanation": "Babies sleep in a crib.",
     "image": "/assets/image-game/Baby-sleeps-in-a.webp",
     "band": "young"
@@ -1082,11 +1082,11 @@
   {
     "question": "Is banana yummy?",
     "options": [
+      "maybe",
       "yes",
-      "no",
-      "maybe"
+      "no"
     ],
-    "correct_index": 0,
+    "correct_index": 1,
     "explanation": "Many kids like banana.",
     "band": "young",
     "image": "🍌"
@@ -1094,11 +1094,11 @@
   {
     "question": "What is banana?",
     "options": [
-      "hat",
       "banana",
+      "hat",
       "chair"
     ],
-    "correct_index": 1,
+    "correct_index": 0,
     "explanation": "A banana is a fruit.",
     "band": "young",
     "image": "🍌"
@@ -1106,9 +1106,9 @@
   {
     "question": "Is rice yummy?",
     "options": [
-      "no",
+      "maybe",
       "yes",
-      "maybe"
+      "no"
     ],
     "correct_index": 1,
     "explanation": "Many kids like rice.",
@@ -1131,10 +1131,10 @@
     "question": "Is milk yummy?",
     "options": [
       "no",
-      "maybe",
-      "yes"
+      "yes",
+      "maybe"
     ],
-    "correct_index": 2,
+    "correct_index": 1,
     "explanation": "Many kids like milk.",
     "band": "young",
     "image": "🥛"
@@ -1142,8 +1142,8 @@
   {
     "question": "What is milk?",
     "options": [
-      "chair",
       "hat",
+      "chair",
       "milk"
     ],
     "correct_index": 2,
@@ -1154,8 +1154,8 @@
   {
     "question": "Is water yummy?",
     "options": [
-      "no",
       "maybe",
+      "no",
       "yes"
     ],
     "correct_index": 2,
@@ -1167,10 +1167,10 @@
     "question": "What is water?",
     "options": [
       "hat",
-      "water",
-      "chair"
+      "chair",
+      "water"
     ],
-    "correct_index": 1,
+    "correct_index": 2,
     "explanation": "Water is a drink.",
     "band": "young",
     "image": "💧"
@@ -1179,10 +1179,10 @@
     "question": "Is bread yummy?",
     "options": [
       "no",
-      "maybe",
-      "yes"
+      "yes",
+      "maybe"
     ],
-    "correct_index": 2,
+    "correct_index": 1,
     "explanation": "Many kids like bread.",
     "band": "young",
     "image": "🍞"
@@ -1214,11 +1214,11 @@
   {
     "question": "What is egg?",
     "options": [
-      "egg",
       "chair",
+      "egg",
       "hat"
     ],
-    "correct_index": 0,
+    "correct_index": 1,
     "explanation": "An egg is food.",
     "band": "young",
     "image": "🥚"
@@ -1227,10 +1227,10 @@
     "question": "Is cookie yummy?",
     "options": [
       "maybe",
-      "yes",
-      "no"
+      "no",
+      "yes"
     ],
-    "correct_index": 1,
+    "correct_index": 2,
     "explanation": "Many kids like cookie.",
     "band": "young",
     "image": "⭐"
@@ -1238,11 +1238,11 @@
   {
     "question": "What is cookie?",
     "options": [
-      "chair",
       "cookie",
-      "hat"
+      "hat",
+      "chair"
     ],
-    "correct_index": 1,
+    "correct_index": 0,
     "explanation": "A cookie is a snack.",
     "band": "young",
     "image": "🎩"
@@ -1250,8 +1250,8 @@
   {
     "question": "Is cake yummy?",
     "options": [
-      "maybe",
       "no",
+      "maybe",
       "yes"
     ],
     "correct_index": 2,
@@ -1263,8 +1263,8 @@
     "question": "What is cake?",
     "options": [
       "cake",
-      "chair",
-      "hat"
+      "hat",
+      "chair"
     ],
     "correct_index": 0,
     "explanation": "Cake is sweet.",
@@ -1274,11 +1274,11 @@
   {
     "question": "Is juice yummy?",
     "options": [
+      "yes",
       "maybe",
-      "no",
-      "yes"
+      "no"
     ],
-    "correct_index": 2,
+    "correct_index": 0,
     "explanation": "Many kids like juice.",
     "band": "young",
     "image": "⭐"
@@ -1286,11 +1286,11 @@
   {
     "question": "What is juice?",
     "options": [
+      "juice",
       "hat",
-      "chair",
-      "juice"
+      "chair"
     ],
-    "correct_index": 2,
+    "correct_index": 0,
     "explanation": "Juice is a drink.",
     "band": "young",
     "image": "🎩"
@@ -1298,25 +1298,25 @@
   {
     "question": "We eat soup with a ___",
     "options": [
+      "spoon",
       "ball",
-      "shoe",
-      "spoon"
+      "shoe"
     ],
-    "correct_index": 2,
+    "correct_index": 0,
     "explanation": "We use a spoon.",
-    "image": "/assets/image-game/We-eat-soup-with-a.png",
+    "image": "/assets/image-game/We-eat-soup-with-a.webp",
     "band": "young"
   },
   {
     "question": "Hot food can ___ you",
     "options": [
-      "fly",
+      "burn",
       "sing",
-      "burn"
+      "fly"
     ],
-    "correct_index": 2,
+    "correct_index": 0,
     "explanation": "Hot food can burn.",
-    "image": "/assets/image-game/Hot-food-can.png",
+    "image": "/assets/image-game/Hot-food-can___you.webp",
     "band": "young"
   },
   {
@@ -1328,99 +1328,99 @@
     ],
     "correct_index": 1,
     "explanation": "Ice cream is cold.",
-    "image": "/assets/image-game/Ice-cream-is.png",
+    "image": "/assets/image-game/Ice-cream-is.webp",
     "band": "young"
   },
   {
     "question": "Pizza is ___",
     "options": [
-      "sleepy",
       "tall",
+      "sleepy",
       "yummy"
     ],
     "correct_index": 2,
     "explanation": "Pizza is yummy.",
-    "image": "/assets/image-game/Pizza-is.png",
+    "image": "/assets/image-game/Pizza-is.webp",
     "band": "young"
   },
   {
     "question": "Carrot is a ___",
     "options": [
-      "toy",
+      "vegetable",
       "animal",
-      "vegetable"
+      "toy"
     ],
-    "correct_index": 2,
+    "correct_index": 0,
     "explanation": "Carrot is a vegetable.",
-    "image": "/assets/image-game/Carrot-is-a.png",
+    "image": "/assets/image-game/Carrot-is-a.webp",
     "band": "young"
   },
   {
     "question": "Corn is ___ and yellow",
     "options": [
       "fast",
-      "yummy",
-      "blue"
+      "blue",
+      "yummy"
     ],
-    "correct_index": 1,
+    "correct_index": 2,
     "explanation": "Corn is yellow.",
-    "image": "/assets/image-game/Corn-is.png",
+    "image": "/assets/image-game/Corn-is.webp",
     "band": "young"
   },
   {
     "question": "Fish is ___ to eat",
     "options": [
+      "food",
       "hat",
-      "shoe",
-      "food"
+      "shoe"
     ],
-    "correct_index": 2,
+    "correct_index": 0,
     "explanation": "Fish can be food.",
-    "image": "/assets/image-game/Fish-is.png",
+    "image": "/assets/image-game/Fish-is.webp",
     "band": "young"
   },
   {
     "question": "Honey is ___",
     "options": [
-      "loud",
       "salty",
+      "loud",
       "sweet"
     ],
     "correct_index": 2,
     "explanation": "Honey is sweet.",
-    "image": "/assets/image-game/Honey-is.png",
+    "image": "/assets/image-game/Honey-is.webp",
     "band": "young"
   },
   {
     "question": "Lemon is ___",
     "options": [
-      "sour",
       "big",
-      "soft"
+      "soft",
+      "sour"
     ],
-    "correct_index": 0,
+    "correct_index": 2,
     "explanation": "Lemons are sour.",
-    "image": "/assets/image-game/Lemon-is.png",
+    "image": "/assets/image-game/Lemon-is.webp",
     "band": "young"
   },
   {
     "question": "Breakfast is in the ___",
     "options": [
-      "night",
       "morning",
-      "moon"
+      "moon",
+      "night"
     ],
-    "correct_index": 1,
+    "correct_index": 0,
     "explanation": "Breakfast is in the morning.",
-    "image": "/assets/image-game/Breakfast-is-in-the.png",
+    "image": "/assets/image-game/Breakfast-is-in-the.webp",
     "band": "young"
   },
   {
     "question": "What number? 1",
     "options": [
       "one",
-      "two",
-      "five"
+      "five",
+      "two"
     ],
     "correct_index": 0,
     "explanation": "1 is one.",
@@ -1431,8 +1431,8 @@
     "question": "What number? 2",
     "options": [
       "two",
-      "three",
-      "six"
+      "six",
+      "three"
     ],
     "correct_index": 0,
     "explanation": "2 is two.",
@@ -1442,11 +1442,11 @@
   {
     "question": "What number? 3",
     "options": [
-      "seven",
+      "three",
       "four",
-      "three"
+      "seven"
     ],
-    "correct_index": 2,
+    "correct_index": 0,
     "explanation": "3 is three.",
     "band": "young",
     "image": "🎩"
@@ -1454,8 +1454,8 @@
   {
     "question": "What number? 4",
     "options": [
-      "eight",
       "five",
+      "eight",
       "four"
     ],
     "correct_index": 2,
@@ -1466,9 +1466,9 @@
   {
     "question": "What number? 5",
     "options": [
-      "nine",
+      "six",
       "five",
-      "six"
+      "nine"
     ],
     "correct_index": 1,
     "explanation": "5 is five.",
@@ -1478,11 +1478,11 @@
   {
     "question": "What number? 6",
     "options": [
+      "seven",
       "ten",
-      "six",
-      "seven"
+      "six"
     ],
-    "correct_index": 1,
+    "correct_index": 2,
     "explanation": "6 is six.",
     "band": "young",
     "image": "🎩"
@@ -1490,11 +1490,11 @@
   {
     "question": "What number? 7",
     "options": [
-      "one",
       "seven",
+      "one",
       "eight"
     ],
-    "correct_index": 1,
+    "correct_index": 0,
     "explanation": "7 is seven.",
     "band": "young",
     "image": "🎩"
@@ -1502,11 +1502,11 @@
   {
     "question": "What number? 8",
     "options": [
-      "two",
       "nine",
-      "eight"
+      "eight",
+      "two"
     ],
-    "correct_index": 2,
+    "correct_index": 1,
     "explanation": "8 is eight.",
     "band": "young",
     "image": "🎩"
@@ -1526,11 +1526,11 @@
   {
     "question": "What number? 10",
     "options": [
-      "one",
       "four",
-      "ten"
+      "ten",
+      "one"
     ],
-    "correct_index": 2,
+    "correct_index": 1,
     "explanation": "10 is ten.",
     "band": "young",
     "image": "🎩"
@@ -1538,11 +1538,11 @@
   {
     "question": "Count: 1, 2, ___",
     "options": [
-      "three",
       "zero",
+      "three",
       "ten"
     ],
-    "correct_index": 0,
+    "correct_index": 1,
     "explanation": "One two three.",
     "band": "young",
     "image": "✏️"
@@ -1550,11 +1550,11 @@
   {
     "question": "How many legs on a dog?",
     "options": [
+      "two",
       "four",
-      "ten",
-      "two"
+      "ten"
     ],
-    "correct_index": 0,
+    "correct_index": 1,
     "explanation": "Dogs have four legs.",
     "band": "young",
     "image": "🐶"
@@ -1574,11 +1574,11 @@
   {
     "question": "Days in one week?",
     "options": [
-      "ten",
+      "seven",
       "three",
-      "seven"
+      "ten"
     ],
-    "correct_index": 2,
+    "correct_index": 0,
     "explanation": "Seven days in a week.",
     "band": "young",
     "image": "⭐"
@@ -1599,8 +1599,8 @@
     "question": "Less than two = ___",
     "options": [
       "one",
-      "five",
-      "nine"
+      "nine",
+      "five"
     ],
     "correct_index": 0,
     "explanation": "One is less than two.",
@@ -1623,10 +1623,10 @@
     "question": "Zero means ___",
     "options": [
       "many",
-      "none",
-      "big"
+      "big",
+      "none"
     ],
-    "correct_index": 1,
+    "correct_index": 2,
     "explanation": "Zero means none.",
     "band": "young",
     "image": "✏️"
@@ -1634,8 +1634,8 @@
   {
     "question": "Ten comes after ___",
     "options": [
-      "two",
       "four",
+      "two",
       "nine"
     ],
     "correct_index": 2,
@@ -1646,11 +1646,11 @@
   {
     "question": "Three bears story: ___ bears",
     "options": [
-      "ten",
       "three",
+      "ten",
       "one"
     ],
-    "correct_index": 1,
+    "correct_index": 0,
     "explanation": "Three bears in the story.",
     "band": "young",
     "image": "🐻"
@@ -1670,11 +1670,11 @@
   {
     "question": "Sides on a triangle?",
     "options": [
-      "three",
       "five",
-      "eight"
+      "eight",
+      "three"
     ],
-    "correct_index": 0,
+    "correct_index": 2,
     "explanation": "A triangle has three sides.",
     "band": "young",
     "image": "⭐"
@@ -1694,11 +1694,11 @@
   {
     "question": "Ducks in a row: 1,2,3 = ___",
     "options": [
-      "nine",
       "three",
-      "six"
+      "six",
+      "nine"
     ],
-    "correct_index": 1,
+    "correct_index": 0,
     "explanation": "One two three is three.",
     "band": "young",
     "image": "🦆"
@@ -1706,11 +1706,11 @@
   {
     "question": "How many noses?",
     "options": [
-      "one",
       "four",
-      "six"
+      "six",
+      "one"
     ],
-    "correct_index": 0,
+    "correct_index": 2,
     "explanation": "You have one nose.",
     "band": "young",
     "image": "👃"
@@ -1731,8 +1731,8 @@
     "question": "Doll is a ___",
     "options": [
       "toy",
-      "car",
-      "food"
+      "food",
+      "car"
     ],
     "correct_index": 0,
     "explanation": "A doll is a toy.",
@@ -1742,11 +1742,11 @@
   {
     "question": "Blocks you can ___",
     "options": [
-      "stack",
       "fly",
+      "stack",
       "drink"
     ],
-    "correct_index": 0,
+    "correct_index": 1,
     "explanation": "You stack blocks.",
     "band": "young",
     "image": "✏️"
@@ -1766,11 +1766,11 @@
   {
     "question": "Slide at the ___",
     "options": [
-      "bed",
+      "park",
       "moon",
-      "park"
+      "bed"
     ],
-    "correct_index": 2,
+    "correct_index": 0,
     "explanation": "Slides are at the park.",
     "band": "young",
     "image": "🌙"
@@ -1778,11 +1778,11 @@
   {
     "question": "Swing goes back and ___",
     "options": [
-      "eat",
       "up",
-      "forth"
+      "forth",
+      "eat"
     ],
-    "correct_index": 2,
+    "correct_index": 1,
     "explanation": "A swing goes back and forth.",
     "band": "young",
     "image": "✏️"
@@ -1790,11 +1790,11 @@
   {
     "question": "Bubbles are ___",
     "options": [
-      "fun",
       "loud",
-      "hot"
+      "hot",
+      "fun"
     ],
-    "correct_index": 0,
+    "correct_index": 2,
     "explanation": "Bubbles are fun.",
     "band": "young",
     "image": "🔥"
@@ -1802,11 +1802,11 @@
   {
     "question": "Sandbox has ___",
     "options": [
+      "sand",
       "rain",
-      "milk",
-      "sand"
+      "milk"
     ],
-    "correct_index": 2,
+    "correct_index": 0,
     "explanation": "A sandbox has sand.",
     "band": "young",
     "image": "🥛"
@@ -1814,11 +1814,11 @@
   {
     "question": "Teddy bear is ___",
     "options": [
-      "fast",
       "soft",
+      "fast",
       "loud"
     ],
-    "correct_index": 1,
+    "correct_index": 0,
     "explanation": "Teddy bears are soft.",
     "band": "young",
     "image": "🐻"
@@ -1826,11 +1826,11 @@
   {
     "question": "Puzzle pieces fit ___",
     "options": [
-      "together",
       "away",
-      "apart"
+      "apart",
+      "together"
     ],
-    "correct_index": 0,
+    "correct_index": 2,
     "explanation": "Puzzle pieces fit together.",
     "band": "young",
     "image": "✏️"
@@ -1838,11 +1838,11 @@
   {
     "question": "Crayons draw ___",
     "options": [
-      "pictures",
       "shoes",
-      "cars"
+      "cars",
+      "pictures"
     ],
-    "correct_index": 0,
+    "correct_index": 2,
     "explanation": "Crayons draw pictures.",
     "band": "young",
     "image": "👟"
@@ -1850,11 +1850,11 @@
   {
     "question": "Drum makes ___",
     "options": [
+      "food",
       "sleep",
-      "sound",
-      "food"
+      "sound"
     ],
-    "correct_index": 1,
+    "correct_index": 2,
     "explanation": "Drums make sound.",
     "band": "young",
     "image": "✏️"
@@ -1862,9 +1862,9 @@
   {
     "question": "Hide and ___",
     "options": [
-      "eat",
+      "run",
       "seek",
-      "run"
+      "eat"
     ],
     "correct_index": 1,
     "explanation": "Hide and seek is a game.",
@@ -1874,11 +1874,11 @@
   {
     "question": "Tag game: you ___ friends",
     "options": [
+      "chase",
       "cook",
-      "read",
-      "chase"
+      "read"
     ],
-    "correct_index": 2,
+    "correct_index": 0,
     "explanation": "In tag you chase friends.",
     "band": "young",
     "image": "✏️"
@@ -1886,11 +1886,11 @@
   {
     "question": "Bounce the ___",
     "options": [
-      "ball",
       "spoon",
+      "ball",
       "book"
     ],
-    "correct_index": 0,
+    "correct_index": 1,
     "explanation": "You bounce a ball.",
     "band": "young",
     "image": "⚽"
@@ -1899,10 +1899,10 @@
     "question": "Sun is ___",
     "options": [
       "cold",
-      "wet",
-      "hot"
+      "hot",
+      "wet"
     ],
-    "correct_index": 2,
+    "correct_index": 1,
     "explanation": "The sun is hot.",
     "band": "young",
     "image": "☀️"
@@ -1910,11 +1910,11 @@
   {
     "question": "Rain makes you ___",
     "options": [
-      "wet",
       "dry",
-      "tall"
+      "tall",
+      "wet"
     ],
-    "correct_index": 0,
+    "correct_index": 2,
     "explanation": "Rain makes you wet.",
     "band": "young",
     "image": "🌧️"
@@ -1922,11 +1922,11 @@
   {
     "question": "Snow is ___",
     "options": [
+      "cold",
       "hot",
-      "loud",
-      "cold"
+      "loud"
     ],
-    "correct_index": 2,
+    "correct_index": 0,
     "explanation": "Snow is cold.",
     "band": "young",
     "image": "❄️"
@@ -1958,11 +1958,11 @@
   {
     "question": "Clouds are in the ___",
     "options": [
-      "sky",
       "sea",
-      "box"
+      "box",
+      "sky"
     ],
-    "correct_index": 0,
+    "correct_index": 2,
     "explanation": "Clouds are in the sky.",
     "band": "young",
     "image": "☁️"
@@ -1970,11 +1970,11 @@
   {
     "question": "Thunder is ___",
     "options": [
+      "soft",
       "loud",
-      "tiny",
-      "soft"
+      "tiny"
     ],
-    "correct_index": 0,
+    "correct_index": 1,
     "explanation": "Thunder is loud.",
     "band": "young",
     "image": "✏️"
@@ -1982,8 +1982,8 @@
   {
     "question": "Umbrella for ___",
     "options": [
-      "play",
       "sun",
+      "play",
       "rain"
     ],
     "correct_index": 2,
@@ -1994,11 +1994,11 @@
   {
     "question": "Tree has ___",
     "options": [
+      "leaves",
       "wheels",
-      "wings",
-      "leaves"
+      "wings"
     ],
-    "correct_index": 2,
+    "correct_index": 0,
     "explanation": "Trees have leaves.",
     "band": "young",
     "image": "🌳"
@@ -2007,10 +2007,10 @@
     "question": "Flower smells ___",
     "options": [
       "loud",
-      "nice",
-      "fast"
+      "fast",
+      "nice"
     ],
-    "correct_index": 1,
+    "correct_index": 2,
     "explanation": "Flowers smell nice.",
     "band": "young",
     "image": "🌸"
@@ -2019,10 +2019,10 @@
     "question": "Butterfly can ___",
     "options": [
       "swim",
-      "drive",
-      "fly"
+      "fly",
+      "drive"
     ],
-    "correct_index": 2,
+    "correct_index": 1,
     "explanation": "Butterflies fly.",
     "band": "young",
     "image": "🏊"
@@ -2042,11 +2042,11 @@
   {
     "question": "Moon at ___",
     "options": [
-      "breakfast",
       "night",
-      "run"
+      "run",
+      "breakfast"
     ],
-    "correct_index": 1,
+    "correct_index": 0,
     "explanation": "We see the moon at night.",
     "band": "young",
     "image": "🌙"
@@ -2055,8 +2055,8 @@
     "question": "Ocean is big ___",
     "options": [
       "water",
-      "sand",
-      "grass"
+      "grass",
+      "sand"
     ],
     "correct_index": 0,
     "explanation": "The ocean is water.",
@@ -2066,11 +2066,11 @@
   {
     "question": "Beach has ___",
     "options": [
-      "sand",
+      "fire",
       "snow",
-      "fire"
+      "sand"
     ],
-    "correct_index": 0,
+    "correct_index": 2,
     "explanation": "Beaches have sand.",
     "band": "young",
     "image": "🏖️"
@@ -2078,11 +2078,11 @@
   {
     "question": "Mountain is very ___",
     "options": [
+      "tall",
       "wet",
-      "sweet",
-      "tall"
+      "sweet"
     ],
-    "correct_index": 2,
+    "correct_index": 0,
     "explanation": "Mountains are tall.",
     "band": "young",
     "image": "🏔️"
@@ -2102,11 +2102,11 @@
   {
     "question": "Plant needs ___",
     "options": [
-      "cars",
+      "water",
       "shoes",
-      "water"
+      "cars"
     ],
-    "correct_index": 2,
+    "correct_index": 0,
     "explanation": "Plants need water.",
     "band": "young",
     "image": "🐜"
@@ -2114,11 +2114,11 @@
   {
     "question": "Seed grows into a ___",
     "options": [
-      "plant",
       "hat",
+      "plant",
       "car"
     ],
-    "correct_index": 0,
+    "correct_index": 1,
     "explanation": "Seeds grow into plants.",
     "band": "young",
     "image": "🐜"
@@ -2127,10 +2127,10 @@
     "question": "Garden has ___",
     "options": [
       "shoes",
-      "flowers",
-      "buses"
+      "buses",
+      "flowers"
     ],
-    "correct_index": 1,
+    "correct_index": 2,
     "explanation": "Gardens have flowers.",
     "band": "young",
     "image": "🌸"
@@ -2138,11 +2138,11 @@
   {
     "question": "Car has ___",
     "options": [
-      "wheels",
+      "wings",
       "fins",
-      "wings"
+      "wheels"
     ],
-    "correct_index": 0,
+    "correct_index": 2,
     "explanation": "Cars have wheels.",
     "band": "young",
     "image": "🚗"
@@ -2150,11 +2150,11 @@
   {
     "question": "Bus is ___ than a bike",
     "options": [
+      "softer",
       "smaller",
-      "bigger",
-      "softer"
+      "bigger"
     ],
-    "correct_index": 1,
+    "correct_index": 2,
     "explanation": "A bus is bigger.",
     "band": "young",
     "image": "🚲"
@@ -2162,11 +2162,11 @@
   {
     "question": "Train goes on ___",
     "options": [
-      "trees",
       "clouds",
-      "tracks"
+      "tracks",
+      "trees"
     ],
-    "correct_index": 2,
+    "correct_index": 1,
     "explanation": "Trains go on tracks.",
     "band": "young",
     "image": "🚂"
@@ -2174,11 +2174,11 @@
   {
     "question": "Plane flies in the ___",
     "options": [
-      "water",
       "sky",
+      "water",
       "sand"
     ],
-    "correct_index": 1,
+    "correct_index": 0,
     "explanation": "Planes fly in the sky.",
     "band": "young",
     "image": "✈️"
@@ -2186,11 +2186,11 @@
   {
     "question": "Boat floats on ___",
     "options": [
-      "grass",
+      "water",
       "fire",
-      "water"
+      "grass"
     ],
-    "correct_index": 2,
+    "correct_index": 0,
     "explanation": "Boats float on water.",
     "band": "young",
     "image": "⛵"
@@ -2198,8 +2198,8 @@
   {
     "question": "Bike has two ___",
     "options": [
-      "noses",
       "wings",
+      "noses",
       "wheels"
     ],
     "correct_index": 2,
@@ -2222,11 +2222,11 @@
   {
     "question": "Ambulance helps ___ people",
     "options": [
-      "play",
       "sick",
-      "sleep"
+      "sleep",
+      "play"
     ],
-    "correct_index": 1,
+    "correct_index": 0,
     "explanation": "Ambulances help sick people.",
     "band": "young",
     "image": "🎮"
@@ -2234,11 +2234,11 @@
   {
     "question": "Truck carries ___",
     "options": [
-      "things",
+      "clouds",
       "stars",
-      "clouds"
+      "things"
     ],
-    "correct_index": 0,
+    "correct_index": 2,
     "explanation": "Trucks carry things.",
     "band": "young",
     "image": "🚒"
@@ -2246,11 +2246,11 @@
   {
     "question": "Helicopter has big ___",
     "options": [
-      "blades",
       "cookies",
-      "socks"
+      "socks",
+      "blades"
     ],
-    "correct_index": 0,
+    "correct_index": 2,
     "explanation": "Helicopters have blades.",
     "band": "young",
     "image": "🧦"
@@ -2271,10 +2271,10 @@
     "question": "Honk goes the ___",
     "options": [
       "shoe",
-      "horn",
-      "hat"
+      "hat",
+      "horn"
     ],
-    "correct_index": 1,
+    "correct_index": 2,
     "explanation": "Cars honk the horn.",
     "band": "young",
     "image": "🎩"
@@ -2282,11 +2282,11 @@
   {
     "question": "Happy face ___",
     "options": [
+      "cry",
       "sleep",
-      "smile",
-      "cry"
+      "smile"
     ],
-    "correct_index": 1,
+    "correct_index": 2,
     "explanation": "Happy means smile.",
     "band": "young",
     "image": "😊"
@@ -2306,11 +2306,11 @@
   {
     "question": "Angry face is ___",
     "options": [
-      "mad",
       "sweet",
+      "mad",
       "soft"
     ],
-    "correct_index": 0,
+    "correct_index": 1,
     "explanation": "Angry means mad.",
     "band": "young",
     "image": "✏️"
@@ -2318,11 +2318,11 @@
   {
     "question": "Tired means need ___",
     "options": [
-      "jump",
       "run",
-      "sleep"
+      "sleep",
+      "jump"
     ],
-    "correct_index": 2,
+    "correct_index": 1,
     "explanation": "Tired means need sleep.",
     "band": "young",
     "image": "🔴"
@@ -2330,11 +2330,11 @@
   {
     "question": "Scared means a little ___",
     "options": [
+      "hungry",
       "tall",
-      "afraid",
-      "hungry"
+      "afraid"
     ],
-    "correct_index": 1,
+    "correct_index": 2,
     "explanation": "Scared means afraid.",
     "band": "young",
     "image": "🔴"
@@ -2342,8 +2342,8 @@
   {
     "question": "Excited means very ___",
     "options": [
-      "sleepy",
       "cold",
+      "sleepy",
       "happy"
     ],
     "correct_index": 2,
@@ -2354,11 +2354,11 @@
   {
     "question": "Laugh when something is ___",
     "options": [
-      "funny",
+      "sad",
       "cold",
-      "sad"
+      "funny"
     ],
-    "correct_index": 0,
+    "correct_index": 2,
     "explanation": "We laugh when funny.",
     "band": "young",
     "image": "❄️"
@@ -2366,11 +2366,11 @@
   {
     "question": "Yummy food makes you ___",
     "options": [
+      "mad",
       "happy",
-      "sad",
-      "mad"
+      "sad"
     ],
-    "correct_index": 0,
+    "correct_index": 1,
     "explanation": "Yummy food makes us happy.",
     "band": "young",
     "image": "😊"
@@ -2378,11 +2378,11 @@
   {
     "question": "Hug shows ___",
     "options": [
-      "love",
       "rain",
-      "anger"
+      "anger",
+      "love"
     ],
-    "correct_index": 0,
+    "correct_index": 2,
     "explanation": "Hugs show love.",
     "band": "young",
     "image": "🌧️"

@@ -162,16 +162,16 @@ foods.forEach(([item, type, exp]) => {
   bank.push(q(`Is ${item} yummy?`, 'yes', 'no', 'maybe', `Many kids like ${item}.`));
   bank.push(qRot(`What is ${item}?`, item, 'chair', 'hat', 0, exp));
 });
-bank.push(qPhoto('We eat soup with a ___', 'spoon', 'shoe', 'ball', 'We use a spoon.', 'We-eat-soup-with-a.png'));
-bank.push(qPhoto('Hot food can ___ you', 'burn', 'fly', 'sing', 'Hot food can burn.', 'Hot-food-can.png'));
-bank.push(qPhoto('Ice cream is ___', 'cold', 'hot', 'loud', 'Ice cream is cold.', 'Ice-cream-is.png'));
-bank.push(qPhoto('Pizza is ___', 'yummy', 'sleepy', 'tall', 'Pizza is yummy.', 'Pizza-is.png'));
-bank.push(qPhoto('Carrot is a ___', 'vegetable', 'animal', 'toy', 'Carrot is a vegetable.', 'Carrot-is-a.png'));
-bank.push(qPhoto('Corn is ___ and yellow', 'yummy', 'blue', 'fast', 'Corn is yellow.', 'Corn-is.png'));
-bank.push(qPhoto('Fish is ___ to eat', 'food', 'shoe', 'hat', 'Fish can be food.', 'Fish-is.png'));
-bank.push(qPhoto('Honey is ___', 'sweet', 'salty', 'loud', 'Honey is sweet.', 'Honey-is.png'));
-bank.push(qPhoto('Lemon is ___', 'sour', 'big', 'soft', 'Lemons are sour.', 'Lemon-is.png'));
-bank.push(qPhoto('Breakfast is in the ___', 'morning', 'night', 'moon', 'Breakfast is in the morning.', 'Breakfast-is-in-the.png'));
+bank.push(qPhoto('We eat soup with a ___', 'spoon', 'shoe', 'ball', 'We use a spoon.', 'We-eat-soup-with-a.webp'));
+bank.push(qPhoto('Hot food can ___ you', 'burn', 'fly', 'sing', 'Hot food can burn.', 'Hot-food-can___you.webp'));
+bank.push(qPhoto('Ice cream is ___', 'cold', 'hot', 'loud', 'Ice cream is cold.', 'Ice-cream-is.webp'));
+bank.push(qPhoto('Pizza is ___', 'yummy', 'sleepy', 'tall', 'Pizza is yummy.', 'Pizza-is.webp'));
+bank.push(qPhoto('Carrot is a ___', 'vegetable', 'animal', 'toy', 'Carrot is a vegetable.', 'Carrot-is-a.webp'));
+bank.push(qPhoto('Corn is ___ and yellow', 'yummy', 'blue', 'fast', 'Corn is yellow.', 'Corn-is.webp'));
+bank.push(qPhoto('Fish is ___ to eat', 'food', 'shoe', 'hat', 'Fish can be food.', 'Fish-is.webp'));
+bank.push(qPhoto('Honey is ___', 'sweet', 'salty', 'loud', 'Honey is sweet.', 'Honey-is.webp'));
+bank.push(qPhoto('Lemon is ___', 'sour', 'big', 'soft', 'Lemons are sour.', 'Lemon-is.webp'));
+bank.push(qPhoto('Breakfast is in the ___', 'morning', 'night', 'moon', 'Breakfast is in the morning.', 'Breakfast-is-in-the.webp'));
 
 // —— Numbers (25) ——
 for (let n = 1; n <= 10; n += 1) {
