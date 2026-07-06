@@ -6,15 +6,18 @@ export const OBSTACLE_GAP_BASE = 28;
 export const OBSTACLE_SPAWN_AHEAD_MIN = 38;
 export const OBSTACLE_SPAWN_AHEAD_SPREAD = 14;
 
-/** แสดงคำถามเมื่อสิ่งกีดขวางอยู่ห่างเท่านี้ (ครอบคลุมระยะ spawn 38–52) */
-export const QUESTION_TRIGGER_MIN = 14;
-export const QUESTION_TRIGGER_MAX = 56;
+/** เริ่มโหลดคำถามเมื่อใกล้สิ่งกีดขวางเท่านี้ */
+export const QUESTION_TRIGGER_MIN = 5;
+export const QUESTION_TRIGGER_MAX = 58;
 
-/** ชนสิ่งกีดขวางเมื่อถึงระยะนี้ (ยังไม่ตอบ) */
-export const OBSTACLE_HIT_Z = 1.8;
+/** หยุดห่างจากสิ่งกีดขวางเท่านี้ รอตอบคำถาม */
+export const OBSTACLE_STOP_DIST = 5.5;
 
-/** ช้าลงขณะมีคำถาม — ไม่จับเวลา แต่ให้เวลาคิด */
-export const QUESTION_SCROLL_SLOW = 0.38;
+/** ความเร็วเลื่อนขณะกระโดดข้าม (หลังตอบถูก) */
+export const JUMP_SCROLL_BOOST = 1.35;
+
+/** เลื่อนผ่านสิ่งกีดขวางหลังชน (ตอบผิด) */
+export const HIT_PASS_OFFSET = 2.2;
 
 export const JUMP_DURATION = 0.58;
 export const JUMP_HEIGHT = 1.55;

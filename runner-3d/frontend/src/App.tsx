@@ -15,6 +15,7 @@ export default function App() {
     scrollZ,
     obstacles,
     jumpHeight,
+    activeObstacleId,
     evaluation,
     submitting,
     fx,
@@ -24,7 +25,10 @@ export default function App() {
     restart,
   } = useGameManager();
 
-  const showQuestion = Boolean(state?.current_question) && phase === "running";
+  const atObstacle = activeObstacleId != null;
+  const showQuestion =
+    Boolean(state?.current_question) && phase === "running" && atObstacle;
+  const showQuestionLoading = phase === "running" && atObstacle && !state?.current_question;
 
   return (
     <div className="flex h-full min-h-screen flex-col bg-slate-900">
@@ -54,6 +58,14 @@ export default function App() {
             />
             <GameEffects fx={fx} />
             <HUD state={state} combo={combo} />
+
+            {showQuestionLoading && (
+              <div className="pointer-events-none absolute inset-x-0 bottom-4 z-30 flex justify-center px-3 sm:bottom-8">
+                <div className="rounded-3xl border border-white/20 bg-black/40 px-6 py-4 text-sm text-white backdrop-blur-xl animate-pulse">
+                  กำลังโหลดคำถาม…
+                </div>
+              </div>
+            )}
 
             {showQuestion && state.current_question && (
               <FloatingQuestionCard

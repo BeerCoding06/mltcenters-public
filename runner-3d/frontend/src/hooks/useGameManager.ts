@@ -4,8 +4,9 @@ import {
   TARGET_QUESTIONS,
   QUESTION_TRIGGER_MIN,
   QUESTION_TRIGGER_MAX,
-  OBSTACLE_HIT_Z,
-  QUESTION_SCROLL_SLOW,
+  OBSTACLE_STOP_DIST,
+  JUMP_SCROLL_BOOST,
+  HIT_PASS_OFFSET,
   HIT_RECOVER_SEC,
   HIT_SLOW_FACTOR,
   CORRECT_SPEED_BOOST,
@@ -77,6 +78,7 @@ export function useGameManager() {
   const obstaclesRef = useRef<Obstacle[]>([]);
   const submittingRef = useRef(false);
   const gameOverRef = useRef(false);
+  const bumpTargetRef = useRef<number | null>(null);
 
   const patch = useCallback((partial: Partial<GameSnapshot>) => {
     setSnap((s) => ({ ...s, ...partial }));
@@ -95,7 +97,7 @@ export function useGameManager() {
         obstacles: obstaclesRef.current,
         jumpHeight: jumpHeightRef.current,
         activeObstacleId: activeObstacleRef.current,
-        state: stateRef.current,
+        state: stateRef.current ? { ...stateRef.current } : null,
         submitting: submittingRef.current,
         combo: comboRef.current,
         fx: {
@@ -124,39 +126,41 @@ export function useGameManager() {
     syncSnap(true);
   }, [syncSnap]);
 
-  useEffect(() => {
-    if (initRef.current) return;
-    initRef.current = true;
-    init().catch(console.error);
-  }, [init]);
-
   const fetchQuestion = useCallback(async () => {
     const sid = sessionRef.current;
     if (!sid || fetchingQ.current || stateRef.current?.current_question) return;
     const now = performance.now();
-    if (now - lastFetchMs.current < 700) return;
+    if (now - lastFetchMs.current < 500) return;
     lastFetchMs.current = now;
     fetchingQ.current = true;
     try {
       const res = await gameApi.generateQuestion(sid);
       stateRef.current = res.game_state;
       speedRef.current = res.game_state.speed;
-      if (!res.game_state.current_question) {
-        activeObstacleRef.current = null;
-      }
     } catch (err) {
       console.error("generate-question failed:", err);
-      activeObstacleRef.current = null;
     } finally {
       fetchingQ.current = false;
       syncSnap(true);
     }
   }, [syncSnap]);
 
-  const forceWrong = useCallback(() => {
-    if (!stateRef.current?.current_question || submittingRef.current) return;
-    void resolveAnswerRef.current(-1);
-  }, []);
+  const prefetchQuestion = useCallback(async () => {
+    const sid = sessionRef.current;
+    if (!sid || fetchingQ.current || stateRef.current?.current_question) return;
+    await fetchQuestion();
+  }, [fetchQuestion]);
+
+  const boot = useCallback(async () => {
+    await init();
+    void prefetchQuestion();
+  }, [init, prefetchQuestion]);
+
+  useEffect(() => {
+    if (initRef.current) return;
+    initRef.current = true;
+    boot().catch(console.error);
+  }, [boot]);
 
   const resolveAnswer = useCallback(
     async (selectedIndex: number) => {
@@ -204,7 +208,14 @@ export function useGameManager() {
           audioManager.playHit();
           animRef.current = "hit";
           hitRecoverT.current = HIT_RECOVER_SEC;
-          if (obsId != null) resolvedObstacles.current.add(obsId);
+          if (obsId != null) {
+            const obs = obstaclesRef.current.find((o) => o.id === obsId);
+            if (obs) bumpTargetRef.current = obs.z + HIT_PASS_OFFSET;
+            obstaclesRef.current = obstaclesRef.current.map((o) =>
+              o.id === obsId ? { ...o, cleared: true } : o
+            );
+            resolvedObstacles.current.add(obsId);
+          }
         }
 
         activeObstacleRef.current = null;
@@ -229,6 +240,7 @@ export function useGameManager() {
 
         submittingRef.current = false;
         syncSnap(true);
+        void prefetchQuestion();
       } catch {
         submittingRef.current = false;
         syncSnap(true);
@@ -265,15 +277,15 @@ export function useGameManager() {
       const phase = phaseRef.current;
 
       if (phase === "running") {
-        const hasQuestion =
-          Boolean(stateRef.current?.current_question) || fetchingQ.current;
-        const spd =
-          speedRef.current *
-          (hasQuestion ? QUESTION_SCROLL_SLOW : 1) *
-          (hitRecoverT.current > 0 ? HIT_SLOW_FACTOR : 1);
+        const hasQuestion = Boolean(stateRef.current?.current_question);
+        const isJumping = jumpSys.current.isActive();
+        const isHitting =
+          hitRecoverT.current > 0 ||
+          animRef.current === "hit" ||
+          animRef.current === "recover";
+        let spd = speedRef.current * (isHitting ? HIT_SLOW_FACTOR : 1);
 
-        scrollRef.current += spd * delta;
-        const z = scrollRef.current;
+        let z = scrollRef.current;
 
         const spawn = obstacleMgr.current.trySpawn(
           z,
@@ -284,45 +296,89 @@ export function useGameManager() {
         }
         obstaclesRef.current = obstacleMgr.current.prune(z, obstaclesRef.current);
 
-        const upcoming = obstaclesRef.current
-          .filter((o) => !o.cleared && !resolvedObstacles.current.has(o.id))
-          .map((o) => ({ o, dist: o.z - z }))
-          .filter(({ dist }) => dist > QUESTION_TRIGGER_MIN && dist < QUESTION_TRIGGER_MAX)
-          .sort((a, b) => a.dist - b.dist)[0];
+        const findNextObstacle = (atZ: number) =>
+          obstaclesRef.current
+            .filter((o) => !o.cleared && !resolvedObstacles.current.has(o.id))
+            .map((o) => ({ o, dist: o.z - atZ }))
+            .filter(({ dist }) => dist > 0.4 && dist < QUESTION_TRIGGER_MAX)
+            .sort((a, b) => a.dist - b.dist)[0];
+
+        const nextObstacle = findNextObstacle(z);
+        const nearStop =
+          nextObstacle != null &&
+          nextObstacle.dist <= OBSTACLE_STOP_DIST + 2;
+
+        const activeObs =
+          activeObstacleRef.current != null
+            ? obstaclesRef.current.find((o) => o.id === activeObstacleRef.current)
+            : nextObstacle?.o;
+
+        let newZ = z;
+        const prevZ = newZ;
+
+        if (isJumping) {
+          newZ += spd * JUMP_SCROLL_BOOST * delta;
+        } else if (
+          (activeObs || nearStop) &&
+          (hasQuestion || submittingRef.current || nearStop) &&
+          !isHitting &&
+          !isJumping
+        ) {
+          const obs = activeObs ?? nextObstacle?.o;
+          if (obs) {
+            const stopZ = obs.z - OBSTACLE_STOP_DIST;
+            if (newZ < stopZ) newZ += nearStop && !hasQuestion ? spd * 0.15 * delta : spd * delta;
+            newZ = Math.min(newZ, stopZ);
+            if (newZ >= stopZ - 0.05) animRef.current = "idle";
+            if (!activeObstacleRef.current) activeObstacleRef.current = obs.id;
+          }
+        } else if (activeObs && !hasQuestion && !isHitting && !isJumping) {
+          const stopZ = activeObs.z - OBSTACLE_STOP_DIST;
+          const dist = activeObs.z - newZ;
+          if (dist <= OBSTACLE_STOP_DIST + 1) {
+            newZ = Math.min(newZ, stopZ);
+            animRef.current = "idle";
+          } else if (dist < OBSTACLE_STOP_DIST + 12) {
+            newZ += spd * 0.22 * delta;
+          } else {
+            newZ += spd * delta;
+          }
+        } else if (bumpTargetRef.current != null && newZ < bumpTargetRef.current) {
+          newZ += spd * 0.65 * delta;
+          if (newZ >= bumpTargetRef.current) {
+            newZ = bumpTargetRef.current;
+            bumpTargetRef.current = null;
+          }
+        } else if (!isHitting) {
+          newZ += spd * delta;
+        } else if (bumpTargetRef.current != null) {
+          newZ += spd * delta;
+          if (newZ >= bumpTargetRef.current) {
+            newZ = bumpTargetRef.current;
+            bumpTargetRef.current = null;
+          }
+        }
+
+        scrollRef.current = newZ;
+        z = scrollRef.current;
 
         if (
-          upcoming &&
+          nextObstacle &&
           activeObstacleRef.current == null &&
-          !stateRef.current?.current_question &&
-          !submittingRef.current &&
-          !fetchingQ.current
-        ) {
-          activeObstacleRef.current = upcoming.o.id;
-          void fetchQuestion();
-        }
-
-        if (
-          activeObstacleRef.current != null &&
-          !stateRef.current?.current_question &&
-          !submittingRef.current &&
-          !fetchingQ.current
-        ) {
-          void fetchQuestion();
-        }
-
-        if (
-          activeObstacleRef.current != null &&
-          stateRef.current?.current_question &&
           !submittingRef.current &&
           !jumpSys.current.isActive() &&
-          animRef.current !== "hit"
+          (nextObstacle.dist > QUESTION_TRIGGER_MIN || nearStop)
         ) {
-          const obs = obstaclesRef.current.find(
-            (o) => o.id === activeObstacleRef.current
-          );
-          if (obs && z + OBSTACLE_HIT_Z >= obs.z) {
-            forceWrong();
-          }
+          activeObstacleRef.current = nextObstacle.o.id;
+        }
+
+        if (
+          activeObstacleRef.current != null &&
+          !stateRef.current?.current_question &&
+          !submittingRef.current &&
+          !fetchingQ.current
+        ) {
+          void fetchQuestion();
         }
 
         const jumpFrame = jumpSys.current.update(delta);
@@ -346,7 +402,7 @@ export function useGameManager() {
             }, 100);
           }
         } else if (
-          !["jump_start", "jump", "jump_land", "hit", "celebrate", "gameover"].includes(
+          !["jump_start", "jump", "jump_land", "hit", "recover", "idle", "celebrate", "gameover"].includes(
             animRef.current
           )
         ) {
@@ -355,6 +411,7 @@ export function useGameManager() {
 
         if (stateRef.current && !gameOverRef.current) {
           const finished = stateRef.current.questions_answered >= TARGET_QUESTIONS;
+          const moved = newZ - prevZ;
           if (finished && !stateRef.current.game_over) {
             stateRef.current = { ...stateRef.current, game_over: true };
             gameOverRef.current = true;
@@ -366,8 +423,8 @@ export function useGameManager() {
           } else {
             stateRef.current = {
               ...stateRef.current,
-              distance: stateRef.current.distance + spd * delta,
-              speed: spd,
+              distance: stateRef.current.distance + moved,
+              speed: moved > 0.001 ? moved / delta : 0,
             };
           }
         }
@@ -379,7 +436,7 @@ export function useGameManager() {
 
     rafRef.current = requestAnimationFrame(loop);
     return () => cancelAnimationFrame(rafRef.current);
-  }, [fetchQuestion, forceWrong, syncSnap, patch]);
+  }, [fetchQuestion, syncSnap, patch]);
 
   const answer = useCallback(
     (index: number) => {
@@ -402,6 +459,7 @@ export function useGameManager() {
     jumpSys.current.reset();
     activeObstacleRef.current = null;
     comboRef.current = 0;
+    bumpTargetRef.current = null;
     hitRecoverT.current = 0;
     fetchingQ.current = false;
     submittingRef.current = false;
@@ -410,7 +468,8 @@ export function useGameManager() {
     animRef.current = "run";
     patch({ evaluation: null, answerFeedback: null });
     syncSnap(true);
-  }, [patch, syncSnap]);
+    void prefetchQuestion();
+  }, [patch, syncSnap, prefetchQuestion]);
 
   return { ...snap, answer, restart };
 }

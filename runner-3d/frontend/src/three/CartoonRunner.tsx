@@ -57,6 +57,13 @@ export function CartoonRunner({ animState, speed, jumpHeight, squash }: Props) {
       root.current.rotation.x = 0.25;
       if (armL.current) armL.current.rotation.x = 0.5;
       if (armR.current) armR.current.rotation.x = 0.3;
+    } else if (animState === "idle") {
+      root.current.rotation.x = 0;
+      root.current.rotation.z = 0;
+      if (legL.current) legL.current.rotation.x = 0;
+      if (legR.current) legR.current.rotation.x = 0;
+      if (armL.current) armL.current.rotation.x = 0.08;
+      if (armR.current) armR.current.rotation.x = 0.08;
     } else if (animState === "recover") {
       root.current.rotation.z = THREE.MathUtils.lerp(root.current.rotation.z, 0, delta * 6);
       run();

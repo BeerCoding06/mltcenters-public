@@ -26,7 +26,10 @@ export function FloatingQuestionCard({
         transition={{ duration: 0.28, ease: "easeOut" }}
         className="pointer-events-auto absolute inset-x-0 bottom-4 z-30 flex justify-center px-3 sm:bottom-8"
       >
-        <div className="w-full max-w-lg rounded-3xl border border-white/25 bg-white/15 p-4 shadow-2xl backdrop-blur-xl sm:p-5">
+        <div
+          key={question.id}
+          className="w-full max-w-lg rounded-3xl border border-white/25 bg-white/15 p-4 shadow-2xl backdrop-blur-xl sm:p-5"
+        >
           <div className="mb-3">
             <span className="rounded-full bg-violet-500/30 px-2.5 py-0.5 text-xs font-medium text-violet-100">
               {difficultyLabel(question.difficulty)}
