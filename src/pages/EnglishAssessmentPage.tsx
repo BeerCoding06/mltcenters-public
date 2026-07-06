@@ -9,6 +9,7 @@ import { ChatWindow } from '@/components/assessment/ChatWindow';
 import { useAssessment } from '@/hooks/useAssessment';
 import { useTextToSpeech } from '@/hooks/useTextToSpeech';
 import { useSpeechRecognition } from '@/hooks/useSpeechRecognition';
+import { ASSESSMENT_SCENARIOS } from '@/constants/assessmentScenarios';
 import type { AvatarState, AssessmentResult } from '@/types/assessment';
 
 const ASSESSMENT_STORAGE_KEY = 'mlt-assessment-result';
@@ -56,6 +57,8 @@ export default function EnglishAssessmentPage() {
     xp,
     progress,
     completeWithCurrent,
+    scenarioId,
+    selectScenario,
   } = useAssessment(handleComplete);
 
   const speakReply = useCallback(
@@ -239,17 +242,50 @@ export default function EnglishAssessmentPage() {
           <motion.div
             initial={{ opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="max-w-md mx-auto mb-8 text-center"
+            className="max-w-3xl mx-auto mb-8"
           >
-            <button
-              type="button"
-              onClick={startConversation}
-              className="w-full rounded-2xl bg-gradient-to-r from-[#5BC0FF] to-[#6EE7B7] px-8 py-5 text-lg font-bold text-white shadow-xl hover:shadow-2xl transition-all flex items-center justify-center gap-3"
-            >
-              <Volume2 className="h-6 w-6" />
-              {t.assessmentPage.startVoice[lang]}
-            </button>
-            <p className="mt-3 text-sm text-muted-foreground">{t.assessmentPage.startHint[lang]}</p>
+            <h2 className="text-center text-sm font-semibold text-[#5BC0FF] mb-1">
+              {t.assessmentPage.scenarios.title[lang]}
+            </h2>
+            <p className="text-center text-sm text-muted-foreground mb-4">
+              {t.assessmentPage.scenarios.hint[lang]}
+            </p>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
+              {ASSESSMENT_SCENARIOS.map((scenario) => {
+                const selected = scenarioId === scenario.id;
+                const label = t.assessmentPage.scenarios[scenario.id][lang];
+                return (
+                  <button
+                    key={scenario.id}
+                    type="button"
+                    onClick={() => selectScenario(scenario.id)}
+                    className={`rounded-2xl border px-3 py-4 text-center transition-all ${
+                      selected
+                        ? 'border-[#5BC0FF] bg-[#5BC0FF]/10 shadow-md ring-2 ring-[#5BC0FF]/30'
+                        : 'border-white/80 bg-white/90 shadow hover:border-[#5BC0FF]/40 hover:shadow-md'
+                    }`}
+                  >
+                    <span className="text-2xl block mb-1.5" aria-hidden>
+                      {scenario.icon}
+                    </span>
+                    <span className="text-sm font-medium text-foreground leading-tight">
+                      {label}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+            <div className="text-center">
+              <button
+                type="button"
+                onClick={startConversation}
+                className="w-full max-w-md mx-auto rounded-2xl bg-gradient-to-r from-[#5BC0FF] to-[#6EE7B7] px-8 py-5 text-lg font-bold text-white shadow-xl hover:shadow-2xl transition-all flex items-center justify-center gap-3"
+              >
+                <Volume2 className="h-6 w-6" />
+                {t.assessmentPage.startVoice[lang]}
+              </button>
+              <p className="mt-3 text-sm text-muted-foreground">{t.assessmentPage.startHint[lang]}</p>
+            </div>
           </motion.div>
         )}
 

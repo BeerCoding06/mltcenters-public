@@ -1,5 +1,9 @@
 import { useState, useCallback, useRef } from 'react';
 import type { ChatMessage, AIAssessmentResponse, Scores, AssessmentResult } from '@/types/assessment';
+import {
+  type AssessmentScenarioId,
+  welcomeForScenario,
+} from '@/constants/assessmentScenarios';
 
 const API_BASE = '/api';
 const XP_PER_ANSWER = 20;
@@ -49,10 +53,11 @@ function buildResult(scoresList: Scores[], totalXP: number, answerCount: number)
 const WELCOME_MESSAGE: ChatMessage = {
   id: 'welcome',
   role: 'assistant',
-  content: "Hello, friend! I am happy to see you. What is your name?",
+  content: welcomeForScenario('free_talk'),
 };
 
 export function useAssessment(onComplete: (result: AssessmentResult) => void) {
+  const [scenarioId, setScenarioId] = useState<AssessmentScenarioId>('free_talk');
   const [messages, setMessages] = useState<ChatMessage[]>([WELCOME_MESSAGE]);
   const [input, setInput] = useState('');
   const [isThinking, setIsThinking] = useState(false);
@@ -62,6 +67,22 @@ export function useAssessment(onComplete: (result: AssessmentResult) => void) {
   const [progress, setProgress] = useState(0);
   const maxTurns = 6;
   const abortRef = useRef<AbortController | null>(null);
+
+  const selectScenario = useCallback((id: AssessmentScenarioId) => {
+    setScenarioId(id);
+    setMessages([
+      {
+        id: 'welcome',
+        role: 'assistant',
+        content: welcomeForScenario(id),
+      },
+    ]);
+    setInput('');
+    setScoresHistory([]);
+    setXp(0);
+    setAnswerCount(0);
+    setProgress(0);
+  }, []);
 
   const sendToAPI = useCallback(async (
     userText: string,
@@ -85,6 +106,7 @@ export function useAssessment(onComplete: (result: AssessmentResult) => void) {
         body: JSON.stringify({
           messages: newMessages.slice(-12).map((m) => ({ role: m.role, content: m.content })),
           speech_context: speechContext,
+          scenario: scenarioId,
         }),
         signal: abortRef.current.signal,
       });
@@ -143,7 +165,7 @@ export function useAssessment(onComplete: (result: AssessmentResult) => void) {
       setIsThinking(false);
       abortRef.current = null;
     }
-  }, [messages, answerCount, scoresHistory, xp, maxTurns, onComplete]);
+  }, [messages, answerCount, scoresHistory, xp, maxTurns, onComplete, scenarioId]);
 
   const completeWithCurrent = useCallback(() => {
     const result = buildResult(scoresHistory, xp, answerCount);
@@ -161,5 +183,7 @@ export function useAssessment(onComplete: (result: AssessmentResult) => void) {
     progress,
     completeWithCurrent,
     scoresHistory,
+    scenarioId,
+    selectScenario,
   };
 }

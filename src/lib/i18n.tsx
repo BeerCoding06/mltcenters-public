@@ -44,6 +44,21 @@ export const translations = {
       voiceMode: { en: "Voice conversation on", th: "โหมดคุยด้วยเสียงเปิดอยู่" },
       typeMode: { en: "Type to reply", th: "พิมพ์เพื่อตอบ" },
     },
+    scenarios: {
+      title: { en: "Choose a situation", th: "เลือกสถานการณ์จำลอง" },
+      hint: { en: "Pick a scene, then tap Start talking.", th: "เลือกฉากก่อน แล้วกดเริ่มคุย" },
+      free_talk: { en: "Free talk", th: "คุยสบาย ๆ" },
+      school: { en: "At school", th: "ที่โรงเรียน" },
+      restaurant: { en: "Restaurant", th: "ร้านอาหาร" },
+      park: { en: "At the park", th: "ที่สวนสาธารณะ" },
+      shopping: { en: "Shopping", th: "ซื้อของ" },
+      home: { en: "At home", th: "อยู่บ้าน" },
+      making_friends: { en: "Making friends", th: "หาเพื่อนใหม่" },
+      doctor: { en: "Doctor visit", th: "ไปหาหมอ" },
+      hotel_booking: { en: "Hotel booking", th: "จองที่พัก" },
+      getting_lost: { en: "Getting lost", th: "หลงทาง" },
+      asking_directions: { en: "Giving directions", th: "มีคนถามทาง" },
+    },
   },
   hero: {
     headline: {

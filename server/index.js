@@ -170,18 +170,48 @@ After each user message, respond with ONLY valid JSON (no markdown):
 Scores: be generous with young kids; adjust up slightly if they speak in full sentences.
 Include scores on every turn after the user's first message. On the very first assistant turn (greeting only), scores may be null.`;
 
+const SCENARIO_PROMPTS = {
+  free_talk:
+    'Situation: free talk. Chat naturally about hobbies, favorites, and daily life. Stay in character as a warm friend.',
+  school:
+    'Situation: at school. Role-play a kind teacher. Talk about class, friends, subjects, recess, and lunch. Use simple school words.',
+  restaurant:
+    'Situation: at a restaurant. Role-play ordering food and drinks. Be polite. Use menu words like soup, rice, juice, please, thank you.',
+  park:
+    'Situation: at the park. Role-play outdoor fun — swings, running, birds, sunshine. Keep it playful and active.',
+  shopping:
+    'Situation: at a shop. Role-play buying things. Ask what they want, colors, and simple prices.',
+  home:
+    'Situation: at home. Role-play family time — meals, pets, toys, bedtime, helping mom or dad.',
+  making_friends:
+    'Situation: meeting a new friend. Practice greetings, sharing, and kind getting-to-know-you questions.',
+  doctor:
+    'Situation: at the doctor. Role-play gently. Ask how they feel. Use simple body words. Stay calm and reassuring — never scary.',
+  hotel_booking:
+    'Situation: hotel front desk. Role-play booking a room. Use simple words: room, night, name, key, check-in. Be polite like a hotel receptionist.',
+  getting_lost:
+    'Situation: the student is lost. Role-play a kind helper. Ask where they want to go. Use direction words: left, right, straight, near, far. Stay calm.',
+  asking_directions:
+    'Situation: a visitor asks the student for directions. You are the visitor who is a little lost. Ask where places are. Let the student practice telling you the way in simple English.',
+};
+
 app.post('/api/assess', async (req, res) => {
   if (!openai) {
     return res.status(503).json({
       error: 'AI API key not configured. Set OPENAI_API_KEY or AI_GATEWAY_API_KEY.',
     });
   }
-  const { messages, speech_context } = req.body || {};
+  const { messages, speech_context, scenario } = req.body || {};
   if (!Array.isArray(messages) || messages.length === 0) {
     return res.status(400).json({ error: 'Body must include messages array.' });
   }
+  const scenarioPrompt =
+    scenario && SCENARIO_PROMPTS[scenario] ? SCENARIO_PROMPTS[scenario] : SCENARIO_PROMPTS.free_talk;
   try {
-    const apiMessages = [{ role: 'system', content: SYSTEM_PROMPT }, ...messages];
+    const apiMessages = [
+      { role: 'system', content: `${SYSTEM_PROMPT}\n\n${scenarioPrompt}` },
+      ...messages,
+    ];
     if (speech_context?.alternatives?.length) {
       apiMessages.push({
         role: 'system',
