@@ -81,6 +81,7 @@ export function useGameManager() {
   const gameOverRef = useRef(false);
   const bumpTargetRef = useRef<number | null>(null);
   const stoppedAtObstacleRef = useRef(false);
+  const stoppedLatchRef = useRef(false);
 
   const patch = useCallback((partial: Partial<GameSnapshot>) => {
     setSnap((s) => ({ ...s, ...partial }));
@@ -99,7 +100,7 @@ export function useGameManager() {
         obstacles: obstaclesRef.current,
         jumpHeight: jumpHeightRef.current,
         activeObstacleId: activeObstacleRef.current,
-        stoppedAtObstacle: stoppedAtObstacleRef.current,
+        stoppedAtObstacle: stoppedLatchRef.current,
         state: stateRef.current ? { ...stateRef.current } : null,
         submitting: submittingRef.current,
         combo: comboRef.current,
@@ -127,6 +128,7 @@ export function useGameManager() {
     resolvedObstacles.current.clear();
     activeObstacleRef.current = null;
     stoppedAtObstacleRef.current = false;
+    stoppedLatchRef.current = false;
     syncSnap(true);
   }, [syncSnap]);
 
@@ -223,6 +225,7 @@ export function useGameManager() {
         }
 
         activeObstacleRef.current = null;
+        stoppedLatchRef.current = false;
         patch({ answerFeedback: feedback });
 
         window.setTimeout(() => {
@@ -242,10 +245,10 @@ export function useGameManager() {
           });
         }
 
-        submittingRef.current = false;
-        syncSnap(true);
         void prefetchQuestion();
-      } catch {
+      } catch (err) {
+        console.error("check-answer failed:", err);
+      } finally {
         submittingRef.current = false;
         syncSnap(true);
       }
@@ -380,9 +383,16 @@ export function useGameManager() {
           const stopZ = stopObs.z - OBSTACLE_STOP_DIST;
           const dist = stopObs.z - z;
           stoppedAtObstacleRef.current =
-            dist <= OBSTACLE_STOP_DIST + 0.2 && z >= stopZ - 0.1;
+            dist <= OBSTACLE_STOP_DIST + 0.35 && z >= stopZ - 0.15;
         } else {
           stoppedAtObstacleRef.current = false;
+        }
+
+        if (activeObstacleRef.current && stoppedAtObstacleRef.current) {
+          stoppedLatchRef.current = true;
+        }
+        if (!activeObstacleRef.current) {
+          stoppedLatchRef.current = false;
         }
 
         if (
@@ -483,6 +493,7 @@ export function useGameManager() {
     jumpSys.current.reset();
     activeObstacleRef.current = null;
     stoppedAtObstacleRef.current = false;
+    stoppedLatchRef.current = false;
     comboRef.current = 0;
     bumpTargetRef.current = null;
     hitRecoverT.current = 0;

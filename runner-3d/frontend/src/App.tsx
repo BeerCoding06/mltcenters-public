@@ -17,7 +17,6 @@ export default function App() {
     jumpHeight,
     stoppedAtObstacle,
     evaluation,
-    submitting,
     fx,
     answerFeedback,
     combo,
@@ -62,7 +61,7 @@ export default function App() {
             <HUD state={state} combo={combo} />
 
             {showQuestionLoading && (
-              <div className="pointer-events-none absolute inset-x-0 bottom-4 z-30 flex justify-center px-3 sm:bottom-8">
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 z-50 flex justify-center px-3 pb-4 sm:pb-8">
                 <div className="rounded-3xl border border-white/20 bg-black/40 px-6 py-4 text-sm text-white backdrop-blur-xl animate-pulse">
                   กำลังโหลดคำถาม…
                 </div>
@@ -73,7 +72,6 @@ export default function App() {
               <FloatingQuestionCard
                 question={state.current_question}
                 onAnswer={answer}
-                disabled={submitting}
                 feedback={answerFeedback}
               />
             )}
