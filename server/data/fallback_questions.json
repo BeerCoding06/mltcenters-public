@@ -308,8 +308,12 @@
     ],
     "correct_index": 1,
     "explanation": "Cats say meow.",
-    "band": "young",
-    "image": "🐱"
+    "image": "/assets/image-game/animals-sounds.webp",
+    "image_focus": {
+      "x": 7,
+      "y": 52
+    },
+    "band": "young"
   },
   {
     "question": "Is a cat an animal?",
@@ -320,8 +324,12 @@
     ],
     "correct_index": 2,
     "explanation": "A cat is an animal.",
-    "band": "young",
-    "image": "🐱"
+    "image": "/assets/image-game/animals-sounds.webp",
+    "image_focus": {
+      "x": 7,
+      "y": 52
+    },
+    "band": "young"
   },
   {
     "question": "Which animal says \"woof\"?",
@@ -332,8 +340,12 @@
     ],
     "correct_index": 0,
     "explanation": "Dogs say woof.",
-    "band": "young",
-    "image": "🐶"
+    "image": "/assets/image-game/animals-sounds.webp",
+    "image_focus": {
+      "x": 17,
+      "y": 52
+    },
+    "band": "young"
   },
   {
     "question": "Is a dog an animal?",
@@ -344,8 +356,12 @@
     ],
     "correct_index": 1,
     "explanation": "A dog is an animal.",
-    "band": "young",
-    "image": "🐶"
+    "image": "/assets/image-game/animals-sounds.webp",
+    "image_focus": {
+      "x": 17,
+      "y": 52
+    },
+    "band": "young"
   },
   {
     "question": "Which animal says \"moo\"?",
@@ -356,8 +372,12 @@
     ],
     "correct_index": 2,
     "explanation": "Cows say moo.",
-    "band": "young",
-    "image": "🐮"
+    "image": "/assets/image-game/animals-sounds.webp",
+    "image_focus": {
+      "x": 27,
+      "y": 52
+    },
+    "band": "young"
   },
   {
     "question": "Is a cow an animal?",
@@ -368,8 +388,12 @@
     ],
     "correct_index": 0,
     "explanation": "A cow is an animal.",
-    "band": "young",
-    "image": "🐮"
+    "image": "/assets/image-game/animals-sounds.webp",
+    "image_focus": {
+      "x": 27,
+      "y": 52
+    },
+    "band": "young"
   },
   {
     "question": "Which animal says \"quack\"?",
@@ -380,8 +404,12 @@
     ],
     "correct_index": 1,
     "explanation": "Ducks say quack.",
-    "band": "young",
-    "image": "🦆"
+    "image": "/assets/image-game/animals-sounds.webp",
+    "image_focus": {
+      "x": 37,
+      "y": 52
+    },
+    "band": "young"
   },
   {
     "question": "Is a duck an animal?",
@@ -392,8 +420,12 @@
     ],
     "correct_index": 2,
     "explanation": "A duck is an animal.",
-    "band": "young",
-    "image": "🦆"
+    "image": "/assets/image-game/animals-sounds.webp",
+    "image_focus": {
+      "x": 37,
+      "y": 52
+    },
+    "band": "young"
   },
   {
     "question": "Which animal says \"baa\"?",
@@ -404,8 +436,12 @@
     ],
     "correct_index": 0,
     "explanation": "Sheep say baa.",
-    "band": "young",
-    "image": "🐑"
+    "image": "/assets/image-game/animals-sounds.webp",
+    "image_focus": {
+      "x": 47,
+      "y": 52
+    },
+    "band": "young"
   },
   {
     "question": "Is a sheep an animal?",
@@ -416,8 +452,12 @@
     ],
     "correct_index": 1,
     "explanation": "A sheep is an animal.",
-    "band": "young",
-    "image": "🐑"
+    "image": "/assets/image-game/animals-sounds.webp",
+    "image_focus": {
+      "x": 47,
+      "y": 52
+    },
+    "band": "young"
   },
   {
     "question": "Which animal says \"oink\"?",
@@ -428,8 +468,12 @@
     ],
     "correct_index": 2,
     "explanation": "Pigs say oink.",
-    "band": "young",
-    "image": "🐷"
+    "image": "/assets/image-game/animals-sounds.webp",
+    "image_focus": {
+      "x": 57,
+      "y": 52
+    },
+    "band": "young"
   },
   {
     "question": "Is a pig an animal?",
@@ -440,8 +484,12 @@
     ],
     "correct_index": 0,
     "explanation": "A pig is an animal.",
-    "band": "young",
-    "image": "🐷"
+    "image": "/assets/image-game/animals-sounds.webp",
+    "image_focus": {
+      "x": 57,
+      "y": 52
+    },
+    "band": "young"
   },
   {
     "question": "Which animal says \"tweet\"?",
@@ -452,8 +500,12 @@
     ],
     "correct_index": 1,
     "explanation": "Birds say tweet.",
-    "band": "young",
-    "image": "🐦"
+    "image": "/assets/image-game/animals-sounds.webp",
+    "image_focus": {
+      "x": 67,
+      "y": 52
+    },
+    "band": "young"
   },
   {
     "question": "Is a bird an animal?",
@@ -464,8 +516,12 @@
     ],
     "correct_index": 2,
     "explanation": "A bird is an animal.",
-    "band": "young",
-    "image": "🐦"
+    "image": "/assets/image-game/animals-sounds.webp",
+    "image_focus": {
+      "x": 67,
+      "y": 52
+    },
+    "band": "young"
   },
   {
     "question": "Which animal says \"ribbit\"?",
@@ -476,8 +532,12 @@
     ],
     "correct_index": 0,
     "explanation": "Frogs say ribbit.",
-    "band": "young",
-    "image": "🐸"
+    "image": "/assets/image-game/animals-sounds.webp",
+    "image_focus": {
+      "x": 77,
+      "y": 52
+    },
+    "band": "young"
   },
   {
     "question": "Is a frog an animal?",
@@ -488,8 +548,12 @@
     ],
     "correct_index": 1,
     "explanation": "A frog is an animal.",
-    "band": "young",
-    "image": "🐸"
+    "image": "/assets/image-game/animals-sounds.webp",
+    "image_focus": {
+      "x": 77,
+      "y": 52
+    },
+    "band": "young"
   },
   {
     "question": "Which animal says \"neigh\"?",
@@ -500,8 +564,12 @@
     ],
     "correct_index": 2,
     "explanation": "Horses say neigh.",
-    "band": "young",
-    "image": "🐴"
+    "image": "/assets/image-game/animals-sounds.webp",
+    "image_focus": {
+      "x": 87,
+      "y": 52
+    },
+    "band": "young"
   },
   {
     "question": "Is a horse an animal?",
@@ -512,8 +580,12 @@
     ],
     "correct_index": 0,
     "explanation": "A horse is an animal.",
-    "band": "young",
-    "image": "🐴"
+    "image": "/assets/image-game/animals-sounds.webp",
+    "image_focus": {
+      "x": 87,
+      "y": 52
+    },
+    "band": "young"
   },
   {
     "question": "Which animal says \"roar\"?",
@@ -524,8 +596,12 @@
     ],
     "correct_index": 1,
     "explanation": "Lions say roar.",
-    "band": "young",
-    "image": "🦁"
+    "image": "/assets/image-game/animals-sounds.webp",
+    "image_focus": {
+      "x": 93,
+      "y": 52
+    },
+    "band": "young"
   },
   {
     "question": "Is a lion an animal?",
@@ -536,8 +612,12 @@
     ],
     "correct_index": 2,
     "explanation": "A lion is an animal.",
-    "band": "young",
-    "image": "🦁"
+    "image": "/assets/image-game/animals-sounds.webp",
+    "image_focus": {
+      "x": 93,
+      "y": 52
+    },
+    "band": "young"
   },
   {
     "question": "Fish live in ___",
@@ -548,8 +628,8 @@
     ],
     "correct_index": 0,
     "explanation": "Fish live in water.",
-    "band": "young",
-    "image": "🐟"
+    "image": "/assets/image-game/Fish-live-in.webp",
+    "band": "young"
   },
   {
     "question": "Birds can ___",
@@ -560,8 +640,8 @@
     ],
     "correct_index": 1,
     "explanation": "Birds can fly.",
-    "band": "young",
-    "image": "🐦"
+    "image": "/assets/image-game/Birds-can.webp",
+    "band": "young"
   },
   {
     "question": "A baby cat is a ___",
@@ -572,8 +652,8 @@
     ],
     "correct_index": 2,
     "explanation": "A baby cat is a kitten.",
-    "band": "young",
-    "image": "🐱"
+    "image": "/assets/image-game/A-baby-cat-is-a.webp",
+    "band": "young"
   },
   {
     "question": "A baby dog is a ___",
@@ -584,8 +664,8 @@
     ],
     "correct_index": 0,
     "explanation": "A baby dog is a puppy.",
-    "band": "young",
-    "image": "🐶"
+    "image": "/assets/image-game/A-baby-dog-is-a.webp",
+    "band": "young"
   },
   {
     "question": "Elephant is ___",
@@ -596,8 +676,8 @@
     ],
     "correct_index": 1,
     "explanation": "Elephants are big.",
-    "band": "young",
-    "image": "🐘"
+    "image": "/assets/image-game/Elephant-is.webp",
+    "band": "young"
   },
   {
     "question": "Ant is ___",
@@ -608,8 +688,8 @@
     ],
     "correct_index": 2,
     "explanation": "Ants are small.",
-    "band": "young",
-    "image": "🐜"
+    "image": "/assets/image-game/Ant-is.webp",
+    "band": "young"
   },
   {
     "question": "Bee makes ___",
@@ -620,8 +700,8 @@
     ],
     "correct_index": 0,
     "explanation": "Bees make honey.",
-    "band": "young",
-    "image": "🐝"
+    "image": "/assets/image-game/Bee-makes.webp",
+    "band": "young"
   },
   {
     "question": "Where is the fish?",
@@ -632,8 +712,8 @@
     ],
     "correct_index": 1,
     "explanation": "Fish are in water.",
-    "band": "young",
-    "image": "🐟"
+    "image": "/assets/image-game/Where-is-the-fish.webp",
+    "band": "young"
   },
   {
     "question": "Rabbit likes ___",
@@ -644,8 +724,8 @@
     ],
     "correct_index": 2,
     "explanation": "Rabbits like carrots.",
-    "band": "young",
-    "image": "🐰"
+    "image": "/assets/image-game/Rabbit-likes.webp",
+    "band": "young"
   },
   {
     "question": "Monkey likes ___",
@@ -656,8 +736,8 @@
     ],
     "correct_index": 0,
     "explanation": "Monkeys like bananas.",
-    "band": "young",
-    "image": "🐵"
+    "image": "/assets/image-game/Monkey-likes.webp",
+    "band": "young"
   },
   {
     "question": "How many eyes?",

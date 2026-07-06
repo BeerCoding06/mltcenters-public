@@ -310,7 +310,8 @@ export function attachImageToQuestion(item) {
   }
   const band = item.band || 'young';
   const image = item.image || resolveQuestionImage(item.question, item.options, item.correct_index, band);
-  return { ...item, image };
+  const out = { ...item, image };
+  return out;
 }
 
 export function emojiToImageUrl(emoji) {

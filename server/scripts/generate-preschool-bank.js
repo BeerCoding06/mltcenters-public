@@ -17,11 +17,13 @@ function q(question, correct, wrong1, wrong2, explanation) {
   return { question, options: opts, correct_index, explanation };
 }
 
-function qPhoto(question, correct, wrong1, wrong2, explanation, imageFile) {
-  return {
+function qPhoto(question, correct, wrong1, wrong2, explanation, imageFile, imageFocus) {
+  const item = {
     ...q(question, correct, wrong1, wrong2, explanation),
     image: `${IMAGE_BASE}/${imageFile}`,
   };
+  if (imageFocus) item.image_focus = imageFocus;
+  return item;
 }
 
 function qRot(question, a, b, c, correctIndex, explanation) {
@@ -54,7 +56,21 @@ bank.push(qPhoto('Fire truck color?', 'red', 'soft', 'slow', 'Fire trucks are re
 bank.push(qPhoto('Snow color?', 'white', 'big', 'fast', 'Snow is white.', 'snow.webp'));
 bank.push(qPhoto('Chocolate color?', 'brown', 'fly', 'sing', 'Chocolate is brown.', 'chocolate.webp'));
 
-// —— Animals & sounds (40) ——
+// —— Animals & sounds (40) —— shared panorama; image_focus pans to each animal
+const ANIMALS_SOUND_IMAGE = 'animals-sounds.webp';
+/** Left→right in animals-sounds.webp (2816×1536). Adjust x/y if crop is off. */
+const ANIMAL_FOCUS = {
+  cat: { x: 7, y: 52 },
+  dog: { x: 17, y: 52 },
+  cow: { x: 27, y: 52 },
+  duck: { x: 37, y: 52 },
+  sheep: { x: 47, y: 52 },
+  pig: { x: 57, y: 52 },
+  bird: { x: 67, y: 52 },
+  frog: { x: 77, y: 52 },
+  horse: { x: 87, y: 52 },
+  lion: { x: 93, y: 52 },
+};
 const animals = [
   ['cat', 'meow', 'Cats say meow.'],
   ['dog', 'woof', 'Dogs say woof.'],
@@ -68,19 +84,24 @@ const animals = [
   ['lion', 'roar', 'Lions say roar.'],
 ];
 animals.forEach(([animal, sound, exp]) => {
-  bank.push(q(`Which animal says "${sound}"?`, animal, 'fish', 'bug', exp));
-  bank.push(q(`Is a ${animal} an animal?`, 'yes', 'no', 'maybe', `A ${animal} is an animal.`));
+  const focus = ANIMAL_FOCUS[animal];
+  bank.push(
+    qPhoto(`Which animal says "${sound}"?`, animal, 'fish', 'bug', exp, ANIMALS_SOUND_IMAGE, focus),
+  );
+  bank.push(
+    qPhoto(`Is a ${animal} an animal?`, 'yes', 'no', 'maybe', `A ${animal} is an animal.`, ANIMALS_SOUND_IMAGE, focus),
+  );
 });
-bank.push(q('Fish live in ___', 'water', 'sky', 'fire', 'Fish live in water.'));
-bank.push(q('Birds can ___', 'fly', 'drive', 'cook', 'Birds can fly.'));
-bank.push(q('A baby cat is a ___', 'kitten', 'puppy', 'calf', 'A baby cat is a kitten.'));
-bank.push(q('A baby dog is a ___', 'puppy', 'kitten', 'chick', 'A baby dog is a puppy.'));
-bank.push(q('Elephant is ___', 'big', 'tiny', 'cold', 'Elephants are big.'));
-bank.push(q('Ant is ___', 'small', 'huge', 'loud', 'Ants are small.'));
-bank.push(q('Bee makes ___', 'honey', 'rice', 'shoes', 'Bees make honey.'));
-bank.push(q('Where is the fish?', 'water', 'tree', 'cloud', 'Fish are in water.'));
-bank.push(q('Rabbit likes ___', 'carrot', 'rock', 'hat', 'Rabbits like carrots.'));
-bank.push(q('Monkey likes ___', 'banana', 'ice', 'book', 'Monkeys like bananas.'));
+bank.push(qPhoto('Fish live in ___', 'water', 'sky', 'fire', 'Fish live in water.', 'Fish-live-in.webp'));
+bank.push(qPhoto('Birds can ___', 'fly', 'drive', 'cook', 'Birds can fly.', 'Birds-can.webp'));
+bank.push(qPhoto('A baby cat is a ___', 'kitten', 'puppy', 'calf', 'A baby cat is a kitten.', 'A-baby-cat-is-a.webp'));
+bank.push(qPhoto('A baby dog is a ___', 'puppy', 'kitten', 'chick', 'A baby dog is a puppy.', 'A-baby-dog-is-a.webp'));
+bank.push(qPhoto('Elephant is ___', 'big', 'tiny', 'cold', 'Elephants are big.', 'Elephant-is.webp'));
+bank.push(qPhoto('Ant is ___', 'small', 'huge', 'loud', 'Ants are small.', 'Ant-is.webp'));
+bank.push(qPhoto('Bee makes ___', 'honey', 'rice', 'shoes', 'Bees make honey.', 'Bee-makes.webp'));
+bank.push(qPhoto('Where is the fish?', 'water', 'tree', 'cloud', 'Fish are in water.', 'Where-is-the-fish.webp'));
+bank.push(qPhoto('Rabbit likes ___', 'carrot', 'rock', 'hat', 'Rabbits like carrots.', 'Rabbit-likes.webp'));
+bank.push(qPhoto('Monkey likes ___', 'banana', 'ice', 'book', 'Monkeys like bananas.', 'Monkey-likes.webp'));
 
 // —— Body (25) ——
 const body = [

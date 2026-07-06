@@ -65,7 +65,11 @@ export function FloatingQuestionCard({
           </div>
 
           {question.image && (
-            <QuestionIllustration image={question.image} alt="Question illustration" />
+            <QuestionIllustration
+              image={question.image}
+              imageFocus={question.image_focus}
+              alt="Question illustration"
+            />
           )}
 
           <div className="flex items-start gap-2">

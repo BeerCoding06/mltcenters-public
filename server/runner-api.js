@@ -213,6 +213,7 @@ function toPublic(state) {
           options: q.options,
           difficulty: state.difficulty,
           image: q.image || attachImageToQuestion(q).image,
+          image_focus: q.image_focus ?? null,
         }
       : null,
   };

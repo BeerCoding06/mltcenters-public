@@ -42,12 +42,18 @@ export interface AnswerFeedback {
   correct: boolean;
 }
 
+export interface ImageFocus {
+  x: number;
+  y: number;
+}
+
 export interface Question {
   id: string;
   question: string;
   options: string[];
   difficulty: string;
   image?: string;
+  image_focus?: ImageFocus;
 }
 
 export interface GameSnapshot {
