@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useI18n } from '@/lib/i18n';
 import { AIAssistantAvatar } from '@/components/assessment/AIAssistantAvatar';
+import { AIIcon } from '@/components/assessment/AIIcon';
 import { ChatWindow } from '@/components/assessment/ChatWindow';
 import { useAssessment } from '@/hooks/useAssessment';
 import type { AvatarState } from '@/types/assessment';
@@ -179,13 +180,16 @@ export default function EnglishAssessmentPage() {
   return (
     <div className="min-h-screen bg-[#F8FAFC] py-16">
       <div className="container mx-auto px-4">
-        <motion.h1
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-3xl md:text-4xl font-bold text-center md:leading-[1.3] mb-2 bg-gradient-to-r from-[#5BC0FF] to-[#6EE7B7] bg-clip-text text-transparent"
+          className="flex flex-col items-center gap-3 mb-2"
         >
-          {t.assessmentPage.title[lang]}
-        </motion.h1>
+          <AIIcon size="lg" className="h-14 w-14" />
+          <h1 className="text-3xl md:text-4xl font-bold text-center md:leading-[1.3] bg-gradient-to-r from-[#5BC0FF] to-[#6EE7B7] bg-clip-text text-transparent">
+            {t.assessmentPage.title[lang]}
+          </h1>
+        </motion.div>
         <p className="text-center text-muted-foreground mb-8">
           {t.assessmentPage.subtitle[lang]}
         </p>

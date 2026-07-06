@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import type { AvatarState } from '@/types/assessment';
+import { AIIcon } from '@/components/assessment/AIIcon';
 
 interface AIAssistantAvatarProps {
   state: AvatarState;
@@ -32,7 +33,7 @@ export function AIAssistantAvatar({ state, className }: AIAssistantAvatarProps) 
       )}
 
       <motion.div
-        className="relative flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br from-[#5BC0FF] to-[#6EE7B7] text-4xl shadow-inner md:h-32 md:w-32"
+        className="relative flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br from-[#5BC0FF] to-[#6EE7B7] shadow-inner md:h-32 md:w-32"
         animate={
           state === 'idle'
             ? { y: [0, -4, 0] }
@@ -48,7 +49,7 @@ export function AIAssistantAvatar({ state, className }: AIAssistantAvatarProps) 
               : {}
         }
       >
-        🤖
+        <AIIcon size="lg" className="h-16 w-16 md:h-20 md:w-20 shadow-none" iconClassName="h-9 w-9 md:h-11 md:w-11" />
       </motion.div>
     </div>
   );

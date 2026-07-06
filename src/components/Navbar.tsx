@@ -1,7 +1,7 @@
 import { useI18n } from '@/lib/i18n';
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Globe } from 'lucide-react';
+import { Menu, X, Globe, Bot } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import brandLogo from '@/assets/logo-new.png';
 
@@ -16,7 +16,7 @@ const Navbar = () => {
     { label: t.nav.activities[lang], path: '/activities' },
     { label: t.nav.schedule[lang], path: '/schedule' },
     { label: t.nav.gallery[lang], path: '/gallery' },
-    { label: t.nav.assessment[lang], path: '/assessment' },
+    { label: t.nav.assessment[lang], path: '/assessment', icon: Bot },
     { label: t.nav.register[lang], path: '/register' },
     { label: t.nav.contact[lang], path: '/contact' },
   ];
@@ -39,19 +39,23 @@ const Navbar = () => {
 
         {/* Desktop */}
         <div className="hidden lg:flex items-center gap-1">
-          {links.map((l) => (
+          {links.map((l) => {
+            const Icon = 'icon' in l ? l.icon : null;
+            return (
             <Link
               key={l.path}
               to={l.path}
-              className={`px-3 py-2 rounded-xl text-sm font-medium transition-colors ${
+              className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-medium transition-colors ${
                 location.pathname === l.path
                   ? "text-primary bg-primary/10"
                   : "text-muted-foreground hover:text-foreground hover:bg-muted"
               }`}
             >
+              {Icon && <Icon size={16} className="shrink-0" />}
               {l.label}
             </Link>
-          ))}
+          );
+          })}
         </div>
 
         <div className="flex items-center gap-2">
@@ -82,20 +86,24 @@ const Navbar = () => {
             className="lg:hidden border-t border-border/50 bg-card/95 backdrop-blur-lg overflow-hidden"
           >
             <div className="px-4 py-3 space-y-1">
-              {links.map((l) => (
+              {links.map((l) => {
+                const Icon = 'icon' in l ? l.icon : null;
+                return (
                 <Link
                   key={l.path}
                   to={l.path}
                   onClick={() => setOpen(false)}
-                  className={`block px-3 py-2.5 rounded-xl text-sm font-medium transition-colors ${
+                  className={`flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm font-medium transition-colors ${
                     location.pathname === l.path
                       ? "text-primary bg-primary/10"
                       : "text-muted-foreground hover:text-foreground hover:bg-muted"
                   }`}
                 >
+                  {Icon && <Icon size={16} className="shrink-0" />}
                   {l.label}
                 </Link>
-              ))}
+              );
+              })}
             </div>
           </motion.div>
         )}

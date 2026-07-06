@@ -2,6 +2,7 @@ import { useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Mic, MicOff, Send } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { AIIcon } from '@/components/assessment/AIIcon';
 import type { ChatMessage as ChatMessageType } from '@/types/assessment';
 
 interface ChatWindowProps {
@@ -42,10 +43,11 @@ export function ChatWindow({
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               className={cn(
-                'flex',
+                'flex items-end gap-2',
                 m.role === 'user' ? 'justify-end' : 'justify-start'
               )}
             >
+              {m.role === 'assistant' && <AIIcon size="sm" />}
               <div
                 className={cn(
                   'max-w-[85%] rounded-2xl px-4 py-3 shadow-md',
