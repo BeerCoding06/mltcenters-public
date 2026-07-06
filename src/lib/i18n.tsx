@@ -15,10 +15,10 @@ export const translations = {
     runner: { en: "3D Runner Game", th: "เกมวิ่ง 3D" },
   },
   assessmentPage: {
-    title: { en: "Chat in English (Ages 1-10)", th: "คุยภาษาอังกฤษ (1-10 ขวบ)" },
+    title: { en: "Chat in English", th: "คุยภาษาอังกฤษ" },
     subtitle: {
-      en: "English only — simple words, slow voice. For children ages 1-10.",
-      th: "ภาษาอังกฤษอย่างเดียว คำง่าย พูดช้า สำหรับเด็ก 1-10 ขวบ",
+      en: "English only — simple words, slow voice. Speak clearly.",
+      th: "ภาษาอังกฤษอย่างเดียว คำง่าย พูดช้า ชัด ๆ",
     },
     startVoice: { en: "Start talking", th: "เริ่มคุย" },
     startHint: {

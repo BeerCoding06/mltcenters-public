@@ -1,10 +1,11 @@
 /**
- * Generate 200 English MCQ for runner game (ages 1-10).
+ * Generate 200 English MCQ for runner game.
  * Run: node server/scripts/generate-preschool-bank.js
  */
 import { writeFileSync } from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { attachImageToQuestion } from '../lib/question-images.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const OUT = path.join(__dirname, '../data/fallback_questions.json');
@@ -262,15 +263,15 @@ for (const item of bank) {
 
 // Rotate correct_index for variety on remaining items
 const final = unique.slice(0, 200).map((item, i) => {
+  let rotated = item;
   if (i % 3 === 1) {
     const [a, b, c] = item.options;
-    return { ...item, options: [b, a, c], correct_index: 1 };
-  }
-  if (i % 3 === 2) {
+    rotated = { ...item, options: [b, a, c], correct_index: 1 };
+  } else if (i % 3 === 2) {
     const [a, b, c] = item.options;
-    return { ...item, options: [b, c, a], correct_index: 2 };
+    rotated = { ...item, options: [b, c, a], correct_index: 2 };
   }
-  return item;
+  return attachImageToQuestion({ ...rotated, band: 'young' });
 });
 
 if (final.length < 200) {
@@ -278,5 +279,7 @@ if (final.length < 200) {
   process.exit(1);
 }
 
+const OUT_YOUNG = path.join(__dirname, '../data/questions_young.json');
+writeFileSync(OUT_YOUNG, JSON.stringify(final, null, 2) + '\n', 'utf-8');
 writeFileSync(OUT, JSON.stringify(final, null, 2) + '\n', 'utf-8');
-console.log(`Wrote ${final.length} questions to ${OUT}`);
+console.log(`Wrote ${final.length} young questions to ${OUT_YOUNG}`);

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-/** ความเร็วพูดสำหรับเด็ก 1-10 ขวบ (ช้า ชัด) */
+/** ความเร็วพูดช้า ชัด (สำหรับเด็ก) */
 const CHILD_SPEECH_RATE = 0.72;
 const CHILD_SPEECH_PITCH = 1.08;
 

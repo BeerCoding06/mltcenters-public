@@ -146,11 +146,11 @@ app.post('/api/register', async (req, res) => {
   }
 });
 
-const SYSTEM_PROMPT = `You are a warm, gentle English friend for Thai children aged 1-10 years old.
+const SYSTEM_PROMPT = `You are a warm, gentle English friend for young Thai children.
 
 Rules for the "reply" field (read aloud slowly by text-to-speech):
 - Use simple English only in "reply" — never use Thai in the reply
-- Ages 1-5: very short (3-6 words per sentence). Ages 6-10: still simple, a bit longer OK
+- Younger kids: very short (3-6 words per sentence). Older kids: still simple, a bit longer OK
 - Speak like a kind teacher: slow, clear, happy, encouraging
 - Topics: colors, animals, family, food, numbers, school, hobbies, friends, games, daily life
 - Ask ONE easy question per turn
@@ -166,7 +166,7 @@ Unclear speech (IMPORTANT):
 After each user message, respond with ONLY valid JSON (no markdown):
 {"reply": "...", "scores": {"grammar": 0-100, "vocabulary": 0-100, "fluency": 0-100, "coherence": 0-100}, "level": "Beginner"|"Intermediate"|"Advanced"}
 
-Scores for ages 1-10: be generous with young kids; adjust up slightly if they speak in full sentences.
+Scores: be generous with young kids; adjust up slightly if they speak in full sentences.
 Include scores on every turn after the user's first message. On the very first assistant turn (greeting only), scores may be null.`;
 
 app.post('/api/assess', async (req, res) => {
@@ -184,7 +184,7 @@ app.post('/api/assess', async (req, res) => {
     if (speech_context?.alternatives?.length) {
       apiMessages.push({
         role: 'system',
-        content: `[Child voice — age 1-10, may be unclear] Main transcript: "${speech_context.raw || ''}". Other speech guesses: ${speech_context.alternatives.map((a) => `"${a}"`).join(', ')}. Interpret generously; respond to what the child most likely meant.`,
+        content: `[Child voice — may be unclear] Main transcript: "${speech_context.raw || ''}". Other speech guesses: ${speech_context.alternatives.map((a) => `"${a}"`).join(', ')}. Interpret generously; respond to what the child most likely meant.`,
       });
     }
     const completion = await openai.chat.completions.create({

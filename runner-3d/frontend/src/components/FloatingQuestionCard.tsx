@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import type { AnswerFeedback, Question } from "../game/types";
 import { difficultyLabel } from "../lib/i18n";
+import { QuestionIllustration } from "./QuestionIllustration";
 
 interface Props {
   question: Question;
@@ -35,6 +36,10 @@ export function FloatingQuestionCard({
               {difficultyLabel(question.difficulty)}
             </span>
           </div>
+
+          {question.image && (
+            <QuestionIllustration emoji={question.image} alt="Question illustration" />
+          )}
 
           <h2 className="text-base font-bold leading-snug text-white sm:text-lg">
             {question.question}

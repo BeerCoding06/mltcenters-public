@@ -6,19 +6,37 @@ import { randomUUID } from 'crypto';
 import { readFileSync, existsSync } from 'fs';
 import { fileURLToPath } from 'url';
 import path from 'path';
+import { attachImageToQuestion } from './lib/question-images.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const BANK_CANDIDATES = [
-  path.join(__dirname, 'data/fallback_questions.json'),
-  path.join(__dirname, '../runner-3d/backend/app/data/fallback_questions.json'),
-];
-const BANK_PATH = BANK_CANDIDATES.find((p) => existsSync(p));
-if (!BANK_PATH) {
-  throw new Error(`Question bank not found. Tried: ${BANK_CANDIDATES.join(', ')}`);
+
+function loadBank(filename) {
+  const candidates = [
+    path.join(__dirname, 'data', filename),
+    path.join(__dirname, '../runner-3d/backend/app/data', filename),
+  ];
+  const bankPath = candidates.find((p) => existsSync(p));
+  if (!bankPath) {
+    throw new Error(`Question bank not found: ${filename}. Tried: ${candidates.join(', ')}`);
+  }
+  return JSON.parse(readFileSync(bankPath, 'utf-8'));
 }
 
-const QUESTION_BANK = JSON.parse(readFileSync(BANK_PATH, 'utf-8'));
-console.log(`Runner: ${QUESTION_BANK.length} preschool questions loaded (bank only, no AI)`);
+const YOUNG_BANK = loadBank('questions_young.json');
+const JUNIOR_BANK = loadBank('questions_junior.json');
+const BANKS = { young: YOUNG_BANK, junior: JUNIOR_BANK };
+console.log(
+  `Runner: ${YOUNG_BANK.length} young + ${JUNIOR_BANK.length} junior questions (bank only, no AI)`,
+);
+
+/** Q1–20 → young (1–10), Q21–30 → junior (10–15) */
+function bandForNext(questionsAnswered) {
+  return questionsAnswered >= 20 ? 'junior' : 'young';
+}
+
+function difficultyForBand(band) {
+  return band === 'junior' ? 'elementary' : 'beginner';
+}
 
 const EVALUATE_PROMPT_TH = `ประเมินผลการเล่นเกมวิ่งตอบคำถามภาษาอังกฤษของผู้เล่น
 ตอบเป็นภาษาไทยทั้งหมด Return ONLY valid JSON (no markdown):
@@ -29,12 +47,12 @@ const EVALUATE_PROMPT_TH = `ประเมินผลการเล่นเ�
 - summary อธิบายผลงาน คะแนน และแนะนำอย่างเป็นมิตร`;
 
 const LEVEL_TH = {
-  preschool: 'เด็ก 1-10 ขวบ',
-  beginner: 'เด็ก 1-10 ขวบ',
+  preschool: 'เริ่มต้น',
+  beginner: 'เริ่มต้น',
   elementary: 'พื้นฐาน',
   intermediate: 'ปานกลาง',
-  Beginner: 'เด็ก 1-10 ขวบ',
-  Preschool: 'เด็ก 1-10 ขวบ',
+  Beginner: 'เริ่มต้น',
+  Preschool: 'เริ่มต้น',
   Elementary: 'พื้นฐาน',
   Intermediate: 'ปานกลาง',
 };
@@ -119,7 +137,7 @@ function defaultState(id) {
     streak: 0,
     questions_answered: 0,
     correct_count: 0,
-    difficulty: 'preschool',
+    difficulty: 'beginner',
     current_question: null,
     last_explanation: '',
     last_correct: null,
@@ -148,16 +166,17 @@ function shuffleOptions(question) {
   };
 }
 
-function buildRandomBatch(asked, count) {
-  let pool = QUESTION_BANK.filter((q) => !asked.has(q.question));
+function buildRandomBatch(asked, count, band) {
+  const bank = BANKS[band];
+  let pool = bank.filter((q) => !asked.has(q.question));
   if (pool.length < count) {
     asked.clear();
-    pool = [...QUESTION_BANK];
+    pool = [...bank];
   }
   const picked = shuffleArray(pool).slice(0, Math.min(count, pool.length));
   return picked.map((q) => {
     asked.add(q.question);
-    return shuffleOptions({ id: randomUUID().replace(/-/g, ''), ...q });
+    return shuffleOptions({ id: randomUUID().replace(/-/g, ''), band, ...q });
   });
 }
 
@@ -167,9 +186,18 @@ function takeRandomFromQueue(queue) {
   return queue.splice(idx, 1)[0];
 }
 
-function nextFromBank(asked) {
-  const [q] = buildRandomBatch(asked, 1);
+function nextFromBank(asked, band) {
+  const [q] = buildRandomBatch(asked, 1, band);
   return q;
+}
+
+function defaultMeta() {
+  return {
+    queue: { young: [], junior: [] },
+    asked: { young: new Set(), junior: new Set() },
+    recent: [],
+    prefetching: false,
+  };
 }
 
 function toPublic(state) {
@@ -179,20 +207,31 @@ function toPublic(state) {
     speed: Math.round(state.speed * 100) / 100,
     distance: Math.round(state.distance * 10) / 10,
     current_question: q
-      ? { id: q.id, question: q.question, options: q.options, difficulty: state.difficulty }
+      ? {
+          id: q.id,
+          question: q.question,
+          options: q.options,
+          difficulty: state.difficulty,
+          image: q.image || attachImageToQuestion(q).image,
+        }
       : null,
   };
 }
 
 function adaptiveDifficulty(state) {
-  return 'preschool';
+  return difficultyForBand(bandForNext(state.questions_answered));
 }
 
-function refillBankQueue(sessionId, min = 6) {
+function refillBankQueue(sessionId, state, targets = { young: 20, junior: 10 }) {
   const m = meta.get(sessionId);
-  if (!m || m.queue.length >= min) return;
-  const batch = buildRandomBatch(m.asked, min - m.queue.length);
-  m.queue.push(...shuffleArray(batch));
+  if (!m) return;
+  for (const band of ['young', 'junior']) {
+    const need = targets[band] - m.queue[band].length;
+    if (need > 0) {
+      const batch = buildRandomBatch(m.asked[band], need, band);
+      m.queue[band].push(...shuffleArray(batch));
+    }
+  }
 }
 
 export function createRunnerRouter(openai, model) {
@@ -203,8 +242,8 @@ export function createRunnerRouter(openai, model) {
     const id = randomUUID().replace(/-/g, '');
     const state = defaultState(id);
     sessions.set(id, state);
-    meta.set(id, { queue: [], asked: new Set(), recent: [], prefetching: false });
-    refillBankQueue(id, 30);
+    meta.set(id, defaultMeta());
+    refillBankQueue(id, state);
 
     res.json({ session_id: id, game_state: toPublic(state) });
   });
@@ -215,18 +254,20 @@ export function createRunnerRouter(openai, model) {
     if (!state) return res.status(404).json({ detail: 'Session not found' });
     if (state.game_over) return res.json({ session_id, game_state: toPublic(state) });
 
-    const m = meta.get(session_id) || { queue: [], asked: new Set(), recent: [], prefetching: false };
+    const m = meta.get(session_id) || defaultMeta();
+    const band = bandForNext(state.questions_answered);
+    state.difficulty = difficultyForBand(band);
 
-    if (m.queue.length) {
-      state.current_question = takeRandomFromQueue(m.queue);
+    if (m.queue[band].length) {
+      state.current_question = takeRandomFromQueue(m.queue[band]);
     } else {
-      state.current_question = nextFromBank(m.asked);
+      state.current_question = nextFromBank(m.asked[band], band);
     }
-    if (m.queue.length < 20) refillBankQueue(session_id, 30);
+    refillBankQueue(session_id, state);
 
     if (state.current_question) {
       m.recent.push(state.current_question.question);
-      m.asked.add(state.current_question.question);
+      m.asked[band].add(state.current_question.question);
     }
     meta.set(session_id, m);
     res.json({ session_id, game_state: toPublic(state) });
@@ -295,8 +336,8 @@ export function createRunnerRouter(openai, model) {
     const state = sessions.get(req.params.session_id);
     if (!state) return res.status(404).json({ detail: 'Session not found' });
     Object.assign(state, defaultState(state.session_id));
-    meta.set(req.params.session_id, { queue: [], asked: new Set(), recent: [], prefetching: false });
-    refillBankQueue(req.params.session_id, 30);
+    meta.set(req.params.session_id, defaultMeta());
+    refillBankQueue(req.params.session_id, state);
     res.json(toPublic(state));
   });
 

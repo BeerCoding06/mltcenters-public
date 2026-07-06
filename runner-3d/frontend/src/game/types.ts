@@ -47,6 +47,7 @@ export interface Question {
   question: string;
   options: string[];
   difficulty: string;
+  image?: string;
 }
 
 export interface GameSnapshot {

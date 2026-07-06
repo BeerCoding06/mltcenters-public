@@ -1,0 +1,2402 @@
+[
+  {
+    "question": "She ___ to music every day.",
+    "options": [
+      "listens",
+      "listen",
+      "listening"
+    ],
+    "correct_index": 0,
+    "explanation": "Use listens with she.",
+    "band": "junior",
+    "image": "🎵"
+  },
+  {
+    "question": "They ___ football after school.",
+    "options": [
+      "plays",
+      "play",
+      "playing"
+    ],
+    "correct_index": 1,
+    "explanation": "They play — no -s.",
+    "band": "junior",
+    "image": "⚽"
+  },
+  {
+    "question": "I ___ my homework yesterday.",
+    "options": [
+      "finish",
+      "finishing",
+      "finished"
+    ],
+    "correct_index": 2,
+    "explanation": "Yesterday → past tense.",
+    "band": "junior",
+    "image": "📝"
+  },
+  {
+    "question": "He ___ not like spicy food.",
+    "options": [
+      "does",
+      "do",
+      "did"
+    ],
+    "correct_index": 0,
+    "explanation": "He does not like.",
+    "band": "junior",
+    "image": "✏️"
+  },
+  {
+    "question": "We ___ going to the museum tomorrow.",
+    "options": [
+      "is",
+      "are",
+      "am"
+    ],
+    "correct_index": 1,
+    "explanation": "We are going.",
+    "band": "junior",
+    "image": "🏛️"
+  },
+  {
+    "question": "The cat ___ on the sofa now.",
+    "options": [
+      "sleep",
+      "sleeps",
+      "is sleeping"
+    ],
+    "correct_index": 2,
+    "explanation": "Now → present continuous.",
+    "band": "junior",
+    "image": "🐱"
+  },
+  {
+    "question": "Birds ___ in the sky.",
+    "options": [
+      "fly",
+      "flies",
+      "flying"
+    ],
+    "correct_index": 0,
+    "explanation": "Birds fly.",
+    "band": "junior",
+    "image": "🐦"
+  },
+  {
+    "question": "She has ___ finished her project.",
+    "options": [
+      "yet",
+      "already",
+      "never"
+    ],
+    "correct_index": 1,
+    "explanation": "Already = before now.",
+    "band": "junior",
+    "image": "✏️"
+  },
+  {
+    "question": "I have ___ been to Japan.",
+    "options": [
+      "ever",
+      "always",
+      "never"
+    ],
+    "correct_index": 2,
+    "explanation": "Never = not at any time.",
+    "band": "junior",
+    "image": "🐝"
+  },
+  {
+    "question": "If it rains, we ___ stay inside.",
+    "options": [
+      "will",
+      "would",
+      "was"
+    ],
+    "correct_index": 0,
+    "explanation": "First conditional: will.",
+    "band": "junior",
+    "image": "🌧️"
+  },
+  {
+    "question": "Choose the correct sentence.",
+    "options": [
+      "She more tall than me.",
+      "She is taller than me.",
+      "She tallest than me."
+    ],
+    "correct_index": 1,
+    "explanation": "Comparative: taller than.",
+    "band": "junior",
+    "image": "✏️"
+  },
+  {
+    "question": "Past of \"go\"?",
+    "options": [
+      "goed",
+      "gone",
+      "went"
+    ],
+    "correct_index": 2,
+    "explanation": "Irregular past: went.",
+    "band": "junior",
+    "image": "✏️"
+  },
+  {
+    "question": "Past of \"eat\"?",
+    "options": [
+      "ate",
+      "eated",
+      "eating"
+    ],
+    "correct_index": 0,
+    "explanation": "Irregular past: ate.",
+    "band": "junior",
+    "image": "✏️"
+  },
+  {
+    "question": "Plural of \"child\"?",
+    "options": [
+      "childs",
+      "children",
+      "childes"
+    ],
+    "correct_index": 1,
+    "explanation": "Children is the plural.",
+    "band": "junior",
+    "image": "✏️"
+  },
+  {
+    "question": "Which is correct?",
+    "options": [
+      "I don't have some money.",
+      "I not have money.",
+      "I don't have any money."
+    ],
+    "correct_index": 2,
+    "explanation": "Use don't + base verb.",
+    "band": "junior",
+    "image": "💰"
+  },
+  {
+    "question": "Something you use to cut paper:",
+    "options": [
+      "scissors",
+      "spoon",
+      "pillow"
+    ],
+    "correct_index": 0,
+    "explanation": "Scissors cut paper.",
+    "band": "junior",
+    "image": "✂️"
+  },
+  {
+    "question": "A person who fixes teeth:",
+    "options": [
+      "pilot",
+      "dentist",
+      "farmer"
+    ],
+    "correct_index": 1,
+    "explanation": "A dentist fixes teeth.",
+    "band": "junior",
+    "image": "🦷"
+  },
+  {
+    "question": "The study of stars and planets:",
+    "options": [
+      "biology",
+      "history",
+      "astronomy"
+    ],
+    "correct_index": 2,
+    "explanation": "Astronomy is space science.",
+    "band": "junior",
+    "image": "🪐"
+  },
+  {
+    "question": "Very, very small — invisible to the eye:",
+    "options": [
+      "microscopic",
+      "gigantic",
+      "colorful"
+    ],
+    "correct_index": 0,
+    "explanation": "Microscopic means tiny.",
+    "band": "junior",
+    "image": "🐜"
+  },
+  {
+    "question": "To save something for later use:",
+    "options": [
+      "destroy",
+      "store",
+      "ignore"
+    ],
+    "correct_index": 1,
+    "explanation": "Store means keep for later.",
+    "band": "junior",
+    "image": "📦"
+  },
+  {
+    "question": "A long trip by ship:",
+    "options": [
+      "snack",
+      "whisper",
+      "voyage"
+    ],
+    "correct_index": 2,
+    "explanation": "A voyage is a long journey.",
+    "band": "junior",
+    "image": "🚢"
+  },
+  {
+    "question": "Feeling nervous before a test:",
+    "options": [
+      "anxious",
+      "hungry",
+      "sleepy"
+    ],
+    "correct_index": 0,
+    "explanation": "Anxious means worried.",
+    "band": "junior",
+    "image": "🛋️"
+  },
+  {
+    "question": "The ability to understand others' feelings:",
+    "options": [
+      "gravity",
+      "empathy",
+      "electricity"
+    ],
+    "correct_index": 1,
+    "explanation": "Empathy is understanding feelings.",
+    "band": "junior",
+    "image": "💭"
+  },
+  {
+    "question": "Opposite of \"generous\":",
+    "options": [
+      "kind",
+      "brave",
+      "selfish"
+    ],
+    "correct_index": 2,
+    "explanation": "Selfish is the opposite.",
+    "band": "junior",
+    "image": "🐟"
+  },
+  {
+    "question": "A book that tells a made-up story:",
+    "options": [
+      "novel",
+      "dictionary",
+      "calendar"
+    ],
+    "correct_index": 0,
+    "explanation": "A novel is fiction.",
+    "band": "junior",
+    "image": "📖"
+  },
+  {
+    "question": "Water that falls from clouds:",
+    "options": [
+      "sand",
+      "rain",
+      "smoke"
+    ],
+    "correct_index": 1,
+    "explanation": "Rain falls from clouds.",
+    "band": "junior",
+    "image": "☁️"
+  },
+  {
+    "question": "A place where you borrow books:",
+    "options": [
+      "bakery",
+      "stadium",
+      "library"
+    ],
+    "correct_index": 2,
+    "explanation": "Libraries lend books.",
+    "band": "junior",
+    "image": "📖"
+  },
+  {
+    "question": "Energy from the sun:",
+    "options": [
+      "solar",
+      "lunar",
+      "metal"
+    ],
+    "correct_index": 0,
+    "explanation": "Solar means from the sun.",
+    "band": "junior",
+    "image": "☀️"
+  },
+  {
+    "question": "To make something better:",
+    "options": [
+      "worsen",
+      "improve",
+      "forget"
+    ],
+    "correct_index": 1,
+    "explanation": "Improve means make better.",
+    "band": "junior",
+    "image": "🧠"
+  },
+  {
+    "question": "A group of musicians playing together:",
+    "options": [
+      "audience",
+      "recipe",
+      "orchestra"
+    ],
+    "correct_index": 2,
+    "explanation": "An orchestra plays music.",
+    "band": "junior",
+    "image": "🎵"
+  },
+  {
+    "question": "Careful use of water and electricity:",
+    "options": [
+      "conservation",
+      "pollution",
+      "competition"
+    ],
+    "correct_index": 0,
+    "explanation": "Conservation protects resources.",
+    "band": "junior",
+    "image": "💧"
+  },
+  {
+    "question": "A story passed down for many years:",
+    "options": [
+      "receipt",
+      "legend",
+      "ticket"
+    ],
+    "correct_index": 1,
+    "explanation": "Legends are old stories.",
+    "band": "junior",
+    "image": "👂"
+  },
+  {
+    "question": "To find a solution to a problem:",
+    "options": [
+      "create",
+      "hide",
+      "solve"
+    ],
+    "correct_index": 2,
+    "explanation": "Solve a problem.",
+    "band": "junior",
+    "image": "🧠"
+  },
+  {
+    "question": "Something that is not true:",
+    "options": [
+      "false",
+      "real",
+      "certain"
+    ],
+    "correct_index": 0,
+    "explanation": "False means not true.",
+    "band": "junior",
+    "image": "🎩"
+  },
+  {
+    "question": "Full of energy and excitement:",
+    "options": [
+      "boring",
+      "enthusiastic",
+      "silent"
+    ],
+    "correct_index": 1,
+    "explanation": "Enthusiastic means eager.",
+    "band": "junior",
+    "image": "🧠"
+  },
+  {
+    "question": "Plants make food using sunlight. This is called ___",
+    "options": [
+      "recycling",
+      "digestion",
+      "photosynthesis"
+    ],
+    "correct_index": 2,
+    "explanation": "Plants use photosynthesis.",
+    "band": "junior",
+    "image": "🎤"
+  },
+  {
+    "question": "The center of our solar system is the ___",
+    "options": [
+      "Sun",
+      "Moon",
+      "Mars"
+    ],
+    "correct_index": 0,
+    "explanation": "The Sun is the center.",
+    "band": "junior",
+    "image": "☀️"
+  },
+  {
+    "question": "Water freezes at zero degrees ___",
+    "options": [
+      "colors",
+      "Celsius",
+      "meters"
+    ],
+    "correct_index": 1,
+    "explanation": "Water freezes at 0°C.",
+    "band": "junior",
+    "image": "💧"
+  },
+  {
+    "question": "The human body has 206 ___",
+    "options": [
+      "stars",
+      "oceans",
+      "bones"
+    ],
+    "correct_index": 2,
+    "explanation": "Adults have 206 bones.",
+    "band": "junior",
+    "image": "🌊"
+  },
+  {
+    "question": "Electricity needs a complete ___ to flow.",
+    "options": [
+      "circuit",
+      "circle",
+      "season"
+    ],
+    "correct_index": 0,
+    "explanation": "Electricity flows in a circuit.",
+    "band": "junior",
+    "image": "✏️"
+  },
+  {
+    "question": "Dinosaurs lived millions of years ___",
+    "options": [
+      "ahead",
+      "ago",
+      "above"
+    ],
+    "correct_index": 1,
+    "explanation": "Ago means in the past.",
+    "band": "junior",
+    "image": "🦁"
+  },
+  {
+    "question": "A caterpillar becomes a ___",
+    "options": [
+      "fish",
+      "rock",
+      "butterfly"
+    ],
+    "correct_index": 2,
+    "explanation": "Metamorphosis: butterfly.",
+    "band": "junior",
+    "image": "🐱"
+  },
+  {
+    "question": "The force that pulls objects down:",
+    "options": [
+      "gravity",
+      "music",
+      "color"
+    ],
+    "correct_index": 0,
+    "explanation": "Gravity pulls things down.",
+    "band": "junior",
+    "image": "🎩"
+  },
+  {
+    "question": "Oxygen is a ___ we breathe.",
+    "options": [
+      "solid",
+      "gas",
+      "liquid"
+    ],
+    "correct_index": 1,
+    "explanation": "Oxygen is a gas.",
+    "band": "junior",
+    "image": "✏️"
+  },
+  {
+    "question": "Recycling helps reduce ___",
+    "options": [
+      "homework",
+      "sleep",
+      "pollution"
+    ],
+    "correct_index": 2,
+    "explanation": "Recycling reduces pollution.",
+    "band": "junior",
+    "image": "♻️"
+  },
+  {
+    "question": "The brain controls your ___",
+    "options": [
+      "body",
+      "shoes",
+      "clouds"
+    ],
+    "correct_index": 0,
+    "explanation": "The brain controls the body.",
+    "band": "junior",
+    "image": "🧫"
+  },
+  {
+    "question": "Volcanoes can erupt hot ___",
+    "options": [
+      "ice",
+      "lava",
+      "cotton"
+    ],
+    "correct_index": 1,
+    "explanation": "Lava comes from volcanoes.",
+    "band": "junior",
+    "image": "🔥"
+  },
+  {
+    "question": "The Moon orbits the ___",
+    "options": [
+      "Mars",
+      "Jupiter",
+      "Earth"
+    ],
+    "correct_index": 2,
+    "explanation": "The Moon orbits Earth.",
+    "band": "junior",
+    "image": "🌙"
+  },
+  {
+    "question": "I have keys but no locks. I have space but no room. What am I?",
+    "options": [
+      "keyboard",
+      "piano only",
+      "door"
+    ],
+    "correct_index": 0,
+    "explanation": "A keyboard has keys.",
+    "band": "junior",
+    "image": "🎩"
+  },
+  {
+    "question": "What gets wetter the more it dries?",
+    "options": [
+      "river",
+      "towel",
+      "sun"
+    ],
+    "correct_index": 1,
+    "explanation": "A towel dries you and gets wet.",
+    "band": "junior",
+    "image": "🎩"
+  },
+  {
+    "question": "If you have me, you want to share me. If you share me, you lose me. What am I?",
+    "options": [
+      "pizza",
+      "book",
+      "secret"
+    ],
+    "correct_index": 2,
+    "explanation": "Secrets are lost when shared.",
+    "band": "junior",
+    "image": "🐜"
+  },
+  {
+    "question": "What has hands but cannot clap?",
+    "options": [
+      "clock",
+      "robot",
+      "tree"
+    ],
+    "correct_index": 0,
+    "explanation": "A clock has hands.",
+    "band": "junior",
+    "image": "🤲"
+  },
+  {
+    "question": "Which word is a palindrome? (reads same backward)",
+    "options": [
+      "happy",
+      "level",
+      "jump"
+    ],
+    "correct_index": 1,
+    "explanation": "LEVEL reads same both ways.",
+    "band": "junior",
+    "image": "😊"
+  },
+  {
+    "question": "Complete: Practice makes ___",
+    "options": [
+      "tired",
+      "hungry",
+      "perfect"
+    ],
+    "correct_index": 2,
+    "explanation": "Practice makes perfect.",
+    "band": "junior",
+    "image": "🔴"
+  },
+  {
+    "question": "Which does not belong? apple, banana, carrot, grape",
+    "options": [
+      "carrot",
+      "apple",
+      "banana"
+    ],
+    "correct_index": 0,
+    "explanation": "Carrot is a vegetable.",
+    "band": "junior",
+    "image": "🥕"
+  },
+  {
+    "question": "Synonym of \"brave\":",
+    "options": [
+      "lazy",
+      "courageous",
+      "quiet"
+    ],
+    "correct_index": 1,
+    "explanation": "Courageous means brave.",
+    "band": "junior",
+    "image": "📖"
+  },
+  {
+    "question": "Antonym of \"ancient\":",
+    "options": [
+      "old",
+      "historic",
+      "modern"
+    ],
+    "correct_index": 2,
+    "explanation": "Modern is opposite of ancient.",
+    "band": "junior",
+    "image": "↔️"
+  },
+  {
+    "question": "If 3 cats catch 3 mice in 3 minutes, how many cats for 100 mice in 100 minutes?",
+    "options": [
+      "3",
+      "100",
+      "1"
+    ],
+    "correct_index": 0,
+    "explanation": "Still 3 cats — same rate.",
+    "band": "junior",
+    "image": "🐱"
+  },
+  {
+    "question": "A map helps you find your ___",
+    "options": [
+      "food",
+      "way",
+      "sleep"
+    ],
+    "correct_index": 1,
+    "explanation": "Maps show directions.",
+    "band": "junior",
+    "image": "✏️"
+  },
+  {
+    "question": "Brainstorm means think of many ___",
+    "options": [
+      "apples",
+      "shoes",
+      "ideas"
+    ],
+    "correct_index": 2,
+    "explanation": "Brainstorm = many ideas.",
+    "band": "junior",
+    "image": "🌧️"
+  },
+  {
+    "question": "Which is a renewable resource?",
+    "options": [
+      "solar energy",
+      "coal",
+      "oil"
+    ],
+    "correct_index": 0,
+    "explanation": "Solar energy renews.",
+    "band": "junior",
+    "image": "🧠"
+  },
+  {
+    "question": "Teamwork means working ___",
+    "options": [
+      "alone",
+      "together",
+      "slowly"
+    ],
+    "correct_index": 1,
+    "explanation": "Together as a team.",
+    "band": "junior",
+    "image": "✏️"
+  },
+  {
+    "question": "A goal is something you want to ___",
+    "options": [
+      "forget",
+      "break",
+      "achieve"
+    ],
+    "correct_index": 2,
+    "explanation": "Achieve your goals.",
+    "band": "junior",
+    "image": "🐜"
+  },
+  {
+    "question": "You should ___ \"please\" when asking for help.",
+    "options": [
+      "say",
+      "eat",
+      "draw"
+    ],
+    "correct_index": 0,
+    "explanation": "Say please politely.",
+    "band": "junior",
+    "image": "✏️"
+  },
+  {
+    "question": "A passport is needed for international ___",
+    "options": [
+      "sleep",
+      "travel",
+      "cooking"
+    ],
+    "correct_index": 1,
+    "explanation": "Travel abroad needs a passport.",
+    "band": "junior",
+    "image": "✏️"
+  },
+  {
+    "question": "Recycling paper saves ___",
+    "options": [
+      "money only",
+      "phones",
+      "trees"
+    ],
+    "correct_index": 2,
+    "explanation": "Paper comes from trees.",
+    "band": "junior",
+    "image": "♻️"
+  },
+  {
+    "question": "A healthy diet includes fruits and ___",
+    "options": [
+      "vegetables",
+      "candy only",
+      "soda only"
+    ],
+    "correct_index": 0,
+    "explanation": "Eat vegetables too.",
+    "band": "junior",
+    "image": "🍎"
+  },
+  {
+    "question": "Exercise keeps your body ___",
+    "options": [
+      "lazy",
+      "healthy",
+      "sad"
+    ],
+    "correct_index": 1,
+    "explanation": "Exercise helps health.",
+    "band": "junior",
+    "image": "😢"
+  },
+  {
+    "question": "Cyberbullying happens ___",
+    "options": [
+      "in space",
+      "underwater",
+      "online"
+    ],
+    "correct_index": 2,
+    "explanation": "Online on the internet.",
+    "band": "junior",
+    "image": "🖊️"
+  },
+  {
+    "question": "A resume lists your skills and ___",
+    "options": [
+      "experience",
+      "pets",
+      "games"
+    ],
+    "correct_index": 0,
+    "explanation": "Resumes show experience.",
+    "band": "junior",
+    "image": "📄"
+  },
+  {
+    "question": "Democracy means people can ___",
+    "options": [
+      "fly",
+      "vote",
+      "sleep"
+    ],
+    "correct_index": 1,
+    "explanation": "Citizens vote in democracy.",
+    "band": "junior",
+    "image": "🗳️"
+  },
+  {
+    "question": "An interview is a meeting for a ___",
+    "options": [
+      "meal",
+      "nap",
+      "job"
+    ],
+    "correct_index": 2,
+    "explanation": "Jobs use interviews.",
+    "band": "junior",
+    "image": "✏️"
+  },
+  {
+    "question": "Budget means a plan for spending ___",
+    "options": [
+      "money",
+      "time only",
+      "clouds"
+    ],
+    "correct_index": 0,
+    "explanation": "Budget your money.",
+    "band": "junior",
+    "image": "💳"
+  },
+  {
+    "question": "Volunteering means helping without ___",
+    "options": [
+      "friends",
+      "payment",
+      "books"
+    ],
+    "correct_index": 1,
+    "explanation": "Volunteers work for free.",
+    "band": "junior",
+    "image": "📖"
+  },
+  {
+    "question": "A documentary is a ___ film about real life.",
+    "options": [
+      "cartoon",
+      "comedy only",
+      "non-fiction"
+    ],
+    "correct_index": 2,
+    "explanation": "Documentaries are real.",
+    "band": "junior",
+    "image": "📰"
+  },
+  {
+    "question": "Culture includes food, music, and ___",
+    "options": [
+      "traditions",
+      "gravity",
+      "math"
+    ],
+    "correct_index": 0,
+    "explanation": "Traditions are cultural.",
+    "band": "junior",
+    "image": "🎵"
+  },
+  {
+    "question": "To apologize means to say ___",
+    "options": [
+      "hello",
+      "sorry",
+      "goodbye"
+    ],
+    "correct_index": 1,
+    "explanation": "Sorry shows apology.",
+    "band": "junior",
+    "image": "✏️"
+  },
+  {
+    "question": "A debate is a discussion with different ___",
+    "options": [
+      "colors",
+      "animals",
+      "opinions"
+    ],
+    "correct_index": 2,
+    "explanation": "People share opinions.",
+    "band": "junior",
+    "image": "💬"
+  },
+  {
+    "question": "Time management helps you use ___ wisely.",
+    "options": [
+      "time",
+      "water",
+      "sand"
+    ],
+    "correct_index": 0,
+    "explanation": "Manage your time.",
+    "band": "junior",
+    "image": "💧"
+  },
+  {
+    "question": "A mentor is someone who ___ you.",
+    "options": [
+      "ignores",
+      "guides",
+      "hurts"
+    ],
+    "correct_index": 1,
+    "explanation": "Mentors guide learners.",
+    "band": "junior",
+    "image": "✏️"
+  },
+  {
+    "question": "Critical thinking means thinking ___",
+    "options": [
+      "quickly only",
+      "never",
+      "carefully"
+    ],
+    "correct_index": 2,
+    "explanation": "Think carefully and deeply.",
+    "band": "junior",
+    "image": "🚗"
+  },
+  {
+    "question": "Biodiversity means many kinds of ___",
+    "options": [
+      "life",
+      "rocks",
+      "cars"
+    ],
+    "correct_index": 0,
+    "explanation": "Many species = biodiversity.",
+    "band": "junior",
+    "image": "🚗"
+  },
+  {
+    "question": "A hypothesis is a scientific ___",
+    "options": [
+      "fact",
+      "guess",
+      "law"
+    ],
+    "correct_index": 1,
+    "explanation": "Scientists test hypotheses.",
+    "band": "junior",
+    "image": "🔬"
+  },
+  {
+    "question": "The book is ___ the table.",
+    "options": [
+      "in",
+      "at",
+      "on"
+    ],
+    "correct_index": 2,
+    "explanation": "On top of the table.",
+    "band": "junior",
+    "image": "🪑"
+  },
+  {
+    "question": "She arrived ___ 8 o'clock.",
+    "options": [
+      "at",
+      "on",
+      "in"
+    ],
+    "correct_index": 0,
+    "explanation": "At + time.",
+    "band": "junior",
+    "image": "✏️"
+  },
+  {
+    "question": "We live ___ Bangkok.",
+    "options": [
+      "on",
+      "in",
+      "at"
+    ],
+    "correct_index": 1,
+    "explanation": "In + city.",
+    "band": "junior",
+    "image": "🇹🇭"
+  },
+  {
+    "question": "He is good ___ math.",
+    "options": [
+      "in",
+      "on",
+      "at"
+    ],
+    "correct_index": 2,
+    "explanation": "Good at a subject.",
+    "band": "junior",
+    "image": "✏️"
+  },
+  {
+    "question": "I'm interested ___ science.",
+    "options": [
+      "in",
+      "on",
+      "at"
+    ],
+    "correct_index": 0,
+    "explanation": "Interested in something.",
+    "band": "junior",
+    "image": "✏️"
+  },
+  {
+    "question": "Turn left ___ the traffic light.",
+    "options": [
+      "in",
+      "at",
+      "on"
+    ],
+    "correct_index": 1,
+    "explanation": "At a specific place.",
+    "band": "junior",
+    "image": "✏️"
+  },
+  {
+    "question": "She walked ___ the bridge.",
+    "options": [
+      "under",
+      "behind",
+      "across"
+    ],
+    "correct_index": 2,
+    "explanation": "Across = from one side to other.",
+    "band": "junior",
+    "image": "✏️"
+  },
+  {
+    "question": "The cat hid ___ the bed.",
+    "options": [
+      "under",
+      "over",
+      "through"
+    ],
+    "correct_index": 0,
+    "explanation": "Under the bed.",
+    "band": "junior",
+    "image": "🐱"
+  },
+  {
+    "question": "We talked ___ our favorite movies.",
+    "options": [
+      "at",
+      "about",
+      "in"
+    ],
+    "correct_index": 1,
+    "explanation": "Talk about a topic.",
+    "band": "junior",
+    "image": "✏️"
+  },
+  {
+    "question": "This gift is ___ you.",
+    "options": [
+      "at",
+      "on",
+      "for"
+    ],
+    "correct_index": 2,
+    "explanation": "A gift for someone.",
+    "band": "junior",
+    "image": "✏️"
+  },
+  {
+    "question": "Main idea: \"Dogs need exercise daily.\" Best title?",
+    "options": [
+      "Healthy Dogs",
+      "Cooking Tips",
+      "Space Travel"
+    ],
+    "correct_index": 0,
+    "explanation": "Matches exercise for dogs.",
+    "band": "junior",
+    "image": "🐶"
+  },
+  {
+    "question": "Which word best completes: \"Although it rained, we ___ fun.\"",
+    "options": [
+      "have",
+      "had",
+      "having"
+    ],
+    "correct_index": 1,
+    "explanation": "Although + past story: had.",
+    "band": "junior",
+    "image": "🌧️"
+  },
+  {
+    "question": "\"Quick\" and \"fast\" are ___",
+    "options": [
+      "opposites",
+      "unrelated",
+      "similar"
+    ],
+    "correct_index": 2,
+    "explanation": "They mean nearly the same.",
+    "band": "junior",
+    "image": "✏️"
+  },
+  {
+    "question": "\"Increase\" is opposite of ___",
+    "options": [
+      "decrease",
+      "grow",
+      "rise"
+    ],
+    "correct_index": 0,
+    "explanation": "Decrease is opposite.",
+    "band": "junior",
+    "image": "✏️"
+  },
+  {
+    "question": "Which invention lets you talk to people far away?",
+    "options": [
+      "bicycle",
+      "telephone",
+      "pillow"
+    ],
+    "correct_index": 1,
+    "explanation": "Phones connect distant people.",
+    "band": "junior",
+    "image": "🧠"
+  },
+  {
+    "question": "A marathon is a long ___ race.",
+    "options": [
+      "swimming only",
+      "sleeping",
+      "running"
+    ],
+    "correct_index": 2,
+    "explanation": "Marathons are 42 km runs.",
+    "band": "junior",
+    "image": "🏊"
+  },
+  {
+    "question": "Composer writes ___",
+    "options": [
+      "music",
+      "buildings",
+      "clothes"
+    ],
+    "correct_index": 0,
+    "explanation": "Composers create music.",
+    "band": "junior",
+    "image": "🎵"
+  },
+  {
+    "question": "Archaeologists study ___",
+    "options": [
+      "future only",
+      "ancient things",
+      "clouds"
+    ],
+    "correct_index": 1,
+    "explanation": "They dig up history.",
+    "band": "junior",
+    "image": "☁️"
+  },
+  {
+    "question": "Ecosystem includes plants, animals, and ___",
+    "options": [
+      "phones",
+      "shoes",
+      "environment"
+    ],
+    "correct_index": 2,
+    "explanation": "All living things together.",
+    "band": "junior",
+    "image": "🐜"
+  },
+  {
+    "question": "What does \"eco-friendly\" mean?",
+    "options": [
+      "good for Earth",
+      "very fast",
+      "very loud"
+    ],
+    "correct_index": 0,
+    "explanation": "Eco-friendly helps nature.",
+    "band": "junior",
+    "image": "🎩"
+  },
+  {
+    "question": "A journalist writes ___",
+    "options": [
+      "recipes only",
+      "news",
+      "maps only"
+    ],
+    "correct_index": 1,
+    "explanation": "Journalists report news.",
+    "band": "junior",
+    "image": "✏️"
+  },
+  {
+    "question": "Inflation means prices go ___",
+    "options": [
+      "down",
+      "away",
+      "up"
+    ],
+    "correct_index": 2,
+    "explanation": "Inflation raises prices.",
+    "band": "junior",
+    "image": "📈"
+  },
+  {
+    "question": "A contract is a written ___",
+    "options": [
+      "agreement",
+      "song",
+      "game"
+    ],
+    "correct_index": 0,
+    "explanation": "Contracts are agreements.",
+    "band": "junior",
+    "image": "✏️"
+  },
+  {
+    "question": "Philosophy asks big ___ about life.",
+    "options": [
+      "sandwiches",
+      "questions",
+      "trains"
+    ],
+    "correct_index": 1,
+    "explanation": "Philosophy explores ideas.",
+    "band": "junior",
+    "image": "🚂"
+  },
+  {
+    "question": "Which is renewable energy?",
+    "options": [
+      "plastic",
+      "coal",
+      "wind power"
+    ],
+    "correct_index": 2,
+    "explanation": "Wind keeps blowing.",
+    "band": "junior",
+    "image": "💨"
+  },
+  {
+    "question": "A curator works in a ___",
+    "options": [
+      "museum",
+      "farm",
+      "kitchen"
+    ],
+    "correct_index": 0,
+    "explanation": "Curators care for exhibits.",
+    "band": "junior",
+    "image": "🏛️"
+  },
+  {
+    "question": "Metaphor compares two things ___",
+    "options": [
+      "with numbers",
+      "without like",
+      "with colors"
+    ],
+    "correct_index": 1,
+    "explanation": "Metaphor says A is B.",
+    "band": "junior",
+    "image": "✏️"
+  },
+  {
+    "question": "Simile uses \"like\" or \"___\"",
+    "options": [
+      "the",
+      "very",
+      "as"
+    ],
+    "correct_index": 2,
+    "explanation": "As brave as a lion.",
+    "band": "junior",
+    "image": "✏️"
+  },
+  {
+    "question": "A protagonist is the main ___",
+    "options": [
+      "character",
+      "villain",
+      "setting"
+    ],
+    "correct_index": 0,
+    "explanation": "Hero or main character.",
+    "band": "junior",
+    "image": "🦸"
+  },
+  {
+    "question": "Setting in a story is time and ___",
+    "options": [
+      "food",
+      "place",
+      "shoe"
+    ],
+    "correct_index": 1,
+    "explanation": "Where and when.",
+    "band": "junior",
+    "image": "✏️"
+  },
+  {
+    "question": "Climax is the most ___ part of a story.",
+    "options": [
+      "boring",
+      "short",
+      "exciting"
+    ],
+    "correct_index": 2,
+    "explanation": "The peak moment.",
+    "band": "junior",
+    "image": "✏️"
+  },
+  {
+    "question": "Editing means fixing ___ in writing.",
+    "options": [
+      "mistakes",
+      "colors",
+      "shoes"
+    ],
+    "correct_index": 0,
+    "explanation": "Edit to improve text.",
+    "band": "junior",
+    "image": "👟"
+  },
+  {
+    "question": "A thesaurus gives ___",
+    "options": [
+      "maps",
+      "synonyms",
+      "recipes"
+    ],
+    "correct_index": 1,
+    "explanation": "Words with similar meaning.",
+    "band": "junior",
+    "image": "📖"
+  },
+  {
+    "question": "A bibliography lists ___",
+    "options": [
+      "games",
+      "pets",
+      "sources"
+    ],
+    "correct_index": 2,
+    "explanation": "Books and sources used.",
+    "band": "junior",
+    "image": "✏️"
+  },
+  {
+    "question": "Statistics uses ___ to describe data.",
+    "options": [
+      "numbers",
+      "paint",
+      "music"
+    ],
+    "correct_index": 0,
+    "explanation": "Data as numbers.",
+    "band": "junior",
+    "image": "🎵"
+  },
+  {
+    "question": "Probability measures how ___ something is.",
+    "options": [
+      "heavy",
+      "likely",
+      "sweet"
+    ],
+    "correct_index": 1,
+    "explanation": "Chance something happens.",
+    "band": "junior",
+    "image": "✏️"
+  },
+  {
+    "question": "Geometry studies shapes and ___",
+    "options": [
+      "songs",
+      "recipes",
+      "angles"
+    ],
+    "correct_index": 2,
+    "explanation": "Math of shapes.",
+    "band": "junior",
+    "image": "✏️"
+  },
+  {
+    "question": "Algebra uses ___ to stand for numbers.",
+    "options": [
+      "letters",
+      "colors",
+      "animals"
+    ],
+    "correct_index": 0,
+    "explanation": "Like x and y.",
+    "band": "junior",
+    "image": "✏️"
+  },
+  {
+    "question": "A habitat is where an animal ___",
+    "options": [
+      "shops",
+      "lives",
+      "drives"
+    ],
+    "correct_index": 1,
+    "explanation": "Natural home.",
+    "band": "junior",
+    "image": "✏️"
+  },
+  {
+    "question": "Migration is when animals ___ seasonally.",
+    "options": [
+      "sleep",
+      "cook",
+      "travel"
+    ],
+    "correct_index": 2,
+    "explanation": "Birds migrate south.",
+    "band": "junior",
+    "image": "✏️"
+  },
+  {
+    "question": "Camouflage helps animals ___",
+    "options": [
+      "hide",
+      "sing",
+      "fly faster"
+    ],
+    "correct_index": 0,
+    "explanation": "Blend into surroundings.",
+    "band": "junior",
+    "image": "🎤"
+  },
+  {
+    "question": "A food chain shows who eats ___",
+    "options": [
+      "clouds",
+      "whom",
+      "music"
+    ],
+    "correct_index": 1,
+    "explanation": "Energy flow in nature.",
+    "band": "junior",
+    "image": "☁️"
+  },
+  {
+    "question": "Deforestation means cutting down ___",
+    "options": [
+      "water",
+      "sky",
+      "forests"
+    ],
+    "correct_index": 2,
+    "explanation": "Trees removed.",
+    "band": "junior",
+    "image": "🌲"
+  },
+  {
+    "question": "Carbon footprint measures pollution from your ___",
+    "options": [
+      "lifestyle",
+      "hair",
+      "shoes"
+    ],
+    "correct_index": 0,
+    "explanation": "Your daily impact.",
+    "band": "junior",
+    "image": "🚗"
+  },
+  {
+    "question": "A synonym for \"enormous\" is ___",
+    "options": [
+      "tiny",
+      "huge",
+      "quiet"
+    ],
+    "correct_index": 1,
+    "explanation": "Huge means very big.",
+    "band": "junior",
+    "image": "📖"
+  },
+  {
+    "question": "An antonym for \"borrow\" is ___",
+    "options": [
+      "take",
+      "keep",
+      "lend"
+    ],
+    "correct_index": 2,
+    "explanation": "Lend is the opposite.",
+    "band": "junior",
+    "image": "↔️"
+  },
+  {
+    "question": "Which sentence is future tense?",
+    "options": [
+      "I will visit grandma.",
+      "I visit grandma.",
+      "I visited grandma."
+    ],
+    "correct_index": 0,
+    "explanation": "Will + verb = future.",
+    "band": "junior",
+    "image": "✏️"
+  },
+  {
+    "question": "The capital of Thailand is ___",
+    "options": [
+      "London",
+      "Bangkok",
+      "Paris"
+    ],
+    "correct_index": 1,
+    "explanation": "Bangkok is the capital.",
+    "band": "junior",
+    "image": "🇹🇭"
+  },
+  {
+    "question": "Photosynthesis happens in ___",
+    "options": [
+      "rocks",
+      "cars",
+      "plants"
+    ],
+    "correct_index": 2,
+    "explanation": "Plants make food from light.",
+    "band": "junior",
+    "image": "🌿"
+  },
+  {
+    "question": "A decade is ___ years.",
+    "options": [
+      "10",
+      "5",
+      "100"
+    ],
+    "correct_index": 0,
+    "explanation": "Decade = 10 years.",
+    "band": "junior",
+    "image": "🔟"
+  },
+  {
+    "question": "A century is ___ years.",
+    "options": [
+      "10",
+      "100",
+      "1000"
+    ],
+    "correct_index": 1,
+    "explanation": "Century = 100 years.",
+    "band": "junior",
+    "image": "💯"
+  },
+  {
+    "question": "The largest ocean is the ___",
+    "options": [
+      "Arctic",
+      "Indian only",
+      "Pacific"
+    ],
+    "correct_index": 2,
+    "explanation": "Pacific is largest.",
+    "band": "junior",
+    "image": "🌊"
+  },
+  {
+    "question": "H2O is the chemical name for ___",
+    "options": [
+      "water",
+      "air",
+      "gold"
+    ],
+    "correct_index": 0,
+    "explanation": "H2O is water.",
+    "band": "junior",
+    "image": "💧"
+  },
+  {
+    "question": "Which planet is known as the Red Planet?",
+    "options": [
+      "Venus",
+      "Mars",
+      "Jupiter"
+    ],
+    "correct_index": 1,
+    "explanation": "Mars looks red.",
+    "band": "junior",
+    "image": "🪐"
+  },
+  {
+    "question": "A biography tells the story of a real ___",
+    "options": [
+      "planet",
+      "recipe",
+      "person"
+    ],
+    "correct_index": 2,
+    "explanation": "Biographies are about people.",
+    "band": "junior",
+    "image": "📘"
+  },
+  {
+    "question": "Autobiography means you write about ___",
+    "options": [
+      "yourself",
+      "aliens",
+      "cars"
+    ],
+    "correct_index": 0,
+    "explanation": "Auto = self.",
+    "band": "junior",
+    "image": "📘"
+  },
+  {
+    "question": "A prefix meaning \"not\" is ___",
+    "options": [
+      "re-",
+      "un-",
+      "pre-"
+    ],
+    "correct_index": 1,
+    "explanation": "Unhappy = not happy.",
+    "band": "junior",
+    "image": "🔤"
+  },
+  {
+    "question": "Re- in \"recycle\" means ___",
+    "options": [
+      "never",
+      "under",
+      "again"
+    ],
+    "correct_index": 2,
+    "explanation": "Recycle = use again.",
+    "band": "junior",
+    "image": "✏️"
+  },
+  {
+    "question": "Which is an adjective?",
+    "options": [
+      "beautiful",
+      "beauty",
+      "beautify"
+    ],
+    "correct_index": 0,
+    "explanation": "Beautiful describes nouns.",
+    "band": "junior",
+    "image": "📝"
+  },
+  {
+    "question": "Which is a noun?",
+    "options": [
+      "happy",
+      "happiness",
+      "happily"
+    ],
+    "correct_index": 1,
+    "explanation": "Happiness is a thing/idea.",
+    "band": "junior",
+    "image": "📦"
+  },
+  {
+    "question": "Which is an adverb?",
+    "options": [
+      "quick",
+      "quicken",
+      "quickly"
+    ],
+    "correct_index": 2,
+    "explanation": "Quickly describes verbs.",
+    "band": "junior",
+    "image": "⚡"
+  },
+  {
+    "question": "Active voice: \"The dog chased the ball.\" Passive?",
+    "options": [
+      "The ball was chased by the dog.",
+      "The ball chased the dog.",
+      "Chased the ball dog."
+    ],
+    "correct_index": 0,
+    "explanation": "Ball receives the action.",
+    "band": "junior",
+    "image": "⚽"
+  },
+  {
+    "question": "A conclusion sums up the main ___",
+    "options": [
+      "colors",
+      "ideas",
+      "shoes"
+    ],
+    "correct_index": 1,
+    "explanation": "End of an essay.",
+    "band": "junior",
+    "image": "👟"
+  },
+  {
+    "question": "A topic sentence starts a ___",
+    "options": [
+      "song",
+      "game",
+      "paragraph"
+    ],
+    "correct_index": 2,
+    "explanation": "First sentence of paragraph.",
+    "band": "junior",
+    "image": "⭐"
+  },
+  {
+    "question": "Plagiarism means copying without ___",
+    "options": [
+      "credit",
+      "effort",
+      "paper"
+    ],
+    "correct_index": 0,
+    "explanation": "Give credit to sources.",
+    "band": "junior",
+    "image": "⚠️"
+  },
+  {
+    "question": "A podcast is like a radio show ___",
+    "options": [
+      "underwater",
+      "online",
+      "in space"
+    ],
+    "correct_index": 1,
+    "explanation": "Podcasts stream online.",
+    "band": "junior",
+    "image": "🎙️"
+  },
+  {
+    "question": "Coding means writing instructions for a ___",
+    "options": [
+      "tree",
+      "shoe",
+      "computer"
+    ],
+    "correct_index": 2,
+    "explanation": "Programs run on computers.",
+    "band": "junior",
+    "image": "💻"
+  },
+  {
+    "question": "An algorithm is a step-by-step ___",
+    "options": [
+      "plan",
+      "color",
+      "animal"
+    ],
+    "correct_index": 0,
+    "explanation": "Like a recipe for solving.",
+    "band": "junior",
+    "image": "🧮"
+  },
+  {
+    "question": "Artificial intelligence tries to mimic human ___",
+    "options": [
+      "eating",
+      "thinking",
+      "sleeping"
+    ],
+    "correct_index": 1,
+    "explanation": "AI learns patterns.",
+    "band": "junior",
+    "image": "🧠"
+  },
+  {
+    "question": "Sustainable means able to continue without harm to ___",
+    "options": [
+      "phones",
+      "games",
+      "nature"
+    ],
+    "correct_index": 2,
+    "explanation": "Long-term eco balance.",
+    "band": "junior",
+    "image": "♻️"
+  },
+  {
+    "question": "A refugee leaves home because of danger or ___",
+    "options": [
+      "war",
+      "fun",
+      "parties"
+    ],
+    "correct_index": 0,
+    "explanation": "Seek safety elsewhere.",
+    "band": "junior",
+    "image": "🕊️"
+  },
+  {
+    "question": "Human rights belong to every ___",
+    "options": [
+      "building",
+      "person",
+      "car"
+    ],
+    "correct_index": 1,
+    "explanation": "Rights for all humans.",
+    "band": "junior",
+    "image": "🚗"
+  },
+  {
+    "question": "A constitution is basic laws of a ___",
+    "options": [
+      "kitchen",
+      "garden",
+      "country"
+    ],
+    "correct_index": 2,
+    "explanation": "Founding rules of nation.",
+    "band": "junior",
+    "image": "📜"
+  },
+  {
+    "question": "Inflation makes things cost ___",
+    "options": [
+      "more",
+      "less",
+      "nothing"
+    ],
+    "correct_index": 0,
+    "explanation": "Prices rise.",
+    "band": "junior",
+    "image": "📈"
+  },
+  {
+    "question": "A entrepreneur starts a new ___",
+    "options": [
+      "planet",
+      "business",
+      "song"
+    ],
+    "correct_index": 1,
+    "explanation": "Entrepreneurs create companies.",
+    "band": "junior",
+    "image": "💡"
+  },
+  {
+    "question": "Innovation means a new idea or ___",
+    "options": [
+      "sleep",
+      "rain",
+      "invention"
+    ],
+    "correct_index": 2,
+    "explanation": "Something new and useful.",
+    "band": "junior",
+    "image": "🌧️"
+  },
+  {
+    "question": "Collaboration means working with ___",
+    "options": [
+      "others",
+      "nobody",
+      "walls"
+    ],
+    "correct_index": 0,
+    "explanation": "Team collaboration.",
+    "band": "junior",
+    "image": "🤝"
+  },
+  {
+    "question": "Resilience means bouncing back after ___",
+    "options": [
+      "lunch",
+      "difficulty",
+      "music"
+    ],
+    "correct_index": 1,
+    "explanation": "Recover from hard times.",
+    "band": "junior",
+    "image": "💪"
+  },
+  {
+    "question": "Mindfulness means paying attention to the ___",
+    "options": [
+      "past only",
+      "future only",
+      "present"
+    ],
+    "correct_index": 2,
+    "explanation": "Focus on now.",
+    "band": "junior",
+    "image": "🧘"
+  },
+  {
+    "question": "Which is a compound word?",
+    "options": [
+      "sunflower",
+      "sun",
+      "flower"
+    ],
+    "correct_index": 0,
+    "explanation": "Sun + flower combined.",
+    "band": "junior",
+    "image": "🔗"
+  },
+  {
+    "question": "Which word has a silent letter?",
+    "options": [
+      "night only same",
+      "knight",
+      "light"
+    ],
+    "correct_index": 1,
+    "explanation": "Knight has silent k.",
+    "band": "junior",
+    "image": "🌙"
+  },
+  {
+    "question": "Homophones sound the same: their, there, and ___",
+    "options": [
+      "where",
+      "when",
+      "they're"
+    ],
+    "correct_index": 2,
+    "explanation": "They're = they are.",
+    "band": "junior",
+    "image": "🔊"
+  },
+  {
+    "question": "A fable often teaches a ___",
+    "options": [
+      "lesson",
+      "recipe",
+      "map"
+    ],
+    "correct_index": 0,
+    "explanation": "Moral at the end.",
+    "band": "junior",
+    "image": "📖"
+  },
+  {
+    "question": "Irony is when the opposite of what you expect ___",
+    "options": [
+      "sleeps",
+      "happens",
+      "eats"
+    ],
+    "correct_index": 1,
+    "explanation": "Unexpected outcome.",
+    "band": "junior",
+    "image": "😏"
+  },
+  {
+    "question": "Satire uses humor to criticize ___",
+    "options": [
+      "gravity",
+      "math",
+      "society"
+    ],
+    "correct_index": 2,
+    "explanation": "Social commentary.",
+    "band": "junior",
+    "image": "🎭"
+  },
+  {
+    "question": "A stanza is a group of lines in a ___",
+    "options": [
+      "poem",
+      "novel",
+      "map"
+    ],
+    "correct_index": 0,
+    "explanation": "Poetry sections.",
+    "band": "junior",
+    "image": "📝"
+  },
+  {
+    "question": "Rhyme scheme helps poems ___",
+    "options": [
+      "cook",
+      "flow",
+      "drive"
+    ],
+    "correct_index": 1,
+    "explanation": "Pattern of rhymes.",
+    "band": "junior",
+    "image": "🎵"
+  },
+  {
+    "question": "Onomatopoeia: \"buzz\" sounds like a ___",
+    "options": [
+      "cat",
+      "fish",
+      "bee"
+    ],
+    "correct_index": 2,
+    "explanation": "Buzz mimics bees.",
+    "band": "junior",
+    "image": "💥"
+  },
+  {
+    "question": "Personification gives human traits to non-human ___",
+    "options": [
+      "things",
+      "numbers",
+      "years"
+    ],
+    "correct_index": 0,
+    "explanation": "The wind whispered.",
+    "band": "junior",
+    "image": "🗣️"
+  },
+  {
+    "question": "A flashback shows an earlier ___",
+    "options": [
+      "meal",
+      "event",
+      "shoe"
+    ],
+    "correct_index": 1,
+    "explanation": "Past scene in story.",
+    "band": "junior",
+    "image": "⏪"
+  },
+  {
+    "question": "Foreshadowing hints at future ___",
+    "options": [
+      "colors",
+      "food",
+      "events"
+    ],
+    "correct_index": 2,
+    "explanation": "Clues about what comes.",
+    "band": "junior",
+    "image": "🔮"
+  },
+  {
+    "question": "A protagonist faces a ___",
+    "options": [
+      "conflict",
+      "sandwich",
+      "nap"
+    ],
+    "correct_index": 0,
+    "explanation": "Problem to solve.",
+    "band": "junior",
+    "image": "🦸"
+  },
+  {
+    "question": "Resolution is when the conflict is ___",
+    "options": [
+      "started",
+      "solved",
+      "ignored"
+    ],
+    "correct_index": 1,
+    "explanation": "Story ending.",
+    "band": "junior",
+    "image": "✅"
+  },
+  {
+    "question": "Genre of Harry Potter: fantasy and ___",
+    "options": [
+      "cookbook",
+      "manual",
+      "adventure"
+    ],
+    "correct_index": 2,
+    "explanation": "Magic adventure story.",
+    "band": "junior",
+    "image": "🧙"
+  },
+  {
+    "question": "Non-fiction is based on ___ facts.",
+    "options": [
+      "real",
+      "fake",
+      "imaginary"
+    ],
+    "correct_index": 0,
+    "explanation": "True information.",
+    "band": "junior",
+    "image": "📰"
+  },
+  {
+    "question": "A citation tells where you found ___",
+    "options": [
+      "shoes",
+      "information",
+      "food"
+    ],
+    "correct_index": 1,
+    "explanation": "Source reference.",
+    "band": "junior",
+    "image": "📎"
+  },
+  {
+    "question": "Peer review means other experts check your ___",
+    "options": [
+      "lunch",
+      "games",
+      "work"
+    ],
+    "correct_index": 2,
+    "explanation": "Quality control in science.",
+    "band": "junior",
+    "image": "🔍"
+  },
+  {
+    "question": "A variable in science is something that ___",
+    "options": [
+      "changes",
+      "never moves",
+      "disappears"
+    ],
+    "correct_index": 0,
+    "explanation": "Independent variable.",
+    "band": "junior",
+    "image": "🧪"
+  },
+  {
+    "question": "A control group is used for ___",
+    "options": [
+      "cooking",
+      "comparison",
+      "sleep"
+    ],
+    "correct_index": 1,
+    "explanation": "Compare with experiment group.",
+    "band": "junior",
+    "image": "🧫"
+  },
+  {
+    "question": "Hypothesis → experiment → ___ → conclusion",
+    "options": [
+      "lunch",
+      "games",
+      "results"
+    ],
+    "correct_index": 2,
+    "explanation": "Scientific method steps.",
+    "band": "junior",
+    "image": "🔬"
+  },
+  {
+    "question": "Latitude and longitude locate places on a ___",
+    "options": [
+      "map",
+      "menu",
+      "song"
+    ],
+    "correct_index": 0,
+    "explanation": "GPS coordinates.",
+    "band": "junior",
+    "image": "🗺️"
+  },
+  {
+    "question": "Equator divides Earth into north and ___",
+    "options": [
+      "east",
+      "south",
+      "west"
+    ],
+    "correct_index": 1,
+    "explanation": "Middle line of Earth.",
+    "band": "junior",
+    "image": "🌍"
+  },
+  {
+    "question": "A peninsula is land surrounded by water on ___ sides.",
+    "options": [
+      "all four",
+      "none",
+      "three"
+    ],
+    "correct_index": 2,
+    "explanation": "Like a arm of land.",
+    "band": "junior",
+    "image": "🏝️"
+  },
+  {
+    "question": "Archipelago is a group of ___",
+    "options": [
+      "islands",
+      "mountains",
+      "rivers"
+    ],
+    "correct_index": 0,
+    "explanation": "Like islands in the sea.",
+    "band": "junior",
+    "image": "🏝️"
+  },
+  {
+    "question": "Democracy vs dictatorship: who has power?",
+    "options": [
+      "kings only",
+      "people vs one ruler",
+      "no one"
+    ],
+    "correct_index": 1,
+    "explanation": "People vote in democracy.",
+    "band": "junior",
+    "image": "🗳️"
+  },
+  {
+    "question": "GDP measures a country's economic ___",
+    "options": [
+      "weather",
+      "food",
+      "output"
+    ],
+    "correct_index": 2,
+    "explanation": "Gross Domestic Product.",
+    "band": "junior",
+    "image": "📊"
+  },
+  {
+    "question": "Trade means buying and selling ___",
+    "options": [
+      "goods",
+      "clouds",
+      "dreams"
+    ],
+    "correct_index": 0,
+    "explanation": "Exchange products.",
+    "band": "junior",
+    "image": "🤝"
+  },
+  {
+    "question": "Import means bring goods from ___",
+    "options": [
+      "home only",
+      "abroad",
+      "space"
+    ],
+    "correct_index": 1,
+    "explanation": "From other countries.",
+    "band": "junior",
+    "image": "📥"
+  },
+  {
+    "question": "Export means send goods to other ___",
+    "options": [
+      "rooms",
+      "beds",
+      "countries"
+    ],
+    "correct_index": 2,
+    "explanation": "Sell overseas.",
+    "band": "junior",
+    "image": "📤"
+  },
+  {
+    "question": "A tariff is a tax on ___",
+    "options": [
+      "imports",
+      "friends",
+      "books"
+    ],
+    "correct_index": 0,
+    "explanation": "Trade tax.",
+    "band": "junior",
+    "image": "📦"
+  },
+  {
+    "question": "Inflation vs deflation: prices go up vs ___",
+    "options": [
+      "sideways",
+      "down",
+      "away"
+    ],
+    "correct_index": 1,
+    "explanation": "Deflation lowers prices.",
+    "band": "junior",
+    "image": "📈"
+  },
+  {
+    "question": "A budget deficit means spending more than ___",
+    "options": [
+      "sleep",
+      "fun",
+      "income"
+    ],
+    "correct_index": 2,
+    "explanation": "Debt increases.",
+    "band": "junior",
+    "image": "💳"
+  },
+  {
+    "question": "Scholarship helps pay for ___",
+    "options": [
+      "education",
+      "toys",
+      "games"
+    ],
+    "correct_index": 0,
+    "explanation": "School funding aid.",
+    "band": "junior",
+    "image": "🎓"
+  },
+  {
+    "question": "Internship is short work ___ to learn.",
+    "options": [
+      "vacation",
+      "experience",
+      "sleep"
+    ],
+    "correct_index": 1,
+    "explanation": "On-the-job learning.",
+    "band": "junior",
+    "image": "💼"
+  },
+  {
+    "question": "CV is another word for ___",
+    "options": [
+      "recipe",
+      "map",
+      "resume"
+    ],
+    "correct_index": 2,
+    "explanation": "Curriculum vitae.",
+    "band": "junior",
+    "image": "📄"
+  },
+  {
+    "question": "Networking means building professional ___",
+    "options": [
+      "connections",
+      "walls",
+      "bridges"
+    ],
+    "correct_index": 0,
+    "explanation": "Meet people in your field.",
+    "band": "junior",
+    "image": "🤝"
+  },
+  {
+    "question": "Public speaking builds ___ skills.",
+    "options": [
+      "cooking",
+      "communication",
+      "running"
+    ],
+    "correct_index": 1,
+    "explanation": "Speak to audiences.",
+    "band": "junior",
+    "image": "🎤"
+  }
+]
