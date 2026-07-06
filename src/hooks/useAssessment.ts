@@ -49,7 +49,8 @@ function buildResult(scoresList: Scores[], totalXP: number, answerCount: number)
 const WELCOME_MESSAGE: ChatMessage = {
   id: 'welcome',
   role: 'assistant',
-  content: "Hi! Let's have a quick chat in English—just say hi and talk a bit like we're meeting for the first time. I'll listen and we can see how you're doing! 😊",
+  content:
+    "Hi there! I'm so glad to meet you. How are you today? Tell me a little about yourself!",
 };
 
 export function useAssessment(onComplete: (result: AssessmentResult) => void) {
@@ -91,10 +92,11 @@ export function useAssessment(onComplete: (result: AssessmentResult) => void) {
       const scores = data.scores;
       const level = data.level || null;
 
+      const assistantId = crypto.randomUUID();
       setMessages((prev) => [
         ...prev,
         {
-          id: crypto.randomUUID(),
+          id: assistantId,
           role: 'assistant',
           content: reply,
           scores: scores || undefined,
@@ -121,7 +123,7 @@ export function useAssessment(onComplete: (result: AssessmentResult) => void) {
         const result = buildResult(nextScores, xp + addedXP, nextCount);
         onComplete(result);
       }
-      return { reply, scores, level };
+      return { reply, scores, level, messageId: assistantId };
     } catch (e) {
       if ((e as Error).name !== 'AbortError') {
         setMessages((prev) => [

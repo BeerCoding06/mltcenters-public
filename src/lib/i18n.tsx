@@ -20,6 +20,30 @@ export const translations = {
       en: "Have a normal greeting chat—say hi, introduce yourself, small talk. We'll estimate your level from the conversation.",
       th: "คุยทักทายปกติเป็นภาษาอังกฤษ—ทักทาย แนะนำตัว คุยเล่นนิดหน่อย ระบบจะประเมินระดับจากบทสนทนา",
     },
+    startVoice: { en: "Start voice chat", th: "เริ่มคุยด้วยเสียง" },
+    startHint: {
+      en: "Tap to hear the AI and speak back — like a real conversation",
+      th: "แตะเพื่อฟัง AI พูดและตอบกลับด้วยเสียง — เหมือนคุยกันจริง",
+    },
+    points: { en: "Points", th: "คะแนน" },
+    done: { en: "I'm done — show my results", th: "จบแล้ว — ดูผลประเมิน" },
+    status: {
+      idle: { en: "Ready to chat", th: "พร้อมคุย" },
+      listening: { en: "Listening… speak now", th: "กำลังฟัง… พูดได้เลย" },
+      thinking: { en: "Thinking…", th: "กำลังคิด…" },
+      speaking: { en: "AI is speaking…", th: "AI กำลังพูด…" },
+    },
+    chat: {
+      placeholder: { en: "Speak or type in English…", th: "พูดหรือพิมพ์ภาษาอังกฤษ…" },
+      send: { en: "Send", th: "ส่ง" },
+      micOn: { en: "Stop microphone", th: "หยุดไมค์" },
+      micOff: { en: "Start microphone", th: "เปิดไมค์" },
+      replay: { en: "Hear again", th: "ฟังอีกครั้ง" },
+      you: { en: "You", th: "คุณ" },
+      ai: { en: "AI Tutor", th: "AI ติวเตอร์" },
+      voiceMode: { en: "Voice conversation on", th: "โหมดคุยด้วยเสียงเปิดอยู่" },
+      typeMode: { en: "Type to reply", th: "พิมพ์เพื่อตอบ" },
+    },
   },
   hero: {
     headline: {

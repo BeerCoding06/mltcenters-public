@@ -29,29 +29,33 @@ export function CartoonRunner({ animState, speed, position }: Props) {
     const dodgeDir = animState === "dodgeLeft" ? -1 : 1;
 
     if (isDodge) {
-      dodgeT.current = Math.min(1, dodgeT.current + delta * 5);
+      dodgeT.current = Math.min(1, dodgeT.current + delta * 6);
     } else {
-      dodgeT.current = Math.max(0, dodgeT.current - delta * 4);
+      dodgeT.current = Math.max(0, dodgeT.current - delta * 3);
     }
 
     if (animState === "run" || isDodge) {
       const swing = Math.sin(t * pace * 1.2) * 0.75;
-      if (legL.current) legL.current.rotation.x = swing;
-      if (legR.current) legR.current.rotation.x = -swing;
+      if (legL.current) {
+        legL.current.rotation.x = isDodge ? (dodgeDir < 0 ? 0.55 : -0.15) : swing;
+      }
+      if (legR.current) {
+        legR.current.rotation.x = isDodge ? (dodgeDir < 0 ? -0.15 : 0.55) : -swing;
+      }
       if (armL.current) {
-        armL.current.rotation.x = isDodge ? -0.4 + dodgeDir * 0.5 : -swing * 0.7;
-        armL.current.rotation.z = isDodge ? dodgeDir * 0.4 : 0;
+        armL.current.rotation.x = isDodge ? -0.5 + dodgeDir * 0.8 : -swing * 0.7;
+        armL.current.rotation.z = isDodge ? dodgeDir * 0.65 : 0;
       }
       if (armR.current) {
-        armR.current.rotation.x = isDodge ? -0.4 - dodgeDir * 0.3 : swing * 0.7;
-        armR.current.rotation.z = isDodge ? -dodgeDir * 0.2 : 0;
+        armR.current.rotation.x = isDodge ? -0.5 - dodgeDir * 0.5 : swing * 0.7;
+        armR.current.rotation.z = isDodge ? -dodgeDir * 0.35 : 0;
       }
       root.current.position.y = position[1] + Math.abs(Math.sin(t * pace)) * 0.1;
-      root.current.rotation.x = isDodge ? 0.2 : 0.08;
+      root.current.rotation.x = isDodge ? 0.28 : 0.08;
       root.current.rotation.z = isDodge
-        ? dodgeDir * (0.22 + dodgeT.current * 0.12)
+        ? dodgeDir * (0.35 + dodgeT.current * 0.2)
         : Math.sin(t * pace) * 0.03;
-      root.current.rotation.y = isDodge ? dodgeDir * -0.15 : 0;
+      root.current.rotation.y = isDodge ? dodgeDir * -0.28 : 0;
     } else if (animState === "idle") {
       root.current.position.y = position[1] + Math.sin(t * 2) * 0.03;
       root.current.rotation.set(0, 0, 0);

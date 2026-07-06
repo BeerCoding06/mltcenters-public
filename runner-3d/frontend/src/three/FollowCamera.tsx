@@ -19,7 +19,7 @@ export function FollowCamera({ target, offset = [0, 2.8, -6] }: Props) {
       target.current.position.y + oy,
       target.current.position.z + oz
     );
-    state.camera.position.lerp(desired, 0.08);
+    state.camera.position.lerp(desired, 0.12);
     state.camera.lookAt(
       target.current.position.x,
       target.current.position.y + 1.2,

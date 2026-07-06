@@ -3,6 +3,7 @@ import { useMemo } from "react";
 interface Obstacle {
   id: number;
   z: number;
+  lane: number;
   kind: "barrel" | "cone" | "crate";
 }
 
@@ -50,7 +51,7 @@ export function ObstacleTrack({ obstacles, scrollZ }: Props) {
       ))}
 
       {obstacles.map((o) => (
-        <ObstacleMesh key={o.id} kind={o.kind} position={[0, 0, o.z]} />
+        <ObstacleMesh key={o.id} kind={o.kind} position={[o.lane, 0, o.z]} />
       ))}
 
       {/* Finish line */}

@@ -5,6 +5,7 @@ import * as THREE from "three";
 import { AvatarCharacter } from "./AvatarCharacter";
 import { FollowCamera } from "./FollowCamera";
 import { ObstacleTrack, type Obstacle } from "./ObstacleTrack";
+import { DODGE_RANGE_MAX, DODGE_RANGE_MIN, LANE_DODGE_X } from "../constants";
 import type { AnimState } from "../types";
 
 interface Props {
@@ -15,23 +16,59 @@ interface Props {
   playerZ: number;
 }
 
+function pickAvoidLane(obstacleLane: number, obstacleId: number): number {
+  if (obstacleLane === 0) {
+    return obstacleId % 2 === 0 ? -LANE_DODGE_X : LANE_DODGE_X;
+  }
+  return obstacleLane > 0 ? -LANE_DODGE_X : LANE_DODGE_X;
+}
+
 function SceneInner({ speed, animState, scrollZ, obstacles, playerZ }: Props) {
   const playerRef = useRef<THREE.Group>(null);
   const laneX = useRef(0);
   const laneTarget = useRef(0);
 
   useEffect(() => {
-    if (animState === "dodgeLeft") laneTarget.current = -1.7;
-    else if (animState === "dodgeRight") laneTarget.current = 1.7;
-    else if (animState === "run" || animState === "idle") laneTarget.current = 0;
-  }, [animState]);
+    if (animState === "dodgeLeft") laneTarget.current = -LANE_DODGE_X;
+    else if (animState === "dodgeRight") laneTarget.current = LANE_DODGE_X;
+    else if (animState === "run" || animState === "idle") {
+      const nearest = obstacles
+        .map((o) => ({ o, dist: o.z - scrollZ }))
+        .filter(({ dist }) => dist > DODGE_RANGE_MIN && dist < DODGE_RANGE_MAX)
+        .sort((a, b) => a.dist - b.dist)[0];
+      laneTarget.current = nearest
+        ? pickAvoidLane(nearest.o.lane, nearest.o.id)
+        : 0;
+    }
+  }, [animState, obstacles, scrollZ]);
 
   useFrame((_, delta) => {
     if (!playerRef.current) return;
-    const speed = animState === "dodgeLeft" || animState === "dodgeRight" ? 14 : 6;
-    laneX.current = THREE.MathUtils.lerp(laneX.current, laneTarget.current, delta * speed);
+
+    const nearest = obstacles
+      .map((o) => ({ o, dist: o.z - scrollZ }))
+      .filter(({ dist }) => dist > DODGE_RANGE_MIN && dist < DODGE_RANGE_MAX)
+      .sort((a, b) => a.dist - b.dist)[0];
+
+    let targetX = 0;
+    if (animState === "dodgeLeft") targetX = -LANE_DODGE_X;
+    else if (animState === "dodgeRight") targetX = LANE_DODGE_X;
+    else if (nearest) targetX = pickAvoidLane(nearest.o.lane, nearest.o.id);
+
+    laneTarget.current = targetX;
+    const dodging =
+      animState === "dodgeLeft" ||
+      animState === "dodgeRight" ||
+      Boolean(nearest);
+    const lerpSpeed = dodging ? 20 : 7;
+    laneX.current = THREE.MathUtils.lerp(laneX.current, laneTarget.current, delta * lerpSpeed);
     playerRef.current.position.x = laneX.current;
     playerRef.current.position.z = playerZ;
+    playerRef.current.rotation.z = THREE.MathUtils.lerp(
+      playerRef.current.rotation.z,
+      -laneX.current * 0.12,
+      delta * 10
+    );
   });
 
   return (
@@ -67,7 +104,7 @@ export function GameScene(props: Props) {
       <Suspense
         fallback={
           <Html center>
-            <span className="text-white text-sm animate-pulse">Loading 3D world…</span>
+            <span className="text-white text-sm animate-pulse">กำลังโหลดโลก 3D…</span>
           </Html>
         }
       >

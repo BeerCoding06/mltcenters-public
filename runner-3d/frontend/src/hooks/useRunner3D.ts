@@ -1,12 +1,28 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { gameApi } from "../services/api";
-import { TARGET_QUESTIONS } from "../constants";
+import {
+  TARGET_QUESTIONS,
+  OBSTACLE_GAP,
+  OBSTACLE_SPAWN_AHEAD_MIN,
+  OBSTACLE_SPAWN_AHEAD_SPREAD,
+  OBSTACLE_LANES,
+  DODGE_RANGE_MIN,
+  DODGE_RANGE_MAX,
+  LANE_DODGE_X,
+  QUESTION_TIMER_SEC,
+  FEEDBACK_MS,
+} from "../constants";
 import type { AnimState, GamePhase, GameState, PerformanceEvaluation } from "../types";
 import type { Obstacle } from "../three/ObstacleTrack";
 
-const OBSTACLE_GAP = 7;
-const QUESTION_TIMER_SEC = 9;
-const FEEDBACK_MS = 1200;
+const OBSTACLE_HIT_BUFFER = 3;
+
+function pickAvoidLane(obstacleLane: number, obstacleId: number): number {
+  if (obstacleLane === 0) {
+    return obstacleId % 2 === 0 ? -LANE_DODGE_X : LANE_DODGE_X;
+  }
+  return obstacleLane > 0 ? -LANE_DODGE_X : LANE_DODGE_X;
+}
 
 export function useRunner3D() {
   const [phase, setPhase] = useState<GamePhase>("loading");
@@ -30,6 +46,16 @@ export function useRunner3D() {
   const speedRef = useRef(8);
   const questionTimer = useRef(0);
   const sessionRef = useRef<string | null>(null);
+  const obstaclesRef = useRef<Obstacle[]>([]);
+  const animStateRef = useRef<AnimState>("idle");
+
+  useEffect(() => {
+    obstaclesRef.current = obstacles;
+  }, [obstacles]);
+
+  useEffect(() => {
+    animStateRef.current = animState;
+  }, [animState]);
 
   const init = useCallback(async () => {
     const res = await gameApi.newGame();
@@ -78,26 +104,47 @@ export function useRunner3D() {
       questionTimer.current += delta;
       const sid = sessionRef.current;
 
+      const obs = obstaclesRef.current;
+      let obstacleDodge: AnimState | null = null;
+      for (const o of obs) {
+        const dist = o.z - z;
+        if (dist > DODGE_RANGE_MIN && dist < DODGE_RANGE_MAX) {
+          obstacleDodge = pickAvoidLane(o.lane, o.id) < 0 ? "dodgeLeft" : "dodgeRight";
+          break;
+        }
+      }
+      if (obstacleDodge && animStateRef.current !== obstacleDodge) {
+        animStateRef.current = obstacleDodge;
+        setAnimState(obstacleDodge);
+      } else if (
+        !obstacleDodge &&
+        (animStateRef.current === "dodgeLeft" || animStateRef.current === "dodgeRight")
+      ) {
+        animStateRef.current = "run";
+        setAnimState("run");
+      }
+
       if (sid && questionTimer.current >= QUESTION_TIMER_SEC) {
         void fetchQuestion(sid);
       } else if (z - lastSpawnZ.current > OBSTACLE_GAP) {
         lastSpawnZ.current = z;
         const kinds: Obstacle["kind"][] = ["barrel", "cone", "crate"];
-        const batch = 1 + (Math.random() > 0.6 ? 1 : 0);
-        const newObs: Obstacle[] = [];
-        for (let i = 0; i < batch; i++) {
-          newObs.push({
+        const lane =
+          OBSTACLE_LANES[Math.floor(Math.random() * OBSTACLE_LANES.length)];
+        const newObs: Obstacle[] = [
+          {
             id: nextObstacleId.current++,
-            z: z + 14 + i * 6 + Math.random() * 4,
+            z: z + OBSTACLE_SPAWN_AHEAD_MIN + Math.random() * OBSTACLE_SPAWN_AHEAD_SPREAD,
+            lane,
             kind: kinds[Math.floor(Math.random() * kinds.length)],
-          });
-        }
-        setObstacles((prev) => [...prev.filter((o) => o.z > z - 8), ...newObs]);
+          },
+        ];
+        setObstacles((prev) => [...prev.filter((o) => o.z > z - 12), ...newObs]);
       }
 
       setObstacles((obs) => {
         for (const o of obs) {
-          if (!hitObstacles.current.has(o.id) && z + 3 >= o.z && sid) {
+          if (!hitObstacles.current.has(o.id) && z + OBSTACLE_HIT_BUFFER >= o.z && sid) {
             hitObstacles.current.add(o.id);
             void fetchQuestion(sid);
             break;

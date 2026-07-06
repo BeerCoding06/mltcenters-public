@@ -1,140 +1,51 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { Volume2 } from 'lucide-react';
 import { useI18n } from '@/lib/i18n';
 import { AIAssistantAvatar } from '@/components/assessment/AIAssistantAvatar';
 import { AIIcon } from '@/components/assessment/AIIcon';
 import { ChatWindow } from '@/components/assessment/ChatWindow';
 import { useAssessment } from '@/hooks/useAssessment';
+import { useTextToSpeech } from '@/hooks/useTextToSpeech';
+import { useSpeechRecognition } from '@/hooks/useSpeechRecognition';
 import type { AvatarState } from '@/types/assessment';
 import type { AssessmentResult } from '@/types/assessment';
 
 const ASSESSMENT_STORAGE_KEY = 'mlt-assessment-result';
 const XP_STORAGE_KEY = 'mlt-assessment-xp';
 
-function useSpeechRecognition(onResult: (text: string) => void) {
-  const [supported, setSupported] = useState(false);
-  const [isListening, setIsListening] = useState(false);
-  const recognitionRef = useRef<SpeechRecognition | null>(null);
-
-  useEffect(() => {
-    const SpeechRecognitionAPI =
-      (window as Window & { SpeechRecognition?: typeof SpeechRecognition }).SpeechRecognition ||
-      (window as Window & { webkitSpeechRecognition?: typeof SpeechRecognition }).webkitSpeechRecognition;
-    if (!SpeechRecognitionAPI) return;
-    const rec = new SpeechRecognitionAPI();
-    rec.continuous = false;
-    rec.lang = 'en-US';
-    rec.interimResults = false;
-    rec.onresult = (e: SpeechRecognitionEvent) => {
-      const text = Array.from(e.results)
-        .map((r) => r[0].transcript)
-        .join(' ');
-      onResult(text);
-    };
-    rec.onend = () => setIsListening(false);
-    rec.onerror = () => setIsListening(false);
-    recognitionRef.current = rec;
-    setSupported(true);
-    return () => {
-      try {
-        recognitionRef.current?.abort();
-      } catch {
-        /* ignore */
-      }
-    };
-  }, [onResult]);
-
-  const toggle = useCallback(() => {
-    if (!recognitionRef.current) return;
-    if (isListening) {
-      recognitionRef.current.stop();
-    } else {
-      try {
-        recognitionRef.current.start();
-        setIsListening(true);
-      } catch {
-        setIsListening(false);
-      }
-    }
-  }, [isListening]);
-
-  return { supported, isListening, toggle };
-}
-
-function useTTS() {
-  const synth = typeof window !== 'undefined' ? window.speechSynthesis : null;
-  const voicesRef = useRef<SpeechSynthesisVoice[]>([]);
-  const unlockedRef = useRef(false);
-
-  useEffect(() => {
-    if (!synth) return;
-    const load = () => {
-      voicesRef.current = synth.getVoices();
-    };
-    load();
-    synth.onvoiceschanged = load;
-  }, [synth]);
-
-  /** Call once right after a user click to allow TTS to work after async (browser autoplay policy). */
-  const unlockAudio = useCallback(() => {
-    if (!synth || unlockedRef.current) return;
-    unlockedRef.current = true;
-    const u = new SpeechSynthesisUtterance('');
-    u.volume = 0;
-    u.rate = 10;
-    synth.speak(u);
-    synth.cancel();
-  }, [synth]);
-
-  const speak = useCallback(
-    (text: string, onEnd?: () => void) => {
-      if (!synth) return;
-      const t = String(text || '').trim();
-      if (!t) return;
-      synth.cancel();
-      if (voicesRef.current.length === 0) voicesRef.current = synth.getVoices();
-      const u = new SpeechSynthesisUtterance(t);
-      u.lang = 'en-US';
-      u.rate = 1.05;
-      u.volume = 1;
-      const en = voicesRef.current.find((v) => v.lang.startsWith('en'));
-      if (en) u.voice = en;
-      u.onend = () => onEnd?.();
-      u.onerror = () => onEnd?.();
-      synth.speak(u);
-    },
-    [synth]
-  );
-
-  const stop = useCallback(() => {
-    synth?.cancel();
-  }, [synth]);
-
-  return { speak, stop, unlockAudio };
-}
-
 export default function EnglishAssessmentPage() {
   const { lang, t } = useI18n();
   const navigate = useNavigate();
   const [avatarState, setAvatarState] = useState<AvatarState>('idle');
-  const [result, setResult] = useState<AssessmentResult | null>(null);
-  const { speak, stop, unlockAudio } = useTTS();
+  const [conversationStarted, setConversationStarted] = useState(false);
+  const [voiceMode, setVoiceMode] = useState(true);
+  const [speakingMessageId, setSpeakingMessageId] = useState<string | null>(null);
+  const voiceModeRef = useRef(voiceMode);
+  const busyRef = useRef(false);
+  const pendingSendRef = useRef<string | null>(null);
+
+  const { speak, stop, unlockAudio, isSpeaking } = useTextToSpeech();
+
+  useEffect(() => {
+    voiceModeRef.current = voiceMode;
+  }, [voiceMode]);
 
   const handleComplete = useCallback(
     (r: AssessmentResult) => {
-      setResult(r);
+      stop();
       try {
         localStorage.setItem(ASSESSMENT_STORAGE_KEY, JSON.stringify(r));
         const hist = JSON.parse(localStorage.getItem(XP_STORAGE_KEY) || '[]');
         hist.push({ xp: r.totalXP, at: Date.now() });
         localStorage.setItem(XP_STORAGE_KEY, JSON.stringify(hist.slice(-20)));
       } catch {
-        /* ignore storage errors */
+        /* ignore */
       }
       navigate('/assessment/dashboard', { state: { result: r }, replace: true });
     },
-    [navigate]
+    [navigate, stop]
   );
 
   const {
@@ -144,38 +55,147 @@ export default function EnglishAssessmentPage() {
     sendToAPI,
     isThinking,
     xp,
-    answerCount,
     progress,
     completeWithCurrent,
   } = useAssessment(handleComplete);
 
-  const onResult = useCallback(
+  const speakReply = useCallback(
+    (text: string, messageId?: string, thenListen = false) => {
+      setAvatarState('speaking');
+      if (messageId) setSpeakingMessageId(messageId);
+      speak(text, () => {
+        setAvatarState('idle');
+        setSpeakingMessageId(null);
+        if (thenListen && voiceModeRef.current && !busyRef.current) {
+          window.setTimeout(() => startListeningRef.current?.(), 400);
+        }
+      });
+    },
+    [speak]
+  );
+
+  const handleSend = useCallback(
+    async (textOverride?: string) => {
+      const text = (textOverride ?? input).trim();
+      if (!text || busyRef.current) return;
+
+      busyRef.current = true;
+      stopListeningRef.current?.();
+      unlockAudio();
+      setAvatarState('thinking');
+      stop();
+
+      const out = await sendToAPI(text);
+      busyRef.current = false;
+
+      if (out?.reply) {
+        speakReply(out.reply, out.messageId, voiceModeRef.current);
+      } else {
+        setAvatarState('idle');
+        if (voiceModeRef.current) startListeningRef.current?.();
+      }
+    },
+    [input, sendToAPI, speakReply, stop, unlockAudio]
+  );
+
+  const onSpeechFinal = useCallback(
     (text: string) => {
-      setInput((prev) => (prev ? `${prev} ${text}` : text));
+      setInput(text);
+      if (voiceModeRef.current && conversationStarted) {
+        pendingSendRef.current = text;
+      }
+    },
+    [setInput, conversationStarted]
+  );
+
+  const onSpeechInterim = useCallback(
+    (text: string) => {
+      setInput(text);
     },
     [setInput]
   );
-  const { supported: micSupported, isListening, toggle: toggleMic } = useSpeechRecognition(onResult);
 
-  const handleSend = useCallback(async () => {
-    const text = input.trim();
-    if (!text) return;
+  const {
+    supported: micSupported,
+    isListening,
+    start: startListening,
+    stop: stopListening,
+    toggle: toggleMic,
+  } = useSpeechRecognition({
+    lang: 'en-US',
+    onFinal: onSpeechFinal,
+    onInterim: onSpeechInterim,
+  });
+
+  const startListeningRef = useRef(startListening);
+  const stopListeningRef = useRef(stopListening);
+  useEffect(() => {
+    startListeningRef.current = startListening;
+    stopListeningRef.current = stopListening;
+  }, [startListening, stopListening]);
+
+  useEffect(() => {
+    if (!pendingSendRef.current || isListening || isThinking || isSpeaking) return;
+    const text = pendingSendRef.current;
+    pendingSendRef.current = null;
+    void handleSend(text);
+  }, [isListening, isThinking, isSpeaking, handleSend]);
+
+  const startConversation = useCallback(() => {
     unlockAudio();
-    setAvatarState('thinking');
-    stop();
-    const out = await sendToAPI(text);
-    if (out?.reply) {
-      setAvatarState('speaking');
-      speak(out.reply, () => setAvatarState('idle'));
+    setConversationStarted(true);
+    setVoiceMode(true);
+    const welcome = messages[0];
+    if (welcome?.role === 'assistant') {
+      speakReply(welcome.content, welcome.id, true);
     } else {
-      setAvatarState('idle');
+      startListening();
     }
-  }, [input, sendToAPI, speak, stop, unlockAudio]);
+  }, [unlockAudio, messages, speakReply, startListening]);
+
+  const handleReplay = useCallback(
+    (text: string) => {
+      unlockAudio();
+      stopListening();
+      speakReply(text);
+    },
+    [unlockAudio, stopListening, speakReply]
+  );
+
+  const handleToggleMic = useCallback(() => {
+    unlockAudio();
+    if (isListening) stopListening();
+    else startListening();
+  }, [unlockAudio, isListening, stopListening, startListening]);
 
   useEffect(() => {
     if (isListening) setAvatarState('listening');
-    else if (!isListening && avatarState === 'listening') setAvatarState('idle');
-  }, [isListening, avatarState]);
+    else if (avatarState === 'listening' && !isSpeaking && !isThinking) {
+      setAvatarState('idle');
+    }
+  }, [isListening, isSpeaking, isThinking, avatarState]);
+
+  useEffect(() => {
+    if (isThinking) setAvatarState('thinking');
+  }, [isThinking]);
+
+  const statusText = isThinking
+    ? t.assessmentPage.status.thinking[lang]
+    : isSpeaking || speakingMessageId
+      ? t.assessmentPage.status.speaking[lang]
+      : isListening
+        ? t.assessmentPage.status.listening[lang]
+        : t.assessmentPage.status.idle[lang];
+
+  const chatLabels = {
+    placeholder: t.assessmentPage.chat.placeholder[lang],
+    micOn: t.assessmentPage.chat.micOn[lang],
+    micOff: t.assessmentPage.chat.micOff[lang],
+    replay: t.assessmentPage.chat.replay[lang],
+    you: t.assessmentPage.chat.you[lang],
+    ai: t.assessmentPage.chat.ai[lang],
+    voiceMode: t.assessmentPage.chat.voiceMode[lang],
+  };
 
   return (
     <div className="min-h-screen bg-[#F8FAFC] py-16">
@@ -194,10 +214,9 @@ export default function EnglishAssessmentPage() {
           {t.assessmentPage.subtitle[lang]}
         </p>
 
-        {/* XP & progress - simple, playful */}
         <div className="max-w-2xl mx-auto mb-6 flex flex-col sm:flex-row items-center justify-center gap-4">
           <div className="rounded-2xl bg-white/90 shadow-lg px-5 py-2.5 border border-[#5BC0FF]/20">
-            <span className="text-muted-foreground text-xs">Points</span>
+            <span className="text-muted-foreground text-xs">{t.assessmentPage.points[lang]}</span>
             <p className="text-xl font-bold text-[#5BC0FF]">{xp}</p>
           </div>
           <div className="flex-1 w-full max-w-xs">
@@ -212,13 +231,36 @@ export default function EnglishAssessmentPage() {
           </div>
         </div>
 
+        {!conversationStarted && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.96 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="max-w-md mx-auto mb-8 text-center"
+          >
+            <button
+              type="button"
+              onClick={startConversation}
+              className="w-full rounded-2xl bg-gradient-to-r from-[#5BC0FF] to-[#6EE7B7] px-8 py-5 text-lg font-bold text-white shadow-xl hover:shadow-2xl transition-all flex items-center justify-center gap-3"
+            >
+              <Volume2 className="h-6 w-6" />
+              {t.assessmentPage.startVoice[lang]}
+            </button>
+            <p className="mt-3 text-sm text-muted-foreground">{t.assessmentPage.startHint[lang]}</p>
+          </motion.div>
+        )}
+
         <div className="max-w-5xl mx-auto flex flex-col lg:flex-row gap-8 items-start">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="flex-shrink-0 flex justify-center lg:block"
+            className="flex-shrink-0 flex flex-col items-center gap-2 lg:block"
           >
             <AIAssistantAvatar state={avatarState} className="w-32 h-32 lg:w-40 lg:h-40" />
+            {conversationStarted && voiceMode && (
+              <p className="text-xs text-center text-[#5BC0FF] font-medium max-w-[10rem]">
+                {t.assessmentPage.chat.voiceMode[lang]}
+              </p>
+            )}
           </motion.div>
           <motion.div
             initial={{ opacity: 0, x: 20 }}
@@ -230,16 +272,35 @@ export default function EnglishAssessmentPage() {
               messages={messages}
               inputValue={input}
               onInputChange={setInput}
-              onSend={handleSend}
+              onSend={() => void handleSend()}
               isListening={isListening}
-              onToggleMic={toggleMic}
+              onToggleMic={handleToggleMic}
               micSupported={micSupported}
-              disabled={isThinking}
+              disabled={isThinking || isSpeaking || !conversationStarted}
+              statusText={statusText}
+              avatarState={avatarState}
+              speakingMessageId={speakingMessageId}
+              onReplay={handleReplay}
+              labels={chatLabels}
             />
           </motion.div>
         </div>
 
-        <div className="text-center mt-6">
+        <div className="text-center mt-6 flex flex-col sm:flex-row items-center justify-center gap-4">
+          {conversationStarted && (
+            <button
+              type="button"
+              onClick={() => {
+                setVoiceMode((v) => !v);
+                stopListening();
+              }}
+              className="text-sm text-muted-foreground hover:text-[#5BC0FF]"
+            >
+              {voiceMode
+                ? t.assessmentPage.chat.typeMode[lang]
+                : t.assessmentPage.chat.voiceMode[lang]}
+            </button>
+          )}
           <button
             type="button"
             onClick={() => {
@@ -248,7 +309,7 @@ export default function EnglishAssessmentPage() {
             }}
             className="text-sm text-muted-foreground hover:text-[#5BC0FF] underline"
           >
-            I'm done — show my results
+            {t.assessmentPage.done[lang]}
           </button>
         </div>
       </div>
