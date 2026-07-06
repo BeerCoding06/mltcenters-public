@@ -15,7 +15,7 @@ export default function App() {
     scrollZ,
     obstacles,
     jumpHeight,
-    activeObstacleId,
+    stoppedAtObstacle,
     evaluation,
     submitting,
     fx,
@@ -25,10 +25,12 @@ export default function App() {
     restart,
   } = useGameManager();
 
-  const atObstacle = activeObstacleId != null;
   const showQuestion =
-    Boolean(state?.current_question) && phase === "running" && atObstacle;
-  const showQuestionLoading = phase === "running" && atObstacle && !state?.current_question;
+    Boolean(state?.current_question) &&
+    phase === "running" &&
+    stoppedAtObstacle;
+  const showQuestionLoading =
+    phase === "running" && stoppedAtObstacle && !state?.current_question;
 
   return (
     <div className="flex h-full min-h-screen flex-col bg-slate-900">

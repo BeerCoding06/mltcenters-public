@@ -64,6 +64,7 @@ export interface GameSnapshot {
   obstacles: Obstacle[];
   jumpHeight: number;
   activeObstacleId: number | null;
+  stoppedAtObstacle: boolean;
   evaluation: PerformanceEvaluation | null;
   submitting: boolean;
   fx: VisualFx;

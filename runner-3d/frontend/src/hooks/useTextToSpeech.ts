@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
-const CHILD_SPEECH_RATE = 0.72;
-const CHILD_SPEECH_PITCH = 1.08;
-const SEQUENCE_GAP_MS = 450;
+const CHILD_SPEECH_RATE = 0.58;
+const CHILD_SPEECH_PITCH = 1.06;
+const SEQUENCE_GAP_MS = 700;
 
 function pickEnglishVoice(voices: SpeechSynthesisVoice[]): SpeechSynthesisVoice | undefined {
   return (
@@ -131,5 +131,10 @@ export function useTextToSpeech() {
     [speak],
   );
 
-  return { speak, speakOnce, speakSequence, stop, unlockAudio, isSpeaking };
+  /** Stop auto-read when the player picks an answer. */
+  const stopForAnswer = useCallback(() => {
+    stop();
+  }, [stop]);
+
+  return { speak, speakOnce, speakSequence, stop, stopForAnswer, unlockAudio, isSpeaking };
 }

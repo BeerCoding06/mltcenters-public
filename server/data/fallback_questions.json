@@ -248,7 +248,7 @@
     ],
     "correct_index": 2,
     "explanation": "A ball can be red.",
-    "image": "/assets/image-game/ball.webp",
+    "image": "/assets/image-game/Ball-color.webp",
     "band": "young"
   },
   {
@@ -260,7 +260,7 @@
     ],
     "correct_index": 0,
     "explanation": "Leaves are green.",
-    "image": "/assets/image-game/leaf.webp",
+    "image": "/assets/image-game/Leaf-color.webp",
     "band": "young"
   },
   {
@@ -272,7 +272,7 @@
     ],
     "correct_index": 1,
     "explanation": "Fire trucks are red.",
-    "image": "/assets/image-game/fire-truck.webp",
+    "image": "/assets/image-game/Fire-truck-color.webp",
     "band": "young"
   },
   {
@@ -284,7 +284,7 @@
     ],
     "correct_index": 2,
     "explanation": "Snow is white.",
-    "image": "/assets/image-game/snow.webp",
+    "image": "/assets/image-game/Snow-color.webp",
     "band": "young"
   },
   {
@@ -296,7 +296,7 @@
     ],
     "correct_index": 0,
     "explanation": "Chocolate is brown.",
-    "image": "/assets/image-game/chocolate.webp",
+    "image": "/assets/image-game/Chocolate-color.webp",
     "band": "young"
   },
   {

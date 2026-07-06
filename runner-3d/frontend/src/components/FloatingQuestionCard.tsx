@@ -21,7 +21,12 @@ export function FloatingQuestionCard({
   disabled,
   feedback,
 }: Props) {
-  const { speakOnce, speakSequence, stop, isSpeaking } = useTextToSpeech();
+  const { speakOnce, speakSequence, stop, stopForAnswer, isSpeaking } = useTextToSpeech();
+
+  const pickAnswer = (index: number) => {
+    stopForAnswer();
+    onAnswer(index);
+  };
 
   useEffect(() => {
     if (feedback != null) return;
@@ -33,7 +38,7 @@ export function FloatingQuestionCard({
 
     const timer = window.setTimeout(() => {
       speakSequence(lines);
-    }, 500);
+    }, 650);
 
     return () => {
       window.clearTimeout(timer);
@@ -89,24 +94,26 @@ export function FloatingQuestionCard({
               const isSelected = feedback?.selectedIndex === i;
               const showCorrect = feedback && isSelected && feedback.correct;
               const showWrong = feedback && isSelected && !feedback.correct;
+              const rowClass = `flex items-center gap-2 rounded-2xl border px-3 py-2.5 transition-all sm:px-4 sm:py-3.5 ${
+                showCorrect
+                  ? "border-green-400 bg-green-500/40"
+                  : showWrong
+                    ? "border-red-400 bg-red-500/40"
+                    : "border-white/20 bg-black/25 hover:border-white/40 hover:bg-black/35"
+              }`;
               return (
-                <button
-                  key={i}
-                  type="button"
-                  disabled={disabled || feedback != null}
-                  onClick={() => onAnswer(i)}
-                  className={`flex items-center gap-3 rounded-2xl border px-4 py-3.5 text-left text-sm font-medium transition-all active:scale-[0.98] disabled:opacity-90 sm:text-base ${
-                    showCorrect
-                      ? "border-green-400 bg-green-500/40 text-white"
-                      : showWrong
-                        ? "border-red-400 bg-red-500/40 text-white"
-                        : "border-white/20 bg-black/25 text-white hover:border-white/40 hover:bg-black/35"
-                  }`}
-                >
-                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/20 text-sm font-bold">
-                    {LABELS[i]}
-                  </span>
-                  <span className="flex-1">{opt}</span>
+                <div key={i} className={rowClass}>
+                  <button
+                    type="button"
+                    disabled={disabled || feedback != null}
+                    onClick={() => pickAnswer(i)}
+                    className="flex min-w-0 flex-1 items-center gap-3 text-left text-sm font-medium text-white transition-all active:scale-[0.98] disabled:opacity-90 sm:text-base"
+                  >
+                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/20 text-sm font-bold">
+                      {LABELS[i]}
+                    </span>
+                    <span className="flex-1">{opt}</span>
+                  </button>
                   <SpeakButton
                     text={`${LABELS[i]}. ${opt}`}
                     onSpeak={speakOnce}
@@ -114,7 +121,7 @@ export function FloatingQuestionCard({
                     label={`Read answer ${LABELS[i]}`}
                     size="sm"
                   />
-                </button>
+                </div>
               );
             })}
           </div>

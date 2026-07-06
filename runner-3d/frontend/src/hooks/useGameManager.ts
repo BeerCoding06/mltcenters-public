@@ -44,6 +44,7 @@ export function useGameManager() {
     obstacles: [],
     jumpHeight: 0,
     activeObstacleId: null,
+    stoppedAtObstacle: false,
     evaluation: null,
     submitting: false,
     fx: EMPTY_FX,
@@ -79,6 +80,7 @@ export function useGameManager() {
   const submittingRef = useRef(false);
   const gameOverRef = useRef(false);
   const bumpTargetRef = useRef<number | null>(null);
+  const stoppedAtObstacleRef = useRef(false);
 
   const patch = useCallback((partial: Partial<GameSnapshot>) => {
     setSnap((s) => ({ ...s, ...partial }));
@@ -97,6 +99,7 @@ export function useGameManager() {
         obstacles: obstaclesRef.current,
         jumpHeight: jumpHeightRef.current,
         activeObstacleId: activeObstacleRef.current,
+        stoppedAtObstacle: stoppedAtObstacleRef.current,
         state: stateRef.current ? { ...stateRef.current } : null,
         submitting: submittingRef.current,
         combo: comboRef.current,
@@ -123,6 +126,7 @@ export function useGameManager() {
     obstacleMgr.current.reset();
     resolvedObstacles.current.clear();
     activeObstacleRef.current = null;
+    stoppedAtObstacleRef.current = false;
     syncSnap(true);
   }, [syncSnap]);
 
@@ -362,6 +366,25 @@ export function useGameManager() {
         scrollRef.current = newZ;
         z = scrollRef.current;
 
+        const stopObs =
+          activeObstacleRef.current != null
+            ? obstaclesRef.current.find((o) => o.id === activeObstacleRef.current)
+            : null;
+        if (
+          stopObs &&
+          !jumpSys.current.isActive() &&
+          hitRecoverT.current <= 0 &&
+          animRef.current !== "hit" &&
+          animRef.current !== "recover"
+        ) {
+          const stopZ = stopObs.z - OBSTACLE_STOP_DIST;
+          const dist = stopObs.z - z;
+          stoppedAtObstacleRef.current =
+            dist <= OBSTACLE_STOP_DIST + 0.2 && z >= stopZ - 0.1;
+        } else {
+          stoppedAtObstacleRef.current = false;
+        }
+
         if (
           nextObstacle &&
           activeObstacleRef.current == null &&
@@ -376,7 +399,8 @@ export function useGameManager() {
           activeObstacleRef.current != null &&
           !stateRef.current?.current_question &&
           !submittingRef.current &&
-          !fetchingQ.current
+          !fetchingQ.current &&
+          nearStop
         ) {
           void fetchQuestion();
         }
@@ -458,6 +482,7 @@ export function useGameManager() {
     resolvedObstacles.current.clear();
     jumpSys.current.reset();
     activeObstacleRef.current = null;
+    stoppedAtObstacleRef.current = false;
     comboRef.current = 0;
     bumpTargetRef.current = null;
     hitRecoverT.current = 0;

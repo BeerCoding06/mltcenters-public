@@ -50,11 +50,11 @@ colors.forEach(([color, thing, exp]) => {
   bank.push(q(`What color is the ${thing}?`, color, 'pink', 'gray', exp));
   bank.push(qRot(`Find the color: ${color}`, color, 'seven', 'run', 0, `${color} is a color.`));
 });
-bank.push(qPhoto('Ball color?', 'red', 'eat', 'jump', 'A ball can be red.', 'ball.webp'));
-bank.push(qPhoto('Leaf color?', 'green', 'hot', 'loud', 'Leaves are green.', 'leaf.webp'));
-bank.push(qPhoto('Fire truck color?', 'red', 'soft', 'slow', 'Fire trucks are red.', 'fire-truck.webp'));
-bank.push(qPhoto('Snow color?', 'white', 'big', 'fast', 'Snow is white.', 'snow.webp'));
-bank.push(qPhoto('Chocolate color?', 'brown', 'fly', 'sing', 'Chocolate is brown.', 'chocolate.webp'));
+bank.push(qPhoto('Ball color?', 'red', 'eat', 'jump', 'A ball can be red.', 'Ball-color.webp'));
+bank.push(qPhoto('Leaf color?', 'green', 'hot', 'loud', 'Leaves are green.', 'Leaf-color.webp'));
+bank.push(qPhoto('Fire truck color?', 'red', 'soft', 'slow', 'Fire trucks are red.', 'Fire-truck-color.webp'));
+bank.push(qPhoto('Snow color?', 'white', 'big', 'fast', 'Snow is white.', 'Snow-color.webp'));
+bank.push(qPhoto('Chocolate color?', 'brown', 'fly', 'sing', 'Chocolate is brown.', 'Chocolate-color.webp'));
 
 // —— Animals & sounds (40) —— shared panorama; image_focus pans to each animal
 const ANIMALS_SOUND_IMAGE = 'animals-sounds.webp';
