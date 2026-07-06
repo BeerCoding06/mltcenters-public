@@ -9,6 +9,7 @@ export default defineConfig({
     proxy: {
       "/runner-api": { target: "http://localhost:3000", changeOrigin: true },
       "/api/v1": { target: "http://localhost:8003", changeOrigin: true },
+      "/assets": { target: "http://localhost:8080", changeOrigin: true },
     },
   },
 });

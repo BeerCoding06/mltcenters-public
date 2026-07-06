@@ -1,5 +1,15 @@
 /** Twemoji CDN — consistent illustrated emoji for all devices. */
 
+export function isLocalOrRemoteImage(value: string): boolean {
+  return value.startsWith("/") || value.startsWith("http://") || value.startsWith("https://");
+}
+
+export function resolveQuestionImageSrc(image: string): string | null {
+  if (!image) return null;
+  if (isLocalOrRemoteImage(image)) return image;
+  return emojiToImageUrl(image);
+}
+
 export function emojiToImageUrl(emoji: string): string | null {
   if (!emoji) return null;
   const parts: string[] = [];

@@ -305,6 +305,9 @@ export function resolveQuestionImage(question, options, correctIndex = 0, band =
 }
 
 export function attachImageToQuestion(item) {
+  if (item.image && (item.image.startsWith('/') || item.image.startsWith('http'))) {
+    return { ...item };
+  }
   const band = item.band || 'young';
   const image = item.image || resolveQuestionImage(item.question, item.options, item.correct_index, band);
   return { ...item, image };

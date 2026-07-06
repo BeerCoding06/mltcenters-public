@@ -9,11 +9,19 @@ import { attachImageToQuestion } from '../lib/question-images.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const OUT = path.join(__dirname, '../data/fallback_questions.json');
+const IMAGE_BASE = '/assets/image-game';
 
 function q(question, correct, wrong1, wrong2, explanation) {
   const opts = [correct, wrong1, wrong2];
   const correct_index = 0;
   return { question, options: opts, correct_index, explanation };
+}
+
+function qPhoto(question, correct, wrong1, wrong2, explanation, imageFile) {
+  return {
+    ...q(question, correct, wrong1, wrong2, explanation),
+    image: `${IMAGE_BASE}/${imageFile}`,
+  };
 }
 
 function qRot(question, a, b, c, correctIndex, explanation) {
@@ -40,11 +48,11 @@ colors.forEach(([color, thing, exp]) => {
   bank.push(q(`What color is the ${thing}?`, color, 'pink', 'gray', exp));
   bank.push(qRot(`Find the color: ${color}`, color, 'seven', 'run', 0, `${color} is a color.`));
 });
-bank.push(q('Ball color?', 'red', 'eat', 'jump', 'A ball can be red.'));
-bank.push(q('Leaf color?', 'green', 'hot', 'loud', 'Leaves are green.'));
-bank.push(q('Fire truck color?', 'red', 'soft', 'slow', 'Fire trucks are red.'));
-bank.push(q('Snow color?', 'white', 'big', 'fast', 'Snow is white.'));
-bank.push(q('Chocolate color?', 'brown', 'fly', 'sing', 'Chocolate is brown.'));
+bank.push(qPhoto('Ball color?', 'red', 'eat', 'jump', 'A ball can be red.', 'ball.webp'));
+bank.push(qPhoto('Leaf color?', 'green', 'hot', 'loud', 'Leaves are green.', 'leaf.webp'));
+bank.push(qPhoto('Fire truck color?', 'red', 'soft', 'slow', 'Fire trucks are red.', 'fire-truck.webp'));
+bank.push(qPhoto('Snow color?', 'white', 'big', 'fast', 'Snow is white.', 'snow.webp'));
+bank.push(qPhoto('Chocolate color?', 'brown', 'fly', 'sing', 'Chocolate is brown.', 'chocolate.webp'));
 
 // —— Animals & sounds (40) ——
 const animals = [

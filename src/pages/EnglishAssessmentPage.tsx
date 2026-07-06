@@ -9,7 +9,6 @@ import { ChatWindow } from '@/components/assessment/ChatWindow';
 import { useAssessment } from '@/hooks/useAssessment';
 import { useTextToSpeech } from '@/hooks/useTextToSpeech';
 import { useSpeechRecognition } from '@/hooks/useSpeechRecognition';
-import { refineChildTranscript } from '@/lib/childSpeech';
 import type { AvatarState, AssessmentResult } from '@/types/assessment';
 
 const ASSESSMENT_STORAGE_KEY = 'mlt-assessment-result';
@@ -100,11 +99,11 @@ export default function EnglishAssessmentPage() {
 
   const onSpeechFinal = useCallback(
     (text: string, meta?: { alternatives: string[] }) => {
-      const refined = refineChildTranscript(text, meta?.alternatives);
-      setInput(refined);
-      if (voiceModeRef.current && conversationStarted) {
+      const spoken = text.trim();
+      setInput(spoken);
+      if (voiceModeRef.current && conversationStarted && spoken) {
         pendingSpeechRef.current = {
-          text: refined,
+          text: spoken,
           alternatives: meta?.alternatives ?? [],
         };
       }
@@ -143,7 +142,7 @@ export default function EnglishAssessmentPage() {
     if (!pendingSpeechRef.current || isListening || isThinking || isSpeaking) return;
     const { text, alternatives } = pendingSpeechRef.current;
     pendingSpeechRef.current = null;
-    void handleSend(text, { raw: text, alternatives });
+    void handleSend(text, { raw: text, alternatives: alternatives.filter((a) => a.trim() !== text) });
   }, [isListening, isThinking, isSpeaking, handleSend]);
 
   const startConversation = useCallback(() => {

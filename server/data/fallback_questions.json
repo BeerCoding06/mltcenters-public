@@ -248,8 +248,8 @@
     ],
     "correct_index": 2,
     "explanation": "A ball can be red.",
-    "band": "young",
-    "image": "⚽"
+    "image": "/assets/image-game/ball.webp",
+    "band": "young"
   },
   {
     "question": "Leaf color?",
@@ -260,8 +260,8 @@
     ],
     "correct_index": 0,
     "explanation": "Leaves are green.",
-    "band": "young",
-    "image": "🍃"
+    "image": "/assets/image-game/leaf.webp",
+    "band": "young"
   },
   {
     "question": "Fire truck color?",
@@ -272,8 +272,8 @@
     ],
     "correct_index": 1,
     "explanation": "Fire trucks are red.",
-    "band": "young",
-    "image": "🚒"
+    "image": "/assets/image-game/fire-truck.webp",
+    "band": "young"
   },
   {
     "question": "Snow color?",
@@ -284,8 +284,8 @@
     ],
     "correct_index": 2,
     "explanation": "Snow is white.",
-    "band": "young",
-    "image": "❄️"
+    "image": "/assets/image-game/snow.webp",
+    "band": "young"
   },
   {
     "question": "Chocolate color?",
@@ -296,8 +296,8 @@
     ],
     "correct_index": 0,
     "explanation": "Chocolate is brown.",
-    "band": "young",
-    "image": "🍫"
+    "image": "/assets/image-game/chocolate.webp",
+    "band": "young"
   },
   {
     "question": "Which animal says \"meow\"?",

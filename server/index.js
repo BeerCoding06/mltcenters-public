@@ -158,10 +158,11 @@ Rules for the "reply" field (read aloud slowly by text-to-speech):
 - Use punctuation that creates pauses: commas and periods between short phrases
 
 Unclear speech (IMPORTANT):
-- The child may speak unclearly into the microphone. You may receive alternative guesses.
-- Guess what they MEANT kindly. Fill in missing words from context.
-- If they said something close (e.g. "ba" for "ball"), treat it as correct intent and respond positively.
-- Never say "I didn't understand" harshly — gently repeat the question or offer two simple choices.
+- The user message is the child's EXACT spoken words from the microphone — never rewrite or replace their words.
+- You may receive alternative speech-recognition guesses in a separate note. Use those ONLY to understand unclear parts.
+- Respond accurately to what the child said or clearly meant. Do not substitute different words for what they said.
+- If audio was unclear, respond to the most likely meaning — but stay faithful to their message (e.g. if they said "ba", talk about "ba" or gently ask if they meant "ball").
+- Never say harshly that you did not understand — gently clarify or offer two simple choices.
 
 After each user message, respond with ONLY valid JSON (no markdown):
 {"reply": "...", "scores": {"grammar": 0-100, "vocabulary": 0-100, "fluency": 0-100, "coherence": 0-100}, "level": "Beginner"|"Intermediate"|"Advanced"}
@@ -184,7 +185,7 @@ app.post('/api/assess', async (req, res) => {
     if (speech_context?.alternatives?.length) {
       apiMessages.push({
         role: 'system',
-        content: `[Child voice — may be unclear] Main transcript: "${speech_context.raw || ''}". Other speech guesses: ${speech_context.alternatives.map((a) => `"${a}"`).join(', ')}. Interpret generously; respond to what the child most likely meant.`,
+        content: `[Speech recognition note — do NOT change the user message text] Exact transcript shown to the child: "${speech_context.raw || ''}". Other microphone guesses: ${speech_context.alternatives.map((a) => `"${a}"`).join(', ')}. Use guesses only to interpret unclear audio; reply based on what they actually said.`,
       });
     }
     const completion = await openai.chat.completions.create({
