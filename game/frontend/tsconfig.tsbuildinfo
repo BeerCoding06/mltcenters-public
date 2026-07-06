@@ -1,0 +1,1 @@
+{"root":["./src/app.tsx","./src/main.tsx","./src/vite-env.d.ts","./src/components/gamecanvas.tsx","./src/components/hud.tsx","./src/components/questionoverlay.tsx","./src/game/eventbus.ts","./src/game/runnerscene.ts","./src/hooks/usegamesession.ts","./src/services/api.ts","./src/types/index.ts"],"version":"5.9.3"}

@@ -1,0 +1,14 @@
+# English Runner Game
+
+services:
+  api:
+    build: ./backend
+    ports: ["8002:8002"]
+    env_file: ./backend/.env
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  web:
+    build: ./frontend
+    ports: ["5190:80"]
+    depends_on: [api]

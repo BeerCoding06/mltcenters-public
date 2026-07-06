@@ -1,0 +1,5 @@
+{
+  "note": "Export Mixamo animations as glTF (.glb) without skin, then place here.",
+  "files": ["idle.glb", "run.glb", "jump.glb", "win.glb", "lose.glb"],
+  "mixamo_tip": "Upload the same Ready Player Me rig to Mixamo, download animations, convert FBX→GLB with Blender or https://products.aspose.app/3d/conversion/fbx-to-glb"
+}
