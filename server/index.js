@@ -33,8 +33,15 @@ const app = express();
 app.use(cors({ origin: true }));
 app.use(express.json());
 
-const openai = process.env.OPENAI_API_KEY
-  ? new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
+const AI_API_KEY = process.env.OPENAI_API_KEY || process.env.AI_GATEWAY_API_KEY;
+const AI_BASE_URL = process.env.OPENAI_BASE_URL || process.env.AI_GATEWAY_BASE_URL;
+const AI_MODEL = process.env.OPENAI_MODEL || process.env.AI_MODEL || 'gpt-4o-mini';
+
+const openai = AI_API_KEY
+  ? new OpenAI({
+      apiKey: AI_API_KEY,
+      ...(AI_BASE_URL ? { baseURL: AI_BASE_URL } : {}),
+    })
   : null;
 
 const mailTransport =
@@ -148,7 +155,9 @@ Rules:
 
 app.post('/api/assess', async (req, res) => {
   if (!openai) {
-    return res.status(503).json({ error: 'OpenAI API key not configured. Set OPENAI_API_KEY.' });
+    return res.status(503).json({
+      error: 'AI API key not configured. Set OPENAI_API_KEY or AI_GATEWAY_API_KEY.',
+    });
   }
   const { messages } = req.body || {};
   if (!Array.isArray(messages) || messages.length === 0) {
@@ -156,7 +165,7 @@ app.post('/api/assess', async (req, res) => {
   }
   try {
     const completion = await openai.chat.completions.create({
-      model: 'gpt-4o-mini',
+      model: AI_MODEL,
       messages: [{ role: 'system', content: SYSTEM_PROMPT }, ...messages],
       max_tokens: 500,
       temperature: 0.7,
@@ -183,6 +192,13 @@ const PORT = process.env.PORT || 3000;
 const host = process.env.HOST || '0.0.0.0';
 app.listen(PORT, host, () => {
   console.log(`Server listening on http://${host}:${PORT}`);
+  if (openai) {
+    console.log(
+      `AI ready: model=${AI_MODEL}${AI_BASE_URL ? ` base=${AI_BASE_URL}` : ' (OpenAI default)'}`
+    );
+  } else {
+    console.warn('AI disabled: set OPENAI_API_KEY or AI_GATEWAY_API_KEY');
+  }
   if (mailTransport) {
     mailTransport
       .verify()

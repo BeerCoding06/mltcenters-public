@@ -11,6 +11,12 @@ services:
       PORT: "3000"
       HOST: "0.0.0.0"
       OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      OPENAI_BASE_URL: ${OPENAI_BASE_URL:-}
+      OPENAI_MODEL: ${OPENAI_MODEL:-}
+      AI_GATEWAY_API_KEY: ${AI_GATEWAY_API_KEY:-}
+      AI_GATEWAY_BASE_URL: ${AI_GATEWAY_BASE_URL:-}
+      AI_MODEL: ${AI_MODEL:-}
+      DEBUG: ${DEBUG:-false}
       REGISTER_TO_EMAIL: ${REGISTER_TO_EMAIL:-mltcenterth@gmail.com}
       SMTP_USER: ${SMTP_USER:-}
       SMTP_PASS: ${SMTP_PASS:-}
