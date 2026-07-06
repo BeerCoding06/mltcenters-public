@@ -56,21 +56,24 @@ bank.push(qPhoto('Fire truck color?', 'red', 'soft', 'slow', 'Fire trucks are re
 bank.push(qPhoto('Snow color?', 'white', 'big', 'fast', 'Snow is white.', 'Snow-color.webp'));
 bank.push(qPhoto('Chocolate color?', 'brown', 'fly', 'sing', 'Chocolate is brown.', 'Chocolate-color.webp'));
 
-// —— Animals & sounds (40) —— shared panorama; image_focus pans to each animal
-const ANIMALS_SOUND_IMAGE = 'animals-sounds.webp';
-/** Left→right in animals-sounds.webp (2816×1536). Adjust x/y if crop is off. */
-const ANIMAL_FOCUS = {
-  cat: { x: 7, y: 52 },
-  dog: { x: 17, y: 52 },
-  cow: { x: 27, y: 52 },
-  duck: { x: 37, y: 52 },
-  sheep: { x: 47, y: 52 },
-  pig: { x: 57, y: 52 },
-  bird: { x: 67, y: 52 },
-  frog: { x: 77, y: 52 },
-  horse: { x: 87, y: 52 },
-  lion: { x: 93, y: 52 },
+// —— Animals & sounds (40) —— free Twemoji icons (CC-BY 4.0) per animal
+const ANIMAL_ICON_FILES = {
+  cat: 'icons/animal-cat.png',
+  dog: 'icons/animal-dog.png',
+  cow: 'icons/animal-cow.png',
+  duck: 'icons/animal-duck.png',
+  sheep: 'icons/animal-sheep.png',
+  pig: 'icons/animal-pig.png',
+  bird: 'icons/animal-bird.png',
+  frog: 'icons/animal-frog.png',
+  horse: 'icons/animal-horse.png',
+  lion: 'icons/animal-lion.png',
 };
+
+function qAnimalIcon(question, correct, wrong1, wrong2, explanation, animal) {
+  return qPhoto(question, correct, wrong1, wrong2, explanation, ANIMAL_ICON_FILES[animal]);
+}
+
 const animals = [
   ['cat', 'meow', 'Cats say meow.'],
   ['dog', 'woof', 'Dogs say woof.'],
@@ -84,13 +87,8 @@ const animals = [
   ['lion', 'roar', 'Lions say roar.'],
 ];
 animals.forEach(([animal, sound, exp]) => {
-  const focus = ANIMAL_FOCUS[animal];
-  bank.push(
-    qPhoto(`Which animal says "${sound}"?`, animal, 'fish', 'bug', exp, ANIMALS_SOUND_IMAGE, focus),
-  );
-  bank.push(
-    qPhoto(`Is a ${animal} an animal?`, 'yes', 'no', 'maybe', `A ${animal} is an animal.`, ANIMALS_SOUND_IMAGE, focus),
-  );
+  bank.push(qAnimalIcon(`Which animal says "${sound}"?`, animal, 'fish', 'bug', exp, animal));
+  bank.push(qAnimalIcon(`Is a ${animal} an animal?`, 'yes', 'no', 'maybe', `A ${animal} is an animal.`, animal));
 });
 bank.push(qPhoto('Fish live in ___', 'water', 'sky', 'fire', 'Fish live in water.', 'Fish-live-in.webp'));
 bank.push(qPhoto('Birds can ___', 'fly', 'drive', 'cook', 'Birds can fly.', 'Birds-can.webp'));

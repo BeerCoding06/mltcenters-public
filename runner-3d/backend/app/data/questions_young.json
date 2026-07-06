@@ -308,11 +308,7 @@
     ],
     "correct_index": 1,
     "explanation": "Cats say meow.",
-    "image": "/assets/image-game/animals-sounds.webp",
-    "image_focus": {
-      "x": 7,
-      "y": 52
-    },
+    "image": "/assets/image-game/icons/animal-cat.png",
     "band": "young"
   },
   {
@@ -324,11 +320,7 @@
     ],
     "correct_index": 2,
     "explanation": "A cat is an animal.",
-    "image": "/assets/image-game/animals-sounds.webp",
-    "image_focus": {
-      "x": 7,
-      "y": 52
-    },
+    "image": "/assets/image-game/icons/animal-cat.png",
     "band": "young"
   },
   {
@@ -340,11 +332,7 @@
     ],
     "correct_index": 0,
     "explanation": "Dogs say woof.",
-    "image": "/assets/image-game/animals-sounds.webp",
-    "image_focus": {
-      "x": 17,
-      "y": 52
-    },
+    "image": "/assets/image-game/icons/animal-dog.png",
     "band": "young"
   },
   {
@@ -356,11 +344,7 @@
     ],
     "correct_index": 1,
     "explanation": "A dog is an animal.",
-    "image": "/assets/image-game/animals-sounds.webp",
-    "image_focus": {
-      "x": 17,
-      "y": 52
-    },
+    "image": "/assets/image-game/icons/animal-dog.png",
     "band": "young"
   },
   {
@@ -372,11 +356,7 @@
     ],
     "correct_index": 2,
     "explanation": "Cows say moo.",
-    "image": "/assets/image-game/animals-sounds.webp",
-    "image_focus": {
-      "x": 27,
-      "y": 52
-    },
+    "image": "/assets/image-game/icons/animal-cow.png",
     "band": "young"
   },
   {
@@ -388,11 +368,7 @@
     ],
     "correct_index": 0,
     "explanation": "A cow is an animal.",
-    "image": "/assets/image-game/animals-sounds.webp",
-    "image_focus": {
-      "x": 27,
-      "y": 52
-    },
+    "image": "/assets/image-game/icons/animal-cow.png",
     "band": "young"
   },
   {
@@ -404,11 +380,7 @@
     ],
     "correct_index": 1,
     "explanation": "Ducks say quack.",
-    "image": "/assets/image-game/animals-sounds.webp",
-    "image_focus": {
-      "x": 37,
-      "y": 52
-    },
+    "image": "/assets/image-game/icons/animal-duck.png",
     "band": "young"
   },
   {
@@ -420,11 +392,7 @@
     ],
     "correct_index": 2,
     "explanation": "A duck is an animal.",
-    "image": "/assets/image-game/animals-sounds.webp",
-    "image_focus": {
-      "x": 37,
-      "y": 52
-    },
+    "image": "/assets/image-game/icons/animal-duck.png",
     "band": "young"
   },
   {
@@ -436,11 +404,7 @@
     ],
     "correct_index": 0,
     "explanation": "Sheep say baa.",
-    "image": "/assets/image-game/animals-sounds.webp",
-    "image_focus": {
-      "x": 47,
-      "y": 52
-    },
+    "image": "/assets/image-game/icons/animal-sheep.png",
     "band": "young"
   },
   {
@@ -452,11 +416,7 @@
     ],
     "correct_index": 1,
     "explanation": "A sheep is an animal.",
-    "image": "/assets/image-game/animals-sounds.webp",
-    "image_focus": {
-      "x": 47,
-      "y": 52
-    },
+    "image": "/assets/image-game/icons/animal-sheep.png",
     "band": "young"
   },
   {
@@ -468,11 +428,7 @@
     ],
     "correct_index": 2,
     "explanation": "Pigs say oink.",
-    "image": "/assets/image-game/animals-sounds.webp",
-    "image_focus": {
-      "x": 57,
-      "y": 52
-    },
+    "image": "/assets/image-game/icons/animal-pig.png",
     "band": "young"
   },
   {
@@ -484,11 +440,7 @@
     ],
     "correct_index": 0,
     "explanation": "A pig is an animal.",
-    "image": "/assets/image-game/animals-sounds.webp",
-    "image_focus": {
-      "x": 57,
-      "y": 52
-    },
+    "image": "/assets/image-game/icons/animal-pig.png",
     "band": "young"
   },
   {
@@ -500,11 +452,7 @@
     ],
     "correct_index": 1,
     "explanation": "Birds say tweet.",
-    "image": "/assets/image-game/animals-sounds.webp",
-    "image_focus": {
-      "x": 67,
-      "y": 52
-    },
+    "image": "/assets/image-game/icons/animal-bird.png",
     "band": "young"
   },
   {
@@ -516,11 +464,7 @@
     ],
     "correct_index": 2,
     "explanation": "A bird is an animal.",
-    "image": "/assets/image-game/animals-sounds.webp",
-    "image_focus": {
-      "x": 67,
-      "y": 52
-    },
+    "image": "/assets/image-game/icons/animal-bird.png",
     "band": "young"
   },
   {
@@ -532,11 +476,7 @@
     ],
     "correct_index": 0,
     "explanation": "Frogs say ribbit.",
-    "image": "/assets/image-game/animals-sounds.webp",
-    "image_focus": {
-      "x": 77,
-      "y": 52
-    },
+    "image": "/assets/image-game/icons/animal-frog.png",
     "band": "young"
   },
   {
@@ -548,11 +488,7 @@
     ],
     "correct_index": 1,
     "explanation": "A frog is an animal.",
-    "image": "/assets/image-game/animals-sounds.webp",
-    "image_focus": {
-      "x": 77,
-      "y": 52
-    },
+    "image": "/assets/image-game/icons/animal-frog.png",
     "band": "young"
   },
   {
@@ -564,11 +500,7 @@
     ],
     "correct_index": 2,
     "explanation": "Horses say neigh.",
-    "image": "/assets/image-game/animals-sounds.webp",
-    "image_focus": {
-      "x": 87,
-      "y": 52
-    },
+    "image": "/assets/image-game/icons/animal-horse.png",
     "band": "young"
   },
   {
@@ -580,11 +512,7 @@
     ],
     "correct_index": 0,
     "explanation": "A horse is an animal.",
-    "image": "/assets/image-game/animals-sounds.webp",
-    "image_focus": {
-      "x": 87,
-      "y": 52
-    },
+    "image": "/assets/image-game/icons/animal-horse.png",
     "band": "young"
   },
   {
@@ -596,11 +524,7 @@
     ],
     "correct_index": 1,
     "explanation": "Lions say roar.",
-    "image": "/assets/image-game/animals-sounds.webp",
-    "image_focus": {
-      "x": 93,
-      "y": 52
-    },
+    "image": "/assets/image-game/icons/animal-lion.png",
     "band": "young"
   },
   {
@@ -612,11 +536,7 @@
     ],
     "correct_index": 2,
     "explanation": "A lion is an animal.",
-    "image": "/assets/image-game/animals-sounds.webp",
-    "image_focus": {
-      "x": 93,
-      "y": 52
-    },
+    "image": "/assets/image-game/icons/animal-lion.png",
     "band": "young"
   },
   {

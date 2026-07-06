@@ -15,6 +15,7 @@ export function QuestionIllustration({ image, imageFocus, alt = "" }: Props) {
   const [imgFailed, setImgFailed] = useState(false);
   const src = resolveQuestionImageSrc(image);
   const isPhoto = isLocalOrRemoteImage(image);
+  const isIcon = isPhoto && image.includes("/icons/");
   const focusX = imageFocus?.x ?? 50;
   const focusY = imageFocus?.y ?? 50;
 
@@ -25,7 +26,7 @@ export function QuestionIllustration({ image, imageFocus, alt = "" }: Props) {
       transition={{ duration: 0.28, ease: "easeOut" }}
       className="mb-3 flex justify-center"
     >
-      {isPhoto ? (
+      {isPhoto && !isIcon ? (
         <div className="w-full max-w-sm overflow-hidden rounded-2xl border border-white/30 bg-white/95 shadow-lg">
           {src && !imgFailed ? (
             imageFocus ? (
