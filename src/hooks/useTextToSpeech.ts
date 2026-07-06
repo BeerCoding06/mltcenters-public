@@ -1,8 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
+/** ความเร็วพูดสำหรับเด็ก 1-10 ขวบ (ช้า ชัด) */
+const CHILD_SPEECH_RATE = 0.72;
+const CHILD_SPEECH_PITCH = 1.08;
+
 function pickEnglishVoice(voices: SpeechSynthesisVoice[]): SpeechSynthesisVoice | undefined {
   return (
-    voices.find((v) => /Google US English|Samantha|Daniel/i.test(v.name)) ||
+    voices.find((v) => /Google US English|Samantha|Karen|Daniel/i.test(v.name)) ||
     voices.find((v) => v.lang === 'en-US') ||
     voices.find((v) => v.lang.startsWith('en'))
   );
@@ -54,8 +58,8 @@ export function useTextToSpeech() {
       if (voicesRef.current.length === 0) voicesRef.current = synth.getVoices();
       const u = new SpeechSynthesisUtterance(t);
       u.lang = 'en-US';
-      u.rate = 0.95;
-      u.pitch = 1.05;
+      u.rate = CHILD_SPEECH_RATE;
+      u.pitch = CHILD_SPEECH_PITCH;
       u.volume = 1;
       const voice = pickEnglishVoice(voicesRef.current);
       if (voice) u.voice = voice;

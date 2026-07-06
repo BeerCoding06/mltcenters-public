@@ -49,8 +49,7 @@ function buildResult(scoresList: Scores[], totalXP: number, answerCount: number)
 const WELCOME_MESSAGE: ChatMessage = {
   id: 'welcome',
   role: 'assistant',
-  content:
-    "Hi there! I'm so glad to meet you. How are you today? Tell me a little about yourself!",
+  content: "Hello, friend! I am happy to see you. What is your name?",
 };
 
 export function useAssessment(onComplete: (result: AssessmentResult) => void) {
@@ -61,10 +60,13 @@ export function useAssessment(onComplete: (result: AssessmentResult) => void) {
   const [xp, setXp] = useState(0);
   const [answerCount, setAnswerCount] = useState(0);
   const [progress, setProgress] = useState(0);
-  const maxTurns = 8;
+  const maxTurns = 6;
   const abortRef = useRef<AbortController | null>(null);
 
-  const sendToAPI = useCallback(async (userText: string) => {
+  const sendToAPI = useCallback(async (
+    userText: string,
+    speechContext?: { raw: string; alternatives: string[] }
+  ) => {
     const newMessages: { role: 'user' | 'assistant'; content: string }[] = [
       ...messages.map((m) => ({ role: m.role, content: m.content })),
       { role: 'user', content: userText },
@@ -82,6 +84,7 @@ export function useAssessment(onComplete: (result: AssessmentResult) => void) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           messages: newMessages.slice(-12).map((m) => ({ role: m.role, content: m.content })),
+          speech_context: speechContext,
         }),
         signal: abortRef.current.signal,
       });

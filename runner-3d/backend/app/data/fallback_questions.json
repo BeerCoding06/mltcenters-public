@@ -1,6 +1,6 @@
 [
   {
-    "question": "What color is the apple? (สีอะไร?)",
+    "question": "What color is the apple?",
     "options": [
       "red",
       "pink",
@@ -20,7 +20,7 @@
     "explanation": "red is a color."
   },
   {
-    "question": "What color is the sky? (สีอะไร?)",
+    "question": "What color is the sky?",
     "options": [
       "pink",
       "gray",
@@ -40,7 +40,7 @@
     "explanation": "blue is a color."
   },
   {
-    "question": "What color is the grass? (สีอะไร?)",
+    "question": "What color is the grass?",
     "options": [
       "pink",
       "green",
@@ -60,7 +60,7 @@
     "explanation": "green is a color."
   },
   {
-    "question": "What color is the sun? (สีอะไร?)",
+    "question": "What color is the sun?",
     "options": [
       "yellow",
       "pink",
@@ -80,7 +80,7 @@
     "explanation": "yellow is a color."
   },
   {
-    "question": "What color is the carrot? (สีอะไร?)",
+    "question": "What color is the carrot?",
     "options": [
       "pink",
       "gray",
@@ -100,7 +100,7 @@
     "explanation": "orange is a color."
   },
   {
-    "question": "What color is the flower? (สีอะไร?)",
+    "question": "What color is the flower?",
     "options": [
       "pink",
       "pink",
@@ -120,7 +120,7 @@
     "explanation": "pink is a color."
   },
   {
-    "question": "What color is the grape? (สีอะไร?)",
+    "question": "What color is the grape?",
     "options": [
       "purple",
       "pink",
@@ -140,7 +140,7 @@
     "explanation": "purple is a color."
   },
   {
-    "question": "What color is the bear? (สีอะไร?)",
+    "question": "What color is the bear?",
     "options": [
       "pink",
       "gray",
@@ -160,7 +160,7 @@
     "explanation": "brown is a color."
   },
   {
-    "question": "What color is the night? (สีอะไร?)",
+    "question": "What color is the night?",
     "options": [
       "pink",
       "black",
@@ -180,7 +180,7 @@
     "explanation": "black is a color."
   },
   {
-    "question": "What color is the cloud? (สีอะไร?)",
+    "question": "What color is the cloud?",
     "options": [
       "white",
       "pink",
@@ -200,7 +200,7 @@
     "explanation": "white is a color."
   },
   {
-    "question": "Ball color? (ลูกบอล)",
+    "question": "Ball color?",
     "options": [
       "eat",
       "jump",
@@ -550,7 +550,7 @@
     "explanation": "Monkeys like bananas."
   },
   {
-    "question": "How many eyes? (กี่eyes)",
+    "question": "How many eyes?",
     "options": [
       "five",
       "two",
@@ -560,7 +560,7 @@
     "explanation": "We have two eyes."
   },
   {
-    "question": "How many ears? (กี่ears)",
+    "question": "How many ears?",
     "options": [
       "five",
       "zero",
@@ -570,7 +570,7 @@
     "explanation": "We have two ears."
   },
   {
-    "question": "How many nose? (กี่nose)",
+    "question": "How many nose?",
     "options": [
       "one",
       "five",
@@ -580,7 +580,7 @@
     "explanation": "We have one nose."
   },
   {
-    "question": "How many mouth? (กี่mouth)",
+    "question": "How many mouth?",
     "options": [
       "five",
       "one",
@@ -590,7 +590,7 @@
     "explanation": "We have one mouth."
   },
   {
-    "question": "How many hands? (กี่hands)",
+    "question": "How many hands?",
     "options": [
       "five",
       "zero",
@@ -600,7 +600,7 @@
     "explanation": "We have two hands."
   },
   {
-    "question": "How many feet? (กี่feet)",
+    "question": "How many feet?",
     "options": [
       "two",
       "five",
@@ -610,7 +610,7 @@
     "explanation": "We have two feet."
   },
   {
-    "question": "How many fingers? (กี่fingers)",
+    "question": "How many fingers?",
     "options": [
       "five",
       "ten",
@@ -620,7 +620,7 @@
     "explanation": "We have ten fingers."
   },
   {
-    "question": "How many head? (กี่head)",
+    "question": "How many head?",
     "options": [
       "five",
       "zero",
@@ -1180,7 +1180,7 @@
     "explanation": "Breakfast is in the morning."
   },
   {
-    "question": "What number? 1 (เลขอะไร?)",
+    "question": "What number? 1",
     "options": [
       "two",
       "one",
@@ -1190,7 +1190,7 @@
     "explanation": "1 is one."
   },
   {
-    "question": "What number? 2 (เลขอะไร?)",
+    "question": "What number? 2",
     "options": [
       "three",
       "six",
@@ -1200,7 +1200,7 @@
     "explanation": "2 is two."
   },
   {
-    "question": "What number? 3 (เลขอะไร?)",
+    "question": "What number? 3",
     "options": [
       "three",
       "four",
@@ -1210,7 +1210,7 @@
     "explanation": "3 is three."
   },
   {
-    "question": "What number? 4 (เลขอะไร?)",
+    "question": "What number? 4",
     "options": [
       "five",
       "four",
@@ -1220,7 +1220,7 @@
     "explanation": "4 is four."
   },
   {
-    "question": "What number? 5 (เลขอะไร?)",
+    "question": "What number? 5",
     "options": [
       "six",
       "nine",
@@ -1230,7 +1230,7 @@
     "explanation": "5 is five."
   },
   {
-    "question": "What number? 6 (เลขอะไร?)",
+    "question": "What number? 6",
     "options": [
       "six",
       "seven",
@@ -1240,7 +1240,7 @@
     "explanation": "6 is six."
   },
   {
-    "question": "What number? 7 (เลขอะไร?)",
+    "question": "What number? 7",
     "options": [
       "eight",
       "seven",
@@ -1250,7 +1250,7 @@
     "explanation": "7 is seven."
   },
   {
-    "question": "What number? 8 (เลขอะไร?)",
+    "question": "What number? 8",
     "options": [
       "nine",
       "two",
@@ -1260,7 +1260,7 @@
     "explanation": "8 is eight."
   },
   {
-    "question": "What number? 9 (เลขอะไร?)",
+    "question": "What number? 9",
     "options": [
       "nine",
       "ten",
@@ -1270,7 +1270,7 @@
     "explanation": "9 is nine."
   },
   {
-    "question": "What number? 10 (เลขอะไร?)",
+    "question": "What number? 10",
     "options": [
       "one",
       "ten",
@@ -1290,7 +1290,7 @@
     "explanation": "One two three."
   },
   {
-    "question": "How many legs on a dog? (สี่ขา)",
+    "question": "How many legs on a dog?",
     "options": [
       "four",
       "two",
@@ -1380,7 +1380,7 @@
     "explanation": "Three bears in the story."
   },
   {
-    "question": "Wheels on a car? (สี่ล้อ)",
+    "question": "Wheels on a car?",
     "options": [
       "four",
       "one",

@@ -1,5 +1,5 @@
 /**
- * Generate 200 preschool (1-5 y/o) English MCQ for runner game.
+ * Generate 200 English MCQ for runner game (ages 1-10).
  * Run: node server/scripts/generate-preschool-bank.js
  */
 import { writeFileSync } from 'fs';
@@ -36,10 +36,10 @@ const colors = [
   ['white', 'cloud', 'Clouds are white.'],
 ];
 colors.forEach(([color, thing, exp]) => {
-  bank.push(q(`What color is the ${thing}? (สีอะไร?)`, color, 'pink', 'gray', exp));
+  bank.push(q(`What color is the ${thing}?`, color, 'pink', 'gray', exp));
   bank.push(qRot(`Find the color: ${color}`, color, 'seven', 'run', 0, `${color} is a color.`));
 });
-bank.push(q('Ball color? (ลูกบอล)', 'red', 'eat', 'jump', 'A ball can be red.'));
+bank.push(q('Ball color?', 'red', 'eat', 'jump', 'A ball can be red.'));
 bank.push(q('Leaf color?', 'green', 'hot', 'loud', 'Leaves are green.'));
 bank.push(q('Fire truck color?', 'red', 'soft', 'slow', 'Fire trucks are red.'));
 bank.push(q('Snow color?', 'white', 'big', 'fast', 'Snow is white.'));
@@ -85,7 +85,7 @@ const body = [
   ['head', 'one', 'We have one head.'],
 ];
 body.forEach(([part, count, exp]) => {
-  bank.push(q(`How many ${part}? (กี่${part})`, count, 'five', 'zero', exp));
+  bank.push(q(`How many ${part}?`, count, 'five', 'zero', exp));
 });
 bank.push(q('You see with your ___', 'eyes', 'toes', 'knee', 'You see with eyes.'));
 bank.push(q('You hear with your ___', 'ears', 'nose', 'hair', 'You hear with ears.'));
@@ -149,10 +149,10 @@ for (let n = 1; n <= 10; n += 1) {
   const w = words[n - 1];
   const wrong = words[(n % 10)];
   const wrong2 = words[((n + 3) % 10)];
-  bank.push(q(`What number? ${n} (เลขอะไร?)`, w, wrong, wrong2, `${n} is ${w}.`));
+  bank.push(q(`What number? ${n}`, w, wrong, wrong2, `${n} is ${w}.`));
 }
 bank.push(q('Count: 1, 2, ___', 'three', 'ten', 'zero', 'One two three.'));
-bank.push(q('How many legs on a dog? (สี่ขา)', 'four', 'two', 'ten', 'Dogs have four legs.'));
+bank.push(q('How many legs on a dog?', 'four', 'two', 'ten', 'Dogs have four legs.'));
 bank.push(q('Fingers on one hand?', 'five', 'two', 'eight', 'Five fingers on one hand.'));
 bank.push(q('Days in one week?', 'seven', 'three', 'ten', 'Seven days in a week.'));
 bank.push(q('More than one = ___', 'many', 'sleep', 'cold', 'Many means a lot.'));
@@ -161,7 +161,7 @@ bank.push(q('A pair means ___', 'two', 'ten', 'zero', 'A pair is two things.'));
 bank.push(q('Zero means ___', 'none', 'many', 'big', 'Zero means none.'));
 bank.push(q('Ten comes after ___', 'nine', 'two', 'four', 'Nine then ten.'));
 bank.push(q('Three bears story: ___ bears', 'three', 'one', 'ten', 'Three bears in the story.'));
-bank.push(q('Wheels on a car? (สี่ล้อ)', 'four', 'one', 'nine', 'Cars have four wheels.'));
+bank.push(q('Wheels on a car?', 'four', 'one', 'nine', 'Cars have four wheels.'));
 bank.push(q('Sides on a triangle?', 'three', 'five', 'eight', 'A triangle has three sides.'));
 bank.push(q('Eggs in a pair?', 'two', 'seven', 'zero', 'A pair is two.'));
 bank.push(q('Ducks in a row: 1,2,3 = ___', 'three', 'six', 'nine', 'One two three is three.'));

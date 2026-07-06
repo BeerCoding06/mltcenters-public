@@ -9,8 +9,8 @@ import { ChatWindow } from '@/components/assessment/ChatWindow';
 import { useAssessment } from '@/hooks/useAssessment';
 import { useTextToSpeech } from '@/hooks/useTextToSpeech';
 import { useSpeechRecognition } from '@/hooks/useSpeechRecognition';
-import type { AvatarState } from '@/types/assessment';
-import type { AssessmentResult } from '@/types/assessment';
+import { refineChildTranscript } from '@/lib/childSpeech';
+import type { AvatarState, AssessmentResult } from '@/types/assessment';
 
 const ASSESSMENT_STORAGE_KEY = 'mlt-assessment-result';
 const XP_STORAGE_KEY = 'mlt-assessment-xp';
@@ -24,7 +24,7 @@ export default function EnglishAssessmentPage() {
   const [speakingMessageId, setSpeakingMessageId] = useState<string | null>(null);
   const voiceModeRef = useRef(voiceMode);
   const busyRef = useRef(false);
-  const pendingSendRef = useRef<string | null>(null);
+  const pendingSpeechRef = useRef<{ text: string; alternatives: string[] } | null>(null);
 
   const { speak, stop, unlockAudio, isSpeaking } = useTextToSpeech();
 
@@ -67,7 +67,7 @@ export default function EnglishAssessmentPage() {
         setAvatarState('idle');
         setSpeakingMessageId(null);
         if (thenListen && voiceModeRef.current && !busyRef.current) {
-          window.setTimeout(() => startListeningRef.current?.(), 400);
+          window.setTimeout(() => startListeningRef.current?.(), 950);
         }
       });
     },
@@ -75,7 +75,7 @@ export default function EnglishAssessmentPage() {
   );
 
   const handleSend = useCallback(
-    async (textOverride?: string) => {
+    async (textOverride?: string, speechContext?: { raw: string; alternatives: string[] }) => {
       const text = (textOverride ?? input).trim();
       if (!text || busyRef.current) return;
 
@@ -85,7 +85,7 @@ export default function EnglishAssessmentPage() {
       setAvatarState('thinking');
       stop();
 
-      const out = await sendToAPI(text);
+      const out = await sendToAPI(text, speechContext);
       busyRef.current = false;
 
       if (out?.reply) {
@@ -99,10 +99,14 @@ export default function EnglishAssessmentPage() {
   );
 
   const onSpeechFinal = useCallback(
-    (text: string) => {
-      setInput(text);
+    (text: string, meta?: { alternatives: string[] }) => {
+      const refined = refineChildTranscript(text, meta?.alternatives);
+      setInput(refined);
       if (voiceModeRef.current && conversationStarted) {
-        pendingSendRef.current = text;
+        pendingSpeechRef.current = {
+          text: refined,
+          alternatives: meta?.alternatives ?? [],
+        };
       }
     },
     [setInput, conversationStarted]
@@ -123,6 +127,7 @@ export default function EnglishAssessmentPage() {
     toggle: toggleMic,
   } = useSpeechRecognition({
     lang: 'en-US',
+    childMode: true,
     onFinal: onSpeechFinal,
     onInterim: onSpeechInterim,
   });
@@ -135,10 +140,10 @@ export default function EnglishAssessmentPage() {
   }, [startListening, stopListening]);
 
   useEffect(() => {
-    if (!pendingSendRef.current || isListening || isThinking || isSpeaking) return;
-    const text = pendingSendRef.current;
-    pendingSendRef.current = null;
-    void handleSend(text);
+    if (!pendingSpeechRef.current || isListening || isThinking || isSpeaking) return;
+    const { text, alternatives } = pendingSpeechRef.current;
+    pendingSpeechRef.current = null;
+    void handleSend(text, { raw: text, alternatives });
   }, [isListening, isThinking, isSpeaking, handleSend]);
 
   const startConversation = useCallback(() => {

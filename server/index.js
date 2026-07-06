@@ -146,18 +146,27 @@ app.post('/api/register', async (req, res) => {
   }
 });
 
-const SYSTEM_PROMPT = `You are a warm, friendly English conversation partner helping Thai learners practice spoken English.
+const SYSTEM_PROMPT = `You are a warm, gentle English friend for Thai children aged 1-10 years old.
 
-Rules for the "reply" field (this will be read aloud by text-to-speech):
-- Write natural spoken English only — 1 to 3 short sentences
-- React to what the user just said, ask a follow-up question, show interest
-- Sound like a real person chatting, not a teacher giving a test
-- Use simple words for beginners; slightly richer vocabulary if they speak well
-- Never mention JSON, scores, or that you are evaluating them in the reply
+Rules for the "reply" field (read aloud slowly by text-to-speech):
+- Use simple English only in "reply" — never use Thai in the reply
+- Ages 1-5: very short (3-6 words per sentence). Ages 6-10: still simple, a bit longer OK
+- Speak like a kind teacher: slow, clear, happy, encouraging
+- Topics: colors, animals, family, food, numbers, school, hobbies, friends, games, daily life
+- Ask ONE easy question per turn
+- Never test hard grammar. Never mention JSON or scores in the reply
+- Use punctuation that creates pauses: commas and periods between short phrases
+
+Unclear speech (IMPORTANT):
+- The child may speak unclearly into the microphone. You may receive alternative guesses.
+- Guess what they MEANT kindly. Fill in missing words from context.
+- If they said something close (e.g. "ba" for "ball"), treat it as correct intent and respond positively.
+- Never say "I didn't understand" harshly — gently repeat the question or offer two simple choices.
 
 After each user message, respond with ONLY valid JSON (no markdown):
 {"reply": "...", "scores": {"grammar": 0-100, "vocabulary": 0-100, "fluency": 0-100, "coherence": 0-100}, "level": "Beginner"|"Intermediate"|"Advanced"}
 
+Scores for ages 1-10: be generous with young kids; adjust up slightly if they speak in full sentences.
 Include scores on every turn after the user's first message. On the very first assistant turn (greeting only), scores may be null.`;
 
 app.post('/api/assess', async (req, res) => {
@@ -166,14 +175,21 @@ app.post('/api/assess', async (req, res) => {
       error: 'AI API key not configured. Set OPENAI_API_KEY or AI_GATEWAY_API_KEY.',
     });
   }
-  const { messages } = req.body || {};
+  const { messages, speech_context } = req.body || {};
   if (!Array.isArray(messages) || messages.length === 0) {
     return res.status(400).json({ error: 'Body must include messages array.' });
   }
   try {
+    const apiMessages = [{ role: 'system', content: SYSTEM_PROMPT }, ...messages];
+    if (speech_context?.alternatives?.length) {
+      apiMessages.push({
+        role: 'system',
+        content: `[Child voice — age 1-10, may be unclear] Main transcript: "${speech_context.raw || ''}". Other speech guesses: ${speech_context.alternatives.map((a) => `"${a}"`).join(', ')}. Interpret generously; respond to what the child most likely meant.`,
+      });
+    }
     const completion = await openai.chat.completions.create({
       model: AI_MODEL,
-      messages: [{ role: 'system', content: SYSTEM_PROMPT }, ...messages],
+      messages: apiMessages,
       max_tokens: 500,
       temperature: 0.7,
     });
