@@ -33,7 +33,7 @@ export function AIAssistantAvatar({ state, className }: AIAssistantAvatarProps) 
       )}
 
       <motion.div
-        className="relative flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br from-[#5BC0FF] to-[#6EE7B7] shadow-inner md:h-32 md:w-32"
+        className="relative flex h-full w-full min-h-0 items-center justify-center rounded-full bg-gradient-to-br from-[#5BC0FF] to-[#6EE7B7] shadow-inner"
         animate={
           state === 'idle'
             ? { y: [0, -4, 0] }
@@ -49,7 +49,7 @@ export function AIAssistantAvatar({ state, className }: AIAssistantAvatarProps) 
               : {}
         }
       >
-        <AIIcon size="lg" className="h-16 w-16 md:h-20 md:w-20 shadow-none" iconClassName="h-9 w-9 md:h-11 md:w-11" />
+        <AIIcon size="lg" className="h-[55%] w-[55%] max-h-20 max-w-20 shadow-none" iconClassName="h-[55%] w-[55%]" />
       </motion.div>
     </div>
   );

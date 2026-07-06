@@ -186,6 +186,15 @@ export default function EnglishAssessmentPage() {
     if (isThinking) setAvatarState('thinking');
   }, [isThinking]);
 
+  useEffect(() => {
+    if (!conversationStarted) return;
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [conversationStarted]);
+
   const statusText = isThinking
     ? t.assessmentPage.status.thinking[lang]
     : isSpeaking || speakingMessageId
@@ -205,52 +214,41 @@ export default function EnglishAssessmentPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] py-16">
-      <div className="container mx-auto px-4">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="flex flex-col items-center gap-3 mb-2"
-        >
-          <AIIcon size="lg" className="h-14 w-14" />
-          <h1 className="text-3xl md:text-4xl font-bold text-center md:leading-[1.3] bg-gradient-to-r from-[#5BC0FF] to-[#6EE7B7] bg-clip-text text-transparent">
-            {t.assessmentPage.title[lang]}
-          </h1>
-        </motion.div>
-        <p className="text-center text-muted-foreground mb-8">
-          {t.assessmentPage.subtitle[lang]}
-        </p>
-
-        <div className="max-w-2xl mx-auto mb-6 flex flex-col sm:flex-row items-center justify-center gap-4">
-          <div className="rounded-2xl bg-white/90 shadow-lg px-5 py-2.5 border border-[#5BC0FF]/20">
-            <span className="text-muted-foreground text-xs">{t.assessmentPage.points[lang]}</span>
-            <p className="text-xl font-bold text-[#5BC0FF]">{xp}</p>
-          </div>
-          <div className="flex-1 w-full max-w-xs">
-            <div className="h-2.5 rounded-full bg-white/80 shadow-inner overflow-hidden">
-              <motion.div
-                className="h-full rounded-full bg-gradient-to-r from-[#5BC0FF] to-[#6EE7B7]"
-                initial={{ width: 0 }}
-                animate={{ width: `${progress * 100}%` }}
-                transition={{ duration: 0.5 }}
-              />
-            </div>
-          </div>
-        </div>
-
-        {!conversationStarted && (
+    <div
+      className={
+        conversationStarted
+          ? 'fixed inset-x-0 top-0 z-40 flex h-[100dvh] flex-col overflow-hidden bg-[#F8FAFC] pt-[4.5rem] pb-[max(0.75rem,env(safe-area-inset-bottom))] sm:pt-20'
+          : 'min-h-[100dvh] bg-[#F8FAFC] pt-[4.5rem] pb-[max(1rem,env(safe-area-inset-bottom))] sm:pt-20 sm:pb-8'
+      }
+    >
+      <div
+        className={`container mx-auto px-3 sm:px-4 max-w-5xl w-full ${
+          conversationStarted ? 'flex flex-1 min-h-0 flex-col' : ''
+        }`}
+      >
+        {!conversationStarted ? (
           <motion.div
-            initial={{ opacity: 0, scale: 0.96 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="max-w-3xl mx-auto mb-8"
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-5 sm:mb-8"
           >
+            <div className="flex flex-col items-center gap-2 mb-3 sm:gap-3 sm:mb-4">
+              <AIIcon size="lg" className="h-11 w-11 sm:h-14 sm:w-14" />
+              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center leading-tight bg-gradient-to-r from-[#5BC0FF] to-[#6EE7B7] bg-clip-text text-transparent px-2">
+                {t.assessmentPage.title[lang]}
+              </h1>
+              <p className="text-center text-sm text-muted-foreground px-2 max-w-md">
+                {t.assessmentPage.subtitle[lang]}
+              </p>
+            </div>
+
             <h2 className="text-center text-sm font-semibold text-[#5BC0FF] mb-1">
               {t.assessmentPage.scenarios.title[lang]}
             </h2>
-            <p className="text-center text-sm text-muted-foreground mb-4">
+            <p className="text-center text-xs sm:text-sm text-muted-foreground mb-3 sm:mb-4 px-1">
               {t.assessmentPage.scenarios.hint[lang]}
             </p>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
+            <div className="grid grid-cols-3 sm:grid-cols-4 gap-2 sm:gap-3 mb-5 sm:mb-6">
               {ASSESSMENT_SCENARIOS.map((scenario) => {
                 const selected = scenarioId === scenario.id;
                 const label = t.assessmentPage.scenarios[scenario.id][lang];
@@ -259,55 +257,68 @@ export default function EnglishAssessmentPage() {
                     key={scenario.id}
                     type="button"
                     onClick={() => selectScenario(scenario.id)}
-                    className={`rounded-2xl border px-3 py-4 text-center transition-all ${
+                    className={`min-h-[5.25rem] sm:min-h-[5.5rem] rounded-xl sm:rounded-2xl border px-1.5 py-2.5 sm:px-3 sm:py-4 text-center transition-all touch-manipulation flex flex-col items-center justify-center gap-1 ${
                       selected
                         ? 'border-[#5BC0FF] bg-[#5BC0FF]/10 shadow-md ring-2 ring-[#5BC0FF]/30'
-                        : 'border-white/80 bg-white/90 shadow hover:border-[#5BC0FF]/40 hover:shadow-md'
+                        : 'border-white/80 bg-white/90 shadow-sm hover:border-[#5BC0FF]/40 active:scale-[0.98]'
                     }`}
                   >
-                    <span className="text-2xl block mb-1.5" aria-hidden>
+                    <span className="text-xl sm:text-2xl leading-none" aria-hidden>
                       {scenario.icon}
                     </span>
-                    <span className="text-sm font-medium text-foreground leading-tight">
+                    <span className="text-[11px] sm:text-sm font-medium text-foreground leading-snug line-clamp-2 px-0.5">
                       {label}
                     </span>
                   </button>
                 );
               })}
             </div>
-            <div className="text-center">
+            <div className="text-center px-1">
               <button
                 type="button"
                 onClick={startConversation}
-                className="w-full max-w-md mx-auto rounded-2xl bg-gradient-to-r from-[#5BC0FF] to-[#6EE7B7] px-8 py-5 text-lg font-bold text-white shadow-xl hover:shadow-2xl transition-all flex items-center justify-center gap-3"
+                className="w-full max-w-md mx-auto rounded-2xl bg-gradient-to-r from-[#5BC0FF] to-[#6EE7B7] px-6 py-4 sm:px-8 sm:py-5 text-base sm:text-lg font-bold text-white shadow-xl hover:shadow-2xl transition-all flex items-center justify-center gap-2 sm:gap-3 touch-manipulation"
               >
-                <Volume2 className="h-6 w-6" />
+                <Volume2 className="h-5 w-5 sm:h-6 sm:w-6 shrink-0" />
                 {t.assessmentPage.startVoice[lang]}
               </button>
-              <p className="mt-3 text-sm text-muted-foreground">{t.assessmentPage.startHint[lang]}</p>
+              <p className="mt-2 sm:mt-3 text-xs sm:text-sm text-muted-foreground">
+                {t.assessmentPage.startHint[lang]}
+              </p>
             </div>
           </motion.div>
-        )}
+        ) : (
+          <div className="flex flex-1 min-h-0 flex-col">
+            <div className="mb-2 sm:mb-3 shrink-0 flex items-center gap-3 rounded-2xl border border-[#5BC0FF]/15 bg-white/90 px-3 py-2.5 shadow-sm">
+              <AIAssistantAvatar state={avatarState} className="w-14 h-14 sm:w-16 sm:h-16 shrink-0" />
+              <div className="min-w-0 flex-1">
+                <p className="text-sm font-semibold text-foreground truncate">
+                  {t.assessmentPage.title[lang]}
+                </p>
+                <p className="text-xs text-[#5BC0FF] font-medium truncate">{statusText}</p>
+                {voiceMode && (
+                  <p className="text-[10px] text-muted-foreground truncate mt-0.5">
+                    {t.assessmentPage.chat.voiceMode[lang]}
+                  </p>
+                )}
+              </div>
+              <div className="shrink-0 text-right">
+                <span className="text-[10px] text-muted-foreground block">
+                  {t.assessmentPage.points[lang]}
+                </span>
+                <p className="text-lg font-bold text-[#5BC0FF] leading-none">{xp}</p>
+              </div>
+            </div>
 
-        <div className="max-w-5xl mx-auto flex flex-col lg:flex-row gap-8 items-start">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="flex-shrink-0 flex flex-col items-center gap-2 lg:block"
-          >
-            <AIAssistantAvatar state={avatarState} className="w-32 h-32 lg:w-40 lg:h-40" />
-            {conversationStarted && voiceMode && (
-              <p className="text-xs text-center text-[#5BC0FF] font-medium max-w-[10rem]">
-                {t.assessmentPage.chat.voiceMode[lang]}
-              </p>
-            )}
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.1 }}
-            className="flex-1 w-full min-w-0"
-          >
+            <div className="mb-2 sm:mb-3 shrink-0 h-2 rounded-full bg-white/80 shadow-inner overflow-hidden">
+              <motion.div
+                className="h-full rounded-full bg-gradient-to-r from-[#5BC0FF] to-[#6EE7B7]"
+                initial={{ width: 0 }}
+                animate={{ width: `${progress * 100}%` }}
+                transition={{ duration: 0.5 }}
+              />
+            </div>
+
             <ChatWindow
               messages={messages}
               inputValue={input}
@@ -316,42 +327,41 @@ export default function EnglishAssessmentPage() {
               isListening={isListening}
               onToggleMic={handleToggleMic}
               micSupported={micSupported}
-              disabled={isThinking || isSpeaking || !conversationStarted}
+              disabled={isThinking || isSpeaking}
               statusText={statusText}
               avatarState={avatarState}
               speakingMessageId={speakingMessageId}
               onReplay={handleReplay}
               labels={chatLabels}
+              compact
             />
-          </motion.div>
-        </div>
 
-        <div className="text-center mt-6 flex flex-col sm:flex-row items-center justify-center gap-4">
-          {conversationStarted && (
-            <button
-              type="button"
-              onClick={() => {
-                setVoiceMode((v) => !v);
-                stopListening();
-              }}
-              className="text-sm text-muted-foreground hover:text-[#5BC0FF]"
-            >
-              {voiceMode
-                ? t.assessmentPage.chat.typeMode[lang]
-                : t.assessmentPage.chat.voiceMode[lang]}
-            </button>
-          )}
-          <button
-            type="button"
-            onClick={() => {
-              if (messages.length >= 2) completeWithCurrent();
-              else navigate('/assessment/dashboard');
-            }}
-            className="text-sm text-muted-foreground hover:text-[#5BC0FF] underline"
-          >
-            {t.assessmentPage.done[lang]}
-          </button>
-        </div>
+            <div className="mt-2 sm:mt-3 shrink-0 flex flex-col items-stretch sm:items-center justify-center gap-1 sm:gap-3 sm:flex-row sm:gap-4">
+              <button
+                type="button"
+                onClick={() => {
+                  setVoiceMode((v) => !v);
+                  stopListening();
+                }}
+                className="text-sm text-muted-foreground hover:text-[#5BC0FF] py-2 touch-manipulation"
+              >
+                {voiceMode
+                  ? t.assessmentPage.chat.typeMode[lang]
+                  : t.assessmentPage.chat.voiceMode[lang]}
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  if (messages.length >= 2) completeWithCurrent();
+                  else navigate('/assessment/dashboard');
+                }}
+                className="text-sm text-muted-foreground hover:text-[#5BC0FF] underline py-2 touch-manipulation"
+              >
+                {t.assessmentPage.done[lang]}
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

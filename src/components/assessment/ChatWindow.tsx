@@ -1,4 +1,4 @@
-import { useRef, useEffect, useLayoutEffect } from 'react';
+import { useRef, useLayoutEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Mic, Send, Volume2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -30,6 +30,7 @@ interface ChatWindowProps {
   speakingMessageId?: string | null;
   onReplay?: (text: string) => void;
   labels: ChatLabels;
+  compact?: boolean;
 }
 
 export function ChatWindow({
@@ -46,56 +47,60 @@ export function ChatWindow({
   speakingMessageId,
   onReplay,
   labels,
+  compact = false,
 }: ChatWindowProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
-  const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const scrollToBottom = (behavior: ScrollBehavior = 'smooth') => {
+  const scrollToBottom = (behavior: ScrollBehavior = 'auto') => {
     const el = scrollRef.current;
     if (!el) return;
-    bottomRef.current?.scrollIntoView({ behavior, block: 'end' });
-    el.scrollTop = el.scrollHeight;
+    el.scrollTo({ top: el.scrollHeight, behavior });
   };
 
   useLayoutEffect(() => {
     scrollToBottom('auto');
-  }, [messages.length]);
-
-  useEffect(() => {
-    scrollToBottom('smooth');
-  }, [messages, inputValue]);
+  }, [messages]);
 
   return (
-    <div className="flex h-[min(32rem,calc(100vh-14rem))] min-h-[22rem] flex-col rounded-2xl bg-white/90 shadow-xl border border-white/80 overflow-hidden">
-      <div
-        className={cn(
-          'flex items-center gap-2 border-b px-4 py-2.5 text-sm font-medium transition-colors',
-          avatarState === 'listening' && 'bg-[#FF8FAB]/15 text-[#c9184a]',
-          avatarState === 'speaking' && 'bg-[#5BC0FF]/15 text-[#0077b6]',
-          avatarState === 'thinking' && 'bg-[#FFE66D]/20 text-[#9a6b00]',
-          avatarState === 'idle' && 'bg-slate-50 text-muted-foreground'
-        )}
-      >
-        {avatarState === 'listening' && (
-          <span className="flex gap-0.5">
-            {[0, 1, 2].map((i) => (
-              <motion.span
-                key={i}
-                className="inline-block h-3 w-0.5 rounded-full bg-[#FF8FAB]"
-                animate={{ scaleY: [0.4, 1, 0.4] }}
-                transition={{ duration: 0.6, repeat: Infinity, delay: i * 0.12 }}
-              />
-            ))}
-          </span>
-        )}
-        {avatarState === 'speaking' && <Volume2 className="h-4 w-4 shrink-0 animate-pulse" />}
-        <span>{statusText}</span>
-      </div>
+    <div
+      className={cn(
+        'flex min-h-0 flex-col rounded-2xl bg-white/90 shadow-xl border border-white/80 overflow-hidden',
+        compact
+          ? 'flex-1 min-h-0'
+          : 'h-[min(32rem,calc(100vh-14rem))] min-h-[22rem]'
+      )}
+    >
+      {!compact && (
+        <div
+          className={cn(
+            'flex items-center gap-2 border-b px-4 py-2.5 text-sm font-medium transition-colors',
+            avatarState === 'listening' && 'bg-[#FF8FAB]/15 text-[#c9184a]',
+            avatarState === 'speaking' && 'bg-[#5BC0FF]/15 text-[#0077b6]',
+            avatarState === 'thinking' && 'bg-[#FFE66D]/20 text-[#9a6b00]',
+            avatarState === 'idle' && 'bg-slate-50 text-muted-foreground'
+          )}
+        >
+          {avatarState === 'listening' && (
+            <span className="flex gap-0.5">
+              {[0, 1, 2].map((i) => (
+                <motion.span
+                  key={i}
+                  className="inline-block h-3 w-0.5 rounded-full bg-[#FF8FAB]"
+                  animate={{ scaleY: [0.4, 1, 0.4] }}
+                  transition={{ duration: 0.6, repeat: Infinity, delay: i * 0.12 }}
+                />
+              ))}
+            </span>
+          )}
+          {avatarState === 'speaking' && <Volume2 className="h-4 w-4 shrink-0 animate-pulse" />}
+          <span className="truncate">{statusText}</span>
+        </div>
+      )}
 
       <div
         ref={scrollRef}
-        className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden p-4 space-y-4 scroll-smooth overscroll-y-contain [scrollbar-gutter:stable]"
+        className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden p-3 sm:p-4 space-y-3 sm:space-y-4 overscroll-y-contain touch-pan-y [scrollbar-gutter:stable]"
         aria-live="polite"
         aria-relevant="additions"
       >
@@ -113,7 +118,7 @@ export function ChatWindow({
                 )}
               >
                 {m.role === 'assistant' && <AIIcon size="sm" />}
-                <div className="flex max-w-[85%] flex-col gap-1">
+                <div className="flex max-w-[88%] sm:max-w-[85%] min-w-0 flex-col gap-1">
                   <span className="text-[10px] font-medium text-muted-foreground px-1">
                     {m.role === 'user' ? labels.you : labels.ai}
                   </span>
@@ -143,10 +148,9 @@ export function ChatWindow({
             );
           })}
         </AnimatePresence>
-        <div ref={bottomRef} className="h-px shrink-0" aria-hidden />
       </div>
 
-      <div className="p-4 border-t border-border/50 bg-white/50 flex gap-2 items-center">
+      <div className="p-2.5 sm:p-4 border-t border-border/50 bg-white/50 flex gap-2 items-center min-w-0">
         <input
           ref={inputRef}
           type="text"
@@ -155,7 +159,7 @@ export function ChatWindow({
           onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && onSend()}
           placeholder={labels.placeholder}
           disabled={disabled || isListening}
-          className="flex-1 rounded-xl border border-border bg-background px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-[#5BC0FF]/50 disabled:opacity-50"
+          className="min-w-0 flex-1 rounded-xl border border-border bg-background px-3 py-2.5 sm:px-4 sm:py-3 text-base text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-[#5BC0FF]/50 disabled:opacity-50"
         />
         {micSupported && (
           <button
@@ -163,7 +167,7 @@ export function ChatWindow({
             onClick={onToggleMic}
             disabled={disabled}
             className={cn(
-              'rounded-xl p-3 transition-all',
+              'shrink-0 rounded-xl p-2.5 sm:p-3 transition-all touch-manipulation',
               isListening
                 ? 'bg-[#FF8FAB] text-white shadow-lg shadow-[#FF8FAB]/30'
                 : 'bg-muted hover:bg-[#5BC0FF]/20 text-foreground'
@@ -177,7 +181,7 @@ export function ChatWindow({
           type="button"
           onClick={onSend}
           disabled={disabled || !inputValue.trim()}
-          className="rounded-xl bg-gradient-to-r from-[#5BC0FF] to-[#6EE7B7] p-3 text-white shadow-md hover:shadow-lg disabled:opacity-50 transition-all"
+          className="shrink-0 rounded-xl bg-gradient-to-r from-[#5BC0FF] to-[#6EE7B7] p-2.5 sm:p-3 text-white shadow-md hover:shadow-lg disabled:opacity-50 transition-all touch-manipulation"
           aria-label={labels.placeholder}
         >
           <Send className="h-5 w-5" />
