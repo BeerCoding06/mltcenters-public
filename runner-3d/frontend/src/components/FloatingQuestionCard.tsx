@@ -1,11 +1,9 @@
 import { motion, AnimatePresence } from "framer-motion";
 import type { AnswerFeedback, Question } from "../game/types";
 import { difficultyLabel } from "../lib/i18n";
-import { QUESTION_ANSWER_SEC } from "../game/constants";
 
 interface Props {
   question: Question;
-  timeLeft: number | null;
   onAnswer: (index: number) => void;
   disabled?: boolean;
   feedback: AnswerFeedback | null;
@@ -15,16 +13,10 @@ const LABELS = ["A", "B", "C"];
 
 export function FloatingQuestionCard({
   question,
-  timeLeft,
   onAnswer,
   disabled,
   feedback,
 }: Props) {
-  const pct =
-    timeLeft != null
-      ? Math.max(0, Math.min(100, (timeLeft / QUESTION_ANSWER_SEC) * 100))
-      : 100;
-
   return (
     <AnimatePresence>
       <motion.div
@@ -35,22 +27,10 @@ export function FloatingQuestionCard({
         className="pointer-events-auto absolute inset-x-0 bottom-4 z-30 flex justify-center px-3 sm:bottom-8"
       >
         <div className="w-full max-w-lg rounded-3xl border border-white/25 bg-white/15 p-4 shadow-2xl backdrop-blur-xl sm:p-5">
-          <div className="mb-3 flex items-center justify-between gap-2">
+          <div className="mb-3">
             <span className="rounded-full bg-violet-500/30 px-2.5 py-0.5 text-xs font-medium text-violet-100">
               {difficultyLabel(question.difficulty)}
             </span>
-            <div className="flex items-center gap-2">
-              <div className="h-1.5 w-20 overflow-hidden rounded-full bg-black/20">
-                <motion.div
-                  className="h-full rounded-full bg-amber-400"
-                  animate={{ width: `${pct}%` }}
-                  transition={{ duration: 0.1 }}
-                />
-              </div>
-              <span className="text-xs font-bold tabular-nums text-white">
-                {timeLeft != null ? timeLeft.toFixed(1) : QUESTION_ANSWER_SEC}s
-              </span>
-            </div>
           </div>
 
           <h2 className="text-base font-bold leading-snug text-white sm:text-lg">

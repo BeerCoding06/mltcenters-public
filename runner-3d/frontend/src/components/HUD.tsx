@@ -5,11 +5,9 @@ import { th } from "../lib/i18n";
 export function HUD({
   state,
   combo,
-  phase,
 }: {
   state: GameState;
   combo: number;
-  phase: string;
 }) {
   const hpPct = Math.max(0, state.hp);
   const progress = Math.min(100, (state.questions_answered / TARGET_QUESTIONS) * 100);
@@ -17,11 +15,6 @@ export function HUD({
   return (
     <div className="pointer-events-none absolute inset-x-0 top-0 z-10 p-3">
       <div className="mx-auto flex max-w-3xl flex-col gap-2">
-        {phase === "countdown" && (
-          <p className="text-center text-sm font-bold text-amber-300 animate-pulse">
-            Get ready…
-          </p>
-        )}
         <div className="flex flex-wrap justify-between gap-2 text-sm">
           <Badge label={th.game.score} value={state.score} className="text-yellow-300" />
           <Badge

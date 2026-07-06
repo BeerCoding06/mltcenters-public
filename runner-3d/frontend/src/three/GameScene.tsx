@@ -72,7 +72,9 @@ export function GameScene(props: Props) {
       shadows
       camera={{ fov: 55, near: 0.1, far: 300, position: [0, 3, -6] }}
       className="h-full w-full"
-      style={{ background: "linear-gradient(#87CEEB 0%, #b4e4ff 55%, #4ade80 55%)" }}
+      style={{
+        background: "linear-gradient(#87CEEB 0%, #87CEEB 48%, #4ade80 48%, #22c55e 100%)",
+      }}
     >
       <Suspense
         fallback={

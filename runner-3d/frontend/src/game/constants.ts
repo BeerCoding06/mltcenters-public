@@ -1,16 +1,20 @@
 export const TARGET_QUESTIONS = 30;
 
 export const PREFETCH_QUESTIONS = 20;
-export const QUESTION_ANSWER_SEC = 3;
-export const COUNTDOWN_SEC = 3;
 
-export const OBSTACLE_GAP_BASE = 26;
-export const OBSTACLE_SPAWN_AHEAD_MIN = 34;
-export const OBSTACLE_SPAWN_AHEAD_SPREAD = 12;
+export const OBSTACLE_GAP_BASE = 28;
+export const OBSTACLE_SPAWN_AHEAD_MIN = 38;
+export const OBSTACLE_SPAWN_AHEAD_SPREAD = 14;
 
-export const QUESTION_TRIGGER_MIN = 8;
-export const QUESTION_TRIGGER_MAX = 20;
-export const OBSTACLE_CLEAR_Z = 2.5;
+/** แสดงคำถามเมื่อสิ่งกีดขวางอยู่ห่างเท่านี้ (ครอบคลุมระยะ spawn 38–52) */
+export const QUESTION_TRIGGER_MIN = 14;
+export const QUESTION_TRIGGER_MAX = 56;
+
+/** ชนสิ่งกีดขวางเมื่อถึงระยะนี้ (ยังไม่ตอบ) */
+export const OBSTACLE_HIT_Z = 1.8;
+
+/** ช้าลงขณะมีคำถาม — ไม่จับเวลา แต่ให้เวลาคิด */
+export const QUESTION_SCROLL_SLOW = 0.38;
 
 export const JUMP_DURATION = 0.58;
 export const JUMP_HEIGHT = 1.55;

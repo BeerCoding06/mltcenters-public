@@ -1,8 +1,6 @@
 import type { GameState, PerformanceEvaluation } from "../types";
 
-const API =
-  import.meta.env.VITE_API_URL ||
-  (import.meta.env.DEV ? "/api/v1" : "/runner-api");
+const API = import.meta.env.VITE_API_URL || "/runner-api";
 
 async function post<T>(path: string, body?: unknown): Promise<T> {
   const res = await fetch(`${API}${path}`, {

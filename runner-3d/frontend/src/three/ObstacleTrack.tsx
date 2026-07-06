@@ -8,34 +8,57 @@ interface Props {
   scrollZ: number;
 }
 
-const POOL_SIZE = 24;
+const SEG_LEN = 5;
+const SEGMENTS_AHEAD = 48;
+const SEGMENTS_BEHIND = 6;
 
 export function ObstacleTrack({ obstacles, scrollZ }: Props) {
-  const segments = useMemo(() => Array.from({ length: 40 }, (_, i) => i), []);
+  const segmentZs = useMemo(() => {
+    const anchor = Math.floor(scrollZ / SEG_LEN) * SEG_LEN;
+    const start = anchor - SEGMENTS_BEHIND * SEG_LEN;
+    return Array.from(
+      { length: SEGMENTS_AHEAD + SEGMENTS_BEHIND },
+      (_, i) => start + i * SEG_LEN
+    );
+  }, [Math.floor(scrollZ / SEG_LEN)]);
+
+  const runwayCenterZ = scrollZ + 55;
 
   return (
     <group position={[0, 0, -scrollZ]}>
-      {segments.map((i) => (
-        <group key={i} position={[0, 0, i * 5]}>
-          <mesh rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
-            <planeGeometry args={[8, 5]} />
-            <meshStandardMaterial color={i % 2 === 0 ? "#4ade80" : "#22c55e"} />
+      {/* พื้นยาวต่อเนื่อง — กัน obstacle ลอยกลางอากาศ */}
+      <mesh
+        rotation={[-Math.PI / 2, 0, 0]}
+        position={[0, 0.001, runwayCenterZ]}
+        receiveShadow
+      >
+        <planeGeometry args={[9, 280]} />
+        <meshStandardMaterial color="#3cb371" />
+      </mesh>
+
+      {segmentZs.map((segZ) => (
+        <group key={segZ} position={[0, 0, segZ]}>
+          <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.02, 0]} receiveShadow>
+            <planeGeometry args={[8, SEG_LEN]} />
+            <meshStandardMaterial
+              color={Math.floor(segZ / SEG_LEN) % 2 === 0 ? "#4ade80" : "#22c55e"}
+            />
           </mesh>
           <mesh position={[-4.2, 0.5, 0]} castShadow>
-            <boxGeometry args={[0.3, 1, 5]} />
+            <boxGeometry args={[0.3, 1, SEG_LEN]} />
             <meshStandardMaterial color="#fbbf24" />
           </mesh>
           <mesh position={[4.2, 0.5, 0]} castShadow>
-            <boxGeometry args={[0.3, 1, 5]} />
+            <boxGeometry args={[0.3, 1, SEG_LEN]} />
             <meshStandardMaterial color="#fbbf24" />
           </mesh>
         </group>
       ))}
 
-      {segments
-        .filter((_, i) => i % 3 === 0)
-        .map((i) => (
-          <group key={`tree-${i}`} position={[-5.5, 0, i * 5]}>
+      {segmentZs
+        .filter((z) => Math.floor(z / SEG_LEN) % 3 === 0)
+        .map((segZ) => (
+          <group key={`tree-${segZ}`} position={[-5.5, 0, segZ]}>
             <mesh position={[0, 1, 0]} castShadow>
               <cylinderGeometry args={[0.25, 0.35, 2, 8]} />
               <meshStandardMaterial color="#92400e" />
@@ -50,11 +73,6 @@ export function ObstacleTrack({ obstacles, scrollZ }: Props) {
       {obstacles.map((o) => (
         <ObstacleMesh key={o.id} kind={o.kind} z={o.z} cleared={o.cleared} />
       ))}
-
-      <mesh position={[0, 0.01, POOL_SIZE * 5]} rotation={[-Math.PI / 2, 0, 0]}>
-        <planeGeometry args={[8, 2]} />
-        <meshStandardMaterial color="#fef08a" />
-      </mesh>
     </group>
   );
 }
@@ -72,7 +90,7 @@ function ObstacleMesh({
 
   if (kind === "rock") {
     return (
-      <mesh position={[0, 0.45, z]} castShadow>
+      <mesh position={[0, 0.55, z]} castShadow>
         <dodecahedronGeometry args={[0.55, 0]} />
         <meshStandardMaterial color="#78716c" transparent opacity={opacity} />
       </mesh>
@@ -80,7 +98,7 @@ function ObstacleMesh({
   }
   if (kind === "woodBox") {
     return (
-      <mesh position={[0, 0.5, z]} castShadow>
+      <mesh position={[0, 0.45, z]} castShadow>
         <boxGeometry args={[0.9, 0.9, 0.9]} />
         <meshStandardMaterial color="#a16207" transparent opacity={opacity} />
       </mesh>
@@ -110,10 +128,12 @@ function ObstacleMesh({
   }
   if (kind === "hole") {
     return (
-      <mesh position={[0, 0.02, z]} rotation={[-Math.PI / 2, 0, 0]}>
-        <ringGeometry args={[0.35, 0.85, 16]} />
-        <meshStandardMaterial color="#1e293b" />
-      </mesh>
+      <group position={[0, 0, z]}>
+        <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.03, 0]}>
+          <ringGeometry args={[0.35, 0.85, 16]} />
+          <meshStandardMaterial color="#1e293b" />
+        </mesh>
+      </group>
     );
   }
   if (kind === "tree") {

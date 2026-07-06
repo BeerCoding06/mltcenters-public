@@ -56,7 +56,6 @@ export interface GameSnapshot {
   scrollZ: number;
   obstacles: Obstacle[];
   jumpHeight: number;
-  questionTimeLeft: number | null;
   activeObstacleId: number | null;
   evaluation: PerformanceEvaluation | null;
   submitting: boolean;

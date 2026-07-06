@@ -15,7 +15,6 @@ export default function App() {
     scrollZ,
     obstacles,
     jumpHeight,
-    questionTimeLeft,
     evaluation,
     submitting,
     fx,
@@ -54,12 +53,11 @@ export default function App() {
               fx={fx}
             />
             <GameEffects fx={fx} />
-            <HUD state={state} combo={combo} phase={phase} />
+            <HUD state={state} combo={combo} />
 
             {showQuestion && state.current_question && (
               <FloatingQuestionCard
                 question={state.current_question}
-                timeLeft={questionTimeLeft}
                 onAnswer={answer}
                 disabled={submitting}
                 feedback={answerFeedback}
