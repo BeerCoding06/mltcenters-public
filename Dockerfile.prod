@@ -1,10 +1,18 @@
-# Multi-stage: build Vite app, then run Express + static (same origin /api).
-# Used by Dockploy when the build is set to Dockerfile.prod
+# Multi-stage: build Vite app + 3D runner, then run Express + static (same origin /api).
 FROM node:20-alpine AS frontend
 WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci
 COPY . .
+RUN npm run build
+
+FROM node:20-alpine AS runner-frontend
+WORKDIR /app/runner-3d/frontend
+COPY runner-3d/frontend/package.json runner-3d/frontend/package-lock.json* ./
+RUN npm install
+COPY runner-3d/frontend/ .
+ENV VITE_BASE=/runner-app/
+ENV VITE_API_URL=/runner-api
 RUN npm run build
 
 FROM node:20-alpine AS runner
@@ -13,6 +21,7 @@ COPY server/package.json ./server/
 RUN cd server && npm install --omit=dev
 COPY server ./server
 COPY --from=frontend /app/dist ./dist
+COPY --from=runner-frontend /app/runner-3d/frontend/dist ./dist/runner-app
 ENV NODE_ENV=production
 EXPOSE 3000
 WORKDIR /app/server

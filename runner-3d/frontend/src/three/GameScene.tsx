@@ -1,6 +1,6 @@
 import { Suspense, useRef } from "react";
 import { Canvas } from "@react-three/fiber";
-import { Environment, Html, Stars } from "@react-three/drei";
+import { Html, Stars } from "@react-three/drei";
 import * as THREE from "three";
 import { AvatarCharacter } from "./AvatarCharacter";
 import { FollowCamera } from "./FollowCamera";
@@ -20,15 +20,15 @@ function SceneInner({ speed, animState, scrollZ, obstacles, playerZ }: Props) {
 
   return (
     <>
-      <ambientLight intensity={0.6} />
+      <ambientLight intensity={0.65} />
+      <hemisphereLight args={["#87CEEB", "#4ade80", 0.6]} />
       <directionalLight
-        position={[5, 10, 5]}
-        intensity={1.2}
+        position={[5, 12, 8]}
+        intensity={1.3}
         castShadow
         shadow-mapSize={[1024, 1024]}
       />
-      <Environment preset="sunset" />
-      <Stars radius={80} depth={40} count={2000} factor={3} fade speed={0.5} />
+      <Stars radius={80} depth={40} count={1200} factor={3} fade speed={0.5} />
 
       <group ref={playerRef} position={[0, 0, playerZ]}>
         <AvatarCharacter animState={animState} speed={speed} position={[0, 0, 0]} />
@@ -46,6 +46,7 @@ export function GameScene(props: Props) {
       shadows
       camera={{ fov: 55, near: 0.1, far: 300, position: [0, 3, -6] }}
       className="h-full w-full"
+      style={{ background: "linear-gradient(#87CEEB 0%, #b4e4ff 55%, #4ade80 55%)" }}
     >
       <Suspense
         fallback={

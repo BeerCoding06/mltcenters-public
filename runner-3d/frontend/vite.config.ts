@@ -2,12 +2,13 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 
 export default defineConfig({
+  base: process.env.VITE_BASE || "/",
   plugins: [react()],
   server: {
     port: 5195,
     proxy: {
-      "/api": { target: "http://localhost:8003", changeOrigin: true },
-      "/health": { target: "http://localhost:8003", changeOrigin: true },
+      "/runner-api": { target: "http://localhost:3000", changeOrigin: true },
+      "/api/v1": { target: "http://localhost:8003", changeOrigin: true },
     },
   },
 });

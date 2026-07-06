@@ -1,7 +1,7 @@
 import { useI18n } from '@/lib/i18n';
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Globe, Bot } from 'lucide-react';
+import { Menu, X, Globe, Bot, Gamepad2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import brandLogo from '@/assets/logo-new.png';
 
@@ -17,6 +17,7 @@ const Navbar = () => {
     { label: t.nav.schedule[lang], path: '/schedule' },
     { label: t.nav.gallery[lang], path: '/gallery' },
     { label: t.nav.assessment[lang], path: '/assessment', icon: Bot },
+    { label: t.nav.runner[lang], path: '/runner-app/', icon: Gamepad2 },
     { label: t.nav.register[lang], path: '/register' },
     { label: t.nav.contact[lang], path: '/contact' },
   ];

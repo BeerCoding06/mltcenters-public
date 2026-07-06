@@ -1,6 +1,8 @@
 import type { GameState, PerformanceEvaluation } from "../types";
 
-const API = "/api/v1";
+const API =
+  import.meta.env.VITE_API_URL ||
+  (import.meta.env.DEV ? "/api/v1" : "/runner-api");
 
 async function post<T>(path: string, body?: unknown): Promise<T> {
   const res = await fetch(`${API}${path}`, {
@@ -33,15 +35,5 @@ export const gameApi = {
   reset: (session_id: string) => post<GameState>(`/game/reset/${session_id}`),
 };
 
-/** Ready Player Me demo avatar — replace with your own .glb URL */
-export const RPM_AVATAR_URL =
-  import.meta.env.VITE_RPM_AVATAR_URL ||
-  "https://models.readyplayer.me/64bfa15f0e72c63d7c3934a6.glb";
-
-export const ANIM_PATHS = {
-  run: import.meta.env.VITE_ANIM_RUN || "/models/animations/run.glb",
-  idle: import.meta.env.VITE_ANIM_IDLE || "/models/animations/idle.glb",
-  jump: import.meta.env.VITE_ANIM_JUMP || "/models/animations/jump.glb",
-  win: import.meta.env.VITE_ANIM_WIN || "/models/animations/win.glb",
-  lose: import.meta.env.VITE_ANIM_LOSE || "/models/animations/lose.glb",
-};
+/** Set VITE_RPM_AVATAR_URL only if you host a .glb yourself (optional). */
+export const RPM_AVATAR_URL = import.meta.env.VITE_RPM_AVATAR_URL || "";

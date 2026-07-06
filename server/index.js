@@ -14,6 +14,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import OpenAI from 'openai';
 import nodemailer from 'nodemailer';
+import { createRunnerRouter } from './runner-api.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const distPath = path.join(__dirname, '../dist');
@@ -144,14 +145,9 @@ app.post('/api/register', async (req, res) => {
   }
 });
 
-const SYSTEM_PROMPT = `You are having a normal, friendly greeting conversation in English to understand the person's level. Act like someone saying hi and making small talk—not a test, just natural chat.
-Rules:
-- Talk like a normal greeting: "Hi! How are you?", "What's your name?", "What do you like to do?", "How was your day?" — one short message per turn, warm and natural.
-- After they reply, respond with a single JSON object only, no other text:
-{"reply": "Your natural reply (greeting, follow-up question, or friendly goodbye)", "scores": {"grammar": number 0-100, "vocabulary": number 0-100, "fluency": number 0-100, "coherence": number 0-100}, "level": "Beginner"|"Intermediate"|"Advanced"}
-- From their message, estimate grammar, vocabulary, fluency, coherence (0-100). Level: Beginner 0-59, Intermediate 60-79, Advanced 80-100.
-- Keep the chat to 5–8 exchanges. Start with a simple greeting, then small talk (name, day, hobbies, etc.), then say a nice goodbye in "reply".
-- Always return only the JSON object as your entire message.`;
+const SYSTEM_PROMPT = `You are having a normal, friendly greeting conversation in English to understand the person's level. Act like a normal greeting: warm and natural.
+After they reply, respond with a single JSON object only:
+{"reply": "...", "scores": {"grammar": 0-100, "vocabulary": 0-100, "fluency": 0-100, "coherence": 0-100}, "level": "Beginner"|"Intermediate"|"Advanced"}`;
 
 app.post('/api/assess', async (req, res) => {
   if (!openai) {
@@ -180,10 +176,22 @@ app.post('/api/assess', async (req, res) => {
   }
 });
 
+// 3D English Runner game API
+app.use('/runner-api', createRunnerRouter(openai, AI_MODEL));
+
+const runnerAppPath = path.join(distPath, 'runner-app');
 if (existsSync(distPath)) {
+  if (existsSync(runnerAppPath)) {
+    app.use('/runner-app', express.static(runnerAppPath));
+    app.get('/runner-app/*', (_req, res) => {
+      res.sendFile(path.join(runnerAppPath, 'index.html'));
+    });
+  }
   app.use(express.static(distPath));
   app.get('*', (req, res, next) => {
-    if (req.path.startsWith('/api')) return next();
+    if (req.path.startsWith('/api') || req.path.startsWith('/runner-api') || req.path.startsWith('/runner-app')) {
+      return next();
+    }
     res.sendFile(path.join(distPath, 'index.html'));
   });
 }

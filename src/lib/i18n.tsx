@@ -12,6 +12,7 @@ export const translations = {
     register: { en: "Register", th: "ลงทะเบียน" },
     contact: { en: "Contact", th: "ติดต่อ" },
     assessment: { en: "Chat English", th: "คุยภาษาอังกฤษ" },
+    runner: { en: "3D Runner Game", th: "เกมวิ่ง 3D" },
   },
   assessmentPage: {
     title: { en: "Chat in English", th: "คุยภาษาอังกฤษ" },

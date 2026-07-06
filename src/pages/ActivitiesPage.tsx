@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { useI18n } from '@/lib/i18n';
 import { motion } from 'framer-motion';
 import { PastelImage } from '@/components/PastelImage';
@@ -62,9 +63,18 @@ const ActivitiesPage = () => {
                 <div className="text-4xl mb-4">{item.icon}</div>
                 <h3 className="text-xl font-bold text-foreground mb-3">{item.title[lang]}</h3>
                 <p className="text-sm text-muted-foreground leading-relaxed mb-5">{item.desc[lang]}</p>
+                {i === 2 ? (
+                  <Link
+                    to="/runner-app/"
+                    className="text-sm font-semibold text-primary hover:underline"
+                  >
+                    {lang === 'th' ? 'เล่นเกมเลย →' : 'Play now →'}
+                  </Link>
+                ) : (
                 <button className="text-sm font-semibold text-primary hover:underline">
                   {t.activities.learnMore[lang]} →
                 </button>
+                )}
               </div>
             </motion.div>
           ))}
