@@ -28,6 +28,8 @@ const SMTP_PORT = Number(process.env.SMTP_PORT || 587);
 const SMTP_USER = process.env.SMTP_USER || '';
 const SMTP_PASS = process.env.SMTP_PASS || '';
 const SMTP_FROM = process.env.SMTP_FROM || SMTP_USER;
+const RESEND_API_KEY = process.env.RESEND_API_KEY || '';
+const EMAIL_FROM = process.env.EMAIL_FROM || 'MLTCENTERS <onboarding@resend.dev>';
 const USE_GMAIL_SERVICE = !process.env.SMTP_HOST;
 
 const app = express();
@@ -103,13 +105,53 @@ function buildRegistrationEmail(body) {
   return { text, html };
 }
 
-app.post('/api/register', async (req, res) => {
+const emailConfigured = Boolean(RESEND_API_KEY || (SMTP_USER && SMTP_PASS));
+
+async function sendRegistrationEmail({ replyTo, subject, text, html }) {
+  if (RESEND_API_KEY) {
+    const res = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${RESEND_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        from: EMAIL_FROM,
+        to: [REGISTER_TO_EMAIL],
+        reply_to: replyTo,
+        subject,
+        html,
+        text,
+      }),
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.message || `Resend failed (${res.status})`);
+    }
+    return;
+  }
+
   if (!mailTransport) {
+    throw new Error('Email not configured');
+  }
+
+  await mailTransport.sendMail({
+    from: SMTP_FROM,
+    to: REGISTER_TO_EMAIL,
+    replyTo,
+    subject,
+    text,
+    html,
+  });
+}
+
+app.post('/api/register', async (req, res) => {
+  if (!emailConfigured) {
     return res.status(503).json({
       error:
-        'Email is not configured. Set SMTP_USER and SMTP_PASS (Gmail App Password) in server/.env or project .env.',
+        'Email is not configured. Set RESEND_API_KEY or SMTP_USER + SMTP_PASS in .env.',
       errorTh:
-        'ยังไม่ได้ตั้งค่าอีเมล กรุณาใส่ SMTP_USER และ SMTP_PASS (รหัส App Password ของ Gmail) ในไฟล์ .env',
+        'ยังไม่ได้ตั้งค่าอีเมล กรุณาใส่ RESEND_API_KEY หรือ SMTP_USER + SMTP_PASS ในไฟล์ .env',
     });
   }
 
@@ -131,9 +173,7 @@ app.post('/api/register', async (req, res) => {
   const { text, html } = buildRegistrationEmail(payload);
 
   try {
-    await mailTransport.sendMail({
-      from: SMTP_FROM,
-      to: REGISTER_TO_EMAIL,
+    await sendRegistrationEmail({
       replyTo: email,
       subject: `[MLTCENTERS] Registration – ${payload.firstName} ${payload.lastName}`,
       text,
@@ -280,11 +320,13 @@ app.listen(PORT, host, () => {
   if (mailTransport) {
     mailTransport
       .verify()
-      .then(() => console.log(`Registration email ready → ${REGISTER_TO_EMAIL}`))
+      .then(() => console.log(`Registration email (SMTP) → ${REGISTER_TO_EMAIL}`))
       .catch((err) => console.error('SMTP verify failed:', err.message));
+  } else if (RESEND_API_KEY) {
+    console.log(`Registration email (Resend) → ${REGISTER_TO_EMAIL}`);
   } else {
     console.warn(
-      'Registration email disabled: set SMTP_USER + SMTP_PASS in .env (see .env.example)'
+      'Registration email disabled: set RESEND_API_KEY or SMTP_USER + SMTP_PASS in .env'
     );
   }
 });
