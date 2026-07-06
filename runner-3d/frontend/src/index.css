@@ -2,5 +2,42 @@
 @tailwind components;
 @tailwind utilities;
 
-html, body, #root { height: 100%; margin: 0; }
-body { font-family: system-ui, sans-serif; touch-action: manipulation; }
+@layer base {
+  :root {
+    --background: 210 40% 98%;
+    --foreground: 220 20% 20%;
+    --card: 0 0% 100%;
+    --card-foreground: 220 20% 20%;
+    --primary: 200 100% 68%;
+    --primary-foreground: 220 30% 15%;
+    --secondary: 155 72% 67%;
+    --secondary-foreground: 220 30% 15%;
+    --muted: 210 30% 95%;
+    --muted-foreground: 220 10% 45%;
+    --accent: 345 100% 78%;
+    --accent-foreground: 220 30% 15%;
+    --border: 210 25% 90%;
+    --input: 210 25% 90%;
+    --ring: 200 100% 68%;
+    --radius: 1rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+    margin: 0;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Poppins', 'Noto Sans Thai', sans-serif;
+    touch-action: manipulation;
+  }
+}
