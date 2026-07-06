@@ -1,0 +1,91 @@
+import { motion, AnimatePresence } from "framer-motion";
+import type { AnswerFeedback, Question } from "../game/types";
+import { difficultyLabel } from "../lib/i18n";
+import { QUESTION_ANSWER_SEC } from "../game/constants";
+
+interface Props {
+  question: Question;
+  timeLeft: number | null;
+  onAnswer: (index: number) => void;
+  disabled?: boolean;
+  feedback: AnswerFeedback | null;
+}
+
+const LABELS = ["A", "B", "C"];
+
+export function FloatingQuestionCard({
+  question,
+  timeLeft,
+  onAnswer,
+  disabled,
+  feedback,
+}: Props) {
+  const pct =
+    timeLeft != null
+      ? Math.max(0, Math.min(100, (timeLeft / QUESTION_ANSWER_SEC) * 100))
+      : 100;
+
+  return (
+    <AnimatePresence>
+      <motion.div
+        initial={{ opacity: 0, y: 48 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: 24 }}
+        transition={{ duration: 0.28, ease: "easeOut" }}
+        className="pointer-events-auto absolute inset-x-0 bottom-4 z-30 flex justify-center px-3 sm:bottom-8"
+      >
+        <div className="w-full max-w-lg rounded-3xl border border-white/25 bg-white/15 p-4 shadow-2xl backdrop-blur-xl sm:p-5">
+          <div className="mb-3 flex items-center justify-between gap-2">
+            <span className="rounded-full bg-violet-500/30 px-2.5 py-0.5 text-xs font-medium text-violet-100">
+              {difficultyLabel(question.difficulty)}
+            </span>
+            <div className="flex items-center gap-2">
+              <div className="h-1.5 w-20 overflow-hidden rounded-full bg-black/20">
+                <motion.div
+                  className="h-full rounded-full bg-amber-400"
+                  animate={{ width: `${pct}%` }}
+                  transition={{ duration: 0.1 }}
+                />
+              </div>
+              <span className="text-xs font-bold tabular-nums text-white">
+                {timeLeft != null ? timeLeft.toFixed(1) : QUESTION_ANSWER_SEC}s
+              </span>
+            </div>
+          </div>
+
+          <h2 className="text-base font-bold leading-snug text-white sm:text-lg">
+            {question.question}
+          </h2>
+
+          <div className="mt-4 grid gap-2.5">
+            {question.options.map((opt, i) => {
+              const isSelected = feedback?.selectedIndex === i;
+              const showCorrect = feedback && isSelected && feedback.correct;
+              const showWrong = feedback && isSelected && !feedback.correct;
+              return (
+                <button
+                  key={i}
+                  type="button"
+                  disabled={disabled || feedback != null}
+                  onClick={() => onAnswer(i)}
+                  className={`flex items-center gap-3 rounded-2xl border px-4 py-3.5 text-left text-sm font-medium transition-all active:scale-[0.98] disabled:opacity-90 sm:text-base ${
+                    showCorrect
+                      ? "border-green-400 bg-green-500/40 text-white"
+                      : showWrong
+                        ? "border-red-400 bg-red-500/40 text-white"
+                        : "border-white/20 bg-black/25 text-white hover:border-white/40 hover:bg-black/35"
+                  }`}
+                >
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/20 text-sm font-bold">
+                    {LABELS[i]}
+                  </span>
+                  {opt}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      </motion.div>
+    </AnimatePresence>
+  );
+}

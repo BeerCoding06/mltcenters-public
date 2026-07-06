@@ -1,27 +1,23 @@
 import { useMemo } from "react";
+import type { Obstacle, ObstacleKind } from "../game/types";
 
-interface Obstacle {
-  id: number;
-  z: number;
-  lane: number;
-  kind: "barrel" | "cone" | "crate";
-}
+export type { Obstacle, ObstacleKind };
 
 interface Props {
   obstacles: Obstacle[];
   scrollZ: number;
 }
 
+const POOL_SIZE = 24;
+
 export function ObstacleTrack({ obstacles, scrollZ }: Props) {
-  const trackLength = 200;
   const segments = useMemo(() => Array.from({ length: 40 }, (_, i) => i), []);
 
   return (
     <group position={[0, 0, -scrollZ]}>
-      {/* Ground track */}
       {segments.map((i) => (
         <group key={i} position={[0, 0, i * 5]}>
-          <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]} receiveShadow>
+          <mesh rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
             <planeGeometry args={[8, 5]} />
             <meshStandardMaterial color={i % 2 === 0 ? "#4ade80" : "#22c55e"} />
           </mesh>
@@ -36,26 +32,26 @@ export function ObstacleTrack({ obstacles, scrollZ }: Props) {
         </group>
       ))}
 
-      {/* Cartoon trees */}
-      {segments.filter((_, i) => i % 3 === 0).map((i) => (
-        <group key={`tree-l-${i}`} position={[-6, 0, i * 5]}>
-          <mesh position={[0, 1, 0]} castShadow>
-            <cylinderGeometry args={[0.3, 0.4, 2, 8]} />
-            <meshStandardMaterial color="#92400e" />
-          </mesh>
-          <mesh position={[0, 2.8, 0]} castShadow>
-            <sphereGeometry args={[1.2, 8, 8]} />
-            <meshStandardMaterial color="#16a34a" />
-          </mesh>
-        </group>
-      ))}
+      {segments
+        .filter((_, i) => i % 3 === 0)
+        .map((i) => (
+          <group key={`tree-${i}`} position={[-5.5, 0, i * 5]}>
+            <mesh position={[0, 1, 0]} castShadow>
+              <cylinderGeometry args={[0.25, 0.35, 2, 8]} />
+              <meshStandardMaterial color="#92400e" />
+            </mesh>
+            <mesh position={[0, 2.6, 0]} castShadow>
+              <sphereGeometry args={[1, 8, 8]} />
+              <meshStandardMaterial color="#16a34a" />
+            </mesh>
+          </group>
+        ))}
 
       {obstacles.map((o) => (
-        <ObstacleMesh key={o.id} kind={o.kind} position={[o.lane, 0, o.z]} />
+        <ObstacleMesh key={o.id} kind={o.kind} z={o.z} cleared={o.cleared} />
       ))}
 
-      {/* Finish line */}
-      <mesh position={[0, 0.01, trackLength]} rotation={[-Math.PI / 2, 0, 0]}>
+      <mesh position={[0, 0.01, POOL_SIZE * 5]} rotation={[-Math.PI / 2, 0, 0]}>
         <planeGeometry args={[8, 2]} />
         <meshStandardMaterial color="#fef08a" />
       </mesh>
@@ -65,33 +61,79 @@ export function ObstacleTrack({ obstacles, scrollZ }: Props) {
 
 function ObstacleMesh({
   kind,
-  position,
+  z,
+  cleared,
 }: {
-  kind: Obstacle["kind"];
-  position: [number, number, number];
+  kind: ObstacleKind;
+  z: number;
+  cleared: boolean;
 }) {
-  if (kind === "barrel") {
+  const opacity = cleared ? 0.25 : 1;
+
+  if (kind === "rock") {
     return (
-      <mesh position={[position[0], 0.6, position[2]]} castShadow>
-        <cylinderGeometry args={[0.5, 0.5, 1.2, 12]} />
-        <meshStandardMaterial color="#ef4444" />
+      <mesh position={[0, 0.45, z]} castShadow>
+        <dodecahedronGeometry args={[0.55, 0]} />
+        <meshStandardMaterial color="#78716c" transparent opacity={opacity} />
       </mesh>
     );
   }
-  if (kind === "cone") {
+  if (kind === "woodBox") {
     return (
-      <mesh position={[position[0], 0.5, position[2]]} castShadow>
-        <coneGeometry args={[0.5, 1, 8]} />
-        <meshStandardMaterial color="#f97316" />
+      <mesh position={[0, 0.5, z]} castShadow>
+        <boxGeometry args={[0.9, 0.9, 0.9]} />
+        <meshStandardMaterial color="#a16207" transparent opacity={opacity} />
       </mesh>
+    );
+  }
+  if (kind === "fence") {
+    return (
+      <group position={[0, 0, z]}>
+        <mesh position={[-0.35, 0.45, 0]} castShadow>
+          <boxGeometry args={[0.08, 0.9, 0.08]} />
+          <meshStandardMaterial color="#d97706" />
+        </mesh>
+        <mesh position={[0.35, 0.45, 0]} castShadow>
+          <boxGeometry args={[0.08, 0.9, 0.08]} />
+          <meshStandardMaterial color="#d97706" />
+        </mesh>
+        <mesh position={[0, 0.55, 0]} castShadow>
+          <boxGeometry args={[0.9, 0.08, 0.08]} />
+          <meshStandardMaterial color="#b45309" />
+        </mesh>
+        <mesh position={[0, 0.35, 0]} castShadow>
+          <boxGeometry args={[0.9, 0.08, 0.08]} />
+          <meshStandardMaterial color="#b45309" />
+        </mesh>
+      </group>
+    );
+  }
+  if (kind === "hole") {
+    return (
+      <mesh position={[0, 0.02, z]} rotation={[-Math.PI / 2, 0, 0]}>
+        <ringGeometry args={[0.35, 0.85, 16]} />
+        <meshStandardMaterial color="#1e293b" />
+      </mesh>
+    );
+  }
+  if (kind === "tree") {
+    return (
+      <group position={[0, 0, z]}>
+        <mesh position={[0, 0.7, 0]} castShadow>
+          <cylinderGeometry args={[0.2, 0.28, 1.4, 8]} />
+          <meshStandardMaterial color="#78350f" transparent opacity={opacity} />
+        </mesh>
+        <mesh position={[0, 1.55, 0]} castShadow>
+          <coneGeometry args={[0.65, 1.2, 8]} />
+          <meshStandardMaterial color="#15803d" transparent opacity={opacity} />
+        </mesh>
+      </group>
     );
   }
   return (
-    <mesh position={[position[0], 0.5, position[2]]} castShadow>
-      <boxGeometry args={[0.9, 0.9, 0.9]} />
-      <meshStandardMaterial color="#6366f1" />
+    <mesh position={[0, 0.55, z]} castShadow>
+      <boxGeometry args={[1.1, 1.1, 0.25]} />
+      <meshStandardMaterial color="#dc2626" transparent opacity={opacity} />
     </mesh>
   );
 }
-
-export type { Obstacle };

@@ -1,12 +1,13 @@
-export type AnimState = "idle" | "run" | "jump" | "win" | "lose" | "dodgeLeft" | "dodgeRight";
-export type GamePhase = "loading" | "running" | "question" | "feedback" | "gameover" | "results";
-
-export interface Question {
-  id: string;
-  question: string;
-  options: string[];
-  difficulty: string;
-}
+export type {
+  AnimState,
+  GamePhase,
+  Obstacle,
+  ObstacleKind,
+  VisualFx,
+  AnswerFeedback,
+  GameSnapshot,
+  Question,
+} from "../game/types";
 
 export interface GameState {
   session_id: string;
@@ -17,7 +18,7 @@ export interface GameState {
   questions_answered: number;
   correct_count: number;
   difficulty: string;
-  current_question: Question | null;
+  current_question: import("../game/types").Question | null;
   last_explanation: string;
   last_correct: boolean | null;
   game_over: boolean;

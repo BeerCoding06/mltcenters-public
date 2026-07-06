@@ -1,93 +1,66 @@
-import { Suspense, useEffect, useRef } from "react";
+import { Suspense, useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Html, Stars } from "@react-three/drei";
 import * as THREE from "three";
 import { AvatarCharacter } from "./AvatarCharacter";
 import { FollowCamera } from "./FollowCamera";
-import { ObstacleTrack, type Obstacle } from "./ObstacleTrack";
-import { DODGE_RANGE_MAX, DODGE_RANGE_MIN, LANE_DODGE_X } from "../constants";
-import type { AnimState } from "../types";
+import { ObstacleTrack } from "./ObstacleTrack";
+import type { AnimState, Obstacle, VisualFx } from "../game/types";
+import { JUMP_HEIGHT } from "../game/constants";
 
 interface Props {
   speed: number;
   animState: AnimState;
   scrollZ: number;
   obstacles: Obstacle[];
-  playerZ: number;
+  jumpHeight: number;
+  fx: VisualFx;
 }
 
-function pickAvoidLane(obstacleLane: number, obstacleId: number): number {
-  if (obstacleLane === 0) {
-    return obstacleId % 2 === 0 ? -LANE_DODGE_X : LANE_DODGE_X;
-  }
-  return obstacleLane > 0 ? -LANE_DODGE_X : LANE_DODGE_X;
-}
-
-function SceneInner({ speed, animState, scrollZ, obstacles, playerZ }: Props) {
+function SceneInner({ speed, animState, scrollZ, obstacles, jumpHeight, fx }: Props) {
   const playerRef = useRef<THREE.Group>(null);
-  const laneX = useRef(0);
-  const laneTarget = useRef(0);
+  const jumpProgress =
+    jumpHeight > 0 ? jumpHeight / JUMP_HEIGHT : animState.includes("jump") ? 0.5 : 0;
 
-  useEffect(() => {
-    if (animState === "dodgeLeft") laneTarget.current = -LANE_DODGE_X;
-    else if (animState === "dodgeRight") laneTarget.current = LANE_DODGE_X;
-    else if (animState === "run" || animState === "idle") {
-      const nearest = obstacles
-        .map((o) => ({ o, dist: o.z - scrollZ }))
-        .filter(({ dist }) => dist > DODGE_RANGE_MIN && dist < DODGE_RANGE_MAX)
-        .sort((a, b) => a.dist - b.dist)[0];
-      laneTarget.current = nearest
-        ? pickAvoidLane(nearest.o.lane, nearest.o.id)
-        : 0;
-    }
-  }, [animState, obstacles, scrollZ]);
-
-  useFrame((_, delta) => {
+  useFrame(() => {
     if (!playerRef.current) return;
-
-    const nearest = obstacles
-      .map((o) => ({ o, dist: o.z - scrollZ }))
-      .filter(({ dist }) => dist > DODGE_RANGE_MIN && dist < DODGE_RANGE_MAX)
-      .sort((a, b) => a.dist - b.dist)[0];
-
-    let targetX = 0;
-    if (animState === "dodgeLeft") targetX = -LANE_DODGE_X;
-    else if (animState === "dodgeRight") targetX = LANE_DODGE_X;
-    else if (nearest) targetX = pickAvoidLane(nearest.o.lane, nearest.o.id);
-
-    laneTarget.current = targetX;
-    const dodging =
-      animState === "dodgeLeft" ||
-      animState === "dodgeRight" ||
-      Boolean(nearest);
-    const lerpSpeed = dodging ? 20 : 7;
-    laneX.current = THREE.MathUtils.lerp(laneX.current, laneTarget.current, delta * lerpSpeed);
-    playerRef.current.position.x = laneX.current;
-    playerRef.current.position.z = playerZ;
-    playerRef.current.rotation.z = THREE.MathUtils.lerp(
-      playerRef.current.rotation.z,
-      -laneX.current * 0.12,
-      delta * 10
-    );
+    playerRef.current.position.x = 0;
+    playerRef.current.position.z = 0;
   });
 
   return (
     <>
-      <ambientLight intensity={0.65} />
-      <hemisphereLight args={["#87CEEB", "#4ade80", 0.6]} />
+      <ambientLight intensity={0.68} />
+      <hemisphereLight args={["#87CEEB", "#4ade80", 0.65]} />
       <directionalLight
         position={[5, 12, 8]}
-        intensity={1.3}
+        intensity={1.35}
         castShadow
         shadow-mapSize={[1024, 1024]}
       />
-      <Stars radius={80} depth={40} count={1200} factor={3} fade speed={0.5} />
+      <Stars radius={80} depth={40} count={1000} factor={3} fade speed={0.5} />
 
-      <group ref={playerRef} position={[0, 0, playerZ]}>
-        <AvatarCharacter animState={animState} speed={speed} position={[0, 0, 0]} />
+      <group ref={playerRef}>
+        <AvatarCharacter
+          animState={animState}
+          speed={speed}
+          jumpHeight={jumpHeight}
+          jumpProgress={jumpProgress}
+        />
       </group>
 
-      <FollowCamera target={playerRef} />
+      {fx.landingBurst && (
+        <mesh position={[0, 0.05, 2]} rotation={[-Math.PI / 2, 0, 0]}>
+          <ringGeometry args={[0.2, 1.2, 24]} />
+          <meshBasicMaterial color="#86efac" transparent opacity={0.5} />
+        </mesh>
+      )}
+
+      <FollowCamera
+        target={playerRef}
+        shake={fx.shake}
+        zoom={fx.speedLines ? 1.1 : 1}
+      />
       <ObstacleTrack obstacles={obstacles} scrollZ={scrollZ} />
     </>
   );
@@ -108,13 +81,7 @@ export function GameScene(props: Props) {
           </Html>
         }
       >
-        <SceneInner
-          speed={props.speed}
-          animState={props.animState}
-          scrollZ={props.scrollZ}
-          obstacles={props.obstacles}
-          playerZ={props.playerZ}
-        />
+        <SceneInner {...props} />
       </Suspense>
     </Canvas>
   );

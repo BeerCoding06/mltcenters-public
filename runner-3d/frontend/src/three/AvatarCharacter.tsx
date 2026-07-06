@@ -3,13 +3,15 @@ import { useGLTF, useAnimations } from "@react-three/drei";
 import { useEffect, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
-import type { AnimState } from "../types";
+import type { AnimState } from "../game/types";
 import { CartoonRunner } from "./CartoonRunner";
+import { squashFactor } from "../game/easing";
 
 interface Props {
   animState: AnimState;
   speed: number;
-  position: [number, number, number];
+  jumpHeight: number;
+  jumpProgress: number;
 }
 
 class AvatarErrorBoundary extends Component<
@@ -25,7 +27,7 @@ class AvatarErrorBoundary extends Component<
   }
 }
 
-function RpmAvatar({ url, animState, position }: Props & { url: string }) {
+function RpmAvatar({ url, animState, jumpHeight }: Props & { url: string }) {
   const group = useRef<THREE.Group>(null);
   const { scene, animations } = useGLTF(url);
   const clone = useRef(scene.clone(true));
@@ -33,34 +35,70 @@ function RpmAvatar({ url, animState, position }: Props & { url: string }) {
 
   useEffect(() => {
     if (!animations.length) return;
-    const key = Object.keys(actions).find((k) => k.toLowerCase().includes(animState)) || Object.keys(actions)[0];
+    const key =
+      Object.keys(actions).find((k) => k.toLowerCase().includes("run")) ||
+      Object.keys(actions)[0];
     const action = key ? actions[key] : null;
     if (!action) return;
     Object.values(actions).forEach((a) => a?.fadeOut(0.15));
     action.reset().fadeIn(0.15).play();
   }, [animState, actions, animations.length]);
 
-  useFrame((_, delta) => mixer?.update(delta));
+  useFrame((_, delta) => {
+    mixer?.update(delta);
+    if (group.current) group.current.position.y = jumpHeight;
+  });
 
   return (
-    <group ref={group} position={position} scale={1.1}>
+    <group ref={group} scale={1.1}>
       <primitive object={clone.current} />
     </group>
   );
 }
 
-/** Default: built-in cartoon. RPM only when VITE_RPM_AVATAR_URL is set. */
-export function AvatarCharacter(props: Props) {
+export function AvatarCharacter({ animState, speed, jumpHeight, jumpProgress }: Props) {
   const rpmUrl = import.meta.env.VITE_RPM_AVATAR_URL?.trim();
+  const squash = squashFactor(jumpProgress);
 
   if (!rpmUrl) {
-    return <CartoonRunner {...props} />;
+    return (
+      <CartoonRunner
+        animState={animState}
+        speed={speed}
+        jumpHeight={jumpHeight}
+        squash={squash}
+      />
+    );
   }
 
   return (
-    <AvatarErrorBoundary fallback={<CartoonRunner {...props} />}>
-      <Suspense fallback={<CartoonRunner {...props} />}>
-        <RpmAvatar url={rpmUrl} {...props} />
+    <AvatarErrorBoundary
+      fallback={
+        <CartoonRunner
+          animState={animState}
+          speed={speed}
+          jumpHeight={jumpHeight}
+          squash={squash}
+        />
+      }
+    >
+      <Suspense
+        fallback={
+          <CartoonRunner
+            animState={animState}
+            speed={speed}
+            jumpHeight={jumpHeight}
+            squash={squash}
+          />
+        }
+      >
+        <RpmAvatar
+          url={rpmUrl}
+          animState={animState}
+          speed={speed}
+          jumpHeight={jumpHeight}
+          jumpProgress={jumpProgress}
+        />
       </Suspense>
     </AvatarErrorBoundary>
   );

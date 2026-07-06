@@ -1,8 +1,9 @@
 import { GameScene } from "./three/GameScene";
 import { HUD } from "./components/HUD";
-import { QuestionOverlay } from "./components/QuestionOverlay";
+import { FloatingQuestionCard } from "./components/FloatingQuestionCard";
+import { GameEffects } from "./components/GameEffects";
 import { GameNavbar } from "./components/GameNavbar";
-import { useRunner3D } from "./hooks/useRunner3D";
+import { useGameManager } from "./hooks/useGameManager";
 import { th, levelLabel } from "./lib/i18n";
 import type { PerformanceEvaluation } from "./types";
 
@@ -12,19 +13,22 @@ export default function App() {
     state,
     animState,
     scrollZ,
-    playerZ,
     obstacles,
+    jumpHeight,
+    questionTimeLeft,
     evaluation,
     submitting,
-    lastCorrect,
+    fx,
+    answerFeedback,
+    combo,
     answer,
     restart,
-  } = useRunner3D();
+  } = useGameManager();
 
-  const paused = phase === "question" || phase === "feedback";
+  const showQuestion = Boolean(state?.current_question) && phase === "running";
 
   return (
-    <div className="flex h-full min-h-screen flex-col bg-gradient-to-b from-indigo-950 to-slate-950">
+    <div className="flex h-full min-h-screen flex-col bg-slate-900">
       <GameNavbar />
 
       <header className="shrink-0 px-4 py-2 text-center">
@@ -43,34 +47,23 @@ export default function App() {
           <div className="relative h-[calc(100vh-168px)] min-h-[280px]">
             <GameScene
               speed={state.speed}
-              animState={paused ? "idle" : animState}
+              animState={animState}
               scrollZ={scrollZ}
-              playerZ={playerZ}
               obstacles={obstacles}
+              jumpHeight={jumpHeight}
+              fx={fx}
             />
-            <HUD state={state} />
+            <GameEffects fx={fx} />
+            <HUD state={state} combo={combo} phase={phase} />
 
-            {phase === "question" && state.current_question && (
-              <QuestionOverlay
+            {showQuestion && state.current_question && (
+              <FloatingQuestionCard
                 question={state.current_question}
+                timeLeft={questionTimeLeft}
                 onAnswer={answer}
                 disabled={submitting}
+                feedback={answerFeedback}
               />
-            )}
-
-            {phase === "feedback" && (
-              <div className="absolute inset-0 z-30 flex items-center justify-center pointer-events-none">
-                <div
-                  className={`rounded-2xl px-6 py-4 text-center shadow-2xl ${
-                    lastCorrect ? "bg-green-600/90" : "bg-red-600/90"
-                  }`}
-                >
-                  <p className="text-xl font-bold">
-                    {lastCorrect ? th.game.correct : th.game.wrong}
-                  </p>
-                  <p className="mt-1 max-w-xs text-sm">{state.last_explanation}</p>
-                </div>
-              </div>
             )}
 
             {phase === "gameover" && (
@@ -121,36 +114,7 @@ function GameOverModal({
               <span>
                 {th.game.level}: {levelLabel(evaluation.level)}
               </span>
-              <span>
-                {th.game.vocabulary}: {evaluation.vocabulary}
-              </span>
-              <span>
-                {th.game.grammar}: {evaluation.grammar}
-              </span>
-              <span>
-                {th.game.reaction}: {evaluation.reaction}
-              </span>
             </div>
-            {evaluation.strengths.length > 0 && (
-              <div className="mt-3">
-                <p className="text-xs font-semibold text-green-400">{th.game.strengths}</p>
-                <ul className="mt-1 list-disc pl-4 text-slate-400">
-                  {evaluation.strengths.map((t: string, i: number) => (
-                    <li key={i}>{t}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
-            {evaluation.improvements.length > 0 && (
-              <div className="mt-3">
-                <p className="text-xs font-semibold text-amber-400">{th.game.improvements}</p>
-                <ul className="mt-1 list-disc pl-4 text-slate-400">
-                  {evaluation.improvements.map((t: string, i: number) => (
-                    <li key={i}>{t}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
           </div>
         )}
 

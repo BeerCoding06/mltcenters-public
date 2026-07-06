@@ -321,7 +321,7 @@ export function createRunnerRouter(openai, model) {
     meta.set(id, { queue: [], asked: new Set(), recent: [], prefetching: false });
 
     if (aiEnabled) {
-      startPrefetch(openai, model, id, 10);
+      startPrefetch(openai, model, id, 20);
     } else {
       refillBankQueue(id, 20);
     }
@@ -354,7 +354,7 @@ export function createRunnerRouter(openai, model) {
           m.asked
         );
       }
-      if (m.queue.length < 6) startPrefetch(openai, model, session_id, 8);
+      if (m.queue.length < 6) startPrefetch(openai, model, session_id, 12);
     } else if (m.queue.length) {
       state.current_question = m.queue.shift();
       if (m.queue.length < 6) refillBankQueue(session_id, 12);
@@ -378,7 +378,8 @@ export function createRunnerRouter(openai, model) {
       return res.json({ correct: false, animation: 'lose', game_state: toPublic(state) });
     }
     const q = state.current_question;
-    const correct = selected_index === q.correct_index;
+    const correct =
+      selected_index === -1 ? false : selected_index === q.correct_index;
     state.questions_answered += 1;
     state.last_correct = correct;
     if (correct) {
@@ -434,7 +435,7 @@ export function createRunnerRouter(openai, model) {
     Object.assign(state, defaultState(state.session_id));
     meta.set(req.params.session_id, { queue: [], asked: new Set(), recent: [], prefetching: false });
     if (aiEnabled) {
-      startPrefetch(openai, model, req.params.session_id, 10);
+      startPrefetch(openai, model, req.params.session_id, 20);
     } else {
       refillBankQueue(req.params.session_id, 20);
     }
