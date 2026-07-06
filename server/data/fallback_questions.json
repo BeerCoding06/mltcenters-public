@@ -1304,8 +1304,8 @@
     ],
     "correct_index": 0,
     "explanation": "We use a spoon.",
-    "band": "young",
-    "image": "🍲"
+    "image": "/assets/image-game/We-eat-soup-with-a.png",
+    "band": "young"
   },
   {
     "question": "Hot food can ___ you",
@@ -1316,8 +1316,8 @@
     ],
     "correct_index": 1,
     "explanation": "Hot food can burn.",
-    "band": "young",
-    "image": "🔥"
+    "image": "/assets/image-game/Hot-food-can.png",
+    "band": "young"
   },
   {
     "question": "Ice cream is ___",
@@ -1328,8 +1328,8 @@
     ],
     "correct_index": 2,
     "explanation": "Ice cream is cold.",
-    "band": "young",
-    "image": "❄️"
+    "image": "/assets/image-game/Ice-cream-is.png",
+    "band": "young"
   },
   {
     "question": "Pizza is ___",
@@ -1340,8 +1340,8 @@
     ],
     "correct_index": 0,
     "explanation": "Pizza is yummy.",
-    "band": "young",
-    "image": "🍕"
+    "image": "/assets/image-game/Pizza-is.png",
+    "band": "young"
   },
   {
     "question": "Carrot is a ___",
@@ -1352,8 +1352,8 @@
     ],
     "correct_index": 1,
     "explanation": "Carrot is a vegetable.",
-    "band": "young",
-    "image": "🥕"
+    "image": "/assets/image-game/Carrot-is-a.png",
+    "band": "young"
   },
   {
     "question": "Corn is ___ and yellow",
@@ -1364,8 +1364,8 @@
     ],
     "correct_index": 2,
     "explanation": "Corn is yellow.",
-    "band": "young",
-    "image": "🟡"
+    "image": "/assets/image-game/Corn-is.png",
+    "band": "young"
   },
   {
     "question": "Fish is ___ to eat",
@@ -1376,8 +1376,8 @@
     ],
     "correct_index": 0,
     "explanation": "Fish can be food.",
-    "band": "young",
-    "image": "🐟"
+    "image": "/assets/image-game/Fish-is.png",
+    "band": "young"
   },
   {
     "question": "Honey is ___",
@@ -1388,8 +1388,8 @@
     ],
     "correct_index": 1,
     "explanation": "Honey is sweet.",
-    "band": "young",
-    "image": "🍯"
+    "image": "/assets/image-game/Honey-is.png",
+    "band": "young"
   },
   {
     "question": "Lemon is ___",
@@ -1400,8 +1400,8 @@
     ],
     "correct_index": 2,
     "explanation": "Lemons are sour.",
-    "band": "young",
-    "image": "✏️"
+    "image": "/assets/image-game/Lemon-is.png",
+    "band": "young"
   },
   {
     "question": "Breakfast is in the ___",
@@ -1412,8 +1412,8 @@
     ],
     "correct_index": 0,
     "explanation": "Breakfast is in the morning.",
-    "band": "young",
-    "image": "🍳"
+    "image": "/assets/image-game/Breakfast-is-in-the.png",
+    "band": "young"
   },
   {
     "question": "What number? 1",

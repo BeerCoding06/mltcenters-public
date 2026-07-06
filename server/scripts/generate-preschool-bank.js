@@ -160,16 +160,16 @@ foods.forEach(([item, type, exp]) => {
   bank.push(q(`Is ${item} yummy?`, 'yes', 'no', 'maybe', `Many kids like ${item}.`));
   bank.push(qRot(`What is ${item}?`, item, 'chair', 'hat', 0, exp));
 });
-bank.push(q('We eat soup with a ___', 'spoon', 'shoe', 'ball', 'We use a spoon.'));
-bank.push(q('Hot food can ___ you', 'burn', 'fly', 'sing', 'Hot food can burn.'));
-bank.push(q('Ice cream is ___', 'cold', 'hot', 'loud', 'Ice cream is cold.'));
-bank.push(q('Pizza is ___', 'yummy', 'sleepy', 'tall', 'Pizza is yummy.'));
-bank.push(q('Carrot is a ___', 'vegetable', 'animal', 'toy', 'Carrot is a vegetable.'));
-bank.push(q('Corn is ___ and yellow', 'yummy', 'blue', 'fast', 'Corn is yellow.'));
-bank.push(q('Fish is ___ to eat', 'food', 'shoe', 'hat', 'Fish can be food.'));
-bank.push(q('Honey is ___', 'sweet', 'salty', 'loud', 'Honey is sweet.'));
-bank.push(q('Lemon is ___', 'sour', 'big', 'soft', 'Lemons are sour.'));
-bank.push(q('Breakfast is in the ___', 'morning', 'night', 'moon', 'Breakfast is in the morning.'));
+bank.push(qPhoto('We eat soup with a ___', 'spoon', 'shoe', 'ball', 'We use a spoon.', 'We-eat-soup-with-a.png'));
+bank.push(qPhoto('Hot food can ___ you', 'burn', 'fly', 'sing', 'Hot food can burn.', 'Hot-food-can.png'));
+bank.push(qPhoto('Ice cream is ___', 'cold', 'hot', 'loud', 'Ice cream is cold.', 'Ice-cream-is.png'));
+bank.push(qPhoto('Pizza is ___', 'yummy', 'sleepy', 'tall', 'Pizza is yummy.', 'Pizza-is.png'));
+bank.push(qPhoto('Carrot is a ___', 'vegetable', 'animal', 'toy', 'Carrot is a vegetable.', 'Carrot-is-a.png'));
+bank.push(qPhoto('Corn is ___ and yellow', 'yummy', 'blue', 'fast', 'Corn is yellow.', 'Corn-is.png'));
+bank.push(qPhoto('Fish is ___ to eat', 'food', 'shoe', 'hat', 'Fish can be food.', 'Fish-is.png'));
+bank.push(qPhoto('Honey is ___', 'sweet', 'salty', 'loud', 'Honey is sweet.', 'Honey-is.png'));
+bank.push(qPhoto('Lemon is ___', 'sour', 'big', 'soft', 'Lemons are sour.', 'Lemon-is.png'));
+bank.push(qPhoto('Breakfast is in the ___', 'morning', 'night', 'moon', 'Breakfast is in the morning.', 'Breakfast-is-in-the.png'));
 
 // —— Numbers (25) ——
 for (let n = 1; n <= 10; n += 1) {
