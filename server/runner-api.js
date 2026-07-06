@@ -3,22 +3,68 @@
  */
 import { Router } from 'express';
 import { randomUUID } from 'crypto';
-import { readFileSync } from 'fs';
+import { readFileSync, existsSync } from 'fs';
 import { fileURLToPath } from 'url';
 import path from 'path';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const BANK_PATH = path.join(
-  __dirname,
-  '../runner-3d/backend/app/data/fallback_questions.json'
-);
+const BANK_CANDIDATES = [
+  path.join(__dirname, 'data/fallback_questions.json'),
+  path.join(__dirname, '../runner-3d/backend/app/data/fallback_questions.json'),
+];
+const BANK_PATH = BANK_CANDIDATES.find((p) => existsSync(p));
+if (!BANK_PATH) {
+  throw new Error(`Question bank not found. Tried: ${BANK_CANDIDATES.join(', ')}`);
+}
 
 const QUESTION_BANK = JSON.parse(readFileSync(BANK_PATH, 'utf-8'));
 
-const QUESTION_PROMPT = `Create one beginner English multiple-choice question.
-Return ONLY JSON:
+const TOPICS = [
+  'daily life',
+  'food and cooking',
+  'school and study',
+  'animals',
+  'sports',
+  'travel',
+  'weather',
+  'family',
+  'jobs',
+  'hobbies',
+  'technology',
+  'nature',
+  'shopping',
+  'health',
+  'music and movies',
+  'city life',
+  'feelings',
+  'clothes',
+  'time and dates',
+  'transport',
+];
+
+const QUESTION_STYLES = [
+  'vocabulary — choose the correct meaning',
+  'grammar — fill in the blank',
+  'conversation — pick the best reply',
+  'reading — short situational question',
+  'prepositions or articles',
+  'past tense or present tense',
+  'comparatives and superlatives',
+  'countable vs uncountable nouns',
+];
+
+const QUESTION_PROMPT = `You create fresh, unique English multiple-choice questions for a 3D runner learning game.
+
+Return ONLY valid JSON (no markdown):
 {"question":"...","options":["A","B","C"],"correct_index":0,"explanation":"..."}
-Rules: exactly 3 options, correct_index 0-2, simple English, must be UNIQUE.`;
+
+Rules:
+- Exactly 3 distinct options, correct_index is 0, 1, or 2
+- Match the requested difficulty (beginner A1-A2, elementary A2, intermediate B1)
+- Match the topic and question style given
+- Never repeat or paraphrase questions from the avoid list
+- Be creative — new scenarios, words, and sentences every time
+- Keep questions short and clear for mobile players`;
 
 const sessions = new Map();
 const meta = new Map();
@@ -41,7 +87,15 @@ function defaultState(id) {
   };
 }
 
-function shuffleQueue(n = 25) {
+function pickTopic() {
+  return TOPICS[Math.floor(Math.random() * TOPICS.length)];
+}
+
+function pickStyle() {
+  return QUESTION_STYLES[Math.floor(Math.random() * QUESTION_STYLES.length)];
+}
+
+function shuffleQueue(n = 12) {
   const bank = [...QUESTION_BANK].sort(() => Math.random() - 0.5);
   return bank.slice(0, n).map((q) => ({ id: randomUUID().replace(/-/g, ''), ...q }));
 }
@@ -69,7 +123,28 @@ function toPublic(state) {
   };
 }
 
-async function generateQuestion(openai, model, difficulty, avoid = '') {
+function adaptiveDifficulty(state) {
+  const acc = state.correct_count / Math.max(state.questions_answered, 1);
+  if (state.streak >= 5 && acc >= 0.8) return 'intermediate';
+  if (state.streak >= 3 && acc >= 0.6) return 'elementary';
+  return 'beginner';
+}
+
+function parseQuestionJson(raw) {
+  const json = raw.match(/\{[\s\S]*\}/);
+  const data = JSON.parse(json ? json[0] : raw);
+  const options = (data.options || []).slice(0, 3).map(String);
+  while (options.length < 3) options.push('—');
+  return {
+    id: randomUUID().replace(/-/g, ''),
+    question: String(data.question || '').trim(),
+    options,
+    correct_index: Math.min(2, Math.max(0, Number(data.correct_index) || 0)),
+    explanation: String(data.explanation || 'Good job!').trim(),
+  };
+}
+
+async function generateQuestion(openai, model, difficulty, topic, style, avoid, asked) {
   if (openai) {
     try {
       const completion = await openai.chat.completions.create({
@@ -78,37 +153,94 @@ async function generateQuestion(openai, model, difficulty, avoid = '') {
           { role: 'system', content: QUESTION_PROMPT },
           {
             role: 'user',
-            content: `Difficulty: ${difficulty}${avoid ? `\nAvoid:\n${avoid}` : ''}\nNew unique question.`,
+            content: [
+              `Difficulty: ${difficulty}`,
+              `Topic: ${topic}`,
+              `Style: ${style}`,
+              avoid ? `Do NOT repeat these questions:\n${avoid}` : '',
+              'Generate a completely NEW unique question.',
+            ]
+              .filter(Boolean)
+              .join('\n'),
           },
         ],
         max_tokens: 400,
-        temperature: 0.85,
+        temperature: 0.95,
       });
       const raw = completion.choices[0]?.message?.content?.trim() || '';
-      const json = raw.match(/\{[\s\S]*\}/);
-      const data = JSON.parse(json ? json[0] : raw);
-      return {
-        id: randomUUID().replace(/-/g, ''),
-        question: data.question,
-        options: (data.options || []).slice(0, 3),
-        correct_index: Math.min(2, Math.max(0, Number(data.correct_index) || 0)),
-        explanation: data.explanation || 'Good job!',
-      };
-    } catch {
-      /* fallback below */
+      const q = parseQuestionJson(raw);
+      if (q.question && q.options.every(Boolean)) return q;
+    } catch (err) {
+      console.warn('AI question fallback:', err.message);
     }
   }
-  return nextFromBank(new Set());
+  return nextFromBank(asked);
+}
+
+function startPrefetch(openai, model, sessionId, count = 8) {
+  if (!openai) return;
+  const m = meta.get(sessionId);
+  if (!m || m.prefetching) return;
+
+  m.prefetching = true;
+  (async () => {
+    try {
+      for (let i = 0; i < count; i += 1) {
+        if (!sessions.has(sessionId)) break;
+        const sessionMeta = meta.get(sessionId);
+        if (!sessionMeta || sessionMeta.queue.length >= 15) break;
+
+        const state = sessions.get(sessionId);
+        const difficulty = state?.difficulty || 'beginner';
+        const avoid = sessionMeta.recent.slice(-12).map((q) => `- ${q}`).join('\n');
+        const q = await generateQuestion(
+          openai,
+          model,
+          difficulty,
+          pickTopic(),
+          pickStyle(),
+          avoid,
+          sessionMeta.asked
+        );
+
+        if (!q?.question || sessionMeta.asked.has(q.question)) continue;
+        sessionMeta.queue.push(q);
+        sessionMeta.asked.add(q.question);
+      }
+    } finally {
+      const sessionMeta = meta.get(sessionId);
+      if (sessionMeta) sessionMeta.prefetching = false;
+    }
+  })();
+}
+
+function refillBankQueue(sessionId, min = 6) {
+  const m = meta.get(sessionId);
+  if (!m || m.queue.length >= min) return;
+  for (const q of shuffleQueue(min - m.queue.length)) {
+    if (!m.asked.has(q.question)) {
+      m.queue.push(q);
+      m.asked.add(q.question);
+    }
+  }
 }
 
 export function createRunnerRouter(openai, model) {
   const router = Router();
+  const aiEnabled = Boolean(openai);
 
-  router.post('/game/new', (_req, res) => {
+  router.post('/game/new', (req, res) => {
     const id = randomUUID().replace(/-/g, '');
     const state = defaultState(id);
     sessions.set(id, state);
-    meta.set(id, { queue: shuffleQueue(25), asked: new Set(), recent: [] });
+    meta.set(id, { queue: [], asked: new Set(), recent: [], prefetching: false });
+
+    if (aiEnabled) {
+      startPrefetch(openai, model, id, 10);
+    } else {
+      refillBankQueue(id, 20);
+    }
+
     res.json({ session_id: id, game_state: toPublic(state) });
   });
 
@@ -118,26 +250,36 @@ export function createRunnerRouter(openai, model) {
     if (!state) return res.status(404).json({ detail: 'Session not found' });
     if (state.game_over) return res.json({ session_id, game_state: toPublic(state) });
 
-    const m = meta.get(session_id) || { queue: shuffleQueue(25), asked: new Set(), recent: [] };
-    const topics = ['daily life', 'food', 'school', 'animals', 'sports', 'travel', 'weather'];
+    const m = meta.get(session_id) || { queue: [], asked: new Set(), recent: [], prefetching: false };
+    const avoid = m.recent.slice(-12).map((q) => `- ${q}`).join('\n');
+    const topic = pickTopic();
+    const style = pickStyle();
 
-    if (m.queue.length) {
+    if (aiEnabled) {
+      if (m.queue.length) {
+        state.current_question = m.queue.shift();
+      } else {
+        state.current_question = await generateQuestion(
+          openai,
+          model,
+          state.difficulty,
+          topic,
+          style,
+          avoid,
+          m.asked
+        );
+      }
+      if (m.queue.length < 6) startPrefetch(openai, model, session_id, 8);
+    } else if (m.queue.length) {
       state.current_question = m.queue.shift();
+      if (m.queue.length < 6) refillBankQueue(session_id, 12);
     } else {
-      const avoid = m.recent.slice(-8).map((q) => `- ${q}`).join('\n');
-      const topic = topics[state.questions_answered % topics.length];
-      state.current_question = await generateQuestion(
-        openai,
-        model,
-        `${state.difficulty} topic: ${topic}`,
-        avoid
-      );
+      state.current_question = nextFromBank(m.asked);
     }
 
     if (state.current_question) {
       m.recent.push(state.current_question.question);
       m.asked.add(state.current_question.question);
-      if (m.queue.length < 8) m.queue.push(...shuffleQueue(12));
     }
     meta.set(session_id, m);
     res.json({ session_id, game_state: toPublic(state) });
@@ -160,6 +302,7 @@ export function createRunnerRouter(openai, model) {
       state.score += 100 + 25 * Math.min(state.streak - 1, 5);
       state.speed = Math.min(22, state.speed + 2);
       state.last_explanation = q.explanation;
+      state.difficulty = adaptiveDifficulty(state);
     } else {
       state.streak = 0;
       state.hp = Math.max(0, state.hp - 15);
@@ -212,7 +355,12 @@ export function createRunnerRouter(openai, model) {
     const state = sessions.get(req.params.session_id);
     if (!state) return res.status(404).json({ detail: 'Session not found' });
     Object.assign(state, defaultState(state.session_id));
-    meta.set(req.params.session_id, { queue: shuffleQueue(25), asked: new Set(), recent: [] });
+    meta.set(req.params.session_id, { queue: [], asked: new Set(), recent: [], prefetching: false });
+    if (aiEnabled) {
+      startPrefetch(openai, model, req.params.session_id, 10);
+    } else {
+      refillBankQueue(req.params.session_id, 20);
+    }
     res.json(toPublic(state));
   });
 

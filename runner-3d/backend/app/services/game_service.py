@@ -1,9 +1,45 @@
+import asyncio
+import random
 import uuid
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 from app.core.config import get_settings
 from app.services.llm_service import LLMService, QuestionData
 from app.services.question_bank import next_from_bank, shuffle_queue
+
+TOPICS = [
+    "daily life",
+    "food and cooking",
+    "school and study",
+    "animals",
+    "sports",
+    "travel",
+    "weather",
+    "family",
+    "jobs",
+    "hobbies",
+    "technology",
+    "nature",
+    "shopping",
+    "health",
+    "music and movies",
+    "city life",
+    "feelings",
+    "clothes",
+    "time and dates",
+    "transport",
+]
+
+QUESTION_STYLES = [
+    "vocabulary — choose the correct meaning",
+    "grammar — fill in the blank",
+    "conversation — pick the best reply",
+    "reading — short situational question",
+    "prepositions or articles",
+    "past tense or present tense",
+    "comparatives and superlatives",
+    "countable vs uncountable nouns",
+]
 
 
 @dataclass
@@ -48,13 +84,24 @@ class GameState:
         }
 
 
+@dataclass
+class SessionMeta:
+    queue: list[QuestionData] = field(default_factory=list)
+    asked: set[str] = field(default_factory=set)
+    recent: list[str] = field(default_factory=list)
+    prefetching: bool = False
+
+
 class GameService:
     _sessions: dict[str, GameState] = {}
-    _meta: dict[str, dict] = {}
+    _meta: dict[str, SessionMeta] = {}
 
     def __init__(self) -> None:
         self.settings = get_settings()
         self.llm = LLMService()
+        self.ai_enabled = self.settings.llm_provider == "ollama" or bool(
+            self.settings.openai_api_key
+        )
 
     def create_session(self) -> GameState:
         sid = uuid.uuid4().hex
@@ -64,11 +111,8 @@ class GameService:
             speed=self.settings.initial_speed,
         )
         self._sessions[sid] = state
-        self._meta[sid] = {
-            "queue": shuffle_queue(25),
-            "asked": set(),
-            "recent": [],
-        }
+        self._meta[sid] = SessionMeta()
+        self._bootstrap_queue(sid)
         return state
 
     def get_session(self, session_id: str) -> GameState | None:
@@ -78,31 +122,30 @@ class GameService:
         state = self._require(session_id)
         if state.game_over:
             return state
-        meta = self._meta.setdefault(
-            session_id, {"queue": shuffle_queue(25), "asked": set(), "recent": []}
-        )
-        topics = [
-            "daily life", "food", "school", "animals", "sports",
-            "travel", "weather", "family", "jobs", "hobbies",
-        ]
+        meta = self._meta.setdefault(session_id, SessionMeta())
+        avoid = "\n".join(f"- {q}" for q in meta.recent[-12:])
+        topic = random.choice(TOPICS)
+        style = random.choice(QUESTION_STYLES)
 
-        if meta["queue"]:
-            state.current_question = meta["queue"].pop(0)
-        else:
-            topic = topics[state.questions_answered % len(topics)]
-            avoid = "\n".join(f"- {q}" for q in meta.get("recent", [])[-8:])
-            try:
+        if self.ai_enabled:
+            if meta.queue:
+                state.current_question = meta.queue.pop(0)
+            else:
                 state.current_question = await self.llm.generate_question(
-                    state.difficulty, topic, avoid=avoid
+                    state.difficulty, topic, avoid=avoid, style=style, asked=meta.asked
                 )
-            except Exception:
-                state.current_question = next_from_bank(meta["asked"], state.difficulty)
+            if len(meta.queue) < 6:
+                self._start_prefetch(session_id, 8)
+        elif meta.queue:
+            state.current_question = meta.queue.pop(0)
+            if len(meta.queue) < 6:
+                self._refill_bank_queue(session_id, 12)
+        else:
+            state.current_question = next_from_bank(meta.asked, state.difficulty)
 
         if state.current_question:
-            meta.setdefault("recent", []).append(state.current_question.question)
-            meta["asked"].add(state.current_question.question)
-            if len(meta["queue"]) < 8:
-                meta["queue"].extend(shuffle_queue(12))
+            meta.recent.append(state.current_question.question)
+            meta.asked.add(state.current_question.question)
         return state
 
     def check_answer(self, session_id: str, question_id: str, selected_index: int) -> GameState:
@@ -174,12 +217,60 @@ class GameService:
         state.last_correct = None
         state.game_over = False
         state.distance = 0.0
-        self._meta[session_id] = {
-            "queue": shuffle_queue(25),
-            "asked": set(),
-            "recent": [],
-        }
+        self._meta[session_id] = SessionMeta()
+        self._bootstrap_queue(session_id)
         return state
+
+    def _bootstrap_queue(self, session_id: str) -> None:
+        if self.ai_enabled:
+            self._start_prefetch(session_id, 10)
+        else:
+            self._refill_bank_queue(session_id, 20)
+
+    def _refill_bank_queue(self, session_id: str, target: int) -> None:
+        meta = self._meta.setdefault(session_id, SessionMeta())
+        if len(meta.queue) >= target:
+            return
+        for q in shuffle_queue(target - len(meta.queue)):
+            if q.question not in meta.asked:
+                meta.queue.append(q)
+                meta.asked.add(q.question)
+
+    def _start_prefetch(self, session_id: str, count: int) -> None:
+        if not self.ai_enabled:
+            return
+        meta = self._meta.get(session_id)
+        if not meta or meta.prefetching:
+            return
+        meta.prefetching = True
+        asyncio.create_task(self._prefetch_questions(session_id, count))
+
+    async def _prefetch_questions(self, session_id: str, count: int) -> None:
+        meta = self._meta.get(session_id)
+        if not meta:
+            return
+        try:
+            for _ in range(count):
+                if session_id not in self._sessions:
+                    break
+                if len(meta.queue) >= 15:
+                    break
+                state = self._sessions.get(session_id)
+                difficulty = state.difficulty if state else "beginner"
+                avoid = "\n".join(f"- {q}" for q in meta.recent[-12:])
+                q = await self.llm.generate_question(
+                    difficulty,
+                    random.choice(TOPICS),
+                    avoid=avoid,
+                    style=random.choice(QUESTION_STYLES),
+                    asked=meta.asked,
+                )
+                if q.question in meta.asked:
+                    continue
+                meta.queue.append(q)
+                meta.asked.add(q.question)
+        finally:
+            meta.prefetching = False
 
     def _require(self, session_id: str) -> GameState:
         state = self._sessions.get(session_id)

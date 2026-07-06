@@ -35,7 +35,7 @@ class QuestionData:
 class LLMService:
     def __init__(self) -> None:
         self.settings = get_settings()
-        self._chat = self._build_chat(0.8)
+        self._chat = self._build_chat(0.95)
         self._eval = self._build_chat(0.3)
 
     def _build_chat(self, temperature: float):
@@ -54,14 +54,28 @@ class LLMService:
             kwargs["base_url"] = self.settings.openai_base_url
         return ChatOpenAI(**kwargs)
 
-    async def generate_question(self, difficulty: str, topic: str, avoid: str = "") -> QuestionData:
+    async def generate_question(
+        self,
+        difficulty: str,
+        topic: str,
+        avoid: str = "",
+        style: str = "",
+        asked: set[str] | None = None,
+    ) -> QuestionData:
         try:
             avoid_line = f"\nDo NOT repeat these questions:\n{avoid}" if avoid else ""
+            style_line = f"\nStyle: {style}" if style else ""
             response = await self._chat.ainvoke(
                 [
                     SystemMessage(content=QUESTION_PROMPT),
                     HumanMessage(
-                        content=f"Difficulty: {difficulty}\nTopic: {topic}{avoid_line}\nGenerate a NEW unique question."
+                        content=(
+                            f"Difficulty: {difficulty}\n"
+                            f"Topic: {topic}"
+                            f"{style_line}"
+                            f"{avoid_line}\n"
+                            "Generate a completely NEW unique question."
+                        )
                     ),
                 ]
             )
@@ -81,7 +95,7 @@ class LLMService:
         except Exception as e:
             logger.warning("LLM question fallback: %s", e)
             from app.services.question_bank import next_from_bank
-            return next_from_bank(set(), difficulty)
+            return next_from_bank(asked or set(), difficulty)
 
     async def evaluate_performance(self, stats: dict) -> dict:
         try:
