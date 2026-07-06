@@ -115,33 +115,33 @@ const body = [
 body.forEach(([part, count, exp]) => {
   bank.push(q(`How many ${part}?`, count, 'five', 'zero', exp));
 });
-bank.push(q('You see with your ___', 'eyes', 'toes', 'knee', 'You see with eyes.'));
-bank.push(q('You hear with your ___', 'ears', 'nose', 'hair', 'You hear with ears.'));
-bank.push(q('You smell with your ___', 'nose', 'foot', 'arm', 'You smell with your nose.'));
-bank.push(q('You eat with your ___', 'mouth', 'elbow', 'leg', 'You eat with your mouth.'));
-bank.push(q('Wiggle your ___', 'toes', 'sky', 'car', 'You wiggle your toes.'));
-bank.push(q('Clap your ___', 'hands', 'cloud', 'road', 'You clap your hands.'));
-bank.push(q('Stomp your ___', 'feet', 'moon', 'star', 'You stomp your feet.'));
-bank.push(q('Hair is on your ___', 'head', 'shoe', 'cup', 'Hair is on your head.'));
-bank.push(q('Teeth are in your ___', 'mouth', 'ear', 'knee', 'Teeth are in your mouth.'));
-bank.push(q('Tummy is also called ___', 'belly', 'wheel', 'door', 'Tummy means belly.'));
+bank.push(qPhoto('You see with your ___', 'eyes', 'toes', 'knee', 'You see with eyes.', 'You-see-with-your.webp'));
+bank.push(qPhoto('You hear with your ___', 'ears', 'nose', 'hair', 'You hear with ears.', 'You-hear-with-your.webp'));
+bank.push(qPhoto('You smell with your ___', 'nose', 'foot', 'arm', 'You smell with your nose.', 'You-smell-with-your.webp'));
+bank.push(qPhoto('You eat with your ___', 'mouth', 'elbow', 'leg', 'You eat with your mouth.', 'You-eat-with-your.webp'));
+bank.push(qPhoto('Wiggle your ___', 'toes', 'sky', 'car', 'You wiggle your toes.', 'Wiggle-your.webp'));
+bank.push(qPhoto('Clap your ___', 'hands', 'cloud', 'road', 'You clap your hands.', 'Clap-your.webp'));
+bank.push(qPhoto('Stomp your ___', 'feet', 'moon', 'star', 'You stomp your feet.', 'Stomp-your.webp'));
+bank.push(qPhoto('Hair is on your ___', 'head', 'shoe', 'cup', 'Hair is on your head.', 'Hair-is-on-your.webp'));
+bank.push(qPhoto('Teeth are in your ___', 'mouth', 'ear', 'knee', 'Teeth are in your mouth.', 'Teeth-are-in-your.webp'));
+bank.push(qPhoto('Tummy is also called ___', 'belly', 'wheel', 'door', 'Tummy means belly.', 'Tummy-is-also-called.webp'));
 
 // —— Family (15) ——
-bank.push(q('Mom and ___', 'dad', 'bus', 'ball', 'Mom and dad are family.'));
-bank.push(q('Your mom is your ___', 'mother', 'teacher', 'doctor', 'Mom is your mother.'));
-bank.push(q('Your dad is your ___', 'father', 'table', 'cloud', 'Dad is your father.'));
-bank.push(q('Baby says ___', 'mama', 'vroom', 'beep', 'Babies often say mama.'));
-bank.push(q('Grandma is mom\'s ___', 'mother', 'car', 'toy', 'Grandma is mother of mom or dad.'));
-bank.push(q('Brother is a ___', 'boy', 'fruit', 'color', 'A brother is a boy in family.'));
-bank.push(q('Sister is a ___', 'girl', 'truck', 'rain', 'A sister is a girl in family.'));
-bank.push(q('I love my ___', 'family', 'shoe', 'rock', 'We love our family.'));
-bank.push(q('Dad gives a big ___', 'hug', 'jump', 'run', 'Dad can give a hug.'));
-bank.push(q('Mom reads a ___', 'book', 'car', 'shoe', 'Mom can read a book.'));
-bank.push(q('Baby drinks ___', 'milk', 'sand', 'stone', 'Babies drink milk.'));
-bank.push(q('Family eats together at ___', 'table', 'moon', 'star', 'We eat at the table.'));
-bank.push(q('Who tucks you in bed?', 'mom', 'car', 'ball', 'Mom or dad tucks you in.'));
-bank.push(q('Baby sleeps in a ___', 'crib', 'bus', 'tree', 'Babies sleep in a crib.'));
-bank.push(q('We live in a ___', 'home', 'river', 'cloud', 'We live in a home.'));
+bank.push(qPhoto('Mom and ___', 'dad', 'bus', 'ball', 'Mom and dad are family.', 'Mom-and.webp'));
+bank.push(qPhoto('Your mom is your ___', 'mother', 'teacher', 'doctor', 'Mom is your mother.', 'Your-mom-is-your.webp'));
+bank.push(qPhoto('Your dad is your ___', 'father', 'table', 'cloud', 'Dad is your father.', 'Your-dad-is-your.webp'));
+bank.push(qPhoto('Baby says ___', 'mama', 'vroom', 'beep', 'Babies often say mama.', 'Baby-says.webp'));
+bank.push(qPhoto('Grandma is mom\'s ___', 'mother', 'car', 'toy', 'Grandma is mother of mom or dad.', 'Grandma-is-mom.webp'));
+bank.push(qPhoto('Brother is a ___', 'boy', 'fruit', 'color', 'A brother is a boy in family.', 'Brother-is-a.webp'));
+bank.push(qPhoto('Sister is a ___', 'girl', 'truck', 'rain', 'A sister is a girl in family.', 'Sister-is-a.webp'));
+bank.push(qPhoto('I love my ___', 'family', 'shoe', 'rock', 'We love our family.', 'I-love-my.webp'));
+bank.push(qPhoto('Dad gives a big ___', 'hug', 'jump', 'run', 'Dad can give a hug.', 'Dad-gives-a-big.webp'));
+bank.push(qPhoto('Mom reads a ___', 'book', 'car', 'shoe', 'Mom can read a book.', 'Mom-reads-a.webp'));
+bank.push(qPhoto('Baby drinks ___', 'milk', 'sand', 'stone', 'Babies drink milk.', 'Baby-drinks.webp'));
+bank.push(qPhoto('Family eats together at ___', 'table', 'moon', 'star', 'We eat at the table.', 'Family-eats-together-at.webp'));
+bank.push(qPhoto('Who tucks you in bed?', 'mom', 'car', 'ball', 'Mom or dad tucks you in.', 'Who-tucks-you-in-bed.webp'));
+bank.push(qPhoto('Baby sleeps in a ___', 'crib', 'bus', 'tree', 'Babies sleep in a crib.', 'Baby-sleeps-in-a.webp'));
+bank.push(qPhoto('We live in a ___', 'home', 'river', 'cloud', 'We live in a home.', 'We-live-in-a.webp'));
 
 // —— Food & drink (30) ——
 const foods = [

@@ -764,8 +764,8 @@
     ],
     "correct_index": 0,
     "explanation": "You see with eyes.",
-    "band": "young",
-    "image": "👀"
+    "image": "/assets/image-game/You-see-with-your.webp",
+    "band": "young"
   },
   {
     "question": "You hear with your ___",
@@ -776,8 +776,8 @@
     ],
     "correct_index": 1,
     "explanation": "You hear with ears.",
-    "band": "young",
-    "image": "👂"
+    "image": "/assets/image-game/You-hear-with-your.webp",
+    "band": "young"
   },
   {
     "question": "You smell with your ___",
@@ -788,8 +788,8 @@
     ],
     "correct_index": 2,
     "explanation": "You smell with your nose.",
-    "band": "young",
-    "image": "👃"
+    "image": "/assets/image-game/You-smell-with-your.webp",
+    "band": "young"
   },
   {
     "question": "You eat with your ___",
@@ -800,8 +800,8 @@
     ],
     "correct_index": 0,
     "explanation": "You eat with your mouth.",
-    "band": "young",
-    "image": "👄"
+    "image": "/assets/image-game/You-eat-with-your.webp",
+    "band": "young"
   },
   {
     "question": "Wiggle your ___",
@@ -812,8 +812,8 @@
     ],
     "correct_index": 1,
     "explanation": "You wiggle your toes.",
-    "band": "young",
-    "image": "🌤️"
+    "image": "/assets/image-game/Wiggle-your.webp",
+    "band": "young"
   },
   {
     "question": "Clap your ___",
@@ -824,8 +824,8 @@
     ],
     "correct_index": 2,
     "explanation": "You clap your hands.",
-    "band": "young",
-    "image": "🤲"
+    "image": "/assets/image-game/Clap-your.webp",
+    "band": "young"
   },
   {
     "question": "Stomp your ___",
@@ -836,8 +836,8 @@
     ],
     "correct_index": 0,
     "explanation": "You stomp your feet.",
-    "band": "young",
-    "image": "🦶"
+    "image": "/assets/image-game/Stomp-your.webp",
+    "band": "young"
   },
   {
     "question": "Hair is on your ___",
@@ -848,8 +848,8 @@
     ],
     "correct_index": 1,
     "explanation": "Hair is on your head.",
-    "band": "young",
-    "image": "🧒"
+    "image": "/assets/image-game/Hair-is-on-your.webp",
+    "band": "young"
   },
   {
     "question": "Teeth are in your ___",
@@ -860,8 +860,8 @@
     ],
     "correct_index": 2,
     "explanation": "Teeth are in your mouth.",
-    "band": "young",
-    "image": "🦷"
+    "image": "/assets/image-game/Teeth-are-in-your.webp",
+    "band": "young"
   },
   {
     "question": "Tummy is also called ___",
@@ -872,8 +872,8 @@
     ],
     "correct_index": 0,
     "explanation": "Tummy means belly.",
-    "band": "young",
-    "image": "🚪"
+    "image": "/assets/image-game/Tummy-is-also-called.webp",
+    "band": "young"
   },
   {
     "question": "Mom and ___",
@@ -884,8 +884,8 @@
     ],
     "correct_index": 1,
     "explanation": "Mom and dad are family.",
-    "band": "young",
-    "image": "⚽"
+    "image": "/assets/image-game/Mom-and.webp",
+    "band": "young"
   },
   {
     "question": "Your mom is your ___",
@@ -896,8 +896,8 @@
     ],
     "correct_index": 2,
     "explanation": "Mom is your mother.",
-    "band": "young",
-    "image": "👩‍🏫"
+    "image": "/assets/image-game/Your-mom-is-your.webp",
+    "band": "young"
   },
   {
     "question": "Your dad is your ___",
@@ -908,8 +908,8 @@
     ],
     "correct_index": 0,
     "explanation": "Dad is your father.",
-    "band": "young",
-    "image": "☁️"
+    "image": "/assets/image-game/Your-dad-is-your.webp",
+    "band": "young"
   },
   {
     "question": "Baby says ___",
@@ -920,8 +920,8 @@
     ],
     "correct_index": 1,
     "explanation": "Babies often say mama.",
-    "band": "young",
-    "image": "🐝"
+    "image": "/assets/image-game/Baby-says.webp",
+    "band": "young"
   },
   {
     "question": "Grandma is mom's ___",
@@ -932,8 +932,8 @@
     ],
     "correct_index": 2,
     "explanation": "Grandma is mother of mom or dad.",
-    "band": "young",
-    "image": "🚗"
+    "image": "/assets/image-game/Grandma-is-mom.webp",
+    "band": "young"
   },
   {
     "question": "Brother is a ___",
@@ -944,8 +944,8 @@
     ],
     "correct_index": 0,
     "explanation": "A brother is a boy in family.",
-    "band": "young",
-    "image": "🍎"
+    "image": "/assets/image-game/Brother-is-a.webp",
+    "band": "young"
   },
   {
     "question": "Sister is a ___",
@@ -956,8 +956,8 @@
     ],
     "correct_index": 1,
     "explanation": "A sister is a girl in family.",
-    "band": "young",
-    "image": "🚒"
+    "image": "/assets/image-game/Sister-is-a.webp",
+    "band": "young"
   },
   {
     "question": "I love my ___",
@@ -968,8 +968,8 @@
     ],
     "correct_index": 2,
     "explanation": "We love our family.",
-    "band": "young",
-    "image": "✏️"
+    "image": "/assets/image-game/I-love-my.webp",
+    "band": "young"
   },
   {
     "question": "Dad gives a big ___",
@@ -980,8 +980,8 @@
     ],
     "correct_index": 0,
     "explanation": "Dad can give a hug.",
-    "band": "young",
-    "image": "🦘"
+    "image": "/assets/image-game/Dad-gives-a-big.webp",
+    "band": "young"
   },
   {
     "question": "Mom reads a ___",
@@ -992,8 +992,8 @@
     ],
     "correct_index": 1,
     "explanation": "Mom can read a book.",
-    "band": "young",
-    "image": "📖"
+    "image": "/assets/image-game/Mom-reads-a.webp",
+    "band": "young"
   },
   {
     "question": "Baby drinks ___",
@@ -1004,8 +1004,8 @@
     ],
     "correct_index": 2,
     "explanation": "Babies drink milk.",
-    "band": "young",
-    "image": "🥛"
+    "image": "/assets/image-game/Baby-drinks.webp",
+    "band": "young"
   },
   {
     "question": "Family eats together at ___",
@@ -1016,8 +1016,8 @@
     ],
     "correct_index": 0,
     "explanation": "We eat at the table.",
-    "band": "young",
-    "image": "🪑"
+    "image": "/assets/image-game/Family-eats-together-at.webp",
+    "band": "young"
   },
   {
     "question": "Who tucks you in bed?",
@@ -1028,8 +1028,8 @@
     ],
     "correct_index": 1,
     "explanation": "Mom or dad tucks you in.",
-    "band": "young",
-    "image": "🛏️"
+    "image": "/assets/image-game/Who-tucks-you-in-bed.webp",
+    "band": "young"
   },
   {
     "question": "Baby sleeps in a ___",
@@ -1040,8 +1040,8 @@
     ],
     "correct_index": 2,
     "explanation": "Babies sleep in a crib.",
-    "band": "young",
-    "image": "🌳"
+    "image": "/assets/image-game/Baby-sleeps-in-a.webp",
+    "band": "young"
   },
   {
     "question": "We live in a ___",
@@ -1052,8 +1052,8 @@
     ],
     "correct_index": 0,
     "explanation": "We live in a home.",
-    "band": "young",
-    "image": "☁️"
+    "image": "/assets/image-game/We-live-in-a.webp",
+    "band": "young"
   },
   {
     "question": "Is apple yummy?",
