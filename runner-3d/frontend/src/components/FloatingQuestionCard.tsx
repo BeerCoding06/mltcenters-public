@@ -8,7 +8,7 @@ import { useTextToSpeech } from "../hooks/useTextToSpeech";
 
 interface Props {
   question: Question;
-  onAnswer: (index: number) => void | Promise<void>;
+  onAnswer: (index: number) => void | Promise<void | boolean>;
   disabled?: boolean;
   feedback: AnswerFeedback | null;
 }
@@ -28,9 +28,11 @@ export function FloatingQuestionCard({
     if (disabled || feedback != null || answeringRef.current) return;
     answeringRef.current = true;
     stopForAnswer();
-    Promise.resolve(onAnswer(index)).catch(() => {}).finally(() => {
-      answeringRef.current = false;
-    });
+    Promise.resolve(onAnswer(index))
+      .catch(() => false)
+      .finally(() => {
+        answeringRef.current = false;
+      });
   };
 
   useEffect(() => {
@@ -108,7 +110,7 @@ export function FloatingQuestionCard({
                 const showCorrect = feedback && isSelected && feedback.correct;
                 const showWrong = feedback && isSelected && !feedback.correct;
                 const locked = Boolean(disabled || feedback != null);
-                const rowClass = `flex items-center gap-2 rounded-2xl border px-3 py-2.5 transition-all touch-manipulation sm:px-4 sm:py-3.5 ${
+                const rowClass = `flex w-full items-center gap-2 rounded-2xl border px-3 py-2.5 transition-all touch-manipulation sm:px-4 sm:py-3.5 ${
                   showCorrect
                     ? "border-green-400 bg-green-500/40"
                     : showWrong
@@ -119,26 +121,20 @@ export function FloatingQuestionCard({
                 }`;
 
                 return (
-                  <div
-                    key={i}
-                    role="button"
-                    tabIndex={locked ? -1 : 0}
-                    aria-disabled={locked}
-                    onClick={() => pickAnswer(i)}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter" || e.key === " ") {
-                        e.preventDefault();
-                        pickAnswer(i);
-                      }
-                    }}
-                    className={rowClass}
-                  >
-                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/20 text-sm font-bold text-white">
-                      {LABELS[i]}
-                    </span>
-                    <span className="min-w-0 flex-1 text-sm font-medium text-white sm:text-base">
-                      {opt}
-                    </span>
+                  <div key={i} className={rowClass}>
+                    <button
+                      type="button"
+                      disabled={locked}
+                      onClick={() => pickAnswer(i)}
+                      className="flex min-w-0 flex-1 items-center gap-2 text-left disabled:cursor-not-allowed"
+                    >
+                      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/20 text-sm font-bold text-white">
+                        {LABELS[i]}
+                      </span>
+                      <span className="min-w-0 flex-1 text-sm font-medium text-white sm:text-base">
+                        {opt}
+                      </span>
+                    </button>
                     <SpeakButton
                       text={`${LABELS[i]}. ${opt}`}
                       onSpeak={speakOnce}

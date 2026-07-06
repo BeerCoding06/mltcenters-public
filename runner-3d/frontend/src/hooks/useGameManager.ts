@@ -21,6 +21,7 @@ import type {
   GamePhase,
   GameSnapshot,
   Obstacle,
+  Question,
   VisualFx,
 } from "../game/types";
 import type { GameState, PerformanceEvaluation } from "../types";
@@ -50,6 +51,7 @@ export function useGameManager() {
     fx: EMPTY_FX,
     answerFeedback: null,
     combo: 0,
+    displayQuestion: null,
   });
 
   const obstacleMgr = useRef(new ObstacleManager());
@@ -82,6 +84,8 @@ export function useGameManager() {
   const bumpTargetRef = useRef<number | null>(null);
   const stoppedAtObstacleRef = useRef(false);
   const stoppedLatchRef = useRef(false);
+  const holdQuestionUIRef = useRef(false);
+  const displayQuestionRef = useRef<Question | null>(null);
 
   const patch = useCallback((partial: Partial<GameSnapshot>) => {
     setSnap((s) => ({ ...s, ...partial }));
@@ -92,6 +96,17 @@ export function useGameManager() {
       const now = performance.now();
       if (!force && now - lastSyncMs.current < SYNC_MS) return;
       lastSyncMs.current = now;
+      const cq = stateRef.current?.current_question;
+      if (cq && !holdQuestionUIRef.current) {
+        displayQuestionRef.current = {
+          id: cq.id,
+          question: cq.question,
+          options: [...cq.options],
+          difficulty: stateRef.current!.difficulty,
+          image: cq.image,
+          image_focus: cq.image_focus ?? undefined,
+        };
+      }
       setSnap((s) => ({
         ...s,
         phase: phaseRef.current,
@@ -104,6 +119,7 @@ export function useGameManager() {
         state: stateRef.current ? { ...stateRef.current } : null,
         submitting: submittingRef.current,
         combo: comboRef.current,
+        displayQuestion: displayQuestionRef.current,
         fx: {
           flash: flashRef.current,
           shake: shakeRef.current,
@@ -143,6 +159,17 @@ export function useGameManager() {
       const res = await gameApi.generateQuestion(sid);
       stateRef.current = res.game_state;
       speedRef.current = res.game_state.speed;
+      if (res.game_state.current_question) {
+        const cq = res.game_state.current_question;
+        displayQuestionRef.current = {
+          id: cq.id,
+          question: cq.question,
+          options: [...cq.options],
+          difficulty: res.game_state.difficulty,
+          image: cq.image,
+          image_focus: cq.image_focus ?? undefined,
+        };
+      }
     } catch (err) {
       console.error("generate-question failed:", err);
     } finally {
@@ -173,7 +200,18 @@ export function useGameManager() {
       const state = stateRef.current;
       const sid = sessionRef.current;
       const obsId = activeObstacleRef.current;
-      if (!state?.current_question || !sid || submittingRef.current) return;
+      if (!state?.current_question || !sid || submittingRef.current) return false;
+
+      const frozenQuestion = {
+        id: state.current_question.id,
+        question: state.current_question.question,
+        options: [...state.current_question.options],
+        difficulty: state.difficulty,
+        image: state.current_question.image,
+        image_focus: state.current_question.image_focus ?? undefined,
+      };
+      displayQuestionRef.current = frozenQuestion;
+      holdQuestionUIRef.current = true;
 
       submittingRef.current = true;
       syncSnap(true);
@@ -224,13 +262,17 @@ export function useGameManager() {
           }
         }
 
-        activeObstacleRef.current = null;
-        stoppedLatchRef.current = false;
         patch({ answerFeedback: feedback });
+        syncSnap(true);
 
         window.setTimeout(() => {
+          holdQuestionUIRef.current = false;
+          displayQuestionRef.current = null;
+          activeObstacleRef.current = null;
+          stoppedLatchRef.current = false;
           patch({ answerFeedback: null });
           flashRef.current = null;
+          syncSnap(true);
         }, 320);
 
         if (res.game_state.game_over && !gameOverRef.current) {
@@ -246,8 +288,12 @@ export function useGameManager() {
         }
 
         void prefetchQuestion();
+        return true;
       } catch (err) {
         console.error("check-answer failed:", err);
+        holdQuestionUIRef.current = false;
+        displayQuestionRef.current = null;
+        return false;
       } finally {
         submittingRef.current = false;
         syncSnap(true);
@@ -391,8 +437,17 @@ export function useGameManager() {
         if (activeObstacleRef.current && stoppedAtObstacleRef.current) {
           stoppedLatchRef.current = true;
         }
-        if (!activeObstacleRef.current) {
+        if (!activeObstacleRef.current && !holdQuestionUIRef.current) {
           stoppedLatchRef.current = false;
+        }
+
+        if (holdQuestionUIRef.current && activeObstacleRef.current) {
+          const stopObs = obstaclesRef.current.find((o) => o.id === activeObstacleRef.current);
+          if (stopObs) {
+            const stopZ = stopObs.z - OBSTACLE_STOP_DIST;
+            scrollRef.current = Math.min(scrollRef.current, stopZ);
+            z = scrollRef.current;
+          }
         }
 
         if (
@@ -502,7 +557,9 @@ export function useGameManager() {
     gameOverRef.current = false;
     phaseRef.current = "running";
     animRef.current = "run";
-    patch({ evaluation: null, answerFeedback: null });
+    holdQuestionUIRef.current = false;
+    displayQuestionRef.current = null;
+    patch({ evaluation: null, answerFeedback: null, displayQuestion: null });
     syncSnap(true);
     void prefetchQuestion();
   }, [patch, syncSnap, prefetchQuestion]);

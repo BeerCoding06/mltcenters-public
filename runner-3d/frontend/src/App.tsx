@@ -20,16 +20,17 @@ export default function App() {
     fx,
     answerFeedback,
     combo,
+    displayQuestion,
     answer,
     restart,
   } = useGameManager();
 
   const showQuestion =
-    Boolean(state?.current_question) &&
     phase === "running" &&
-    stoppedAtObstacle;
+    Boolean(displayQuestion) &&
+    (stoppedAtObstacle || answerFeedback != null);
   const showQuestionLoading =
-    phase === "running" && stoppedAtObstacle && !state?.current_question;
+    phase === "running" && stoppedAtObstacle && !displayQuestion && !answerFeedback;
 
   return (
     <div className="flex h-full min-h-screen flex-col bg-slate-900">
@@ -68,9 +69,9 @@ export default function App() {
               </div>
             )}
 
-            {showQuestion && state.current_question && (
+            {showQuestion && displayQuestion && (
               <FloatingQuestionCard
-                question={state.current_question}
+                question={displayQuestion}
                 onAnswer={answer}
                 feedback={answerFeedback}
               />

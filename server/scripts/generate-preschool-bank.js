@@ -146,6 +146,23 @@ bank.push(qPhoto('Baby sleeps in a ___', 'crib', 'bus', 'tree', 'Babies sleep in
 bank.push(qPhoto('We live in a ___', 'home', 'river', 'cloud', 'We live in a home.', 'We-live-in-a.webp'));
 
 // —— Food & drink (30) ——
+const FOOD_ICON_FILES = {
+  apple: 'icons/food-apple.png',
+  banana: 'icons/food-banana.png',
+  rice: 'icons/food-rice.png',
+  milk: 'icons/food-milk.png',
+  water: 'icons/food-water.png',
+  bread: 'icons/food-bread.png',
+  egg: 'icons/food-egg.png',
+  cookie: 'icons/food-cookie.png',
+  cake: 'icons/food-cake.png',
+  juice: 'icons/food-juice.png',
+};
+
+function qFoodIcon(question, correct, wrong1, wrong2, explanation, food) {
+  return qPhoto(question, correct, wrong1, wrong2, explanation, FOOD_ICON_FILES[food]);
+}
+
 const foods = [
   ['apple', 'fruit', 'An apple is a fruit.'],
   ['banana', 'fruit', 'A banana is a fruit.'],
@@ -159,8 +176,8 @@ const foods = [
   ['juice', 'drink', 'Juice is a drink.'],
 ];
 foods.forEach(([item, type, exp]) => {
-  bank.push(q(`Is ${item} yummy?`, 'yes', 'no', 'maybe', `Many kids like ${item}.`));
-  bank.push(qRot(`What is ${item}?`, item, 'chair', 'hat', 0, exp));
+  bank.push(qFoodIcon(`Is ${item} yummy?`, 'yes', 'no', 'maybe', `Many kids like ${item}.`, item));
+  bank.push(qFoodIcon(`What is ${item}?`, item, 'chair', 'hat', exp, item));
 });
 bank.push(qPhoto('We eat soup with a ___', 'spoon', 'shoe', 'ball', 'We use a spoon.', 'We-eat-soup-with-a.webp'));
 bank.push(qPhoto('Hot food can ___ you', 'burn', 'fly', 'sing', 'Hot food can burn.', 'Hot-food-can___you.webp'));

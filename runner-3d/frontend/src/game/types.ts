@@ -70,6 +70,7 @@ export interface GameSnapshot {
   fx: VisualFx;
   answerFeedback: AnswerFeedback | null;
   combo: number;
+  displayQuestion: Question | null;
 }
 
 export type { GameState, PerformanceEvaluation };
