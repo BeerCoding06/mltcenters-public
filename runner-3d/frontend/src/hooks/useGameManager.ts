@@ -475,7 +475,7 @@ export function useGameManager() {
   const answer = useCallback(
     (index: number) => {
       audioManager.unlock();
-      void resolveAnswer(index);
+      return resolveAnswer(index);
     },
     [resolveAnswer]
   );

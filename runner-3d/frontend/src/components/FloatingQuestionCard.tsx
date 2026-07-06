@@ -8,7 +8,7 @@ import { useTextToSpeech } from "../hooks/useTextToSpeech";
 
 interface Props {
   question: Question;
-  onAnswer: (index: number) => void;
+  onAnswer: (index: number) => void | Promise<void>;
   disabled?: boolean;
   feedback: AnswerFeedback | null;
 }
@@ -28,7 +28,9 @@ export function FloatingQuestionCard({
     if (disabled || feedback != null || answeringRef.current) return;
     answeringRef.current = true;
     stopForAnswer();
-    onAnswer(index);
+    Promise.resolve(onAnswer(index)).catch(() => {}).finally(() => {
+      answeringRef.current = false;
+    });
   };
 
   useEffect(() => {

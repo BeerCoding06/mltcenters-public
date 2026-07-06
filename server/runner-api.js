@@ -155,14 +155,19 @@ function shuffleArray(arr) {
   return a;
 }
 
-/** สลับตำแหน่ง A/B/C ทุกครั้งที่ดึงคำถาม */
+/** สลับตำแหน่ง A/B/C ทุกครั้งที่ดึงคำถาม (index-based — รองรับข้อความซ้ำ) */
 function shuffleOptions(question) {
-  const correct = question.options[question.correct_index];
-  const options = shuffleArray(question.options);
+  const indices = question.options.map((_, i) => i);
+  for (let i = indices.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [indices[i], indices[j]] = [indices[j], indices[i]];
+  }
+  const options = indices.map((i) => question.options[i]);
+  const correct_index = indices.indexOf(question.correct_index);
   return {
     ...question,
     options,
-    correct_index: options.indexOf(correct),
+    correct_index,
   };
 }
 

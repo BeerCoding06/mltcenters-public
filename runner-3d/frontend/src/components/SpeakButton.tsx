@@ -28,6 +28,7 @@ export function SpeakButton({
         e.preventDefault();
         onSpeak(text);
       }}
+      onPointerDown={(e) => e.stopPropagation()}
       className={`inline-flex shrink-0 items-center justify-center rounded-full border border-white/25 bg-white/15 text-white transition hover:bg-white/30 active:scale-95 ${dim} ${className}`}
     >
       <Volume2 size={icon} />

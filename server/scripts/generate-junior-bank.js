@@ -6,6 +6,7 @@ import { writeFileSync } from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { attachImageToQuestion } from '../lib/question-images.js';
+import { shuffleQuestionOptions, validateBank } from '../lib/question-bank-utils.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const OUT = path.join(__dirname, '../data/questions_junior.json');
@@ -279,17 +280,16 @@ for (const item of bank) {
   unique.push(item);
 }
 
-const final = unique.slice(0, 200).map((item, i) => {
-  let rotated = item;
-  if (i % 3 === 1) {
-    const [a, b, c] = item.options;
-    rotated = { ...item, options: [b, a, c], correct_index: 1 };
-  } else if (i % 3 === 2) {
-    const [a, b, c] = item.options;
-    rotated = { ...item, options: [b, c, a], correct_index: 2 };
+const final = unique.slice(0, 200).map((item) => attachImageToQuestion(shuffleQuestionOptions(item)));
+
+const issues = validateBank(final);
+if (issues.length) {
+  console.error('Junior bank validation failed:');
+  for (const issue of issues.slice(0, 20)) {
+    console.error(` - ${issue.question}: ${issue.errors.join(', ')}`);
   }
-  return attachImageToQuestion(rotated);
-});
+  process.exit(1);
+}
 
 if (final.length < 200) {
   console.error(`Only ${final.length} unique junior questions, need 200`);
