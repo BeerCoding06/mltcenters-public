@@ -1,7 +1,9 @@
 import { GameScene } from "./three/GameScene";
 import { HUD } from "./components/HUD";
 import { QuestionOverlay } from "./components/QuestionOverlay";
+import { GameNavbar } from "./components/GameNavbar";
 import { useRunner3D } from "./hooks/useRunner3D";
+import { th, levelLabel } from "./lib/i18n";
 import type { PerformanceEvaluation } from "./types";
 
 export default function App() {
@@ -23,20 +25,22 @@ export default function App() {
 
   return (
     <div className="flex h-full min-h-screen flex-col bg-gradient-to-b from-indigo-950 to-slate-950">
+      <GameNavbar />
+
       <header className="shrink-0 px-4 py-2 text-center">
-        <h1 className="text-lg font-bold text-violet-300 sm:text-xl">🏃 3D English Runner</h1>
-        <p className="text-xs text-slate-400">Answer questions to run faster!</p>
+        <h1 className="text-lg font-bold text-violet-300 sm:text-xl">🏃 {th.game.title}</h1>
+        <p className="text-xs text-slate-400">{th.game.subtitle}</p>
       </header>
 
       <main className="relative flex-1">
         {phase === "loading" && (
           <p className="flex h-full items-center justify-center text-slate-400 animate-pulse">
-            Starting race…
+            {th.game.loading}
           </p>
         )}
 
         {state && phase !== "loading" && (
-          <div className="relative h-[calc(100vh-120px)] min-h-[320px]">
+          <div className="relative h-[calc(100vh-168px)] min-h-[280px]">
             <GameScene
               speed={state.speed}
               animState={paused ? "idle" : animState}
@@ -62,7 +66,7 @@ export default function App() {
                   }`}
                 >
                   <p className="text-xl font-bold">
-                    {lastCorrect ? "✅ Correct! Dodge!" : "❌ Wrong! Slowing down…"}
+                    {lastCorrect ? th.game.correct : th.game.wrong}
                   </p>
                   <p className="mt-1 max-w-xs text-sm">{state.last_explanation}</p>
                 </div>
@@ -100,26 +104,52 @@ function GameOverModal({
   return (
     <div className="absolute inset-0 z-40 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
       <div className="max-h-[90vh] overflow-y-auto rounded-2xl border border-violet-500/40 bg-slate-900 p-6 text-center shadow-2xl max-w-md w-full">
-        <p className="text-2xl font-bold text-red-400">Race Over</p>
+        <p className="text-2xl font-bold text-red-400">{th.game.raceOver}</p>
         <p className="text-4xl font-bold text-yellow-300">{state.score}</p>
-        <p className="text-sm text-slate-400">Accuracy: {acc}%</p>
+        <p className="text-sm text-slate-400">
+          {th.game.accuracy}: {acc}%
+        </p>
 
         {evaluation && (
           <div className="mt-4 rounded-xl bg-slate-800 p-4 text-left text-sm">
-            <p className="font-semibold text-violet-300">AI Performance Report</p>
-            <p className="mt-1 text-slate-300">{evaluation.summary}</p>
-            <div className="mt-2 grid grid-cols-2 gap-2 text-xs">
-              <span>Overall: {evaluation.overall}</span>
-              <span>Level: {evaluation.level}</span>
-              <span>Vocabulary: {evaluation.vocabulary}</span>
-              <span>Grammar: {evaluation.grammar}</span>
+            <p className="font-semibold text-violet-300">{th.game.aiReport}</p>
+            <p className="mt-2 leading-relaxed text-slate-200">{evaluation.summary}</p>
+            <div className="mt-3 grid grid-cols-2 gap-2 text-xs text-slate-300">
+              <span>
+                {th.game.overall}: {evaluation.overall}
+              </span>
+              <span>
+                {th.game.level}: {levelLabel(evaluation.level)}
+              </span>
+              <span>
+                {th.game.vocabulary}: {evaluation.vocabulary}
+              </span>
+              <span>
+                {th.game.grammar}: {evaluation.grammar}
+              </span>
+              <span>
+                {th.game.reaction}: {evaluation.reaction}
+              </span>
             </div>
+            {evaluation.strengths.length > 0 && (
+              <div className="mt-3">
+                <p className="text-xs font-semibold text-green-400">{th.game.strengths}</p>
+                <ul className="mt-1 list-disc pl-4 text-slate-400">
+                  {evaluation.strengths.map((t: string, i: number) => (
+                    <li key={i}>{t}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
             {evaluation.improvements.length > 0 && (
-              <ul className="mt-2 list-disc pl-4 text-slate-400">
-                {evaluation.improvements.map((t: string, i: number) => (
-                  <li key={i}>{t}</li>
-                ))}
-              </ul>
+              <div className="mt-3">
+                <p className="text-xs font-semibold text-amber-400">{th.game.improvements}</p>
+                <ul className="mt-1 list-disc pl-4 text-slate-400">
+                  {evaluation.improvements.map((t: string, i: number) => (
+                    <li key={i}>{t}</li>
+                  ))}
+                </ul>
+              </div>
             )}
           </div>
         )}
@@ -129,7 +159,7 @@ function GameOverModal({
           onClick={onRestart}
           className="mt-6 w-full rounded-xl bg-violet-500 py-3 font-bold hover:bg-violet-400"
         >
-          Race Again
+          {th.game.raceAgain}
         </button>
       </div>
     </div>

@@ -174,7 +174,7 @@ class GameService:
             state.hp = max(0, state.hp - 15)
             state.speed = max(s.min_speed, state.speed - s.wrong_speed_penalty)
             state.last_explanation = (
-                f"Correct: {q.options[q.correct_index]}. {q.explanation}"
+                f"คำตอบที่ถูก: {q.options[q.correct_index]}. {q.explanation}"
             )
             if state.hp <= 0:
                 state.game_over = True

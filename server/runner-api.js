@@ -66,6 +66,91 @@ Rules:
 - Be creative — new scenarios, words, and sentences every time
 - Keep questions short and clear for mobile players`;
 
+const EVALUATE_PROMPT_TH = `ประเมินผลการเล่นเกมวิ่งตอบคำถามภาษาอังกฤษของผู้เล่น
+ตอบเป็นภาษาไทยทั้งหมด Return ONLY valid JSON (no markdown):
+{"overall":0-100,"vocabulary":0-100,"grammar":0-100,"reaction":0-100,"level":"Beginner|Elementary|Intermediate","strengths":["..."],"improvements":["..."],"summary":"ย่อหน้าสรุปภาษาไทยที่ให้กำลังใจ 2-3 ประโยค"}
+
+กฎ:
+- strengths และ improvements อย่างละ 1-2 ข้อ เป็นภาษาไทย
+- summary อธิบายผลงาน คะแนน และแนะนำอย่างเป็นมิตร`;
+
+const LEVEL_TH = {
+  beginner: 'เริ่มต้น',
+  elementary: 'พื้นฐาน',
+  intermediate: 'ปานกลาง',
+  Beginner: 'เริ่มต้น',
+  Elementary: 'พื้นฐาน',
+  Intermediate: 'ปานกลาง',
+};
+
+function thaiEvaluationFallback(state, acc) {
+  const level = LEVEL_TH[state.difficulty] || state.difficulty;
+  let summary;
+  if (acc >= 80) {
+    summary = `ยอดเยี่ยมมาก! คุณได้ ${state.score} คะแนน ความแม่นยำ ${acc}% แสดงว่าพื้นฐานภาษาอังกฤษแข็งแรง ลองเพิ่มความเร็วในการตอบในครั้งถัดไป`;
+  } else if (acc >= 50) {
+    summary = `ทำได้ดี! คุณได้ ${state.score} คะแนน ความแม่นยำ ${acc}% ฝึกคำศัพท์และไวยากรณ์เพิ่มอีกนิด แล้วคุณจะวิ่งได้ไกลขึ้น`;
+  } else {
+    summary = `สู้ต่อไป! คุณได้ ${state.score} คะแนน ความแม่นยำ ${acc}% ลองทบทวนคำศัพท์พื้นฐานและเล่นอีกครั้งเพื่อพัฒนาทักษะ`;
+  }
+  return {
+    overall: acc,
+    vocabulary: Math.min(100, acc + 5),
+    grammar: acc,
+    reaction: Math.min(100, state.streak * 15),
+    level,
+    strengths: ['ตั้งใจเล่นจนจบการแข่งขัน และพยายามตอบคำถามต่อเนื่อง'],
+    improvements: ['ฝึกคำศัพท์และไวยากรณ์ภาษาอังกฤษทุกวันสัก 10 นาที'],
+    summary,
+  };
+}
+
+async function evaluatePerformance(openai, model, state) {
+  const acc = state.questions_answered
+    ? Math.round((state.correct_count / state.questions_answered) * 100)
+    : 0;
+  const stats = {
+    score: state.score,
+    questions_answered: state.questions_answered,
+    correct_count: state.correct_count,
+    accuracy: acc,
+    streak: state.streak,
+    difficulty: state.difficulty,
+    distance: state.distance,
+  };
+
+  if (openai) {
+    try {
+      const completion = await openai.chat.completions.create({
+        model,
+        messages: [
+          { role: 'system', content: EVALUATE_PROMPT_TH },
+          { role: 'user', content: JSON.stringify(stats) },
+        ],
+        max_tokens: 500,
+        temperature: 0.4,
+      });
+      const raw = completion.choices[0]?.message?.content?.trim() || '';
+      const json = raw.match(/\{[\s\S]*\}/);
+      const data = JSON.parse(json ? json[0] : raw);
+      return {
+        overall: Number(data.overall) || acc,
+        vocabulary: Number(data.vocabulary) || acc,
+        grammar: Number(data.grammar) || acc,
+        reaction: Number(data.reaction) || Math.min(100, state.streak * 15),
+        level: LEVEL_TH[data.level] || data.level || LEVEL_TH[state.difficulty],
+        strengths: Array.isArray(data.strengths) ? data.strengths : [],
+        improvements: Array.isArray(data.improvements) ? data.improvements : [],
+        summary: String(data.summary || thaiEvaluationFallback(state, acc).summary),
+      };
+    } catch (err) {
+      console.warn('AI evaluation fallback:', err.message);
+    }
+  }
+
+  return thaiEvaluationFallback(state, acc);
+}
+
 const sessions = new Map();
 const meta = new Map();
 
@@ -307,20 +392,21 @@ export function createRunnerRouter(openai, model) {
       state.streak = 0;
       state.hp = Math.max(0, state.hp - 15);
       state.speed = Math.max(3, state.speed - 3);
-      state.last_explanation = `Correct: ${q.options[q.correct_index]}. ${q.explanation}`;
+      state.last_explanation = `คำตอบที่ถูก: ${q.options[q.correct_index]}. ${q.explanation}`;
       if (state.hp <= 0) state.game_over = true;
     }
     state.current_question = null;
     res.json({ correct, animation: correct ? 'jump' : 'lose', game_state: toPublic(state) });
   });
 
-  router.post('/evaluate-performance', (req, res) => {
+  router.post('/evaluate-performance', async (req, res) => {
     const { session_id } = req.body || {};
     const state = sessions.get(session_id);
     if (!state) return res.status(404).json({ detail: 'Session not found' });
     const acc = state.questions_answered
       ? Math.round((state.correct_count / state.questions_answered) * 100)
       : 0;
+    const evaluation = await evaluatePerformance(openai, model, state);
     res.json({
       session_id,
       stats: {
@@ -332,16 +418,7 @@ export function createRunnerRouter(openai, model) {
         difficulty: state.difficulty,
         distance: state.distance,
       },
-      evaluation: {
-        overall: acc,
-        vocabulary: Math.min(100, acc + 5),
-        grammar: acc,
-        reaction: Math.min(100, state.streak * 15),
-        level: state.difficulty.charAt(0).toUpperCase() + state.difficulty.slice(1),
-        strengths: ['You kept running and learning!'],
-        improvements: ['Practice English vocabulary daily.'],
-        summary: `Great race! You scored ${state.score} with ${acc}% accuracy.`,
-      },
+      evaluation,
     });
   });
 

@@ -110,16 +110,31 @@ class LLMService:
         except Exception as e:
             logger.warning("LLM evaluate fallback: %s", e)
             acc = stats.get("accuracy", 0)
+            score = stats.get("score", 0)
+            if acc >= 80:
+                summary = f"ยอดเยี่ยมมาก! คุณได้ {score} คะแนน ความแม่นยำ {acc}% แสดงว่าพื้นฐานภาษาอังกฤษแข็งแรง"
+            elif acc >= 50:
+                summary = f"ทำได้ดี! คุณได้ {score} คะแนน ความแม่นยำ {acc}% ฝึกเพิ่มอีกนิดแล้วจะเก่งขึ้น"
+            else:
+                summary = f"สู้ต่อไป! คุณได้ {score} คะแนน ความแม่นยำ {acc}% ลองเล่นอีกครั้งเพื่อพัฒนาทักษะ"
             return {
                 "overall": int(acc),
                 "vocabulary": int(acc * 0.95),
                 "grammar": int(acc * 0.9),
                 "reaction": int(min(100, stats.get("streak", 0) * 15)),
-                "level": stats.get("difficulty", "beginner").title(),
-                "strengths": ["Good effort in the race!"],
-                "improvements": ["Practice more vocabulary daily."],
-                "summary": "Keep running and learning — you're improving!",
+                "level": _level_th(stats.get("difficulty", "beginner")),
+                "strengths": ["ตั้งใจเล่นจนจบการแข่งขัน"],
+                "improvements": ["ฝึกคำศัพท์และไวยากรณ์ภาษาอังกฤษทุกวัน"],
+                "summary": summary,
             }
+
+
+def _level_th(difficulty: str) -> str:
+    return {
+        "beginner": "เริ่มต้น",
+        "elementary": "พื้นฐาน",
+        "intermediate": "ปานกลาง",
+    }.get(difficulty.lower(), difficulty)
 
 
 def _parse_json(raw: str) -> dict:

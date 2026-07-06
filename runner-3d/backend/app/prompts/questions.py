@@ -19,8 +19,8 @@ Rules:
 - Keep questions short and clear for mobile players
 """
 
-EVALUATE_PROMPT = """Evaluate the player's English quiz performance in a runner game.
-Return ONLY JSON:
+EVALUATE_PROMPT = """ประเมินผลการเล่นเกมวิ่งตอบคำถามภาษาอังกฤษของผู้เล่น
+ตอบเป็นภาษาไทยทั้งหมด Return ONLY valid JSON (no markdown):
 {
   "overall": 0-100,
   "vocabulary": 0-100,
@@ -29,6 +29,10 @@ Return ONLY JSON:
   "level": "Beginner|Elementary|Intermediate",
   "strengths": ["..."],
   "improvements": ["..."],
-  "summary": "one encouraging paragraph"
+  "summary": "ย่อหน้าสรุปภาษาไทยที่ให้กำลังใจ"
 }
+
+กฎ:
+- strengths และ improvements อย่างละ 1-2 ข้อ เป็นภาษาไทย
+- summary อธิบายผลงาน คะแนน และแนะนำอย่างเป็นมิตร
 """

@@ -1,5 +1,6 @@
 import type { GameState } from "../types";
 import { TARGET_QUESTIONS } from "../constants";
+import { th } from "../lib/i18n";
 
 export function HUD({ state }: { state: GameState }) {
   const hpPct = Math.max(0, state.hp);
@@ -9,15 +10,23 @@ export function HUD({ state }: { state: GameState }) {
     <div className="pointer-events-none absolute inset-x-0 top-0 z-10 p-3">
       <div className="mx-auto flex max-w-3xl flex-col gap-2">
         <div className="flex flex-wrap justify-between gap-2 text-sm">
-          <Badge label="Score" value={state.score} className="text-yellow-300" />
-          <Badge label="Speed" value={`${state.speed.toFixed(1)} m/s`} className="text-sky-300" />
-          <Badge label="Streak" value={`🔥 ${state.streak}`} className="text-orange-300" />
-          <Badge label="Questions" value={`${state.questions_answered}/${TARGET_QUESTIONS}`} className="text-violet-300" />
+          <Badge label={th.game.score} value={state.score} className="text-yellow-300" />
+          <Badge
+            label={th.game.speed}
+            value={`${state.speed.toFixed(1)} m/s`}
+            className="text-sky-300"
+          />
+          <Badge label={th.game.streak} value={`🔥 ${state.streak}`} className="text-orange-300" />
+          <Badge
+            label={th.game.questions}
+            value={`${state.questions_answered}/${TARGET_QUESTIONS}`}
+            className="text-violet-300"
+          />
         </div>
-        <Bar label="HP" value={hpPct} max={100} color="#22c55e" />
-        <Bar label="Race" value={progress} max={100} color="#a78bfa" />
+        <Bar label={th.game.hp} value={hpPct} max={100} color="#22c55e" />
+        <Bar label={th.game.race} value={progress} max={100} color="#a78bfa" />
         <p className="text-center text-[10px] text-slate-400">
-          Answer more questions to run faster — {TARGET_QUESTIONS} questions to finish the race!
+          {th.game.raceHint(TARGET_QUESTIONS)}
         </p>
       </div>
     </div>
@@ -27,7 +36,7 @@ export function HUD({ state }: { state: GameState }) {
 function Badge({ label, value, className }: { label: string; value: string | number; className: string }) {
   return (
     <div className="rounded-lg bg-black/50 px-3 py-1 backdrop-blur">
-      <p className="text-[10px] uppercase text-slate-400">{label}</p>
+      <p className="text-[10px] text-slate-400">{label}</p>
       <p className={`font-bold ${className}`}>{value}</p>
     </div>
   );
@@ -37,7 +46,7 @@ function Bar({ label, value, max, color }: { label: string; value: number; max: 
   const pct = (value / max) * 100;
   return (
     <div className="flex items-center gap-2">
-      <span className="w-10 text-xs font-bold text-slate-400">{label}</span>
+      <span className="w-12 shrink-0 text-xs font-bold text-slate-400">{label}</span>
       <div className="h-2.5 flex-1 overflow-hidden rounded-full bg-slate-800/80">
         <div className="h-full rounded-full transition-all" style={{ width: `${pct}%`, backgroundColor: color }} />
       </div>

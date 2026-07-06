@@ -1,0 +1,62 @@
+export const th = {
+  nav: {
+    home: "หน้าแรก",
+    about: "เกี่ยวกับเรา",
+    activities: "กิจกรรม",
+    schedule: "กำหนดการ",
+    gallery: "แกลเลอรี",
+    assessment: "คุยภาษาอังกฤษ",
+    runner: "เกมวิ่ง 3D",
+    register: "ลงทะเบียน",
+    contact: "ติดต่อ",
+    brand: "MLTCENTERS",
+  },
+  game: {
+    title: "เกมวิ่งภาษาอังกฤษ 3D",
+    subtitle: "ตอบคำถามให้ถูกเพื่อวิ่งเร็วขึ้น!",
+    loading: "กำลังเริ่มการแข่งขัน…",
+    correct: "✅ ถูกต้อง! หลบสิ!",
+    wrong: "❌ ผิด! ช้าลงแล้ว…",
+    raceOver: "จบการแข่งขัน",
+    accuracy: "ความแม่นยำ",
+    raceAgain: "เล่นอีกครั้ง",
+    aiReport: "สรุปผลจาก AI",
+    overall: "ภาพรวม",
+    level: "ระดับ",
+    vocabulary: "คำศัพท์",
+    grammar: "ไวยากรณ์",
+    reaction: "ปฏิกิริยา",
+    strengths: "จุดเด่น",
+    improvements: "ควรพัฒนา",
+    score: "คะแนน",
+    speed: "ความเร็ว",
+    streak: "สตรีค",
+    questions: "คำถาม",
+    hp: "พลังชีวิต",
+    race: "ความคืบหน้า",
+    raceHint: (target: number) =>
+      `ตอบคำถามให้มากขึ้นเพื่อวิ่งเร็วขึ้น — ตอบครบ ${target} ข้อเพื่อจบการแข่งขัน!`,
+    correctAnswer: "คำตอบที่ถูก",
+    difficulty: {
+      beginner: "เริ่มต้น",
+      elementary: "พื้นฐาน",
+      intermediate: "ปานกลาง",
+    },
+    levelName: {
+      Beginner: "เริ่มต้น",
+      Elementary: "พื้นฐาน",
+      Intermediate: "ปานกลาง",
+    },
+  },
+} as const;
+
+export type Th = typeof th;
+
+export function difficultyLabel(key: string): string {
+  const k = key.toLowerCase() as keyof typeof th.game.difficulty;
+  return th.game.difficulty[k] ?? key;
+}
+
+export function levelLabel(key: string): string {
+  return th.game.levelName[key as keyof typeof th.game.levelName] ?? key;
+}
