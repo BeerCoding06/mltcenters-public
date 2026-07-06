@@ -1,8 +1,9 @@
 import type { GameState } from "../types";
+import { TARGET_QUESTIONS } from "../constants";
 
 export function HUD({ state }: { state: GameState }) {
   const hpPct = Math.max(0, state.hp);
-  const progress = Math.min(100, (state.questions_answered / 15) * 100);
+  const progress = Math.min(100, (state.questions_answered / TARGET_QUESTIONS) * 100);
 
   return (
     <div className="pointer-events-none absolute inset-x-0 top-0 z-10 p-3">
@@ -11,10 +12,13 @@ export function HUD({ state }: { state: GameState }) {
           <Badge label="Score" value={state.score} className="text-yellow-300" />
           <Badge label="Speed" value={`${state.speed.toFixed(1)} m/s`} className="text-sky-300" />
           <Badge label="Streak" value={`🔥 ${state.streak}`} className="text-orange-300" />
-          <Badge label="Distance" value={`${Math.floor(state.distance)}m`} className="text-emerald-300" />
+          <Badge label="Questions" value={`${state.questions_answered}/${TARGET_QUESTIONS}`} className="text-violet-300" />
         </div>
         <Bar label="HP" value={hpPct} max={100} color="#22c55e" />
         <Bar label="Race" value={progress} max={100} color="#a78bfa" />
+        <p className="text-center text-[10px] text-slate-400">
+          Answer more questions to run faster — {TARGET_QUESTIONS} questions to finish the race!
+        </p>
       </div>
     </div>
   );

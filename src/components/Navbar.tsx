@@ -10,17 +10,29 @@ const Navbar = () => {
   const [open, setOpen] = useState(false);
   const location = useLocation();
 
-  const links = [
+  const links: Array<{
+    label: string;
+    path: string;
+    icon?: typeof Bot;
+    external?: boolean;
+  }> = [
     { label: t.nav.home[lang], path: '/' },
     { label: t.nav.about[lang], path: '/about' },
     { label: t.nav.activities[lang], path: '/activities' },
     { label: t.nav.schedule[lang], path: '/schedule' },
     { label: t.nav.gallery[lang], path: '/gallery' },
     { label: t.nav.assessment[lang], path: '/assessment', icon: Bot },
-    { label: t.nav.runner[lang], path: '/runner-app/', icon: Gamepad2 },
+    { label: t.nav.runner[lang], path: '/runner-app/', icon: Gamepad2, external: true },
     { label: t.nav.register[lang], path: '/register' },
     { label: t.nav.contact[lang], path: '/contact' },
   ];
+
+  const linkClass = (path: string, external?: boolean) =>
+    `flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-medium transition-colors ${
+      !external && location.pathname === path
+        ? 'text-primary bg-primary/10'
+        : 'text-muted-foreground hover:text-foreground hover:bg-muted'
+    }`;
 
   return (
     <nav className="sticky top-0 z-50 bg-card/80 backdrop-blur-lg border-b border-border/50 shadow-sm">
@@ -41,16 +53,20 @@ const Navbar = () => {
         {/* Desktop */}
         <div className="hidden lg:flex items-center gap-1">
           {links.map((l) => {
-            const Icon = 'icon' in l ? l.icon : null;
+            const Icon = l.icon ?? null;
+            if (l.external) {
+              return (
+                <a key={l.path} href={l.path} className={linkClass(l.path, true)}>
+                  {Icon && <Icon size={16} className="shrink-0" />}
+                  {l.label}
+                </a>
+              );
+            }
             return (
             <Link
               key={l.path}
               to={l.path}
-              className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-medium transition-colors ${
-                location.pathname === l.path
-                  ? "text-primary bg-primary/10"
-                  : "text-muted-foreground hover:text-foreground hover:bg-muted"
-              }`}
+              className={linkClass(l.path)}
             >
               {Icon && <Icon size={16} className="shrink-0" />}
               {l.label}
@@ -88,17 +104,26 @@ const Navbar = () => {
           >
             <div className="px-4 py-3 space-y-1">
               {links.map((l) => {
-                const Icon = 'icon' in l ? l.icon : null;
+                const Icon = l.icon ?? null;
+                if (l.external) {
+                  return (
+                    <a
+                      key={l.path}
+                      href={l.path}
+                      onClick={() => setOpen(false)}
+                      className={linkClass(l.path, true)}
+                    >
+                      {Icon && <Icon size={16} className="shrink-0" />}
+                      {l.label}
+                    </a>
+                  );
+                }
                 return (
                 <Link
                   key={l.path}
                   to={l.path}
                   onClick={() => setOpen(false)}
-                  className={`flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm font-medium transition-colors ${
-                    location.pathname === l.path
-                      ? "text-primary bg-primary/10"
-                      : "text-muted-foreground hover:text-foreground hover:bg-muted"
-                  }`}
+                  className={linkClass(l.path)}
                 >
                   {Icon && <Icon size={16} className="shrink-0" />}
                   {l.label}

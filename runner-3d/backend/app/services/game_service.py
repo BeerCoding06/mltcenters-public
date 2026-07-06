@@ -3,6 +3,7 @@ from dataclasses import dataclass
 
 from app.core.config import get_settings
 from app.services.llm_service import LLMService, QuestionData
+from app.services.question_bank import next_from_bank, shuffle_queue
 
 
 @dataclass
@@ -49,6 +50,7 @@ class GameState:
 
 class GameService:
     _sessions: dict[str, GameState] = {}
+    _meta: dict[str, dict] = {}
 
     def __init__(self) -> None:
         self.settings = get_settings()
@@ -62,6 +64,11 @@ class GameService:
             speed=self.settings.initial_speed,
         )
         self._sessions[sid] = state
+        self._meta[sid] = {
+            "queue": shuffle_queue(25),
+            "asked": set(),
+            "recent": [],
+        }
         return state
 
     def get_session(self, session_id: str) -> GameState | None:
@@ -71,10 +78,31 @@ class GameService:
         state = self._require(session_id)
         if state.game_over:
             return state
-        topics = ["daily life", "food", "school", "animals", "sports"]
-        state.current_question = await self.llm.generate_question(
-            state.difficulty, topics[state.streak % len(topics)]
+        meta = self._meta.setdefault(
+            session_id, {"queue": shuffle_queue(25), "asked": set(), "recent": []}
         )
+        topics = [
+            "daily life", "food", "school", "animals", "sports",
+            "travel", "weather", "family", "jobs", "hobbies",
+        ]
+
+        if meta["queue"]:
+            state.current_question = meta["queue"].pop(0)
+        else:
+            topic = topics[state.questions_answered % len(topics)]
+            avoid = "\n".join(f"- {q}" for q in meta.get("recent", [])[-8:])
+            try:
+                state.current_question = await self.llm.generate_question(
+                    state.difficulty, topic, avoid=avoid
+                )
+            except Exception:
+                state.current_question = next_from_bank(meta["asked"], state.difficulty)
+
+        if state.current_question:
+            meta.setdefault("recent", []).append(state.current_question.question)
+            meta["asked"].add(state.current_question.question)
+            if len(meta["queue"]) < 8:
+                meta["queue"].extend(shuffle_queue(12))
         return state
 
     def check_answer(self, session_id: str, question_id: str, selected_index: int) -> GameState:
@@ -100,7 +128,7 @@ class GameService:
             state.difficulty = _adaptive(state)
         else:
             state.streak = 0
-            state.hp = max(0, state.hp - 25)
+            state.hp = max(0, state.hp - 15)
             state.speed = max(s.min_speed, state.speed - s.wrong_speed_penalty)
             state.last_explanation = (
                 f"Correct: {q.options[q.correct_index]}. {q.explanation}"
@@ -146,6 +174,11 @@ class GameService:
         state.last_correct = None
         state.game_over = False
         state.distance = 0.0
+        self._meta[session_id] = {
+            "queue": shuffle_queue(25),
+            "asked": set(),
+            "recent": [],
+        }
         return state
 
     def _require(self, session_id: str) -> GameState:

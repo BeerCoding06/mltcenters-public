@@ -54,12 +54,15 @@ class LLMService:
             kwargs["base_url"] = self.settings.openai_base_url
         return ChatOpenAI(**kwargs)
 
-    async def generate_question(self, difficulty: str, topic: str) -> QuestionData:
+    async def generate_question(self, difficulty: str, topic: str, avoid: str = "") -> QuestionData:
         try:
+            avoid_line = f"\nDo NOT repeat these questions:\n{avoid}" if avoid else ""
             response = await self._chat.ainvoke(
                 [
                     SystemMessage(content=QUESTION_PROMPT),
-                    HumanMessage(content=f"Difficulty: {difficulty}\nTopic: {topic}"),
+                    HumanMessage(
+                        content=f"Difficulty: {difficulty}\nTopic: {topic}{avoid_line}\nGenerate a NEW unique question."
+                    ),
                 ]
             )
             raw = response.content if isinstance(response.content, str) else str(response.content)
@@ -77,7 +80,8 @@ class LLMService:
             )
         except Exception as e:
             logger.warning("LLM question fallback: %s", e)
-            return _fallback_question(difficulty)
+            from app.services.question_bank import next_from_bank
+            return next_from_bank(set(), difficulty)
 
     async def evaluate_performance(self, stats: dict) -> dict:
         try:
@@ -113,32 +117,5 @@ def _parse_json(raw: str) -> dict:
 
 
 def _fallback_question(difficulty: str) -> QuestionData:
-    bank = [
-        {
-            "question": "What color is the sky on a sunny day?",
-            "options": ["blue", "green", "red"],
-            "correct_index": 0,
-            "explanation": "The sky looks blue on a clear sunny day.",
-        },
-        {
-            "question": "Which animal says 'meow'?",
-            "options": ["dog", "cat", "cow"],
-            "correct_index": 1,
-            "explanation": "Cats say 'meow'.",
-        },
-        {
-            "question": "Choose the correct verb: I ___ to school every day.",
-            "options": ["go", "goes", "going"],
-            "correct_index": 0,
-            "explanation": "With 'I', use 'go' in present simple.",
-        },
-    ]
-    q = random.choice(bank)
-    return QuestionData(
-        id=uuid.uuid4().hex,
-        question=q["question"],
-        options=q["options"],
-        correct_index=q["correct_index"],
-        explanation=q["explanation"],
-        difficulty=difficulty,
-    )
+    from app.services.question_bank import next_from_bank
+    return next_from_bank(set(), difficulty)

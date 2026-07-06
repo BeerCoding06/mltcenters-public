@@ -15,6 +15,7 @@ import RegisterPage from "./pages/RegisterPage";
 import ContactPage from "./pages/ContactPage";
 import EnglishAssessmentPage from "./pages/EnglishAssessmentPage";
 import AssessmentDashboard from "./pages/AssessmentDashboard";
+import RunnerRedirectPage from "./pages/RunnerRedirectPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -38,6 +39,7 @@ const App = () => (
               <Route path="/contact" element={<ContactPage />} />
               <Route path="/assessment" element={<EnglishAssessmentPage />} />
               <Route path="/assessment/dashboard" element={<AssessmentDashboard />} />
+              <Route path="/runner-app/*" element={<RunnerRedirectPage />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </main>

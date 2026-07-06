@@ -189,10 +189,22 @@ if (existsSync(distPath)) {
   }
   app.use(express.static(distPath));
   app.get('*', (req, res, next) => {
-    if (req.path.startsWith('/api') || req.path.startsWith('/runner-api') || req.path.startsWith('/runner-app')) {
+    if (
+      req.path.startsWith('/api') ||
+      req.path.startsWith('/runner-api') ||
+      req.path.startsWith('/runner-app')
+    ) {
       return next();
     }
     res.sendFile(path.join(distPath, 'index.html'));
+  });
+
+  // Fallback when runner-app bundle missing
+  app.get('/runner-app/*', (_req, res) => {
+    if (existsSync(path.join(runnerAppPath, 'index.html'))) {
+      return res.sendFile(path.join(runnerAppPath, 'index.html'));
+    }
+    res.status(503).send('Runner game is not deployed yet. Please redeploy the application.');
   });
 }
 

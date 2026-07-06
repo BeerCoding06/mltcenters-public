@@ -1,5 +1,5 @@
-import { Suspense, useRef } from "react";
-import { Canvas } from "@react-three/fiber";
+import { Suspense, useEffect, useRef } from "react";
+import { Canvas, useFrame } from "@react-three/fiber";
 import { Html, Stars } from "@react-three/drei";
 import * as THREE from "three";
 import { AvatarCharacter } from "./AvatarCharacter";
@@ -17,6 +17,22 @@ interface Props {
 
 function SceneInner({ speed, animState, scrollZ, obstacles, playerZ }: Props) {
   const playerRef = useRef<THREE.Group>(null);
+  const laneX = useRef(0);
+  const laneTarget = useRef(0);
+
+  useEffect(() => {
+    if (animState === "dodgeLeft") laneTarget.current = -1.7;
+    else if (animState === "dodgeRight") laneTarget.current = 1.7;
+    else if (animState === "run" || animState === "idle") laneTarget.current = 0;
+  }, [animState]);
+
+  useFrame((_, delta) => {
+    if (!playerRef.current) return;
+    const speed = animState === "dodgeLeft" || animState === "dodgeRight" ? 14 : 6;
+    laneX.current = THREE.MathUtils.lerp(laneX.current, laneTarget.current, delta * speed);
+    playerRef.current.position.x = laneX.current;
+    playerRef.current.position.z = playerZ;
+  });
 
   return (
     <>

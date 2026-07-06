@@ -11,7 +11,6 @@ interface Props {
 
 /**
  * Built-in cartoon runner — no external CDN, works offline.
- * Optional Ready Player Me: set VITE_RPM_AVATAR_URL in .env
  */
 export function CartoonRunner({ animState, speed, position }: Props) {
   const root = useRef<THREE.Group>(null);
@@ -20,25 +19,42 @@ export function CartoonRunner({ animState, speed, position }: Props) {
   const armL = useRef<THREE.Group>(null);
   const armR = useRef<THREE.Group>(null);
   const head = useRef<THREE.Mesh>(null);
+  const dodgeT = useRef(0);
 
-  useFrame((state) => {
+  useFrame((state, delta) => {
     if (!root.current) return;
     const t = state.clock.elapsedTime;
     const pace = 10 + speed * 0.8;
+    const isDodge = animState === "dodgeLeft" || animState === "dodgeRight";
+    const dodgeDir = animState === "dodgeLeft" ? -1 : 1;
 
-    if (animState === "run") {
-      const swing = Math.sin(t * pace) * 0.65;
+    if (isDodge) {
+      dodgeT.current = Math.min(1, dodgeT.current + delta * 5);
+    } else {
+      dodgeT.current = Math.max(0, dodgeT.current - delta * 4);
+    }
+
+    if (animState === "run" || isDodge) {
+      const swing = Math.sin(t * pace * 1.2) * 0.75;
       if (legL.current) legL.current.rotation.x = swing;
       if (legR.current) legR.current.rotation.x = -swing;
-      if (armL.current) armL.current.rotation.x = -swing * 0.7;
-      if (armR.current) armR.current.rotation.x = swing * 0.7;
-      root.current.position.y = position[1] + Math.abs(Math.sin(t * pace)) * 0.08;
-      root.current.rotation.z = Math.sin(t * pace) * 0.03;
-      root.current.rotation.x = 0.08;
+      if (armL.current) {
+        armL.current.rotation.x = isDodge ? -0.4 + dodgeDir * 0.5 : -swing * 0.7;
+        armL.current.rotation.z = isDodge ? dodgeDir * 0.4 : 0;
+      }
+      if (armR.current) {
+        armR.current.rotation.x = isDodge ? -0.4 - dodgeDir * 0.3 : swing * 0.7;
+        armR.current.rotation.z = isDodge ? -dodgeDir * 0.2 : 0;
+      }
+      root.current.position.y = position[1] + Math.abs(Math.sin(t * pace)) * 0.1;
+      root.current.rotation.x = isDodge ? 0.2 : 0.08;
+      root.current.rotation.z = isDodge
+        ? dodgeDir * (0.22 + dodgeT.current * 0.12)
+        : Math.sin(t * pace) * 0.03;
+      root.current.rotation.y = isDodge ? dodgeDir * -0.15 : 0;
     } else if (animState === "idle") {
       root.current.position.y = position[1] + Math.sin(t * 2) * 0.03;
-      root.current.rotation.z = 0;
-      root.current.rotation.x = 0;
+      root.current.rotation.set(0, 0, 0);
       if (legL.current) legL.current.rotation.x = 0;
       if (legR.current) legR.current.rotation.x = 0;
     } else if (animState === "jump") {
@@ -57,8 +73,14 @@ export function CartoonRunner({ animState, speed, position }: Props) {
       root.current.rotation.x = 0.2;
     }
 
-    if (head.current && animState === "run") {
-      head.current.rotation.y = Math.sin(t * 3) * 0.05;
+    if (head.current) {
+      if (isDodge) {
+        head.current.rotation.y = dodgeDir * 0.2;
+        head.current.rotation.z = dodgeDir * 0.08;
+      } else if (animState === "run") {
+        head.current.rotation.y = Math.sin(t * 3) * 0.05;
+        head.current.rotation.z = 0;
+      }
     }
   });
 
@@ -69,7 +91,6 @@ export function CartoonRunner({ animState, speed, position }: Props) {
 
   return (
     <group ref={root} position={position}>
-      {/* Head */}
       <group position={[0, 1.55, 0]}>
         <mesh ref={head} castShadow>
           <sphereGeometry args={[0.28, 16, 16]} />
@@ -83,19 +104,17 @@ export function CartoonRunner({ animState, speed, position }: Props) {
           <sphereGeometry args={[0.04, 8, 8]} />
           <meshStandardMaterial color="#222" />
         </mesh>
-        <mesh position={[0, -0.02, 0.24]} rotation={[0, 0, 0]}>
+        <mesh position={[0, -0.02, 0.24]}>
           <torusGeometry args={[0.06, 0.015, 8, 16, Math.PI]} />
           <meshStandardMaterial color="#c45c5c" />
         </mesh>
       </group>
 
-      {/* Body */}
       <mesh position={[0, 1.05, 0]} castShadow>
         <capsuleGeometry args={[0.22, 0.45, 8, 16]} />
         <meshStandardMaterial color={shirt} />
       </mesh>
 
-      {/* Arms */}
       <group ref={armL} position={[-0.32, 1.15, 0]}>
         <mesh position={[0, -0.2, 0]} castShadow>
           <capsuleGeometry args={[0.07, 0.28, 4, 8]} />
@@ -109,7 +128,6 @@ export function CartoonRunner({ animState, speed, position }: Props) {
         </mesh>
       </group>
 
-      {/* Legs */}
       <group ref={legL} position={[-0.12, 0.75, 0]}>
         <mesh position={[0, -0.28, 0]} castShadow>
           <capsuleGeometry args={[0.09, 0.35, 4, 8]} />
@@ -130,6 +148,14 @@ export function CartoonRunner({ animState, speed, position }: Props) {
           <meshStandardMaterial color={shoe} />
         </mesh>
       </group>
+
+      {/* Dodge trail hint */}
+      {(animState === "dodgeLeft" || animState === "dodgeRight") && (
+        <mesh position={[0, 0.05, -0.3]} rotation={[-Math.PI / 2, 0, 0]}>
+          <ringGeometry args={[0.3, 0.55, 16]} />
+          <meshBasicMaterial color="#22d3ee" transparent opacity={0.35} />
+        </mesh>
+      )}
     </group>
   );
 }

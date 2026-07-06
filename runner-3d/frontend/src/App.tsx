@@ -62,7 +62,7 @@ export default function App() {
                   }`}
                 >
                   <p className="text-xl font-bold">
-                    {lastCorrect ? "✅ Correct! Speed boost!" : "❌ Wrong! Slowing down…"}
+                    {lastCorrect ? "✅ Correct! Dodge!" : "❌ Wrong! Slowing down…"}
                   </p>
                   <p className="mt-1 max-w-xs text-sm">{state.last_explanation}</p>
                 </div>

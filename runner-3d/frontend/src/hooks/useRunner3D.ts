@@ -1,7 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { gameApi } from "../services/api";
+import { TARGET_QUESTIONS } from "../constants";
 import type { AnimState, GamePhase, GameState, PerformanceEvaluation } from "../types";
 import type { Obstacle } from "../three/ObstacleTrack";
+
+const OBSTACLE_GAP = 7;
+const QUESTION_TIMER_SEC = 9;
+const FEEDBACK_MS = 1200;
 
 export function useRunner3D() {
   const [phase, setPhase] = useState<GamePhase>("loading");
@@ -23,11 +28,15 @@ export function useRunner3D() {
   const lastTime = useRef(performance.now());
   const scrollRef = useRef(0);
   const speedRef = useRef(8);
+  const questionTimer = useRef(0);
+  const sessionRef = useRef<string | null>(null);
 
   const init = useCallback(async () => {
     const res = await gameApi.newGame();
     setState(res.game_state);
+    sessionRef.current = res.session_id;
     speedRef.current = res.game_state.speed;
+    questionTimer.current = 0;
     setAnimState("run");
     setPhase("running");
   }, []);
@@ -42,6 +51,7 @@ export function useRunner3D() {
     if (fetching.current) return;
     fetching.current = true;
     setAnimState("idle");
+    questionTimer.current = 0;
     try {
       const res = await gameApi.generateQuestion(sessionId);
       setState(res.game_state);
@@ -52,7 +62,6 @@ export function useRunner3D() {
     }
   }, []);
 
-  // Game loop
   useEffect(() => {
     if (phase !== "running") return;
 
@@ -66,34 +75,45 @@ export function useRunner3D() {
       setScrollZ(z);
       setPlayerZ((pz) => pz + spd * delta * 0.15);
 
-      if (z - lastSpawnZ.current > 14) {
+      questionTimer.current += delta;
+      const sid = sessionRef.current;
+
+      if (sid && questionTimer.current >= QUESTION_TIMER_SEC) {
+        void fetchQuestion(sid);
+      } else if (z - lastSpawnZ.current > OBSTACLE_GAP) {
         lastSpawnZ.current = z;
         const kinds: Obstacle["kind"][] = ["barrel", "cone", "crate"];
-        setObstacles((prev) => [
-          ...prev.filter((o) => o.z > z - 8),
-          {
+        const batch = 1 + (Math.random() > 0.6 ? 1 : 0);
+        const newObs: Obstacle[] = [];
+        for (let i = 0; i < batch; i++) {
+          newObs.push({
             id: nextObstacleId.current++,
-            z: z + 22 + Math.random() * 8,
+            z: z + 14 + i * 6 + Math.random() * 4,
             kind: kinds[Math.floor(Math.random() * kinds.length)],
-          },
-        ]);
+          });
+        }
+        setObstacles((prev) => [...prev.filter((o) => o.z > z - 8), ...newObs]);
       }
 
       setObstacles((obs) => {
         for (const o of obs) {
-          if (!hitObstacles.current.has(o.id) && z + 3 >= o.z) {
+          if (!hitObstacles.current.has(o.id) && z + 3 >= o.z && sid) {
             hitObstacles.current.add(o.id);
-            const sid = state?.session_id;
-            if (sid) void fetchQuestion(sid);
+            void fetchQuestion(sid);
             break;
           }
         }
         return obs;
       });
 
-      setState((s) =>
-        s ? { ...s, distance: s.distance + spd * delta, speed: spd } : s
-      );
+      setState((s) => {
+        if (!s) return s;
+        const finished = s.questions_answered >= TARGET_QUESTIONS;
+        if (finished && !s.game_over) {
+          return { ...s, game_over: true, distance: s.distance + spd * delta, speed: spd };
+        }
+        return { ...s, distance: s.distance + spd * delta, speed: spd };
+      });
 
       rafRef.current = requestAnimationFrame(loop);
     };
@@ -101,7 +121,15 @@ export function useRunner3D() {
     lastTime.current = performance.now();
     rafRef.current = requestAnimationFrame(loop);
     return () => cancelAnimationFrame(rafRef.current);
-  }, [phase, state?.session_id, fetchQuestion]);
+  }, [phase, fetchQuestion]);
+
+  useEffect(() => {
+    if (state?.game_over && state.questions_answered >= TARGET_QUESTIONS && phase === "running") {
+      setAnimState("win");
+      setPhase("gameover");
+      gameApi.evaluate(state.session_id).then((r) => setEvaluation(r.evaluation));
+    }
+  }, [state?.game_over, state?.questions_answered, state?.session_id, phase]);
 
   const answer = async (index: number) => {
     if (!state?.current_question || submitting) return;
@@ -115,21 +143,28 @@ export function useRunner3D() {
       setState(res.game_state);
       speedRef.current = res.game_state.speed;
       setLastCorrect(res.correct);
-      setAnimState(res.correct ? "jump" : "lose");
+      setAnimState(
+        res.correct
+          ? Math.random() > 0.5
+            ? "dodgeLeft"
+            : "dodgeRight"
+          : "lose"
+      );
       setPhase("feedback");
 
       setTimeout(() => {
         if (res.game_state.game_over) {
-          setAnimState("lose");
+          setAnimState(res.game_state.questions_answered >= TARGET_QUESTIONS ? "win" : "lose");
           setPhase("gameover");
           gameApi.evaluate(res.game_state.session_id).then((r) => setEvaluation(r.evaluation));
         } else {
           setAnimState("run");
           setPhase("running");
           setLastCorrect(null);
+          questionTimer.current = 0;
           lastTime.current = performance.now();
         }
-      }, 2000);
+      }, FEEDBACK_MS);
     } finally {
       setSubmitting(false);
     }
@@ -146,6 +181,7 @@ export function useRunner3D() {
     setObstacles([]);
     hitObstacles.current.clear();
     lastSpawnZ.current = 0;
+    questionTimer.current = 0;
     setEvaluation(null);
     setAnimState("run");
     setPhase("running");

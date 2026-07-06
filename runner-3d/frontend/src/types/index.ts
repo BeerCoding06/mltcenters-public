@@ -1,4 +1,4 @@
-export type AnimState = "idle" | "run" | "jump" | "win" | "lose";
+export type AnimState = "idle" | "run" | "jump" | "win" | "lose" | "dodgeLeft" | "dodgeRight";
 export type GamePhase = "loading" | "running" | "question" | "feedback" | "gameover" | "results";
 
 export interface Question {
