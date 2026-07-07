@@ -6,8 +6,9 @@ import { useState } from 'react';
 import { useParallax } from '@/hooks/useParallax';
 import { galleryPreviewImages } from '@/lib/gallery-images';
 import HomeContactSection from '@/components/HomeContactSection';
+import { HOME_FAQ } from '@/constants/seo-content';
 
-import heroImg from '@/assets/banner-main.png';
+const HERO_BANNER = '/hero-banner.jpg';
 
 // About cards: ไฟล์ใน public/assets/img-design
 const designUrl = (file: string) => `${import.meta.env.BASE_URL}assets/img-design/${file}`;
@@ -51,10 +52,10 @@ const HomePage = () => {
               className="bg-white/70 backdrop-blur-md rounded-2xl shadow-xl px-8 py-10 sm:px-10 sm:py-12 border border-white/50"
             >
               <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold md:!leading-[1.3] mb-6 bg-gradient-to-r from-[#5BC0FF] via-[#6EE7B7] to-[#5BC0FF] bg-clip-text text-transparent">
-                {t.about.title[lang]}
+                {t.hero.headline[lang]}
               </h1>
               <p className="text-lg sm:text-xl text-muted-foreground mb-10 leading-relaxed">
-                {t.about.desc[lang]}
+                {t.hero.sub[lang]}
               </p>
               <Link
                 to="/register"
@@ -74,8 +75,13 @@ const HomePage = () => {
           >
             <div className="relative rounded-2xl shadow-xl overflow-hidden aspect-[4/3] md:aspect-[5/4] group">
               <img
-                src={heroImg}
+                src={HERO_BANNER}
                 alt={heroAlt[lang]}
+                width={1400}
+                height={1050}
+                fetchPriority="high"
+                loading="eager"
+                decoding="async"
                 className="w-full h-full object-cover object-center img-design-style group-hover:scale-105 transition-transform duration-500"
               />
               <div className="absolute inset-0 img-pastel-overlay pointer-events-none" aria-hidden />
@@ -102,8 +108,10 @@ const HomePage = () => {
           <div className="absolute inset-0 bg-gradient-to-br from-[#5BC0FF]/15 via-[#6EE7B7]/10 to-[#FFE66D]/10" aria-hidden />
           <div className="absolute inset-0 opacity-[0.07]">
             <img
-              src={heroImg}
+              src={HERO_BANNER}
               alt=""
+              loading="lazy"
+              decoding="async"
               className="w-full h-full object-cover object-center scale-105"
               aria-hidden
             />
@@ -235,6 +243,23 @@ const HomePage = () => {
                 </motion.div>
               ))}
             </div>
+          </div>
+        </section>
+
+        {/* FAQ — on-page + matches FAQ schema */}
+        <section className="py-20 bg-white" aria-labelledby="home-faq-heading">
+          <div className="container mx-auto px-6 max-w-3xl">
+            <h2 id="home-faq-heading" className="text-3xl md:text-4xl font-bold text-center text-foreground mb-10">
+              {lang === 'th' ? 'คำถามที่พบบ่อย' : 'Frequently Asked Questions'}
+            </h2>
+            <dl className="space-y-6">
+              {HOME_FAQ[lang].map((item) => (
+                <div key={item.question} className="rounded-2xl border border-border/60 bg-[#F8FAFC] p-5">
+                  <dt className="font-semibold text-foreground mb-2">{item.question}</dt>
+                  <dd className="text-muted-foreground text-sm leading-relaxed">{item.answer}</dd>
+                </div>
+              ))}
+            </dl>
           </div>
         </section>
 

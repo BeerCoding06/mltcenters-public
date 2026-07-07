@@ -7,7 +7,7 @@
  *   SMTP_USER=your@gmail.com  SMTP_PASS=app-password
  */
 import path from 'path';
-import { existsSync } from 'fs';
+import { existsSync, readFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import express from 'express';
 import cors from 'cors';
@@ -15,6 +15,7 @@ import dotenv from 'dotenv';
 import OpenAI from 'openai';
 import nodemailer from 'nodemailer';
 import { createRunnerRouter } from './runner-api.js';
+import { getMetaForPath, injectSeoMeta, isCrawler } from './seo-meta.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const distPath = path.join(__dirname, '../dist');
@@ -278,11 +279,36 @@ app.post('/api/assess', async (req, res) => {
 app.use('/runner-api', createRunnerRouter(openai, AI_MODEL));
 
 const runnerAppPath = path.join(distPath, 'runner-app');
+const indexHtmlPath = path.join(distPath, 'index.html');
+const runnerIndexHtmlPath = path.join(runnerAppPath, 'index.html');
+
+let indexHtmlTemplate = '';
+let runnerIndexHtmlTemplate = '';
+if (existsSync(indexHtmlPath)) {
+  indexHtmlTemplate = readFileSync(indexHtmlPath, 'utf8');
+}
+if (existsSync(runnerIndexHtmlPath)) {
+  runnerIndexHtmlTemplate = readFileSync(runnerIndexHtmlPath, 'utf8');
+}
+
+function sendSpaHtml(req, res, template, pathname) {
+  const meta = getMetaForPath(pathname);
+  if (template && meta?.title && isCrawler(req.get('user-agent') || '')) {
+    res.type('html').send(injectSeoMeta(template, meta));
+    return;
+  }
+  res.sendFile(pathname.startsWith('/runner-app') ? runnerIndexHtmlPath : indexHtmlPath);
+}
+
 if (existsSync(distPath)) {
   if (existsSync(runnerAppPath)) {
     app.use('/runner-app', express.static(runnerAppPath));
-    app.get('/runner-app/*', (_req, res) => {
-      res.sendFile(path.join(runnerAppPath, 'index.html'));
+    app.get('/runner-app/*', (req, res) => {
+      if (existsSync(runnerIndexHtmlPath)) {
+        sendSpaHtml(req, res, runnerIndexHtmlTemplate, req.path);
+      } else {
+        res.status(503).send('Runner game is not deployed yet. Please redeploy the application.');
+      }
     });
   }
   app.use(express.static(distPath));
@@ -294,13 +320,14 @@ if (existsSync(distPath)) {
     ) {
       return next();
     }
-    res.sendFile(path.join(distPath, 'index.html'));
+    if (!existsSync(indexHtmlPath)) return next();
+    sendSpaHtml(req, res, indexHtmlTemplate, req.path);
   });
 
   // Fallback when runner-app bundle missing
   app.get('/runner-app/*', (_req, res) => {
-    if (existsSync(path.join(runnerAppPath, 'index.html'))) {
-      return res.sendFile(path.join(runnerAppPath, 'index.html'));
+    if (existsSync(runnerIndexHtmlPath)) {
+      return res.sendFile(runnerIndexHtmlPath);
     }
     res.status(503).send('Runner game is not deployed yet. Please redeploy the application.');
   });

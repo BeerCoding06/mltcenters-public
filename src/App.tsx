@@ -1,3 +1,4 @@
+import { lazy, Suspense } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -6,17 +7,20 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { I18nProvider } from "@/lib/i18n";
 import Navbar from "@/components/Navbar";
 import FooterSection from "@/components/FooterSection";
-import Index from "./pages/Index";
-import AboutPage from "./pages/AboutPage";
-import ActivitiesPage from "./pages/ActivitiesPage";
-import SchedulePage from "./pages/SchedulePage";
-import GalleryPage from "./pages/GalleryPage";
-import RegisterPage from "./pages/RegisterPage";
-import ContactPage from "./pages/ContactPage";
-import EnglishAssessmentPage from "./pages/EnglishAssessmentPage";
-import AssessmentDashboard from "./pages/AssessmentDashboard";
-import RunnerRedirectPage from "./pages/RunnerRedirectPage";
-import NotFound from "./pages/NotFound";
+import { SiteSEO } from "@/components/PageSEO";
+import { PageLoader } from "@/components/PageLoader";
+
+const Index = lazy(() => import("./pages/Index"));
+const AboutPage = lazy(() => import("./pages/AboutPage"));
+const ActivitiesPage = lazy(() => import("./pages/ActivitiesPage"));
+const SchedulePage = lazy(() => import("./pages/SchedulePage"));
+const GalleryPage = lazy(() => import("./pages/GalleryPage"));
+const RegisterPage = lazy(() => import("./pages/RegisterPage"));
+const ContactPage = lazy(() => import("./pages/ContactPage"));
+const EnglishAssessmentPage = lazy(() => import("./pages/EnglishAssessmentPage"));
+const AssessmentDashboard = lazy(() => import("./pages/AssessmentDashboard"));
+const RunnerRedirectPage = lazy(() => import("./pages/RunnerRedirectPage"));
+const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient();
 
@@ -27,21 +31,24 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <SiteSEO />
           <Navbar />
           <main className="min-h-screen">
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/about" element={<AboutPage />} />
-              <Route path="/activities" element={<ActivitiesPage />} />
-              <Route path="/schedule" element={<SchedulePage />} />
-              <Route path="/gallery" element={<GalleryPage />} />
-              <Route path="/register" element={<RegisterPage />} />
-              <Route path="/contact" element={<ContactPage />} />
-              <Route path="/assessment" element={<EnglishAssessmentPage />} />
-              <Route path="/assessment/dashboard" element={<AssessmentDashboard />} />
-              <Route path="/runner-app/*" element={<RunnerRedirectPage />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
+            <Suspense fallback={<PageLoader />}>
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/about" element={<AboutPage />} />
+                <Route path="/activities" element={<ActivitiesPage />} />
+                <Route path="/schedule" element={<SchedulePage />} />
+                <Route path="/gallery" element={<GalleryPage />} />
+                <Route path="/register" element={<RegisterPage />} />
+                <Route path="/contact" element={<ContactPage />} />
+                <Route path="/assessment" element={<EnglishAssessmentPage />} />
+                <Route path="/assessment/dashboard" element={<AssessmentDashboard />} />
+                <Route path="/runner-app/*" element={<RunnerRedirectPage />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </Suspense>
           </main>
           <FooterSection />
         </BrowserRouter>

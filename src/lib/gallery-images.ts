@@ -18,8 +18,8 @@ export const galleryImages: GalleryImage[] = Object.entries(galleryModules)
   .sort(([a], [b]) => sortKey(a) - sortKey(b))
   .map(([path, src], index) => ({
     src,
-    altEn: `MLTCENTERS workshop photo ${index + 1}`,
-    altTh: `ภาพกิจกรรม MLTCENTERS ${index + 1}`,
+    altEn: `MLTCENTERS language workshop and study-travel activity photo ${index + 1}`,
+    altTh: `ภาพกิจกรรมเรียนภาษาและทัศนศึกษา MLTCENTERS รูปที่ ${index + 1}`,
   }));
 
 /** รูปตัวอย่างบนหน้าแรก (8 รูป กระจายจากทั้งอัลบั้ม) */
