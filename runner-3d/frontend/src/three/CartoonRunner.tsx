@@ -1,16 +1,12 @@
 import { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
+import { worldState } from "../game/worldState";
 import type { AnimState } from "../game/types";
+import { JUMP_HEIGHT } from "../game/constants";
+import { squashFactor } from "../game/easing";
 
-interface Props {
-  animState: AnimState;
-  speed: number;
-  jumpHeight: number;
-  squash: number;
-}
-
-export function CartoonRunner({ animState, speed, jumpHeight, squash }: Props) {
+export function CartoonRunner() {
   const root = useRef<THREE.Group>(null);
   const legL = useRef<THREE.Group>(null);
   const legR = useRef<THREE.Group>(null);
@@ -21,6 +17,12 @@ export function CartoonRunner({ animState, speed, jumpHeight, squash }: Props) {
 
   useFrame((state, delta) => {
     if (!root.current) return;
+    const animState = worldState.animState;
+    const speed = worldState.speed;
+    const jumpHeight = worldState.jumpHeight;
+    const jumpProgress =
+      jumpHeight > 0 ? jumpHeight / JUMP_HEIGHT : animState.includes("jump") ? 0.5 : 0;
+    const squash = squashFactor(jumpProgress);
     blend.current = animState;
     const t = state.clock.elapsedTime;
     const pace = 10 + speed * 0.85;

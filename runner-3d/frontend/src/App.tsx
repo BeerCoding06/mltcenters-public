@@ -11,10 +11,6 @@ export default function App() {
   const {
     phase,
     state,
-    animState,
-    scrollZ,
-    obstacles,
-    jumpHeight,
     stoppedAtObstacle,
     evaluation,
     fx,
@@ -27,8 +23,10 @@ export default function App() {
 
   const showQuestion =
     phase === "running" &&
-    Boolean(displayQuestion) &&
-    (stoppedAtObstacle || answerFeedback != null);
+    displayQuestion != null &&
+    (answerFeedback != null
+      ? !state?.current_question || displayQuestion.id === state.current_question?.id
+      : stoppedAtObstacle);
   const showQuestionLoading =
     phase === "running" && stoppedAtObstacle && !displayQuestion && !answerFeedback;
 
@@ -50,14 +48,7 @@ export default function App() {
 
         {state && phase !== "loading" && (
           <div className="relative h-[calc(100vh-168px)] min-h-[280px]">
-            <GameScene
-              speed={state.speed}
-              animState={animState}
-              scrollZ={scrollZ}
-              obstacles={obstacles}
-              jumpHeight={jumpHeight}
-              fx={fx}
-            />
+            <GameScene />
             <GameEffects fx={fx} />
             <HUD state={state} combo={combo} />
 

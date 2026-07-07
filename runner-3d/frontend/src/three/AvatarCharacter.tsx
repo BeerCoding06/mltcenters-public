@@ -3,16 +3,8 @@ import { useGLTF, useAnimations } from "@react-three/drei";
 import { useEffect, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
-import type { AnimState } from "../game/types";
+import { worldState } from "../game/worldState";
 import { CartoonRunner } from "./CartoonRunner";
-import { squashFactor } from "../game/easing";
-
-interface Props {
-  animState: AnimState;
-  speed: number;
-  jumpHeight: number;
-  jumpProgress: number;
-}
 
 class AvatarErrorBoundary extends Component<
   { fallback: ReactNode; children: ReactNode },
@@ -27,11 +19,12 @@ class AvatarErrorBoundary extends Component<
   }
 }
 
-function RpmAvatar({ url, animState, jumpHeight }: Props & { url: string }) {
+function RpmAvatar({ url }: { url: string }) {
   const group = useRef<THREE.Group>(null);
   const { scene, animations } = useGLTF(url);
   const clone = useRef(scene.clone(true));
   const { actions, mixer } = useAnimations(animations, group);
+  const lastAnim = useRef(worldState.animState);
 
   useEffect(() => {
     if (!animations.length) return;
@@ -42,11 +35,14 @@ function RpmAvatar({ url, animState, jumpHeight }: Props & { url: string }) {
     if (!action) return;
     Object.values(actions).forEach((a) => a?.fadeOut(0.15));
     action.reset().fadeIn(0.15).play();
-  }, [animState, actions, animations.length]);
+  }, [actions, animations.length]);
 
   useFrame((_, delta) => {
     mixer?.update(delta);
-    if (group.current) group.current.position.y = jumpHeight;
+    if (group.current) group.current.position.y = worldState.jumpHeight;
+    if (lastAnim.current !== worldState.animState) {
+      lastAnim.current = worldState.animState;
+    }
   });
 
   return (
@@ -56,49 +52,17 @@ function RpmAvatar({ url, animState, jumpHeight }: Props & { url: string }) {
   );
 }
 
-export function AvatarCharacter({ animState, speed, jumpHeight, jumpProgress }: Props) {
+export function AvatarCharacter() {
   const rpmUrl = import.meta.env.VITE_RPM_AVATAR_URL?.trim();
-  const squash = squashFactor(jumpProgress);
 
   if (!rpmUrl) {
-    return (
-      <CartoonRunner
-        animState={animState}
-        speed={speed}
-        jumpHeight={jumpHeight}
-        squash={squash}
-      />
-    );
+    return <CartoonRunner />;
   }
 
   return (
-    <AvatarErrorBoundary
-      fallback={
-        <CartoonRunner
-          animState={animState}
-          speed={speed}
-          jumpHeight={jumpHeight}
-          squash={squash}
-        />
-      }
-    >
-      <Suspense
-        fallback={
-          <CartoonRunner
-            animState={animState}
-            speed={speed}
-            jumpHeight={jumpHeight}
-            squash={squash}
-          />
-        }
-      >
-        <RpmAvatar
-          url={rpmUrl}
-          animState={animState}
-          speed={speed}
-          jumpHeight={jumpHeight}
-          jumpProgress={jumpProgress}
-        />
+    <AvatarErrorBoundary fallback={<CartoonRunner />}>
+      <Suspense fallback={<CartoonRunner />}>
+        <RpmAvatar url={rpmUrl} />
       </Suspense>
     </AvatarErrorBoundary>
   );

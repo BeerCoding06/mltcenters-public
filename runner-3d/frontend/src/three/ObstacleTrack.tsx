@@ -1,18 +1,22 @@
-import { useMemo } from "react";
+import { useMemo, useSyncExternalStore } from "react";
 import type { Obstacle, ObstacleKind } from "../game/types";
+import { worldState, subscribeScrollSegment, getScrollSegment } from "../game/worldState";
 
 export type { Obstacle, ObstacleKind };
 
 interface Props {
   obstacles: Obstacle[];
-  scrollZ: number;
+  scrollZ?: number;
 }
 
 const SEG_LEN = 5;
 const SEGMENTS_AHEAD = 48;
 const SEGMENTS_BEHIND = 6;
 
-export function ObstacleTrack({ obstacles, scrollZ }: Props) {
+export function ObstacleTrack({ obstacles }: Props) {
+  const segmentKey = useSyncExternalStore(subscribeScrollSegment, getScrollSegment, getScrollSegment);
+  const scrollZ = worldState.scrollZ;
+
   const segmentZs = useMemo(() => {
     const anchor = Math.floor(scrollZ / SEG_LEN) * SEG_LEN;
     const start = anchor - SEGMENTS_BEHIND * SEG_LEN;
@@ -20,12 +24,12 @@ export function ObstacleTrack({ obstacles, scrollZ }: Props) {
       { length: SEGMENTS_AHEAD + SEGMENTS_BEHIND },
       (_, i) => start + i * SEG_LEN
     );
-  }, [Math.floor(scrollZ / SEG_LEN)]);
+  }, [segmentKey]);
 
-  const runwayCenterZ = scrollZ + 55;
+  const runwayCenterZ = 55;
 
   return (
-    <group position={[0, 0, -scrollZ]}>
+    <group>
       {/* พื้นยาวต่อเนื่อง — กัน obstacle ลอยกลางอากาศ */}
       <mesh
         rotation={[-Math.PI / 2, 0, 0]}

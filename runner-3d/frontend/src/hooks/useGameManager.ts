@@ -12,6 +12,7 @@ import {
   CORRECT_SPEED_BOOST,
   WRONG_SPEED_PENALTY,
 } from "../game/constants";
+import { publishWorldFrame } from "../game/worldState";
 import { ObstacleManager } from "../game/managers/ObstacleManager";
 import { AutoJumpSystem } from "../game/managers/AutoJumpSystem";
 import { audioManager } from "../game/managers/AudioManager";
@@ -34,7 +35,7 @@ const EMPTY_FX: VisualFx = {
   landingBurst: false,
 };
 
-const SYNC_MS = 90;
+const SYNC_MS = 120;
 
 export function useGameManager() {
   const [snap, setSnap] = useState<GameSnapshot>({
@@ -97,7 +98,7 @@ export function useGameManager() {
       if (!force && now - lastSyncMs.current < SYNC_MS) return;
       lastSyncMs.current = now;
       const cq = stateRef.current?.current_question;
-      if (cq && !holdQuestionUIRef.current) {
+      if (cq && !holdQuestionUIRef.current && !submittingRef.current) {
         displayQuestionRef.current = {
           id: cq.id,
           question: cq.question,
@@ -110,11 +111,6 @@ export function useGameManager() {
       setSnap((s) => ({
         ...s,
         phase: phaseRef.current,
-        animState: animRef.current,
-        scrollZ: scrollRef.current,
-        obstacles: obstaclesRef.current,
-        jumpHeight: jumpHeightRef.current,
-        activeObstacleId: activeObstacleRef.current,
         stoppedAtObstacle: stoppedLatchRef.current,
         state: stateRef.current ? { ...stateRef.current } : null,
         submitting: submittingRef.current,
@@ -159,7 +155,7 @@ export function useGameManager() {
       const res = await gameApi.generateQuestion(sid);
       stateRef.current = res.game_state;
       speedRef.current = res.game_state.speed;
-      if (res.game_state.current_question) {
+      if (res.game_state.current_question && !holdQuestionUIRef.current) {
         const cq = res.game_state.current_question;
         displayQuestionRef.current = {
           id: cq.id,
@@ -273,6 +269,7 @@ export function useGameManager() {
           patch({ answerFeedback: null });
           flashRef.current = null;
           syncSnap(true);
+          void prefetchQuestion();
         }, 320);
 
         if (res.game_state.game_over && !gameOverRef.current) {
@@ -287,7 +284,6 @@ export function useGameManager() {
           });
         }
 
-        void prefetchQuestion();
         return true;
       } catch (err) {
         console.error("check-answer failed:", err);
@@ -519,6 +515,18 @@ export function useGameManager() {
         }
       }
 
+      publishWorldFrame(
+        scrollRef.current,
+        obstaclesRef.current,
+        animRef.current,
+        jumpHeightRef.current,
+        speedRef.current,
+        {
+          shake: shakeRef.current,
+          speedLines: speedLinesRef.current,
+          landingBurst: landingBurstRef.current,
+        },
+      );
       syncSnap();
       rafRef.current = requestAnimationFrame(loop);
     };

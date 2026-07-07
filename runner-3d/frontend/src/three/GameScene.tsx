@@ -1,80 +1,80 @@
-import { Suspense, useRef } from "react";
+import { Suspense, memo, useRef, useSyncExternalStore } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Html, Stars } from "@react-three/drei";
 import * as THREE from "three";
 import { AvatarCharacter } from "./AvatarCharacter";
 import { FollowCamera } from "./FollowCamera";
 import { ObstacleTrack } from "./ObstacleTrack";
-import type { AnimState, Obstacle, VisualFx } from "../game/types";
-import { JUMP_HEIGHT } from "../game/constants";
+import { worldState, subscribeObstacles, getObstacleSnapshot } from "../game/worldState";
 
-interface Props {
-  speed: number;
-  animState: AnimState;
-  scrollZ: number;
-  obstacles: Obstacle[];
-  jumpHeight: number;
-  fx: VisualFx;
+function LandingBurst() {
+  const ref = useRef<THREE.Mesh>(null);
+  useFrame(() => {
+    if (ref.current) ref.current.visible = worldState.fx.landingBurst;
+  });
+  return (
+    <mesh ref={ref} visible={false} position={[0, 0.05, 2]} rotation={[-Math.PI / 2, 0, 0]}>
+      <ringGeometry args={[0.2, 1.2, 24]} />
+      <meshBasicMaterial color="#86efac" transparent opacity={0.5} />
+    </mesh>
+  );
 }
 
-function SceneInner({ speed, animState, scrollZ, obstacles, jumpHeight, fx }: Props) {
+function SceneInner() {
   const playerRef = useRef<THREE.Group>(null);
-  const jumpProgress =
-    jumpHeight > 0 ? jumpHeight / JUMP_HEIGHT : animState.includes("jump") ? 0.5 : 0;
+  const trackRef = useRef<THREE.Group>(null);
+  const obstacles = useSyncExternalStore(subscribeObstacles, getObstacleSnapshot, getObstacleSnapshot);
 
   useFrame(() => {
-    if (!playerRef.current) return;
-    playerRef.current.position.x = 0;
-    playerRef.current.position.z = 0;
+    if (playerRef.current) {
+      playerRef.current.position.x = 0;
+      playerRef.current.position.z = 0;
+    }
+    if (trackRef.current) {
+      trackRef.current.position.z = -worldState.scrollZ;
+    }
   });
 
   return (
     <>
+      <color attach="background" args={["#87CEEB"]} />
+      <fog attach="fog" args={["#87CEEB", 40, 120]} />
+
       <ambientLight intensity={0.68} />
       <hemisphereLight args={["#87CEEB", "#4ade80", 0.65]} />
-      <directionalLight
-        position={[5, 12, 8]}
-        intensity={1.35}
-        castShadow
-        shadow-mapSize={[1024, 1024]}
-      />
-      <Stars radius={80} depth={40} count={1000} factor={3} fade speed={0.5} />
+      <directionalLight position={[5, 12, 8]} intensity={1.35} castShadow shadow-mapSize={[512, 512]} />
+
+      <Stars radius={80} depth={40} count={600} factor={2.5} fade speed={0.35} />
 
       <group ref={playerRef}>
-        <AvatarCharacter
-          animState={animState}
-          speed={speed}
-          jumpHeight={jumpHeight}
-          jumpProgress={jumpProgress}
-        />
+        <AvatarCharacter />
       </group>
 
-      {fx.landingBurst && (
-        <mesh position={[0, 0.05, 2]} rotation={[-Math.PI / 2, 0, 0]}>
-          <ringGeometry args={[0.2, 1.2, 24]} />
-          <meshBasicMaterial color="#86efac" transparent opacity={0.5} />
-        </mesh>
-      )}
+      <LandingBurst />
 
-      <FollowCamera
-        target={playerRef}
-        shake={fx.shake}
-        zoom={fx.speedLines ? 1.1 : 1}
-      />
-      <ObstacleTrack obstacles={obstacles} scrollZ={scrollZ} />
+      <FollowCamera target={playerRef} />
+
+      <group ref={trackRef}>
+        <ObstacleTrack obstacles={obstacles} scrollZ={0} />
+      </group>
     </>
   );
 }
 
-export function GameScene(props: Props) {
+function GameSceneCanvas() {
   return (
     <Canvas
       shadows
-      camera={{ fov: 55, near: 0.1, far: 300, position: [0, 3, -6] }}
-      className="pointer-events-none h-full w-full"
-      style={{
-        background: "linear-gradient(#87CEEB 0%, #87CEEB 48%, #4ade80 48%, #22c55e 100%)",
+      dpr={[1, 2]}
+      gl={{
+        antialias: true,
+        alpha: false,
+        powerPreference: "high-performance",
+        stencil: false,
       }}
+      resize={{ scroll: false, debounce: { resize: 0, scroll: 0 } }}
+      camera={{ fov: 55, near: 0.1, far: 300, position: [0, 3, -6] }}
+      className="pointer-events-none h-full w-full touch-none"
     >
       <Suspense
         fallback={
@@ -83,8 +83,10 @@ export function GameScene(props: Props) {
           </Html>
         }
       >
-        <SceneInner {...props} />
+        <SceneInner />
       </Suspense>
     </Canvas>
   );
 }
+
+export const GameScene = memo(GameSceneCanvas);
