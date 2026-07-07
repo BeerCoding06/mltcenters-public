@@ -9,12 +9,11 @@ import { HOME_FAQ } from '@/constants/seo-content';
 
 const HomeContactSection = lazy(() => import('@/components/HomeContactSection'));
 
-const HERO_BANNER = "/hero-banner.jpg";
+const HERO_BANNER = "/hero-banner.webp";
+const HERO_BANNER_FALLBACK = "/hero-banner.jpg";
 
-const FACTOR_IMAGE = 0.35;
-
-const designUrl = (file: string) => `${import.meta.env.BASE_URL}assets/img-design-about/${file}`;
-const aboutImages = [designUrl('5545.jpg'), designUrl('5546.jpg'), designUrl('esrwtsry.jpg')];
+const designUrl = (file: string) => `${import.meta.env.BASE_URL}assets/img-design/${file}`;
+const aboutImages = [designUrl('5545.webp'), designUrl('5546.webp'), designUrl('esrwtsry.webp')];
 
 const heroAlt = {
   en: 'Learn languages through technology',
@@ -69,10 +68,11 @@ const HomePage = () => {
           >
             <div className="relative rounded-2xl shadow-xl overflow-hidden aspect-[4/3] md:aspect-[5/4] group">
               <picture>
-                <source srcSet="/hero-banner-mobile.jpg" media="(max-width: 767px)" />
+                <source srcSet="/hero-banner-mobile.webp" type="image/webp" media="(max-width: 767px)" />
                 <source srcSet="/hero-banner.webp" type="image/webp" />
+                <source srcSet="/hero-banner-mobile.jpg" media="(max-width: 767px)" />
                 <img
-                  src="/hero-banner.jpg"
+                  src={HERO_BANNER_FALLBACK}
                   alt={heroAlt[lang]}
                   width={1400}
                   height={1050}
@@ -100,18 +100,7 @@ const HomePage = () => {
         {/* 2) ทำไมต้องเวิร์กช็อปนี้ */}
         <section id="about-value" className="relative py-20 overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-[#5BC0FF]/15 via-[#6EE7B7]/10 to-[#FFE66D]/10" aria-hidden />
-          <div className="absolute inset-0 opacity-[0.07]">
-            <img
-              src={HERO_BANNER}
-              alt=""
-              loading="lazy"
-              decoding="async"
-              width={1400}
-              height={1050}
-              className="w-full h-full object-cover object-center scale-105"
-              aria-hidden
-            />
-          </div>
+          <div className="absolute inset-0 opacity-[0.07] bg-gradient-to-br from-[#5BC0FF]/30 via-[#6EE7B7]/20 to-[#FFE66D]/20" aria-hidden />
           <div className="absolute inset-0 pointer-events-none overflow-hidden">
             <div className="absolute -top-20 -right-20 w-80 h-80 rounded-full bg-[#5BC0FF]/20 blur-3xl" />
             <div className="absolute top-1/2 -left-24 w-72 h-72 rounded-full bg-[#6EE7B7]/15 blur-3xl" />

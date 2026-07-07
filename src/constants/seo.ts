@@ -1,7 +1,7 @@
 export const SITE_URL = "https://www.mltcenters.com";
 export const SITE_NAME = "MLTCENTERS Workshop";
 export const SITE_NAME_SHORT = "MLTCENTERS";
-export const DEFAULT_OG_IMAGE = `${SITE_URL}/og-image.jpg`;
+export const DEFAULT_OG_IMAGE = `${SITE_URL}/og-image.webp`;
 export const DEFAULT_OG_IMAGE_ALT = "MLTCENTERS — เรียนภาษาผ่านเทคโนโลยีและ AI";
 
 export type Lang = "en" | "th";

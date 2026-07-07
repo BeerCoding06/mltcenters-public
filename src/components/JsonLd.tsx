@@ -21,7 +21,7 @@ export function OrganizationJsonLd({ lang }: { lang: Lang }) {
     alternateName: "MLTCENTERS",
     url: SITE_URL,
     logo: `${SITE_URL}/icon-192.png`,
-    image: `${SITE_URL}/og-image.jpg`,
+    image: `${SITE_URL}/og-image.webp`,
     description:
       lang === "th"
         ? "ศูนย์ฝึกอบรมภาษาสมัยใหม่ เวิร์กช็อปภาษาและทัศนศึกษาต่างประเทศด้วย AI และเทคโนโลยี"
@@ -146,7 +146,7 @@ export function ScheduleEventsJsonLd({ lang }: { lang: Lang }) {
         address: { "@type": "PostalAddress", addressCountry: "International" },
       },
       organizer: { "@id": `${SITE_URL}/#organization` },
-      image: `${SITE_URL}/og-image.jpg`,
+      image: `${SITE_URL}/og-image.webp`,
       offers: {
         "@type": "Offer",
         url: `${SITE_URL}/register`,

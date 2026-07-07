@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, lazy, Suspense } from "react";
 import { useLocation } from "react-router-dom";
 import { useI18n } from "@/lib/i18n";
 import {
@@ -8,8 +8,8 @@ import {
   resolveSeoFields,
   type Lang,
 } from "@/constants/seo";
-import { OrganizationJsonLd, WebPageJsonLd, BreadcrumbJsonLd, FaqJsonLd, ScheduleEventsJsonLd, ActivitiesItemListJsonLd } from "./JsonLd";
-import { translations } from "@/lib/i18n";
+
+const SiteJsonLd = lazy(() => import("./SiteJsonLd"));
 
 function upsertMeta(attr: "name" | "property", key: string, content: string) {
   if (!content) return;
@@ -60,17 +60,6 @@ function applyHead(fields: ReturnType<typeof resolveSeoFields>, lang: Lang) {
   upsertMeta("name", "twitter:image", fields.ogImage);
 }
 
-const BREADCRUMB_LABELS: Record<string, Record<Lang, string>> = {
-  "/": { th: "หน้าแรก", en: "Home" },
-  "/about": { th: "เกี่ยวกับเรา", en: "About" },
-  "/activities": { th: "กิจกรรม", en: "Activities" },
-  "/schedule": { th: "กำหนดการ", en: "Schedule" },
-  "/gallery": { th: "แกลเลอรี", en: "Gallery" },
-  "/register": { th: "ลงทะเบียน", en: "Register" },
-  "/contact": { th: "ติดต่อ", en: "Contact" },
-  "/assessment": { th: "คุยภาษาอังกฤษ", en: "Chat English" },
-};
-
 export function SiteSEO() {
   const { pathname } = useLocation();
   const { lang } = useI18n();
@@ -86,7 +75,7 @@ export function SiteSEO() {
             : "The page you requested was not found — return to MLTCENTERS home.",
         keywords: undefined,
         canonical: `${SITE_URL}${pathname}`,
-        ogImage: `${SITE_URL}/og-image.png`,
+        ogImage: `${SITE_URL}/og-image.webp`,
         ogImageAlt: "MLTCENTERS",
         noindex: true,
         path: pathname,
@@ -97,36 +86,11 @@ export function SiteSEO() {
     applyHead(fields, lang);
   }, [fields.title, fields.description, fields.canonical, fields.noindex, lang]);
 
-  const crumbs =
-    config && config.path !== "/"
-      ? [
-          { name: BREADCRUMB_LABELS["/"][lang], url: `${SITE_URL}/` },
-          { name: BREADCRUMB_LABELS[config.path]?.[lang] ?? fields.title, url: fields.canonical },
-        ]
-      : null;
+  if (!config) return null;
 
   return (
-    <>
-      <OrganizationJsonLd lang={lang} />
-      <WebPageJsonLd
-        title={fields.title}
-        description={fields.description}
-        url={fields.canonical}
-        type={fields.jsonLdType}
-        lang={lang}
-      />
-      {config?.path === "/" && <FaqJsonLd lang={lang} />}
-      {config?.path === "/schedule" && <ScheduleEventsJsonLd lang={lang} />}
-      {config?.path === "/activities" && (
-        <ActivitiesItemListJsonLd
-          lang={lang}
-          items={translations.activities.items.map((item) => ({
-            name: item.title[lang],
-            description: item.desc[lang],
-          }))}
-        />
-      )}
-      {crumbs && <BreadcrumbJsonLd items={crumbs} />}
-    </>
+    <Suspense fallback={null}>
+      <SiteJsonLd />
+    </Suspense>
   );
 }

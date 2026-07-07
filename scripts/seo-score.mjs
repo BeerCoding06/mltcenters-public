@@ -60,14 +60,14 @@ if (existsSync(join(base, 'public/hero-banner.jpg'))) {
   const kb = statSync(join(base, 'public/hero-banner.jpg')).size / 1024;
   if (kb < 200) perf += 2;
 }
-if (existsSync(join(base, 'public/og-image.jpg'))) {
+if (existsSync(join(base, 'public/og-image.webp')) || existsSync(join(base, 'public/og-image.jpg'))) {
   perf += 2;
 }
 scores.mobile_perf = [Math.min(perf, 15), 15];
 
 // Keep other categories from before (simplified)
 let tech = 0;
-for (const f of ['public/sitemap.xml', 'public/robots.txt', 'public/site.webmanifest', 'public/og-image.jpg', 'server/seo-meta.js']) {
+for (const f of ['public/sitemap.xml', 'public/robots.txt', 'public/site.webmanifest', 'public/og-image.webp', 'server/seo-meta.js']) {
   if (existsSync(join(base, f))) tech += 3;
 }
 scores.technical = [Math.min(tech, 15), 15];

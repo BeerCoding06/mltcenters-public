@@ -1,7 +1,7 @@
 /** Server-side SEO meta for crawler / social-bot HTML injection (SPA fallback). */
 export const SITE_URL = 'https://www.mltcenters.com';
 export const SITE_NAME = 'MLTCENTERS Workshop';
-export const DEFAULT_OG_IMAGE = `${SITE_URL}/og-image.jpg`;
+export const DEFAULT_OG_IMAGE = `${SITE_URL}/og-image.webp`;
 
 const BOT_UA =
   /googlebot|bingbot|yandex|baiduspider|duckduckbot|slurp|facebookexternalhit|twitterbot|linkedinbot|whatsapp|telegrambot|discordbot|slackbot|pinterest|applebot/i;

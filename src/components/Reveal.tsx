@@ -22,12 +22,14 @@ export function Reveal({ children, className = '', delay = 0 }: RevealProps) {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (!entry.isIntersecting) return;
-        el.style.transitionDelay = `${delay}ms`;
-        el.classList.remove('opacity-0', 'translate-y-6');
-        el.classList.add('opacity-100', 'translate-y-0');
+        requestAnimationFrame(() => {
+          el.style.transitionDelay = `${delay}ms`;
+          el.classList.remove("opacity-0", "translate-y-6");
+          el.classList.add("opacity-100", "translate-y-0");
+        });
         observer.disconnect();
       },
-      { threshold: 0.08, rootMargin: '-32px' }
+      { threshold: 0.08, rootMargin: "-32px" },
     );
 
     observer.observe(el);
