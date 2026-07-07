@@ -20,7 +20,7 @@ export function OrganizationJsonLd({ lang }: { lang: Lang }) {
     name: SITE_NAME,
     alternateName: "MLTCENTERS",
     url: SITE_URL,
-    logo: `${SITE_URL}/logo.png`,
+    logo: `${SITE_URL}/icon-192.png`,
     image: `${SITE_URL}/og-image.jpg`,
     description:
       lang === "th"

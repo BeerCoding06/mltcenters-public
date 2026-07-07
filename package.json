@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
-    "build:runner": "cd runner-3d/frontend && VITE_BASE=/runner-app/ npm run build && rsync -a --delete dist/ ../../dist/runner-app/",
+    "build": "node scripts/sync-brand-icons.mjs && vite build",
+    "build:runner": "node scripts/sync-brand-icons.mjs && cd runner-3d/frontend && VITE_BASE=/runner-app/ npm run build && rsync -a --delete dist/ ../../dist/runner-app/",
     "build:all": "npm run build && npm run build:runner",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
