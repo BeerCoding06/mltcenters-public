@@ -16,7 +16,12 @@ import OpenAI from 'openai';
 import nodemailer from 'nodemailer';
 import compression from 'compression';
 import { createRunnerRouter } from './runner-api.js';
-import { getMetaForPath, injectSeoMeta, isCrawler } from './seo-meta.js';
+import {
+  getMetaForPath,
+  injectSeoMeta,
+  isCrawler,
+  isKnownSpaPath,
+} from './seo-meta.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const distPath = path.join(__dirname, '../dist');
@@ -36,10 +41,24 @@ const USE_GMAIL_SERVICE = !process.env.SMTP_HOST;
 
 const app = express();
 app.use(compression());
+
+// Redirect bare domain to www (works when traffic reaches this server)
+app.use((req, res, next) => {
+  const host = (req.get('host') || '').split(':')[0].toLowerCase();
+  if (host === 'mltcenters.com') {
+    return res.redirect(301, `https://www.mltcenters.com${req.originalUrl}`);
+  }
+  next();
+});
+
 app.use((req, res, next) => {
   res.setHeader('X-Content-Type-Options', 'nosniff');
   res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
   res.setHeader('Permissions-Policy', 'camera=(), microphone=(self), geolocation=()');
+  res.setHeader('X-Frame-Options', 'SAMEORIGIN');
+  if (req.secure || req.get('x-forwarded-proto') === 'https') {
+    res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload');
+  }
   next();
 });
 app.use(cors({ origin: true }));
@@ -301,10 +320,20 @@ if (existsSync(runnerIndexHtmlPath)) {
 
 function sendSpaHtml(req, res, template, pathname) {
   const meta = getMetaForPath(pathname);
-  if (template && meta?.title && isCrawler(req.get('user-agent') || '')) {
+  const is404 = meta.notFound || !isKnownSpaPath(pathname);
+
+  if (is404) {
+    res.status(404);
+  }
+
+  const ua = req.get('user-agent') || '';
+  const shouldInject = template && meta.title && (isCrawler(ua) || is404);
+
+  if (shouldInject) {
     res.type('html').send(injectSeoMeta(template, meta));
     return;
   }
+
   res.sendFile(pathname.startsWith('/runner-app') ? runnerIndexHtmlPath : indexHtmlPath);
 }
 

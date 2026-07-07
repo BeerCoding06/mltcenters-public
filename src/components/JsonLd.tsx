@@ -86,11 +86,6 @@ export function WebPageJsonLd({
     name: SITE_NAME,
     publisher: { "@id": `${SITE_URL}/#organization` },
     inLanguage: ["th-TH", "en-US"],
-    potentialAction: {
-      "@type": "SearchAction",
-      target: `${SITE_URL}/activities?q={search_term_string}`,
-      "query-input": "required name=search_term_string",
-    },
   };
 
   return (

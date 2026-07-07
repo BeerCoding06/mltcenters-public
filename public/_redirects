@@ -1,0 +1,7 @@
+# Cloudflare Pages / Netlify-style redirects (also document for Cloudflare dashboard)
+# https://developers.cloudflare.com/rules/url-forwarding/
+
+# Bare domain → www (301)
+https://mltcenters.com/* https://www.mltcenters.com/:splat 301
+http://mltcenters.com/* https://www.mltcenters.com/:splat 301
+http://www.mltcenters.com/* https://www.mltcenters.com/:splat 301
