@@ -20,7 +20,7 @@ const AboutPage = () => {
           animate={{ opacity: 1, y: 0 }}
           className="max-w-3xl mx-auto text-center mb-12"
         >
-          <h1 className="text-4xl md:text-5xl font-bold gradient-text-pastel mb-6">
+          <h1 className="text-4xl md:text-5xl font-bold heading-gradient mb-6">
             {t.about.title[lang]}
           </h1>
           <p className="text-lg text-muted-foreground leading-relaxed">

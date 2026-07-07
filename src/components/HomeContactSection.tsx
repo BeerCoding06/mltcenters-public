@@ -1,9 +1,9 @@
 import { useI18n } from '@/lib/i18n';
 import { socialLinks } from '@/lib/social-links';
-import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Mail, MapPin, MessageCircle, Phone } from 'lucide-react';
 import lineQrCode from '@/assets/611804.jpg';
+import { Reveal } from '@/components/Reveal';
 
 const HomeContactSection = () => {
   const { lang, t } = useI18n();
@@ -42,31 +42,19 @@ const HomeContactSection = () => {
       </div>
 
       <div className="container mx-auto px-6 relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-12"
-        >
+        <Reveal className="text-center mb-12">
           <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#06C755]/10 text-[#059669] text-sm font-semibold mb-4">
             <MessageCircle size={16} />
             LINE
           </span>
-          <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-[#5BC0FF] via-[#06C755] to-[#6EE7B7] bg-clip-text text-transparent mb-3">
+          <h2 className="text-3xl md:text-4xl font-bold heading-gradient mb-3">
             {t.homeContact.title[lang]}
           </h2>
           <p className="text-muted-foreground max-w-xl mx-auto">{t.homeContact.sub[lang]}</p>
-        </motion.div>
+        </Reveal>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 max-w-5xl mx-auto items-center">
-          {/* QR card */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="flex justify-center"
-          >
+          <Reveal className="flex justify-center">
             <div className="relative w-full max-w-[320px]">
               <div className="absolute -inset-3 rounded-[2rem] bg-gradient-to-br from-[#06C755]/30 via-[#5BC0FF]/20 to-[#6EE7B7]/30 blur-sm" aria-hidden />
               <div className="relative rounded-[1.75rem] bg-white/95 backdrop-blur-md border border-white shadow-2xl p-6 sm:p-8 qr-live-glow">
@@ -92,16 +80,9 @@ const HomeContactSection = () => {
                 <p className="mt-1 text-center text-sm text-muted-foreground">{t.homeContact.lineHint[lang]}</p>
               </div>
             </div>
-          </motion.div>
+          </Reveal>
 
-          {/* Contact channels */}
-          <motion.div
-            initial={{ opacity: 0, x: 24 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="space-y-5"
-          >
+          <Reveal delay={100} className="space-y-5">
             <p className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
               {t.homeContact.orContact[lang]}
             </p>
@@ -154,7 +135,7 @@ const HomeContactSection = () => {
                 {t.homeContact.register[lang]}
               </Link>
             </div>
-          </motion.div>
+          </Reveal>
         </div>
       </div>
     </section>

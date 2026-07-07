@@ -13,14 +13,14 @@
     --popover: 0 0% 100%;
     --popover-foreground: 220 20% 20%;
 
-    --primary: 200 100% 68%;
-    --primary-foreground: 220 30% 15%;
+    --primary: 200 85% 38%;
+    --primary-foreground: 0 0% 100%;
 
     --secondary: 155 72% 67%;
     --secondary-foreground: 220 30% 15%;
 
     --muted: 210 30% 95%;
-    --muted-foreground: 220 10% 45%;
+    --muted-foreground: 220 15% 32%;
 
     --accent: 345 100% 78%;
     --accent-foreground: 220 30% 15%;
@@ -33,7 +33,7 @@
 
     --border: 210 25% 90%;
     --input: 210 25% 90%;
-    --ring: 200 100% 68%;
+    --ring: 200 85% 38%;
 
     --radius: 1rem;
 
@@ -111,7 +111,44 @@
   }
 
   .gradient-text-pastel {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary via-secondary to-accent;
+    @apply text-foreground;
+  }
+
+  .heading-gradient {
+    @apply text-foreground;
+    background: linear-gradient(90deg, #1a6fa0 0%, #0f766e 55%, #1a6fa0 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: #1a3d52;
+  }
+
+  @supports ((-webkit-background-clip: text) or (background-clip: text)) {
+    .heading-gradient {
+      color: transparent;
+    }
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  .focus\:not-sr-only:focus {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: inherit;
+    margin: inherit;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
   }
 
   .gradient-bg-hero {

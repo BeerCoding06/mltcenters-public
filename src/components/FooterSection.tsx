@@ -1,7 +1,8 @@
 import { useI18n } from '@/lib/i18n';
 import { socialLinks } from '@/lib/social-links';
 import { Mail, Phone, MapPin } from 'lucide-react';
-import brandLogo from '@/assets/logo-new.png';
+
+const BRAND_LOGO = '/logo-nav.png';
 
 const FooterSection = () => {
   const { lang, t } = useI18n();
@@ -12,17 +13,17 @@ const FooterSection = () => {
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 flex items-center justify-center bg-[#29303d] rounded-[5px] shrink-0">
-              <img src={brandLogo} alt="MLTCENTERS" className="w-full h-full object-contain" />
+              <img src={BRAND_LOGO} alt="" width={32} height={32} className="w-full h-full object-contain" />
             </div>
             <div>
-              <span className="font-bold text-foreground">MLT<span className="text-primary">CENTERS</span></span>
+              <span className="font-bold text-foreground">MLT<span className="text-[#0f4c6a]">CENTERS</span></span>
               <p className="text-xs text-muted-foreground">{t.footer.tagline[lang]}</p>
             </div>
           </div>
 
           <div className="space-y-2 text-sm text-muted-foreground">
             <a href={`mailto:${t.contactPage.email}`} className="flex items-center gap-2 hover:text-primary transition-colors">
-              <Mail size={14} className="text-primary shrink-0" />
+              <Mail size={14} className="text-[#0f4c6a] shrink-0" aria-hidden />
               {t.contactPage.email}
             </a>
             <a href="tel:+66948521188" className="flex items-center gap-2 hover:text-primary transition-colors">

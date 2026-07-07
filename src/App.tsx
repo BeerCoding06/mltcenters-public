@@ -2,7 +2,6 @@ import { lazy, Suspense } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { I18nProvider } from "@/lib/i18n";
 import Navbar from "@/components/Navbar";
@@ -22,39 +21,35 @@ const AssessmentDashboard = lazy(() => import("./pages/AssessmentDashboard"));
 const RunnerRedirectPage = lazy(() => import("./pages/RunnerRedirectPage"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
-const queryClient = new QueryClient();
-
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <I18nProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <SiteSEO />
-          <Navbar />
-          <main className="min-h-screen">
-            <Suspense fallback={<PageLoader />}>
-              <Routes>
-                <Route path="/" element={<Index />} />
-                <Route path="/about" element={<AboutPage />} />
-                <Route path="/activities" element={<ActivitiesPage />} />
-                <Route path="/schedule" element={<SchedulePage />} />
-                <Route path="/gallery" element={<GalleryPage />} />
-                <Route path="/register" element={<RegisterPage />} />
-                <Route path="/contact" element={<ContactPage />} />
-                <Route path="/assessment" element={<EnglishAssessmentPage />} />
-                <Route path="/assessment/dashboard" element={<AssessmentDashboard />} />
-                <Route path="/runner-app/*" element={<RunnerRedirectPage />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </Suspense>
-          </main>
-          <FooterSection />
-        </BrowserRouter>
-      </I18nProvider>
-    </TooltipProvider>
-  </QueryClientProvider>
+  <TooltipProvider>
+    <I18nProvider>
+      <Toaster />
+      <Sonner />
+      <BrowserRouter>
+        <SiteSEO />
+        <Navbar />
+        <main id="main-content" className="min-h-screen">
+          <Suspense fallback={<PageLoader />}>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/activities" element={<ActivitiesPage />} />
+              <Route path="/schedule" element={<SchedulePage />} />
+              <Route path="/gallery" element={<GalleryPage />} />
+              <Route path="/register" element={<RegisterPage />} />
+              <Route path="/contact" element={<ContactPage />} />
+              <Route path="/assessment" element={<EnglishAssessmentPage />} />
+              <Route path="/assessment/dashboard" element={<AssessmentDashboard />} />
+              <Route path="/runner-app/*" element={<RunnerRedirectPage />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Suspense>
+        </main>
+        <FooterSection />
+      </BrowserRouter>
+    </I18nProvider>
+  </TooltipProvider>
 );
 
 export default App;

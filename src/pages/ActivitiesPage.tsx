@@ -33,7 +33,7 @@ const ActivitiesPage = () => {
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-4xl md:text-5xl font-bold gradient-text-pastel text-center mb-14"
+          className="text-4xl md:text-5xl font-bold heading-gradient text-center mb-14"
         >
           {t.activities.title[lang]}
         </motion.h1>

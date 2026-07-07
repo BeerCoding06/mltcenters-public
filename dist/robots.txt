@@ -17,3 +17,6 @@ User-agent: facebookexternalhit
 Allow: /
 
 Sitemap: https://www.mltcenters.com/sitemap.xml
+
+# Machine-readable site summary for AI agents
+# https://www.mltcenters.com/llms.txt

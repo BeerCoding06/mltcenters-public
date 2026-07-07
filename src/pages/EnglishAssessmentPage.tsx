@@ -234,7 +234,7 @@ export default function EnglishAssessmentPage() {
           >
             <div className="flex flex-col items-center gap-2 mb-3 sm:gap-3 sm:mb-4">
               <AIIcon size="lg" className="h-11 w-11 sm:h-14 sm:w-14" />
-              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center leading-tight bg-gradient-to-r from-[#5BC0FF] to-[#6EE7B7] bg-clip-text text-transparent px-2">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center leading-tight heading-gradient px-2">
                 {t.assessmentPage.title[lang]}
               </h1>
               <p className="text-center text-sm text-muted-foreground px-2 max-w-md">

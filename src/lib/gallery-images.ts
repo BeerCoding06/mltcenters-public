@@ -22,14 +22,6 @@ export const galleryImages: GalleryImage[] = Object.entries(galleryModules)
     altTh: `ภาพกิจกรรมเรียนภาษาและทัศนศึกษา MLTCENTERS รูปที่ ${index + 1}`,
   }));
 
-/** รูปตัวอย่างบนหน้าแรก (8 รูป กระจายจากทั้งอัลบั้ม) */
-export const galleryPreviewImages: GalleryImage[] = (() => {
-  const count = 8;
-  if (galleryImages.length <= count) return galleryImages;
-  const step = Math.floor(galleryImages.length / count);
-  return Array.from({ length: count }, (_, i) => galleryImages[Math.min(i * step, galleryImages.length - 1)]);
-})();
-
 export function getGalleryImage(index: number): GalleryImage {
   return galleryImages[index % galleryImages.length];
 }

@@ -14,6 +14,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import OpenAI from 'openai';
 import nodemailer from 'nodemailer';
+import compression from 'compression';
 import { createRunnerRouter } from './runner-api.js';
 import { getMetaForPath, injectSeoMeta, isCrawler } from './seo-meta.js';
 
@@ -34,6 +35,13 @@ const EMAIL_FROM = process.env.EMAIL_FROM || 'MLTCENTERS <onboarding@resend.dev>
 const USE_GMAIL_SERVICE = !process.env.SMTP_HOST;
 
 const app = express();
+app.use(compression());
+app.use((req, res, next) => {
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+  res.setHeader('Permissions-Policy', 'camera=(), microphone=(self), geolocation=()');
+  next();
+});
 app.use(cors({ origin: true }));
 app.use(express.json());
 
@@ -318,6 +326,10 @@ if (existsSync(distPath)) {
       req.path.startsWith('/runner-api') ||
       req.path.startsWith('/runner-app')
     ) {
+      return next();
+    }
+    // Never serve SPA shell for static/agent files (llms.txt, sw.js, sitemap, etc.)
+    if (/\.(txt|xml|json|js|webmanifest|png|jpe?g|webp|ico|svg|woff2?|css)$/i.test(req.path)) {
       return next();
     }
     if (!existsSync(indexHtmlPath)) return next();

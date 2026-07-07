@@ -1,0 +1,25 @@
+# MLTCENTERS Workshop
+> MLTCENTERS is a modern language training center in Samut Prakan, Thailand. We run AI-powered English workshops, hands-on language activities, study-travel programs abroad, and interactive learning games for students and professionals.
+
+Important notes:
+- Website languages: Thai (primary) and English
+- Online registration and contact forms are available
+- Interactive tools: English AI conversation practice and a 3D English runner game for kids
+
+## Core pages
+- [Home](https://www.mltcenters.com/): Workshop overview, benefits, gallery preview, FAQ, and registration call-to-action
+- [About](https://www.mltcenters.com/about): Mission, teaching philosophy, and team background
+- [Activities](https://www.mltcenters.com/activities): AI conversation, language apps, team games, digital presentations, and 3D runner game
+- [Schedule](https://www.mltcenters.com/schedule): Study-travel dates (Singapore, Malaysia, Korea) and hotel workshop courses
+- [Gallery](https://www.mltcenters.com/gallery): Photos from workshops and study-travel programs
+- [Register](https://www.mltcenters.com/register): Online registration form for workshops and programs
+- [Contact](https://www.mltcenters.com/contact): Phone, email, LINE QR code, and address
+
+## Interactive tools
+- [English AI Chat](https://www.mltcenters.com/assessment): Practice English conversation with AI in realistic scenarios
+- [3D English Runner Game](https://www.mltcenters.com/runner-app/): Kids answer English questions while running in a 3D game
+
+## Optional
+- [Sitemap](https://www.mltcenters.com/sitemap.xml): Indexable pages on this site
+- [Facebook](https://www.facebook.com/mltcenterbykrumam/): Workshop updates and announcements
+- [YouTube](https://www.youtube.com/@Krumamclub): Video content from MLTCENTERS

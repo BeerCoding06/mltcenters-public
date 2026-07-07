@@ -20,7 +20,7 @@ const SchedulePage = () => {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-14 max-w-4xl mx-auto"
         >
-          <h1 className="text-4xl md:text-5xl font-bold gradient-text-pastel mb-4">
+          <h1 className="text-4xl md:text-5xl font-bold heading-gradient mb-4">
             {t.schedule.title[lang]}
           </h1>
           <p className="text-muted-foreground text-lg leading-relaxed">{t.schedule.sub[lang]}</p>

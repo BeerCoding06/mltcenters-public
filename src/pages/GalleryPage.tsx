@@ -40,7 +40,7 @@ const GalleryPage = () => {
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-4xl md:text-5xl font-bold gradient-text-pastel text-center mb-3"
+          className="text-4xl md:text-5xl font-bold heading-gradient text-center mb-3"
         >
           {t.gallery.title[lang]}
         </motion.h1>
