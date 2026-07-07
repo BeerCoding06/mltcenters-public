@@ -1,6 +1,8 @@
 # Multi-stage: build Vite app + 3D runner, then run Express + static (same origin /api).
 FROM node:20-alpine AS frontend
 WORKDIR /app
+# Optional: regenerate icons from logo when Python + Pillow are available
+RUN apk add --no-cache python3 py3-pillow
 COPY package.json package-lock.json ./
 RUN npm ci
 COPY . .

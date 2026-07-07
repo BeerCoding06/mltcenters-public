@@ -7,7 +7,22 @@ dist
 .env.*
 !.env.example
 server/node_modules
+runner-3d/frontend/node_modules
 coverage
 .vscode
 .cursor
 **/*.log
+
+# Subprojects not used by Dockerfile.prod
+game
+tutor
+frontend
+backend
+
+# Large dev-only assets (gallery JPGs are bundled via imports; keep if needed at build)
+# src/assets/gallery-krumam is ~20MB — included for GalleryPage imports
+
+# Agent / IDE
+agent-transcripts
+terminals
+mcps
