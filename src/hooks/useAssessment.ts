@@ -11,6 +11,8 @@ import {
   looksIncompleteUtterance,
   shouldIgnoreTranscript,
 } from '@/lib/speechTranscript';
+import { ANALYTICS_EVENTS } from '@/analytics/analytics-context';
+import { track } from '@/analytics/track';
 
 const API_BASE = '/api';
 const XP_PER_ANSWER = 20;
@@ -163,6 +165,12 @@ export function useAssessment(onComplete: (result: AssessmentResult) => void) {
     inFlightKeyRef.current = requestKey;
     lastUserSentRef.current = trimmed;
 
+    if (answerCount === 0 && !messagesRef.current.some((m) => m.role === 'user')) {
+      track(ANALYTICS_EVENTS.ASSESSMENT_STARTED);
+      track(ANALYTICS_EVENTS.CHAT_STARTED);
+    }
+    track(ANALYTICS_EVENTS.CHAT_MESSAGE_SENT);
+
     const historyForApi = buildOutgoingMessages(messagesRef.current, trimmed);
     const alts = filterSpeechAlternatives(
       speechContext?.raw || trimmed,
@@ -207,6 +215,7 @@ export function useAssessment(onComplete: (result: AssessmentResult) => void) {
       const level = data.level || null;
 
       logClientAssessDebug('final response', reply);
+      track(ANALYTICS_EVENTS.CHAT_RESPONSE_RECEIVED);
 
       const assistantId = crypto.randomUUID();
       setMessages((prev) => {
@@ -241,11 +250,22 @@ export function useAssessment(onComplete: (result: AssessmentResult) => void) {
       const turnsSoFar = historyForApi.filter((m) => m.role === 'user').length;
       if (turnsSoFar >= maxTurns || /goodbye|well done|great job|see you/i.test(reply)) {
         const result = buildResult(nextScores, xp + addedXP, nextCount);
+        track(ANALYTICS_EVENTS.ASSESSMENT_COMPLETED, {
+          level: result.level,
+          score_avg: Math.round(
+            (result.scores.grammar +
+              result.scores.vocabulary +
+              result.scores.fluency +
+              result.scores.coherence) /
+              4
+          ),
+        });
         onComplete(result);
       }
       return { reply, scores, level, messageId: assistantId };
     } catch (e) {
       if ((e as Error).name !== 'AbortError') {
+        track(ANALYTICS_EVENTS.ASSESSMENT_FAILED);
         return appendLocalAssistant(
           "Oops, something went wrong. No worries—just try again or type your answer!"
         );
@@ -260,6 +280,16 @@ export function useAssessment(onComplete: (result: AssessmentResult) => void) {
 
   const completeWithCurrent = useCallback(() => {
     const result = buildResult(scoresHistory, xp, answerCount);
+    track(ANALYTICS_EVENTS.ASSESSMENT_COMPLETED, {
+      level: result.level,
+      score_avg: Math.round(
+        (result.scores.grammar +
+          result.scores.vocabulary +
+          result.scores.fluency +
+          result.scores.coherence) /
+          4
+      ),
+    });
     onComplete(result);
   }, [scoresHistory, xp, answerCount, onComplete]);
 

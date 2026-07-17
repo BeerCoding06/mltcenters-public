@@ -35,6 +35,8 @@ import {
   injectSeoMeta,
   isKnownSpaPath,
 } from './seo-meta.js';
+import { createAnalyticsRouter } from './analytics/analytics-router.js';
+import { initAnalyticsDb } from './analytics/db.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const distPath = path.join(__dirname, '../dist');
@@ -88,7 +90,8 @@ app.use((req, res, next) => {
   next();
 });
 app.use(cors({ origin: true }));
-app.use(express.json());
+app.use(express.json({ limit: '256kb' }));
+app.use('/api/analytics', createAnalyticsRouter());
 
 const AI_API_KEY = process.env.OPENAI_API_KEY || process.env.AI_GATEWAY_API_KEY;
 const AI_BASE_URL = process.env.OPENAI_BASE_URL || process.env.AI_GATEWAY_BASE_URL;
@@ -415,27 +418,36 @@ if (existsSync(distPath)) {
 
 const PORT = process.env.PORT || 3000;
 const host = process.env.HOST || '0.0.0.0';
-app.listen(PORT, host, () => {
-  console.log(`Server listening on http://${host}:${PORT}`);
-  if (openai) {
-    console.log(
-      `AI ready: model=${AI_MODEL}${AI_BASE_URL ? ` base=${AI_BASE_URL}` : ' (OpenAI default)'}`
-    );
-  } else {
-    console.warn('AI disabled: set OPENAI_API_KEY or AI_GATEWAY_API_KEY');
-  }
-  if (mailTransport) {
-    mailTransport
-      .verify()
-      .then(() => console.log(`Registration email (SMTP) → ${REGISTER_TO_EMAILS.join(', ')}`))
-      .catch((err) => console.error('SMTP verify failed:', err.message));
-  } else if (PHP_MAILER_READY && MAIL_SMTP_USER && MAIL_SMTP_PASS) {
-    console.log(`Registration email (PHPMailer via ${MAIL_SMTP_FROM}) → ${REGISTER_TO_EMAILS.join(', ')}`);
-  } else if (RESEND_API_KEY) {
-    console.log(`Registration email (Resend) → ${REGISTER_TO_EMAILS.join(', ')}`);
-  } else {
-    console.warn(
-      'Registration email disabled: set RESEND_API_KEY or SMTP_USER + SMTP_PASS in .env'
-    );
-  }
-});
+
+initAnalyticsDb()
+  .catch((err) => {
+    console.error('[analytics] failed to init database:', err);
+  })
+  .finally(() => {
+    app.listen(PORT, host, () => {
+      console.log(`Server listening on http://${host}:${PORT}`);
+      if (openai) {
+        console.log(
+          `AI ready: model=${AI_MODEL}${AI_BASE_URL ? ` base=${AI_BASE_URL}` : ' (OpenAI default)'}`
+        );
+      } else {
+        console.warn('AI disabled: set OPENAI_API_KEY or AI_GATEWAY_API_KEY');
+      }
+      if (mailTransport) {
+        mailTransport
+          .verify()
+          .then(() => console.log(`Registration email (SMTP) → ${REGISTER_TO_EMAILS.join(', ')}`))
+          .catch((err) => console.error('SMTP verify failed:', err.message));
+      } else if (PHP_MAILER_READY && MAIL_SMTP_USER && MAIL_SMTP_PASS) {
+        console.log(
+          `Registration email (PHPMailer via ${MAIL_SMTP_FROM}) → ${REGISTER_TO_EMAILS.join(', ')}`
+        );
+      } else if (RESEND_API_KEY) {
+        console.log(`Registration email (Resend) → ${REGISTER_TO_EMAILS.join(', ')}`);
+      } else {
+        console.warn(
+          'Registration email disabled: set RESEND_API_KEY or SMTP_USER + SMTP_PASS in .env'
+        );
+      }
+    });
+  });

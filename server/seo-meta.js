@@ -20,6 +20,7 @@ export const KNOWN_SPA_PATHS = new Set([
   '/contact',
   '/assessment',
   '/assessment/dashboard',
+  '/admin/analytics',
 ]);
 
 const NOT_FOUND_META = {
@@ -82,6 +83,12 @@ export const PAGE_META = {
     title: 'ผลประเมินภาษาอังกฤษ | MLTCENTERS',
     h1: 'ผลประเมินภาษาอังกฤษ',
     description: 'ดูผลการประเมินภาษาอังกฤษจากการสนทนากับ AI',
+    noindex: true,
+  },
+  '/admin/analytics': {
+    title: 'Analytics Admin | MLTCENTERS',
+    h1: 'Analytics Admin',
+    description: 'Internal analytics dashboard',
     noindex: true,
   },
 };

@@ -2,3 +2,5 @@ node_modules
 dist
 .env
 mail/vendor
+server/data/analytics.sqlite
+server/data/analytics.sqlite-*

@@ -1,7 +1,9 @@
 import { useI18n } from '@/lib/i18n';
 import { motion } from 'framer-motion';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
+import { ANALYTICS_EVENTS } from '@/analytics/analytics-context';
+import { track } from '@/analytics/track';
 
 const BRAND_LOGO = '/logo-nav.png';
 
@@ -76,6 +78,10 @@ const RegisterPage = () => {
   const [form, setForm] = useState(emptyForm);
   const [submitting, setSubmitting] = useState(false);
 
+  useEffect(() => {
+    track(ANALYTICS_EVENTS.REGISTER_STARTED);
+  }, []);
+
   const update = (field: FormField, value: string) => {
     setForm((prev) => ({ ...prev, [field]: value }));
   };
@@ -97,6 +103,7 @@ const RegisterPage = () => {
             : data.error || t.registerPage.error[lang];
         throw new Error(msg);
       }
+      track(ANALYTICS_EVENTS.REGISTER_COMPLETED);
       toast.success(t.registerPage.success[lang]);
       setForm(emptyForm);
     } catch (err) {

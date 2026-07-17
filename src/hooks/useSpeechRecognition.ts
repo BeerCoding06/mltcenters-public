@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { normalizeTranscript, shouldIgnoreTranscript } from '@/lib/speechTranscript';
+import { ANALYTICS_EVENTS } from '@/analytics/analytics-context';
+import { track } from '@/analytics/track';
 
 export interface SpeechResultMeta {
   alternatives: string[];
@@ -80,6 +82,7 @@ export function useSpeechRecognition({
     if (import.meta.env.DEV) {
       console.info('[speech] final transcript:', text, { alternatives });
     }
+    track(ANALYTICS_EVENTS.SPEECH_COMPLETED, { chars: text.length });
     onFinalRef.current?.(text, { alternatives });
   }, []);
 
@@ -138,6 +141,7 @@ export function useSpeechRecognition({
     rec.onerror = () => {
       setIsListening(false);
       clearFlushTimer();
+      track(ANALYTICS_EVENTS.SPEECH_FAILED);
       // Do not flush on error — avoids sending interrupted partials
       bufferRef.current = '';
       altsRef.current = [];
@@ -164,9 +168,11 @@ export function useSpeechRecognition({
     try {
       recognitionRef.current.start();
       setIsListening(true);
+      track(ANALYTICS_EVENTS.SPEECH_STARTED);
       return true;
     } catch {
       setIsListening(false);
+      track(ANALYTICS_EVENTS.SPEECH_FAILED);
       return false;
     }
   }, [clearFlushTimer]);

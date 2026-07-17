@@ -317,6 +317,34 @@ export function createRunnerRouter(openai, model) {
       ? Math.round((state.correct_count / state.questions_answered) * 100)
       : 0;
     const evaluation = await evaluatePerformance(aiEvaluateEnabled ? openai : null, model, state);
+
+    // Best-effort analytics (never fail the game response)
+    try {
+      const { ingestEvents } = await import('./analytics/analytics-service.js');
+      await ingestEvents({
+        body: {
+          events: [
+            {
+              name: 'runner_finished',
+              sessionId: String(session_id || `runner-${Date.now()}`),
+              visitorId: String(req.body?.visitor_id || session_id || 'runner-anon'),
+              ts: Date.now(),
+              path: '/runner-app/',
+              metadata: {
+                score: state.score,
+                duration_ms: Number(state.distance || 0),
+              },
+            },
+          ],
+        },
+        ip: req.ip || 'unknown',
+        userAgent: req.get('user-agent') || '',
+        headers: req.headers,
+      });
+    } catch (err) {
+      console.warn('[analytics] runner_finished failed:', err?.message || err);
+    }
+
     res.json({
       session_id,
       stats: {

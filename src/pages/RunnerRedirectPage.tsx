@@ -1,9 +1,14 @@
 import { useEffect } from 'react';
+import { ANALYTICS_EVENTS } from '@/analytics/analytics-context';
+import { track, flushAnalyticsQueue } from '@/analytics/track';
 
 /** Full-page redirect — runner is a separate app at /runner-app/ */
 export default function RunnerRedirectPage() {
   useEffect(() => {
-    window.location.replace('/runner-app/');
+    track(ANALYTICS_EVENTS.RUNNER_STARTED);
+    void flushAnalyticsQueue().finally(() => {
+      window.location.replace('/runner-app/');
+    });
   }, []);
 
   return (

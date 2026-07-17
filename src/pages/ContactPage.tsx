@@ -3,10 +3,16 @@ import { socialLinks } from '@/lib/social-links';
 import { motion } from 'framer-motion';
 import { Mail, Phone, MapPin, Sparkles } from 'lucide-react';
 import mltPoster from '@/assets/MLTMEP.png';
+import { ANALYTICS_EVENTS } from '@/analytics/analytics-context';
+import { track } from '@/analytics/track';
 
 const ContactPage = () => {
   const { lang, t } = useI18n();
   const mapEmbedUrl = `https://maps.google.com/maps?q=${encodeURIComponent(t.contactPage.address.en)}&hl=${lang}&z=16&output=embed`;
+
+  const onContactAction = (channel: string) => {
+    track(ANALYTICS_EVENTS.CONTACT_SUBMIT, { channel });
+  };
 
   return (
     <div className="py-16 min-h-screen relative overflow-hidden">
@@ -44,6 +50,7 @@ const ContactPage = () => {
                 <h3 className="font-semibold text-foreground text-sm mb-0.5">Email</h3>
                 <a
                   href={`mailto:${t.contactPage.email}`}
+                  onClick={() => onContactAction('email')}
                   className="text-muted-foreground text-sm hover:text-primary transition-colors break-all"
                 >
                   {t.contactPage.email}
@@ -61,6 +68,7 @@ const ContactPage = () => {
                 </h3>
                 <a
                   href="tel:+66948521188"
+                  onClick={() => onContactAction('phone')}
                   className="text-muted-foreground text-sm hover:text-primary transition-colors"
                 >
                   {t.contactPage.phone}

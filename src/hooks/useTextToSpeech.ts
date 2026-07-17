@@ -1,4 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { ANALYTICS_EVENTS } from '@/analytics/analytics-context';
+import { track } from '@/analytics/track';
 
 /** ความเร็วพูดช้า ชัด (สำหรับเด็ก) */
 const CHILD_SPEECH_RATE = 0.72;
@@ -63,9 +65,13 @@ export function useTextToSpeech() {
       u.volume = 1;
       const voice = pickEnglishVoice(voicesRef.current);
       if (voice) u.voice = voice;
-      u.onstart = () => setIsSpeaking(true);
+      u.onstart = () => {
+        setIsSpeaking(true);
+        track(ANALYTICS_EVENTS.TTS_STARTED);
+      };
       u.onend = () => {
         setIsSpeaking(false);
+        track(ANALYTICS_EVENTS.TTS_COMPLETED);
         onEnd?.();
       };
       u.onerror = () => {
