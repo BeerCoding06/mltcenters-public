@@ -1,6 +1,10 @@
-import { query } from './db.js';
+import { getAnalyticsDbMode, getFileStore, query } from './db.js';
 
 export async function insertEvent(row) {
+  if (getAnalyticsDbMode() === 'file') {
+    getFileStore().insertEvent(row);
+    return;
+  }
   await query(
     `INSERT INTO analytics_events
       (name, ts, path, referrer, session_id, visitor_id, ip_hash, country_code, user_agent, device_type, browser, metadata_json)
@@ -23,6 +27,10 @@ export async function insertEvent(row) {
 }
 
 export async function insertPageView(row) {
+  if (getAnalyticsDbMode() === 'file') {
+    getFileStore().insertPageView(row);
+    return;
+  }
   await query(
     `INSERT INTO page_views
       (visitor_id, session_id, path, started_at, duration_ms, scroll_depth, referrer, country_code)
@@ -41,6 +49,10 @@ export async function insertPageView(row) {
 }
 
 export async function upsertChatSession(row) {
+  if (getAnalyticsDbMode() === 'file') {
+    getFileStore().upsertChatSession(row);
+    return;
+  }
   const existing = await query(
     `SELECT id, message_count FROM chat_sessions WHERE session_id = ? AND visitor_id = ? ORDER BY id DESC LIMIT 1`,
     [row.session_id, row.visitor_id]
@@ -70,6 +82,10 @@ export async function upsertChatSession(row) {
 }
 
 export async function upsertAssessment(row) {
+  if (getAnalyticsDbMode() === 'file') {
+    getFileStore().upsertAssessment(row);
+    return;
+  }
   const existing = await query(
     `SELECT id FROM assessment_results WHERE session_id = ? AND visitor_id = ? ORDER BY id DESC LIMIT 1`,
     [row.session_id, row.visitor_id]
@@ -107,6 +123,10 @@ export async function upsertAssessment(row) {
 }
 
 export async function upsertRunner(row) {
+  if (getAnalyticsDbMode() === 'file') {
+    getFileStore().upsertRunner(row);
+    return;
+  }
   const existing = await query(
     `SELECT id FROM runner_results WHERE session_id = ? AND visitor_id = ? ORDER BY id DESC LIMIT 1`,
     [row.session_id, row.visitor_id]
@@ -151,6 +171,10 @@ function dayStartMs(daysAgo = 0) {
 }
 
 export async function getSummary() {
+  if (getAnalyticsDbMode() === 'file') {
+    return getFileStore().getSummary();
+  }
+
   const today = dayStartMs(0);
   const week = dayStartMs(6);
   const month = dayStartMs(29);
@@ -227,7 +251,7 @@ export async function getSummary() {
   );
 
   const dailyVisitors = await query(
-    `SELECT CAST(ts / 86400000 AS INTEGER) AS day_bucket, COUNT(DISTINCT visitor_id) AS c
+    `SELECT FLOOR(ts / 86400000) AS day_bucket, COUNT(DISTINCT visitor_id) AS c
      FROM analytics_events WHERE ts >= ?
      GROUP BY day_bucket ORDER BY day_bucket ASC`,
     [week]

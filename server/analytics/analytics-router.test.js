@@ -5,24 +5,22 @@ import express from 'express';
 import path from 'path';
 import fs from 'fs';
 import os from 'os';
-import { fileURLToPath } from 'url';
-import { initAnalyticsDb, closeAnalyticsDb, query } from './db.js';
+import { initAnalyticsDb, closeAnalyticsDb, getFileStore } from './db.js';
 import { createAnalyticsRouter } from './analytics-router.js';
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 describe('analytics router integration', () => {
   let app;
   let server;
   let baseUrl;
-  const tmpDb = path.join(os.tmpdir(), `mlt-analytics-test-${Date.now()}.sqlite`);
+  const tmpDb = path.join(os.tmpdir(), `mlt-analytics-test-${Date.now()}.json`);
 
   beforeAll(async () => {
     process.env.ANALYTICS_ENABLED = 'true';
     process.env.ANALYTICS_ADMIN_TOKEN = 'test-admin-token';
     process.env.ANALYTICS_IP_SALT = 'test-salt';
-    process.env.ANALYTICS_SQLITE_PATH = tmpDb;
+    process.env.ANALYTICS_FILE_PATH = tmpDb;
     delete process.env.DATABASE_URL;
+    delete process.env.ANALYTICS_SQLITE_PATH;
 
     await initAnalyticsDb();
     app = express();
@@ -63,8 +61,12 @@ describe('analytics router integration', () => {
     });
     expect(res.status).toBe(202);
 
-    const rows = await query(`SELECT name, path FROM analytics_events WHERE visitor_id = ?`, ['vis-1']);
-    expect(rows.rows.some((r) => r.name === 'page_view' && r.path === '/about')).toBe(true);
+    // Force persist
+    getFileStore().close();
+    const raw = JSON.parse(fs.readFileSync(tmpDb, 'utf8'));
+    expect(raw.analytics_events.some((r) => r.name === 'page_view' && r.path === '/about')).toBe(
+      true
+    );
   });
 
   it('rejects summary without admin token', async () => {
@@ -73,6 +75,11 @@ describe('analytics router integration', () => {
   });
 
   it('returns summary with admin token', async () => {
+    // Re-init file store after close in previous test
+    await closeAnalyticsDb();
+    process.env.ANALYTICS_FILE_PATH = tmpDb;
+    await initAnalyticsDb();
+
     const res = await fetch(`${baseUrl}/api/analytics/summary`, {
       headers: { Authorization: 'Bearer test-admin-token' },
     });

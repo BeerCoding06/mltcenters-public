@@ -4,3 +4,5 @@ dist
 mail/vendor
 server/data/analytics.sqlite
 server/data/analytics.sqlite-*
+server/data/analytics.json
+server/data/analytics.json.tmp

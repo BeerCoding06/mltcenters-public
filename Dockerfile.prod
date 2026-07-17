@@ -19,10 +19,9 @@ RUN npm run build
 
 FROM node:20-alpine AS runner
 WORKDIR /app
-# Use PHP 8.3 only — Alpine's `composer` package pulls PHP 8.4 without ext-ctype.
-# python3/make/g++ required to compile better-sqlite3 for analytics.
+# PHP 8.3 for PHPMailer — avoid Alpine `composer` package (pulls PHP 8.4 without ctype).
+# Analytics uses pure JS file store (or Postgres via DATABASE_URL) — no native sqlite build.
 RUN apk add --no-cache php83 php83-mbstring php83-openssl php83-ctype php83-phar curl \
-    python3 make g++ \
     && curl -sS https://getcomposer.org/installer | php83 -- --install-dir=/usr/local/bin --filename=composer \
     && ln -sf /usr/bin/php83 /usr/bin/php
 COPY mail/composer.json mail/composer.lock* ./mail/

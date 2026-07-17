@@ -1,14 +1,15 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { createFileStore } from './file-store.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 let mode = 'none';
-/** @type {import('better-sqlite3').Database | null} */
-let sqlite = null;
 /** @type {import('pg').Pool | null} */
 let pgPool = null;
+/** @type {ReturnType<typeof createFileStore> | null} */
+let fileStore = null;
 
 function isPostgresUrl(url) {
   return typeof url === 'string' && /^postgres(ql)?:\/\//i.test(url);
@@ -16,6 +17,14 @@ function isPostgresUrl(url) {
 
 export function getAnalyticsDbMode() {
   return mode;
+}
+
+export function getFileStore() {
+  return fileStore;
+}
+
+export function getPgPool() {
+  return pgPool;
 }
 
 export async function initAnalyticsDb() {
@@ -30,23 +39,23 @@ export async function initAnalyticsDb() {
     return { mode };
   }
 
-  const { default: Database } = await import('better-sqlite3');
-  const sqlitePath =
+  const filePath =
     process.env.ANALYTICS_SQLITE_PATH ||
-    path.join(__dirname, '../data/analytics.sqlite');
-  fs.mkdirSync(path.dirname(sqlitePath), { recursive: true });
-  sqlite = new Database(sqlitePath);
-  sqlite.pragma('journal_mode = WAL');
-  mode = 'sqlite';
-  migrateSqlite();
-  console.info(`[analytics] database: sqlite (${sqlitePath})`);
-  return { mode, sqlitePath };
-}
+    process.env.ANALYTICS_FILE_PATH ||
+    path.join(__dirname, '../data/analytics.json');
+  // migrate old sqlite path name → json beside it
+  if (filePath.endsWith('.sqlite')) {
+    const jsonPath = filePath.replace(/\.sqlite$/, '.json');
+    fileStore = createFileStore(jsonPath);
+    mode = 'file';
+    console.info(`[analytics] database: file (${jsonPath})`);
+    return { mode, filePath: jsonPath };
+  }
 
-function migrateSqlite() {
-  const schemaPath = path.join(__dirname, 'schema.sql');
-  const sql = fs.readFileSync(schemaPath, 'utf8');
-  sqlite.exec(sql);
+  fileStore = createFileStore(filePath);
+  mode = 'file';
+  console.info(`[analytics] database: file (${filePath})`);
+  return { mode, filePath };
 }
 
 async function migratePostgres() {
@@ -124,38 +133,35 @@ async function migratePostgres() {
 }
 
 /**
+ * Postgres helper — converts ? placeholders to $1,$2,...
  * @param {string} sql
  * @param {unknown[]} [params]
  */
 export async function query(sql, params = []) {
-  if (mode === 'postgres') {
-    let i = 0;
-    const text = sql.replace(/\?/g, () => `$${++i}`);
-    const result = await pgPool.query(text, params);
-    return { rows: result.rows, rowCount: result.rowCount };
+  if (mode !== 'postgres' || !pgPool) {
+    throw new Error('query() is only available in postgres mode');
   }
-
-  if (mode === 'sqlite') {
-    const trimmed = sql.trim().toLowerCase();
-    if (trimmed.startsWith('select') || trimmed.startsWith('with')) {
-      const rows = sqlite.prepare(sql).all(...params);
-      return { rows, rowCount: rows.length };
-    }
-    const info = sqlite.prepare(sql).run(...params);
-    return { rows: [], rowCount: info.changes, lastInsertRowid: info.lastInsertRowid };
-  }
-
-  throw new Error('Analytics database not initialized');
+  let i = 0;
+  const text = sql.replace(/\?/g, () => `$${++i}`);
+  const result = await pgPool.query(text, params);
+  return { rows: result.rows, rowCount: result.rowCount };
 }
 
 export async function closeAnalyticsDb() {
-  if (sqlite) {
-    sqlite.close();
-    sqlite = null;
+  if (fileStore) {
+    fileStore.close();
+    fileStore = null;
   }
   if (pgPool) {
     await pgPool.end();
     pgPool = null;
   }
   mode = 'none';
+}
+
+// Ensure data dir exists for file mode default path
+try {
+  fs.mkdirSync(path.join(__dirname, '../data'), { recursive: true });
+} catch {
+  /* ignore */
 }

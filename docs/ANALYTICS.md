@@ -26,9 +26,10 @@ Browser AnalyticsProvider / track()
 | Mode | When |
 |------|------|
 | PostgreSQL | `DATABASE_URL=postgresql://...` |
-| SQLite | default — `server/data/analytics.sqlite` (or `ANALYTICS_SQLITE_PATH`) |
+| File JSON | default — `server/data/analytics.json` (pure JS, no native modules) |
 
-Tables: `analytics_events`, `page_views`, `chat_sessions`, `assessment_results`, `runner_results`.
+Postgres tables: `analytics_events`, `page_views`, `chat_sessions`, `assessment_results`, `runner_results`.  
+File mode stores the same collections inside one JSON file.
 
 **Privacy:** raw IP is never stored. Only `ip_hash = sha256(salt:ip)`.
 
