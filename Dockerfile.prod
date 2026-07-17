@@ -27,8 +27,8 @@ RUN apk add --no-cache php83 php83-mbstring php83-openssl php83-ctype php83-phar
     && ln -sf /usr/bin/php83 /usr/bin/php
 COPY mail/composer.json mail/composer.lock* ./mail/
 RUN cd mail && php83 /usr/local/bin/composer install --no-dev --optimize-autoloader --no-interaction
-COPY server/package.json ./server/
-RUN cd server && npm install --omit=dev
+COPY server/package.json server/package-lock.json ./server/
+RUN cd server && npm ci --omit=dev
 COPY server ./server
 COPY mail ./mail
 COPY --from=frontend /app/dist ./dist

@@ -58,10 +58,12 @@ ANALYTICS_SQLITE_PATH=        # optional SQLite path
 
 ### Dokploy
 
-1. Set the env vars above on the app.
-2. Optional: attach a Postgres service and set `DATABASE_URL`.
-3. Redeploy.
-4. Visit `https://www.mltcenters.com/admin/analytics`.
+1. Set the env vars above as **runtime Environment** (not Build Args when possible).
+2. **Do not put spaces** in secrets that Dokploy may pass as `--build-arg` — e.g. Gmail App Password should be `abcdefghijklmnop` not `abcd efgh ijkl mnop`.
+3. Avoid spaces/`<>` in `EMAIL_FROM` if it is passed as a build-arg (prefer `MLTCENTERS <onboarding@resend.dev>` only as runtime env).
+4. Optional: attach a Postgres service and set `DATABASE_URL`.
+5. Redeploy.
+6. Visit `https://www.mltcenters.com/admin/analytics`.
 
 Geo uses `CF-IPCountry` / `X-Vercel-IP-Country` / `X-Country-Code` when present; otherwise `XX` (Bangkok timezone → `TH`).
 
