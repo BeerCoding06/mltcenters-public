@@ -61,6 +61,43 @@ function mail_env(string $key, ?string $default = null): ?string
     return $vars[$key] ?? $default;
 }
 
+function mail_normalize_password(?string $pass): ?string
+{
+    if ($pass === null || $pass === '') {
+        return null;
+    }
+
+    $pass = trim($pass);
+    if (
+        (str_starts_with($pass, '"') && str_ends_with($pass, '"')) ||
+        (str_starts_with($pass, "'") && str_ends_with($pass, "'"))
+    ) {
+        $pass = substr($pass, 1, -1);
+    }
+
+    // Gmail App Passwords are often copied with spaces (abcd efgh ijkl mnop).
+    return str_replace(' ', '', $pass);
+}
+
+function mail_assert_smtp_password(string $pass): void
+{
+    $lower = strtolower($pass);
+    if (
+        str_contains($lower, 'your-gmail') ||
+        str_contains($lower, 'app-password')
+    ) {
+        throw new MailException(
+            'MAIL_SMTP_PASS is not a valid Gmail App Password. Create one at Google Account → Security → App passwords.'
+        );
+    }
+
+    if (strlen($pass) < 16) {
+        throw new MailException(
+            'MAIL_SMTP_PASS must be a 16-character Gmail App Password (not your normal Gmail login password).'
+        );
+    }
+}
+
 function mail_parse_recipients(?string $value): array
 {
     $default = 'paradon.pokpingmaung@gmail.com,mltcenterth@gmail.com';
@@ -82,15 +119,17 @@ function mail_parse_recipients(?string $value): array
 /** @param array{replyTo?: string, subject: string, text: string, html: string} $data */
 function send_registration_mail(array $data): void
 {
-    $smtpUser = mail_env('MAIL_SMTP_USER') ?? mail_env('SMTP_USER');
-    $smtpPass = mail_env('MAIL_SMTP_PASS') ?? mail_env('SMTP_PASS');
+    $smtpUser = trim((string) (mail_env('MAIL_SMTP_USER') ?? mail_env('SMTP_USER') ?? ''));
+    $smtpPass = mail_normalize_password(mail_env('MAIL_SMTP_PASS') ?? mail_env('SMTP_PASS'));
     $recipients = mail_parse_recipients(mail_env('REGISTER_TO_EMAIL'));
     $fromEmail = mail_env('MAIL_SMTP_FROM', $smtpUser);
     $fromName = mail_env('MAIL_SMTP_FROM_NAME', 'MLTCENTERS Workshop');
 
-    if (!$smtpUser || !$smtpPass) {
+    if ($smtpUser === '' || !$smtpPass) {
         throw new MailException('MAIL_SMTP_USER and MAIL_SMTP_PASS must be set in .env');
     }
+
+    mail_assert_smtp_password($smtpPass);
 
     $mail = new PHPMailer(true);
     $mail->CharSet = PHPMailer::CHARSET_UTF8;
@@ -116,7 +155,18 @@ function send_registration_mail(array $data): void
     $mail->Body = (string) $data['html'];
     $mail->AltBody = (string) $data['text'];
 
-    $mail->send();
+    try {
+        $mail->send();
+    } catch (MailException $e) {
+        if (stripos($e->getMessage(), 'authenticate') !== false) {
+            throw new MailException(
+                'Gmail SMTP authentication failed. Use a 16-character App Password for '
+                . $smtpUser
+                . ' (Google Account → Security → 2-Step Verification → App passwords).'
+            );
+        }
+        throw $e;
+    }
 }
 
 /** @param array<string, mixed> $payload */

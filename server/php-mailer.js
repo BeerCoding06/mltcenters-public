@@ -32,6 +32,27 @@ export function isPhpMailerReady() {
   return existsSync(PHP_SCRIPT) && existsSync(PHP_VENDOR);
 }
 
+function mailChildEnv() {
+  const keys = [
+    'MAIL_SMTP_USER',
+    'MAIL_SMTP_PASS',
+    'MAIL_SMTP_FROM',
+    'MAIL_SMTP_FROM_NAME',
+    'MAIL_SMTP_HOST',
+    'MAIL_SMTP_PORT',
+    'REGISTER_TO_EMAIL',
+    'SMTP_USER',
+    'SMTP_PASS',
+  ];
+  const env = { ...process.env };
+  for (const key of keys) {
+    if (process.env[key] !== undefined) {
+      env[key] = process.env[key];
+    }
+  }
+  return env;
+}
+
 /**
  * @param {{ replyTo: string, subject: string, text: string, html: string }} payload
  */
@@ -40,7 +61,7 @@ export function sendViaPhpMailer(payload) {
 
   return new Promise((resolve, reject) => {
     const proc = spawn(phpBin, [PHP_SCRIPT], {
-      env: process.env,
+      env: mailChildEnv(),
       stdio: ['pipe', 'pipe', 'pipe'],
     });
 

@@ -242,7 +242,15 @@ app.post('/api/register', async (req, res) => {
     return res.json({ ok: true });
   } catch (err) {
     console.error('Registration email failed:', err);
-    return res.status(500).json({ error: err.message || 'Failed to send registration email.' });
+    const message = err.message || 'Failed to send registration email.';
+    const authFailed =
+      /authenticate|app password|gmail smtp authentication/i.test(message);
+    return res.status(500).json({
+      error: message,
+      errorTh: authFailed
+        ? 'Gmail ปฏิเสธการ login — ต้องใช้ App Password 16 หลัก (ไม่ใช่รหัสเข้า Gmail ปกติ) ที่ Google Account → Security → App passwords'
+        : 'ส่งอีเมลไม่สำเร็จ กรุณาลองใหม่อีกครั้ง',
+    });
   }
 });
 
