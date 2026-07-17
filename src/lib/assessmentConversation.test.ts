@@ -46,4 +46,23 @@ describe('assessmentConversation client builder', () => {
       'I play guitar.',
     ]);
   });
+
+  it('drops filler user messages and duplicate assistant replies from outgoing history', () => {
+    const messages: ChatMessage[] = [
+      { id: 'welcome', role: 'assistant', content: 'Hello!' },
+      { id: 'u1', role: 'user', content: 'I like dogs.' },
+      { id: 'a1', role: 'assistant', content: 'Dogs are great. Do you have one?' },
+      { id: 'u2', role: 'user', content: 'and' },
+      {
+        id: 'a2',
+        role: 'assistant',
+        content: 'Dogs are great. Do you have one?',
+      },
+    ];
+
+    const outgoing = buildOutgoingMessages(messages, 'I have a puppy.');
+    expect(outgoing.some((m) => m.content === 'and')).toBe(false);
+    expect(outgoing.filter((m) => m.role === 'assistant')).toHaveLength(1);
+    expect(outgoing[outgoing.length - 1].content).toBe('I have a puppy.');
+  });
 });

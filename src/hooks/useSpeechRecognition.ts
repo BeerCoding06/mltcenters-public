@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { normalizeTranscript, shouldIgnoreTranscript } from '@/lib/speechTranscript';
 
 export interface SpeechResultMeta {
   alternatives: string[];
@@ -6,8 +7,10 @@ export interface SpeechResultMeta {
 
 interface Options {
   lang?: string;
-  /** โหมดเด็กเล็ก: ฟังนานขึ้น รวมคำพูด ส่งหลายทางเลือกจากไมค์ */
+  /** Longer continuous listening + 1.5–2s silence endpoint before final emit */
   childMode?: boolean;
+  /** Silence before treating speech as finished (ms). Default: child 1800 / adult 1200 */
+  silenceMs?: number;
   onFinal?: (text: string, meta?: SpeechResultMeta) => void;
   onInterim?: (text: string) => void;
 }
@@ -24,6 +27,7 @@ function collectAlternatives(result: SpeechRecognitionResult): string[] {
 export function useSpeechRecognition({
   lang = 'en-US',
   childMode = false,
+  silenceMs,
   onFinal,
   onInterim,
 }: Options = {}) {
@@ -35,6 +39,8 @@ export function useSpeechRecognition({
   const bufferRef = useRef('');
   const altsRef = useRef<string[]>([]);
   const flushTimerRef = useRef<number | null>(null);
+  const lastFinalEmittedRef = useRef('');
+  const endpointMs = silenceMs ?? (childMode ? 1800 : 1200);
 
   useEffect(() => {
     onFinalRef.current = onFinal;
@@ -49,15 +55,37 @@ export function useSpeechRecognition({
   }, []);
 
   const flushBuffer = useCallback(() => {
-    const text = bufferRef.current.trim();
-    const alternatives = [...new Set(altsRef.current)];
+    const text = normalizeTranscript(bufferRef.current);
+    const alternatives = [...new Set(altsRef.current.map(normalizeTranscript).filter(Boolean))];
     bufferRef.current = '';
     altsRef.current = [];
-    if (text) onFinalRef.current?.(text, { alternatives });
+
+    // Never send interim leftovers or filler-only finals to the LLM pipeline
+    if (!text || shouldIgnoreTranscript(text)) {
+      if (import.meta.env.DEV && text) {
+        console.info('[speech] ignored filler/partial final transcript:', text);
+      }
+      return;
+    }
+
+    // Deduplicate identical consecutive finals (interrupted / double fire)
+    if (text.toLowerCase() === lastFinalEmittedRef.current.toLowerCase()) {
+      if (import.meta.env.DEV) {
+        console.info('[speech] ignored duplicate final transcript:', text);
+      }
+      return;
+    }
+
+    lastFinalEmittedRef.current = text;
+    if (import.meta.env.DEV) {
+      console.info('[speech] final transcript:', text, { alternatives });
+    }
+    onFinalRef.current?.(text, { alternatives });
   }, []);
 
   const scheduleFlush = useCallback(() => {
     clearFlushTimer();
+    // Endpoint detection: wait for silence after final chunks, then emit once
     flushTimerRef.current = window.setTimeout(() => {
       flushTimerRef.current = null;
       flushBuffer();
@@ -66,8 +94,8 @@ export function useSpeechRecognition({
       } catch {
         /* ignore */
       }
-    }, childMode ? 1400 : 600);
-  }, [childMode, clearFlushTimer, flushBuffer]);
+    }, endpointMs);
+  }, [clearFlushTimer, flushBuffer, endpointMs]);
 
   useEffect(() => {
     const SpeechRecognitionAPI =
@@ -77,6 +105,7 @@ export function useSpeechRecognition({
 
     const rec = new SpeechRecognitionAPI();
     rec.continuous = childMode;
+    // Keep interim for UI preview only — never flushed as final
     rec.interimResults = true;
     rec.lang = lang;
     rec.maxAlternatives = childMode ? 5 : 3;
@@ -88,27 +117,30 @@ export function useSpeechRecognition({
         const chunk = result[0]?.transcript || '';
         if (result.isFinal) {
           const parts = collectAlternatives(result);
-          bufferRef.current = `${bufferRef.current} ${chunk}`.trim();
+          bufferRef.current = normalizeTranscript(`${bufferRef.current} ${chunk}`);
           altsRef.current.push(...parts);
           scheduleFlush();
         } else {
+          // Interim only — never appended to the final buffer
           interim += chunk;
         }
       }
-      const preview = `${bufferRef.current} ${interim}`.trim();
+      const preview = normalizeTranscript(`${bufferRef.current} ${interim}`);
       if (preview) onInterimRef.current?.(preview);
-      else if (interim) onInterimRef.current?.(interim);
     };
 
     rec.onend = () => {
       setIsListening(false);
       clearFlushTimer();
-      if (childMode && bufferRef.current.trim()) flushBuffer();
+      // Only flush accumulated FINAL chunks after silence / stop
+      if (bufferRef.current.trim()) flushBuffer();
     };
     rec.onerror = () => {
       setIsListening(false);
       clearFlushTimer();
-      if (bufferRef.current.trim()) flushBuffer();
+      // Do not flush on error — avoids sending interrupted partials
+      bufferRef.current = '';
+      altsRef.current = [];
     };
 
     recognitionRef.current = rec;

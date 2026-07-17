@@ -10,6 +10,10 @@ import { useAssessment } from '@/hooks/useAssessment';
 import { useTextToSpeech } from '@/hooks/useTextToSpeech';
 import { useSpeechRecognition } from '@/hooks/useSpeechRecognition';
 import { ASSESSMENT_SCENARIOS } from '@/constants/assessmentScenarios';
+import {
+  filterSpeechAlternatives,
+  shouldIgnoreTranscript,
+} from '@/lib/speechTranscript';
 import type { AvatarState, AssessmentResult } from '@/types/assessment';
 
 const ASSESSMENT_STORAGE_KEY = 'mlt-assessment-result';
@@ -103,11 +107,17 @@ export default function EnglishAssessmentPage() {
   const onSpeechFinal = useCallback(
     (text: string, meta?: { alternatives: string[] }) => {
       const spoken = text.trim();
+      // Interim never reaches here; still hard-block filler finals
+      if (!spoken || shouldIgnoreTranscript(spoken)) {
+        setInput('');
+        pendingSpeechRef.current = null;
+        return;
+      }
       setInput(spoken);
-      if (voiceModeRef.current && conversationStarted && spoken) {
+      if (voiceModeRef.current && conversationStarted) {
         pendingSpeechRef.current = {
           text: spoken,
-          alternatives: meta?.alternatives ?? [],
+          alternatives: filterSpeechAlternatives(spoken, meta?.alternatives ?? []),
         };
       }
     },
@@ -116,6 +126,7 @@ export default function EnglishAssessmentPage() {
 
   const onSpeechInterim = useCallback(
     (text: string) => {
+      // Preview only — never queued for LLM
       setInput(text);
     },
     [setInput]
@@ -130,6 +141,7 @@ export default function EnglishAssessmentPage() {
   } = useSpeechRecognition({
     lang: 'en-US',
     childMode: true,
+    silenceMs: 1800,
     onFinal: onSpeechFinal,
     onInterim: onSpeechInterim,
   });
@@ -143,9 +155,13 @@ export default function EnglishAssessmentPage() {
 
   useEffect(() => {
     if (!pendingSpeechRef.current || isListening || isThinking || isSpeaking) return;
-    const { text, alternatives } = pendingSpeechRef.current;
+    const pending = pendingSpeechRef.current;
     pendingSpeechRef.current = null;
-    void handleSend(text, { raw: text, alternatives: alternatives.filter((a) => a.trim() !== text) });
+    if (shouldIgnoreTranscript(pending.text)) return;
+    void handleSend(pending.text, {
+      raw: pending.text,
+      alternatives: filterSpeechAlternatives(pending.text, pending.alternatives),
+    });
   }, [isListening, isThinking, isSpeaking, handleSend]);
 
   const startConversation = useCallback(() => {

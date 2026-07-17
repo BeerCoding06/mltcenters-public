@@ -4,7 +4,13 @@ import {
   type AssessmentScenarioId,
   welcomeForScenario,
 } from '@/constants/assessmentScenarios';
-import { buildOutgoingMessages } from '@/lib/assessmentConversation';
+import { buildOutgoingMessages, logClientAssessDebug } from '@/lib/assessmentConversation';
+import {
+  CONTINUE_PROMPT,
+  filterSpeechAlternatives,
+  looksIncompleteUtterance,
+  shouldIgnoreTranscript,
+} from '@/lib/speechTranscript';
 
 const API_BASE = '/api';
 const XP_PER_ANSWER = 20;
@@ -68,10 +74,18 @@ export function useAssessment(onComplete: (result: AssessmentResult) => void) {
   const [progress, setProgress] = useState(0);
   const maxTurns = 6;
   const abortRef = useRef<AbortController | null>(null);
+  const inFlightKeyRef = useRef<string | null>(null);
+  const lastUserSentRef = useRef('');
+  const lastAssistantReplyRef = useRef('');
   const messagesRef = useRef<ChatMessage[]>(messages);
   messagesRef.current = messages;
 
   const selectScenario = useCallback((id: AssessmentScenarioId) => {
+    abortRef.current?.abort();
+    abortRef.current = null;
+    inFlightKeyRef.current = null;
+    lastUserSentRef.current = '';
+    lastAssistantReplyRef.current = '';
     setScenarioId(id);
     setMessages([
       {
@@ -87,6 +101,21 @@ export function useAssessment(onComplete: (result: AssessmentResult) => void) {
     setProgress(0);
   }, []);
 
+  const appendLocalAssistant = useCallback((reply: string) => {
+    if (lastAssistantReplyRef.current === reply) return null;
+    lastAssistantReplyRef.current = reply;
+    const assistantId = crypto.randomUUID();
+    setMessages((prev) => [
+      ...prev,
+      {
+        id: assistantId,
+        role: 'assistant',
+        content: reply,
+      },
+    ]);
+    return { reply, scores: null, level: null, messageId: assistantId };
+  }, []);
+
   const sendToAPI = useCallback(async (
     userText: string,
     speechContext?: { raw: string; alternatives: string[] }
@@ -94,8 +123,54 @@ export function useAssessment(onComplete: (result: AssessmentResult) => void) {
     const trimmed = userText.trim();
     if (!trimmed) return null;
 
+    // Ignore filler-only / isolated conjunctions — never hit the LLM
+    if (shouldIgnoreTranscript(trimmed)) {
+      logClientAssessDebug('ignored filler transcript', trimmed);
+      setInput('');
+      return null;
+    }
+
+    // Incomplete utterances → local continue prompt (no guessing)
+    if (looksIncompleteUtterance(trimmed)) {
+      logClientAssessDebug('incomplete transcript → continue prompt', trimmed);
+      if (lastUserSentRef.current === trimmed && lastAssistantReplyRef.current === CONTINUE_PROMPT) {
+        setInput('');
+        return null;
+      }
+      lastUserSentRef.current = trimmed;
+      setMessages((prev) => {
+        const last = prev[prev.length - 1];
+        if (last?.role === 'user' && last.content.trim() === trimmed) return prev;
+        return [...prev, { id: crypto.randomUUID(), role: 'user', content: trimmed }];
+      });
+      setInput('');
+      return appendLocalAssistant(CONTINUE_PROMPT);
+    }
+
+    // Prevent duplicate API requests for the same user text while in flight
+    const requestKey = trimmed.toLowerCase();
+    if (inFlightKeyRef.current === requestKey) {
+      logClientAssessDebug('blocked duplicate in-flight request', trimmed);
+      return null;
+    }
+    if (lastUserSentRef.current === trimmed && isThinking) {
+      return null;
+    }
+
+    abortRef.current?.abort();
+    const controller = new AbortController();
+    abortRef.current = controller;
+    inFlightKeyRef.current = requestKey;
+    lastUserSentRef.current = trimmed;
+
     const historyForApi = buildOutgoingMessages(messagesRef.current, trimmed);
-    const newMessages = historyForApi;
+    const alts = filterSpeechAlternatives(
+      speechContext?.raw || trimmed,
+      speechContext?.alternatives || []
+    );
+
+    logClientAssessDebug('final transcript', trimmed);
+    logClientAssessDebug('outgoing history', historyForApi);
 
     setMessages((prev) => {
       const last = prev[prev.length - 1];
@@ -104,37 +179,50 @@ export function useAssessment(onComplete: (result: AssessmentResult) => void) {
     });
     setInput('');
     setIsThinking(true);
-    abortRef.current = new AbortController();
+
     try {
       const res = await fetch(`${API_BASE}/assess`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           messages: historyForApi,
-          speech_context: speechContext,
+          speech_context: speechContext
+            ? { raw: speechContext.raw || trimmed, alternatives: alts }
+            : undefined,
           scenario: scenarioId,
           greeting_already_spoken: welcomeForScenario(scenarioId),
         }),
-        signal: abortRef.current.signal,
+        signal: controller.signal,
       });
       const data: AIAssessmentResponse = await res.json();
       if (!res.ok) throw new Error((data as { error?: string }).error || 'Request failed');
 
-      const reply = data.reply || 'Good job!';
+      let reply = data.reply || CONTINUE_PROMPT;
+      if (lastAssistantReplyRef.current && reply === lastAssistantReplyRef.current) {
+        reply = CONTINUE_PROMPT;
+      }
+      lastAssistantReplyRef.current = reply;
+
       const scores = data.scores;
       const level = data.level || null;
 
+      logClientAssessDebug('final response', reply);
+
       const assistantId = crypto.randomUUID();
-      setMessages((prev) => [
-        ...prev,
-        {
-          id: assistantId,
-          role: 'assistant',
-          content: reply,
-          scores: scores || undefined,
-          level: level || undefined,
-        },
-      ]);
+      setMessages((prev) => {
+        const last = prev[prev.length - 1];
+        if (last?.role === 'assistant' && last.content === reply) return prev;
+        return [
+          ...prev,
+          {
+            id: assistantId,
+            role: 'assistant',
+            content: reply,
+            scores: scores || undefined,
+            level: level || undefined,
+          },
+        ];
+      });
 
       const addedXP = scores
         ? Math.round(
@@ -149,8 +237,8 @@ export function useAssessment(onComplete: (result: AssessmentResult) => void) {
       }
       const nextScores = scores ? [...scoresHistory, scores] : scoresHistory;
       const nextCount = scores ? answerCount + 1 : answerCount;
-      setProgress(Math.min((newMessages.length / 2) / maxTurns, 1));
-      const turnsSoFar = newMessages.filter((m) => m.role === 'user').length;
+      setProgress(Math.min((historyForApi.length / 2) / maxTurns, 1));
+      const turnsSoFar = historyForApi.filter((m) => m.role === 'user').length;
       if (turnsSoFar >= maxTurns || /goodbye|well done|great job|see you/i.test(reply)) {
         const result = buildResult(nextScores, xp + addedXP, nextCount);
         onComplete(result);
@@ -158,21 +246,17 @@ export function useAssessment(onComplete: (result: AssessmentResult) => void) {
       return { reply, scores, level, messageId: assistantId };
     } catch (e) {
       if ((e as Error).name !== 'AbortError') {
-        setMessages((prev) => [
-          ...prev,
-          {
-            id: crypto.randomUUID(),
-            role: 'assistant',
-            content: "Oops, something went wrong. No worries—just try again or type your answer! 😊",
-          },
-        ]);
+        return appendLocalAssistant(
+          "Oops, something went wrong. No worries—just try again or type your answer!"
+        );
       }
       return null;
     } finally {
+      if (abortRef.current === controller) abortRef.current = null;
+      if (inFlightKeyRef.current === requestKey) inFlightKeyRef.current = null;
       setIsThinking(false);
-      abortRef.current = null;
     }
-  }, [answerCount, scoresHistory, xp, maxTurns, onComplete, scenarioId]);
+  }, [answerCount, scoresHistory, xp, maxTurns, onComplete, scenarioId, isThinking, appendLocalAssistant]);
 
   const completeWithCurrent = useCallback(() => {
     const result = buildResult(scoresHistory, xp, answerCount);

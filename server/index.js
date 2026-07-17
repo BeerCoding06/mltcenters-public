@@ -23,9 +23,12 @@ import {
   buildAssessApiMessages,
   buildRewriteInstruction,
   getPreviousAssistantReply,
+  handleIncompleteUserMessage,
   isSubstantiallySimilar,
+  logAssessDebug,
   logAssessPrompt,
   parseAssessResponse,
+  postProcessReply,
 } from './conversation.js';
 import {
   getMetaForPath,
@@ -258,10 +261,10 @@ async function createAssessCompletion(openaiClient, apiMessages, options = {}) {
   return openaiClient.chat.completions.create({
     model: AI_MODEL,
     messages: apiMessages,
-    max_tokens: 500,
-    temperature: options.temperature ?? 0.7,
-    frequency_penalty: 0.45,
-    presence_penalty: 0.35,
+    max_tokens: 220,
+    temperature: options.temperature ?? 0.65,
+    frequency_penalty: 0.55,
+    presence_penalty: 0.4,
   });
 }
 
@@ -277,20 +280,37 @@ app.post('/api/assess', async (req, res) => {
   }
 
   try {
-    const { apiMessages, history } = buildAssessApiMessages({
+    const { apiMessages, history, latestUser } = buildAssessApiMessages({
       messages,
       scenario,
       speechContext: speech_context,
       greetingAlreadySpoken: greeting_already_spoken,
     });
 
+    logAssessDebug('final transcript', speech_context?.raw || latestUser);
+    logAssessDebug('retrieved conversation history', history);
+
+    const incomplete = handleIncompleteUserMessage(latestUser);
+    if (incomplete.handled) {
+      logAssessDebug(
+        incomplete.ignore ? 'ignored filler transcript' : 'incomplete transcript → continue prompt',
+        latestUser
+      );
+      return res.json({
+        reply: incomplete.reply,
+        ignored: Boolean(incomplete.ignore),
+        scores: null,
+        level: null,
+      });
+    }
+
     logAssessPrompt(apiMessages);
 
     let completion = await createAssessCompletion(openai, apiMessages);
     let parsed = parseAssessResponse(completion.choices[0]?.message?.content?.trim() || '');
 
-    const latestUser = [...history].reverse().find((m) => m.role === 'user')?.content || '';
     const priorAssistant = getPreviousAssistantReply(history);
+    parsed.reply = postProcessReply(parsed.reply, priorAssistant);
 
     if (priorAssistant && isSubstantiallySimilar(parsed.reply, priorAssistant)) {
       const retryMessages = [
@@ -300,8 +320,10 @@ app.post('/api/assess', async (req, res) => {
       logAssessPrompt(retryMessages);
       completion = await createAssessCompletion(openai, retryMessages, { temperature: 0.85 });
       parsed = parseAssessResponse(completion.choices[0]?.message?.content?.trim() || '');
+      parsed.reply = postProcessReply(parsed.reply, priorAssistant);
     }
 
+    logAssessDebug('final response', parsed.reply);
     return res.json(parsed);
   } catch (err) {
     console.error(err);
