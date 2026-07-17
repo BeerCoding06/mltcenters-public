@@ -9,6 +9,28 @@ import {
   validateEventBatch,
 } from './analytics-service.js';
 
+import { getAdminCredentials } from './analytics-controller.js';
+
+describe('admin login credentials', () => {
+  it('defaults username to admin and uses ADMIN_PASS', () => {
+    const prevUser = process.env.ANALYTICS_ADMIN_USER;
+    const prevPass = process.env.ANALYTICS_ADMIN_PASS;
+    const prevToken = process.env.ANALYTICS_ADMIN_TOKEN;
+    process.env.ANALYTICS_ADMIN_USER = 'boss';
+    process.env.ANALYTICS_ADMIN_PASS = 'secret-pass';
+    delete process.env.ANALYTICS_ADMIN_TOKEN;
+
+    const creds = getAdminCredentials();
+    expect(creds.username).toBe('boss');
+    expect(creds.password).toBe('secret-pass');
+    expect(creds.token).toBe('secret-pass');
+
+    process.env.ANALYTICS_ADMIN_USER = prevUser;
+    process.env.ANALYTICS_ADMIN_PASS = prevPass;
+    process.env.ANALYTICS_ADMIN_TOKEN = prevToken;
+  });
+});
+
 describe('analytics-service', () => {
   it('hashes IP without returning raw value', () => {
     const hashed = hashIp('1.2.3.4', 'salt');

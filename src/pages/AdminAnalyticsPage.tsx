@@ -29,6 +29,7 @@ type Summary = {
 };
 
 const TOKEN_KEY = 'mlt-analytics-admin-token';
+const USER_KEY = 'mlt-analytics-admin-user';
 
 function formatDuration(ms: number) {
   if (!ms) return '0s';
@@ -48,7 +49,9 @@ function StatCard({ label, value }: { label: string; value: string | number }) {
 
 export default function AdminAnalyticsPage() {
   const [token, setToken] = useState(() => sessionStorage.getItem(TOKEN_KEY) || '');
-  const [inputToken, setInputToken] = useState('');
+  const [adminUser, setAdminUser] = useState(() => sessionStorage.getItem(USER_KEY) || '');
+  const [username, setUsername] = useState('admin');
+  const [password, setPassword] = useState('');
   const [summary, setSummary] = useState<Summary | null>(null);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -69,10 +72,42 @@ export default function AdminAnalyticsPage() {
     } catch (e) {
       setSummary(null);
       setError(e instanceof Error ? e.message : 'Failed to load');
+      sessionStorage.removeItem(TOKEN_KEY);
+      sessionStorage.removeItem(USER_KEY);
+      setToken('');
+      setAdminUser('');
     } finally {
       setLoading(false);
     }
   }, []);
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+    try {
+      const res = await fetch('/api/analytics/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          username: username.trim(),
+          password,
+        }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || 'Login failed');
+      const nextToken = String(data.token || '');
+      if (!nextToken) throw new Error('No session token returned');
+      sessionStorage.setItem(TOKEN_KEY, nextToken);
+      sessionStorage.setItem(USER_KEY, data.username || username.trim());
+      setAdminUser(data.username || username.trim());
+      setPassword('');
+      await load(nextToken);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Login failed');
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     if (token) void load(token);
@@ -88,29 +123,49 @@ export default function AdminAnalyticsPage() {
 
   if (!token) {
     return (
-      <div className="min-h-screen flex items-center justify-center px-4 py-16">
-        <form
-          className="w-full max-w-md pastel-card p-8 space-y-4"
-          onSubmit={(e) => {
-            e.preventDefault();
-            void load(inputToken.trim());
-          }}
-        >
-          <h1 className="text-2xl font-bold heading-gradient">Analytics Admin</h1>
-          <p className="text-sm text-muted-foreground">
-            Enter <code className="text-xs">ANALYTICS_ADMIN_TOKEN</code> from your environment.
-          </p>
-          <input
-            type="password"
-            value={inputToken}
-            onChange={(e) => setInputToken(e.target.value)}
-            className="w-full px-4 py-3 rounded-xl bg-muted border border-border"
-            placeholder="Admin token"
-            autoComplete="current-password"
-          />
+      <div className="min-h-screen flex items-center justify-center px-4 py-16 bg-gradient-to-br from-primary/10 via-background to-secondary/10">
+        <form className="w-full max-w-md pastel-card p-8 space-y-4" onSubmit={handleLogin}>
+          <div className="text-center space-y-1 mb-2">
+            <h1 className="text-2xl font-bold heading-gradient">Admin Login</h1>
+            <p className="text-sm text-muted-foreground">MLTCENTERS Analytics</p>
+          </div>
+
+          <div>
+            <label htmlFor="admin-user" className="block text-sm font-medium mb-1.5">
+              Username
+            </label>
+            <input
+              id="admin-user"
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              className="w-full px-4 py-3 rounded-xl bg-muted border border-border"
+              placeholder="admin"
+              autoComplete="username"
+              required
+            />
+          </div>
+
+          <div>
+            <label htmlFor="admin-pass" className="block text-sm font-medium mb-1.5">
+              Password
+            </label>
+            <input
+              id="admin-pass"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full px-4 py-3 rounded-xl bg-muted border border-border"
+              placeholder="••••••••"
+              autoComplete="current-password"
+              required
+            />
+          </div>
+
           {error && <p className="text-sm text-destructive">{error}</p>}
+
           <button type="submit" className="w-full gradient-btn py-3" disabled={loading}>
-            {loading ? 'Checking…' : 'Open dashboard'}
+            {loading ? 'Signing in…' : 'Sign in'}
           </button>
         </form>
       </div>
@@ -129,7 +184,9 @@ export default function AdminAnalyticsPage() {
         <div className="flex flex-wrap items-end justify-between gap-3">
           <div>
             <h1 className="text-3xl font-bold heading-gradient">Analytics</h1>
-            <p className="text-sm text-muted-foreground">MLTCENTERS first-party analytics</p>
+            <p className="text-sm text-muted-foreground">
+              Signed in as <span className="font-medium text-foreground">{adminUser || 'admin'}</span>
+            </p>
           </div>
           <div className="flex gap-2">
             <button type="button" className="text-sm underline" onClick={() => void load(token)}>
@@ -140,7 +197,9 @@ export default function AdminAnalyticsPage() {
               className="text-sm underline text-muted-foreground"
               onClick={() => {
                 sessionStorage.removeItem(TOKEN_KEY);
+                sessionStorage.removeItem(USER_KEY);
                 setToken('');
+                setAdminUser('');
                 setSummary(null);
               }}
             >
@@ -195,10 +254,7 @@ export default function AdminAnalyticsPage() {
             </div>
 
             <div className="grid md:grid-cols-3 gap-4">
-              <StatCard
-                label="Assessment completed"
-                value={summary.assessment.completed || 0}
-              />
+              <StatCard label="Assessment completed" value={summary.assessment.completed || 0} />
               <StatCard label="Chat sessions" value={summary.chat.sessions} />
               <StatCard label="Runner finished" value={summary.runner.finished || 0} />
               <StatCard label="Assessment started" value={summary.assessment.started || 0} />

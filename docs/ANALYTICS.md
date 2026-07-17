@@ -43,7 +43,7 @@ File mode stores the same collections inside one JSON file.
 
 ## Dashboard
 
-Open `/admin/analytics` and paste `ANALYTICS_ADMIN_TOKEN`.
+Open `/admin/analytics` and sign in with admin username/password.
 
 Shows visitors, sessions, bounce rate, top pages/browsers/countries/devices, assessment/chat/runner stats, and a 7-day chart.
 
@@ -51,11 +51,15 @@ Shows visitors, sessions, bounce rate, top pages/browsers/countries/devices, ass
 
 ```env
 ANALYTICS_ENABLED=true
-ANALYTICS_ADMIN_TOKEN=long-random-secret
+ANALYTICS_ADMIN_USER=admin
+ANALYTICS_ADMIN_PASS=your-password
+ANALYTICS_ADMIN_TOKEN=long-random-secret   # optional; defaults to ADMIN_PASS
 ANALYTICS_IP_SALT=another-long-random-secret
 DATABASE_URL=                 # optional Postgres
-ANALYTICS_SQLITE_PATH=        # optional SQLite path
+ANALYTICS_FILE_PATH=          # optional JSON file path
 ```
+
+Login API: `POST /api/analytics/login` with `{ "username", "password" }` → `{ token }`.
 
 ### Dokploy
 
