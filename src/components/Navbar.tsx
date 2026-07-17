@@ -4,6 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Globe, Bot, Gamepad2 } from 'lucide-react';
 
 const BRAND_LOGO = '/logo-nav.png';
+const KRUMAM_AVATAR = '/assets/img-design-about/krumam.jpg';
 
 const Navbar = () => {
   const { lang, setLang, t } = useI18n();
@@ -37,20 +38,37 @@ const Navbar = () => {
   return (
     <nav className="sticky top-0 z-50 bg-card/80 backdrop-blur-lg border-b border-border/50 shadow-sm">
       <div className="container mx-auto flex items-center justify-between px-4 py-3 lg:px-6">
-        <Link to="/" className="flex items-center gap-2">
-          <div className="w-9 h-9 flex items-center justify-center text-lg bg-[#29303d] rounded-[5px]">
-            <img
-              src={BRAND_LOGO}
-              alt=""
-              width={36}
-              height={36}
-              className="w-full h-full object-contain"
-            />
-          </div>
-              <span className="text-lg font-bold text-foreground">
-                MLT<span className="text-[#0f4c6a]">CENTERS</span>
-              </span>
-        </Link>
+        <div className="flex items-center gap-4 sm:gap-6">
+          <Link to="/" className="flex items-center gap-2 shrink-0">
+            <div className="w-9 h-9 flex items-center justify-center text-lg bg-[#29303d] rounded-[5px]">
+              <img
+                src={BRAND_LOGO}
+                alt={t.imageAlt.brandLogo[lang]}
+                width={36}
+                height={36}
+                className="w-full h-full object-contain"
+              />
+            </div>
+            <span className="text-lg font-bold text-foreground">
+              MLT<span className="text-[#0f4c6a]">CENTERS</span>
+            </span>
+          </Link>
+
+          <Link to="/" className="flex items-center gap-2 shrink-0">
+            <div className="w-9 h-9 rounded-full overflow-hidden ring-2 ring-[#0f4c6a]/20 shrink-0">
+              <img
+                src={KRUMAM_AVATAR}
+                alt={t.imageAlt.krumamClub[lang]}
+                width={36}
+                height={36}
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <span className="text-lg font-bold text-foreground">
+              krumam <span className="text-[#0f4c6a]">club</span>
+            </span>
+          </Link>
+        </div>
 
         {/* Desktop */}
         <div className="hidden lg:flex items-center gap-1">
@@ -58,22 +76,23 @@ const Navbar = () => {
             const Icon = l.icon ?? null;
             if (l.external) {
               return (
-                <a key={l.path} href={l.path} className={linkClass(l.path, true)} rel="noopener noreferrer">
+                <a
+                  key={l.path}
+                  href={l.path}
+                  className={linkClass(l.path, true)}
+                  rel="noopener noreferrer"
+                >
                   {Icon && <Icon size={16} className="shrink-0" />}
                   {l.label}
                 </a>
               );
             }
             return (
-            <Link
-              key={l.path}
-              to={l.path}
-              className={linkClass(l.path)}
-            >
-              {Icon && <Icon size={16} className="shrink-0" />}
-              {l.label}
-            </Link>
-          );
+              <Link key={l.path} to={l.path} className={linkClass(l.path)}>
+                {Icon && <Icon size={16} className="shrink-0" />}
+                {l.label}
+              </Link>
+            );
           })}
         </div>
 
@@ -81,7 +100,9 @@ const Navbar = () => {
           <button
             type="button"
             onClick={() => setLang(lang === "en" ? "th" : "en")}
-            aria-label={lang === "en" ? "เปลี่ยนเป็นภาษาไทย" : "Switch to English"}
+            aria-label={
+              lang === "en" ? "เปลี่ยนเป็นภาษาไทย" : "Switch to English"
+            }
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-muted text-sm font-semibold text-foreground hover:bg-primary/10 hover:text-primary transition-colors"
           >
             <Globe size={15} />
@@ -91,7 +112,15 @@ const Navbar = () => {
           <button
             type="button"
             onClick={() => setOpen(!open)}
-            aria-label={open ? (lang === "en" ? "Close menu" : "ปิดเมนู") : (lang === "en" ? "Open menu" : "เปิดเมนู")}
+            aria-label={
+              open
+                ? lang === "en"
+                  ? "Close menu"
+                  : "ปิดเมนู"
+                : lang === "en"
+                  ? "Open menu"
+                  : "เปิดเมนู"
+            }
             aria-expanded={open}
             className="lg:hidden text-foreground p-1"
           >

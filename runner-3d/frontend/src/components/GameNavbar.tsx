@@ -48,7 +48,7 @@ export function GameNavbar() {
           <div className="w-9 h-9 flex items-center justify-center text-lg bg-[#29303d] rounded-[5px]">
             <img
               src={`${import.meta.env.BASE_URL}logo.png`}
-              alt="MLTCENTERS"
+              alt={t.brandLogo[lang]}
               className="w-full h-full object-contain"
             />
           </div>

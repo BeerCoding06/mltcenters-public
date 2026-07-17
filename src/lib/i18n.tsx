@@ -149,7 +149,10 @@ export const translations = {
       en: "Scan our LINE QR or reach us through any channel below.",
       th: "สแกน QR LINE เพื่อติดต่อทันที หรือเลือกช่องทางอื่นด้านล่าง",
     },
-    scanLine: { en: "Scan to add LINE", th: "สแกนเพื่อเพิ่มเพื่อน LINE" },
+    scanLine: {
+      en: "Scan LINE QR to inquire about English workshops and registration",
+      th: "สแกน QR LINE สอบถามเวิร์กช็อปภาษาอังกฤษและลงทะเบียน",
+    },
     lineLive: { en: "LINE Official QR", th: "QR LINE ทางการ" },
     lineHint: {
       en: "Fast replies for workshop & registration inquiries",
@@ -205,6 +208,10 @@ export const translations = {
           en: "Practice with real AI tools in a supportive environment.",
           th: "ฝึกกับเครื่องมือ AI จริงในบรรยากาศที่เป็นกันเอง",
         },
+        alt: {
+          en: "Students learning English with laptops and digital tools in an MLTCENTERS classroom",
+          th: "นักเรียนเรียนภาษาอังกฤษด้วยแล็ปท็อปและเครื่องมือดิจิทัลในชั้นเรียน MLTCENTERS",
+        },
       },
       {
         title: { en: "Hands-on practice", th: "ลงมือทำจริง" },
@@ -212,12 +219,20 @@ export const translations = {
           en: "No boring lectures — learn by doing.",
           th: "ไม่มีแค่บรรยาย เรียนรู้จากการลงมือทำ",
         },
+        alt: {
+          en: "Hands-on English activity — students arranging word cards to build sentences together",
+          th: "กิจกรรมภาษาอังกฤษแบบลงมือทำ — นักเรียนจัดคำศัพท์สร้างประโยคร่วมกัน",
+        },
       },
       {
         title: { en: "Future-ready skills", th: "พัฒนาทักษะแห่งอนาคต" },
         desc: {
           en: "Build skills that matter for tomorrow.",
           th: "พัฒนาทักษะที่สำคัญสำหรับอนาคต",
+        },
+        alt: {
+          en: "English presentation practice — instructor guiding students to speak with confidence",
+          th: "ฝึกนำเสนอภาษาอังกฤษ — ครูแนะนำนักเรียนให้พูดอย่างมั่นใจ",
         },
       },
     ],
@@ -633,8 +648,8 @@ export const translations = {
       th: "ติดต่อ MLTCENTERS ได้ทุกช่องทาง ยินดีให้คำปรึกษาเรื่องเวิร์กช็อปและการลงทะเบียน",
     },
     posterAlt: {
-      en: "MLTCENTERS — Modern Language Training Center",
-      th: "MLTCENTERS — Modern Language Training Center",
+      en: "MLTCENTERS poster — Modern Language Training Center for English and language learning",
+      th: "โปสเตอร์ MLTCENTERS — ศูนย์ฝึกอบรมภาษาสมัยใหม่ เรียนภาษาอังกฤษและภาษาอื่นๆ",
     },
     posterCaption: {
       en: "Modern Language Training Center",
@@ -650,6 +665,28 @@ export const translations = {
     mapTitle: { en: "Find Us", th: "แผนที่" },
     mapUrl: "https://goo.gl/maps/FkR7BQL2cycZTmiy6?g_st=al",
     openInMaps: { en: "Open in Google Maps", th: "เปิดใน Google Maps" },
+  },
+  imageAlt: {
+    brandLogo: {
+      en: "MLTCENTERS logo — modern English language learning and technology workshop",
+      th: "โลโก้ MLTCENTERS — เวิร์กช็อปเรียนภาษาอังกฤษและเทคโนโลยีสมัยใหม่",
+    },
+    hero: {
+      en: "Students learning English through AI tools and interactive technology at MLTCENTERS workshop",
+      th: "นักเรียนเรียนภาษาอังกฤษด้วย AI และเทคโนโลยีในเวิร์กช็อป MLTCENTERS",
+    },
+    aboutWorkshop: {
+      en: "English workshop classroom — students practicing language skills with modern technology",
+      th: "ห้องเรียนเวิร์กช็อปภาษาอังกฤษ — นักเรียนฝึกทักษะภาษาด้วยเทคโนโลยีสมัยใหม่",
+    },
+    krumamClub: {
+      en: "Kru Mam — English language teacher and founder of krumam club at MLTCENTERS",
+      th: "ครูแมม — ครูสอนภาษาอังกฤษและผู้ก่อตั้ง krumam club ที่ MLTCENTERS",
+    },
+    krumamClubBanner: {
+      en: "Kru Mam Club banner — English language learning community for students overcoming their fear of speaking",
+      th: "แบนเนอร์ Kru Mam Club — ชมรมเรียนภาษาอังกฤษสำหรับผู้ที่อยากกล้าพูดภาษาอังกฤษ",
+    },
   },
   footer: {
     rights: {

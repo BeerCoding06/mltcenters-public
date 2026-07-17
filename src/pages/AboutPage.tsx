@@ -3,11 +3,6 @@ import { motion } from 'framer-motion';
 import { PastelImage } from '@/components/PastelImage';
 import aboutWorkshopImg from '@/assets/254ewr.jpg';
 
-const aboutImgAlt = {
-  en: 'Workshop activity: students learning with technology',
-  th: 'บรรยากาศกิจกรรมอบรม: นักเรียนเรียนรู้ด้วยเทคโนโลยีสมัยใหม่',
-};
-
 const AboutPage = () => {
   const { lang, t } = useI18n();
 
@@ -37,7 +32,7 @@ const AboutPage = () => {
         >
           <PastelImage
             src={aboutWorkshopImg}
-            alt={aboutImgAlt[lang]}
+            alt={t.imageAlt.aboutWorkshop[lang]}
             overlay
             aspectRatio="video"
             className="object-top"

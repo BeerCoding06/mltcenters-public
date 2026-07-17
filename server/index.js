@@ -17,6 +17,14 @@ import nodemailer from 'nodemailer';
 import compression from 'compression';
 import { createRunnerRouter } from './runner-api.js';
 import {
+  buildAssessApiMessages,
+  buildRewriteInstruction,
+  getPreviousAssistantReply,
+  isSubstantiallySimilar,
+  logAssessPrompt,
+  parseAssessResponse,
+} from './conversation.js';
+import {
   getMetaForPath,
   injectSeoMeta,
   isCrawler,
@@ -214,54 +222,16 @@ app.post('/api/register', async (req, res) => {
   }
 });
 
-const SYSTEM_PROMPT = `You are a warm, gentle English friend for young Thai children.
-
-Rules for the "reply" field (read aloud slowly by text-to-speech):
-- Use simple English only in "reply" — never use Thai in the reply
-- Younger kids: very short (3-6 words per sentence). Older kids: still simple, a bit longer OK
-- Speak like a kind teacher: slow, clear, happy, encouraging
-- Topics: colors, animals, family, food, numbers, school, hobbies, friends, games, daily life
-- Ask ONE easy question per turn
-- Never test hard grammar. Never mention JSON or scores in the reply
-- Use punctuation that creates pauses: commas and periods between short phrases
-
-Unclear speech (IMPORTANT):
-- The user message is the child's EXACT spoken words from the microphone — never rewrite or replace their words.
-- You may receive alternative speech-recognition guesses in a separate note. Use those ONLY to understand unclear parts.
-- Respond accurately to what the child said or clearly meant. Do not substitute different words for what they said.
-- If audio was unclear, respond to the most likely meaning — but stay faithful to their message (e.g. if they said "ba", talk about "ba" or gently ask if they meant "ball").
-- Never say harshly that you did not understand — gently clarify or offer two simple choices.
-
-After each user message, respond with ONLY valid JSON (no markdown):
-{"reply": "...", "scores": {"grammar": 0-100, "vocabulary": 0-100, "fluency": 0-100, "coherence": 0-100}, "level": "Beginner"|"Intermediate"|"Advanced"}
-
-Scores: be generous with young kids; adjust up slightly if they speak in full sentences.
-Include scores on every turn after the user's first message. On the very first assistant turn (greeting only), scores may be null.`;
-
-const SCENARIO_PROMPTS = {
-  free_talk:
-    'Situation: free talk. Chat naturally about hobbies, favorites, and daily life. Stay in character as a warm friend.',
-  school:
-    'Situation: at school. Role-play a kind teacher. Talk about class, friends, subjects, recess, and lunch. Use simple school words.',
-  restaurant:
-    'Situation: at a restaurant. Role-play ordering food and drinks. Be polite. Use menu words like soup, rice, juice, please, thank you.',
-  park:
-    'Situation: at the park. Role-play outdoor fun — swings, running, birds, sunshine. Keep it playful and active.',
-  shopping:
-    'Situation: at a shop. Role-play buying things. Ask what they want, colors, and simple prices.',
-  home:
-    'Situation: at home. Role-play family time — meals, pets, toys, bedtime, helping mom or dad.',
-  making_friends:
-    'Situation: meeting a new friend. Practice greetings, sharing, and kind getting-to-know-you questions.',
-  doctor:
-    'Situation: at the doctor. Role-play gently. Ask how they feel. Use simple body words. Stay calm and reassuring — never scary.',
-  hotel_booking:
-    'Situation: hotel front desk. Role-play booking a room. Use simple words: room, night, name, key, check-in. Be polite like a hotel receptionist.',
-  getting_lost:
-    'Situation: the student is lost. Role-play a kind helper. Ask where they want to go. Use direction words: left, right, straight, near, far. Stay calm.',
-  asking_directions:
-    'Situation: a visitor asks the student for directions. You are the visitor who is a little lost. Ask where places are. Let the student practice telling you the way in simple English.',
-};
+async function createAssessCompletion(openaiClient, apiMessages, options = {}) {
+  return openaiClient.chat.completions.create({
+    model: AI_MODEL,
+    messages: apiMessages,
+    max_tokens: 500,
+    temperature: options.temperature ?? 0.7,
+    frequency_penalty: 0.45,
+    presence_penalty: 0.35,
+  });
+}
 
 app.post('/api/assess', async (req, res) => {
   if (!openai) {
@@ -269,32 +239,37 @@ app.post('/api/assess', async (req, res) => {
       error: 'AI API key not configured. Set OPENAI_API_KEY or AI_GATEWAY_API_KEY.',
     });
   }
-  const { messages, speech_context, scenario } = req.body || {};
+  const { messages, speech_context, scenario, greeting_already_spoken } = req.body || {};
   if (!Array.isArray(messages) || messages.length === 0) {
     return res.status(400).json({ error: 'Body must include messages array.' });
   }
-  const scenarioPrompt =
-    scenario && SCENARIO_PROMPTS[scenario] ? SCENARIO_PROMPTS[scenario] : SCENARIO_PROMPTS.free_talk;
+
   try {
-    const apiMessages = [
-      { role: 'system', content: `${SYSTEM_PROMPT}\n\n${scenarioPrompt}` },
-      ...messages,
-    ];
-    if (speech_context?.alternatives?.length) {
-      apiMessages.push({
-        role: 'system',
-        content: `[Speech recognition note — do NOT change the user message text] Exact transcript shown to the child: "${speech_context.raw || ''}". Other microphone guesses: ${speech_context.alternatives.map((a) => `"${a}"`).join(', ')}. Use guesses only to interpret unclear audio; reply based on what they actually said.`,
-      });
-    }
-    const completion = await openai.chat.completions.create({
-      model: AI_MODEL,
-      messages: apiMessages,
-      max_tokens: 500,
-      temperature: 0.7,
+    const { apiMessages, history } = buildAssessApiMessages({
+      messages,
+      scenario,
+      speechContext: speech_context,
+      greetingAlreadySpoken: greeting_already_spoken,
     });
-    const content = completion.choices[0]?.message?.content?.trim() || '';
-    const jsonMatch = content.match(/\{[\s\S]*\}/);
-    const parsed = jsonMatch ? JSON.parse(jsonMatch[0]) : { reply: content, scores: null, level: null };
+
+    logAssessPrompt(apiMessages);
+
+    let completion = await createAssessCompletion(openai, apiMessages);
+    let parsed = parseAssessResponse(completion.choices[0]?.message?.content?.trim() || '');
+
+    const latestUser = [...history].reverse().find((m) => m.role === 'user')?.content || '';
+    const priorAssistant = getPreviousAssistantReply(history);
+
+    if (priorAssistant && isSubstantiallySimilar(parsed.reply, priorAssistant)) {
+      const retryMessages = [
+        ...apiMessages,
+        { role: 'system', content: buildRewriteInstruction(priorAssistant, latestUser) },
+      ];
+      logAssessPrompt(retryMessages);
+      completion = await createAssessCompletion(openai, retryMessages, { temperature: 0.85 });
+      parsed = parseAssessResponse(completion.choices[0]?.message?.content?.trim() || '');
+    }
+
     return res.json(parsed);
   } catch (err) {
     console.error(err);

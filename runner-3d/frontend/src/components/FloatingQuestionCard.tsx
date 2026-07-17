@@ -89,7 +89,7 @@ export function FloatingQuestionCard({
               <QuestionIllustration
                 image={question.image}
                 imageFocus={question.image_focus}
-                alt="Question illustration"
+                alt={`Picture clue for English vocabulary question: ${question.question}`}
               />
             )}
 

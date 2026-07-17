@@ -12,6 +12,10 @@ const nav = {
   contact: { en: 'Contact', th: 'ติดต่อ' },
   assessment: { en: 'Chat English', th: 'คุยภาษาอังกฤษ' },
   runner: { en: '3D Runner Game', th: 'เกมวิ่ง 3D' },
+  brandLogo: {
+    en: 'MLTCENTERS logo — English language learning 3D runner game',
+    th: 'โลโก้ MLTCENTERS — เกมวิ่ง 3D เรียนภาษาอังกฤษ',
+  },
 } as const;
 
 const NavI18nContext = createContext<{

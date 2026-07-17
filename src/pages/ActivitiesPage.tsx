@@ -11,10 +11,22 @@ const activityImages = [
 ];
 
 const activityImgAlts: Record<string, { en: string; th: string }> = {
-  0: { en: 'AI conversation practice', th: 'ฝึกสนทนาด้วย AI' },
-  1: { en: 'Language apps workshop', th: 'ฝึกใช้แอปเรียนภาษา' },
-  2: { en: 'Team language games', th: 'เกมภาษาแบบทีม' },
-  3: { en: 'Digital presentation skills', th: 'พรีเซนต์ด้วยเทคโนโลยี' },
+  0: {
+    en: 'Students practicing English conversation with AI chatbots at MLTCENTERS workshop',
+    th: 'นักเรียนฝึกสนทนาภาษาอังกฤษกับ AI chatbot ในเวิร์กช็อป MLTCENTERS',
+  },
+  1: {
+    en: 'English learners using language apps and digital tools in a hands-on workshop',
+    th: 'ผู้เรียนภาษาอังกฤษใช้แอปและเครื่องมือดิจิทัลในเวิร์กช็อปแบบลงมือทำ',
+  },
+  2: {
+    en: 'Team-based English language games — students learning vocabulary through play',
+    th: 'เกมภาษาอังกฤษแบบทีม — นักเรียนเรียนรู้คำศัพท์ผ่านการเล่น',
+  },
+  3: {
+    en: 'Students presenting in English using digital tools to build confidence',
+    th: 'นักเรียนนำเสนอเป็นภาษาอังกฤษด้วยเครื่องมือดิจิทัลเพื่อสร้างความมั่นใจ',
+  },
 };
 
 const colorMap: Record<string, string> = {

@@ -4,6 +4,7 @@ import {
   type AssessmentScenarioId,
   welcomeForScenario,
 } from '@/constants/assessmentScenarios';
+import { buildOutgoingMessages } from '@/lib/assessmentConversation';
 
 const API_BASE = '/api';
 const XP_PER_ANSWER = 20;
@@ -67,6 +68,8 @@ export function useAssessment(onComplete: (result: AssessmentResult) => void) {
   const [progress, setProgress] = useState(0);
   const maxTurns = 6;
   const abortRef = useRef<AbortController | null>(null);
+  const messagesRef = useRef<ChatMessage[]>(messages);
+  messagesRef.current = messages;
 
   const selectScenario = useCallback((id: AssessmentScenarioId) => {
     setScenarioId(id);
@@ -88,14 +91,17 @@ export function useAssessment(onComplete: (result: AssessmentResult) => void) {
     userText: string,
     speechContext?: { raw: string; alternatives: string[] }
   ) => {
-    const newMessages: { role: 'user' | 'assistant'; content: string }[] = [
-      ...messages.map((m) => ({ role: m.role, content: m.content })),
-      { role: 'user', content: userText },
-    ];
-    setMessages((prev) => [
-      ...prev,
-      { id: crypto.randomUUID(), role: 'user', content: userText },
-    ]);
+    const trimmed = userText.trim();
+    if (!trimmed) return null;
+
+    const historyForApi = buildOutgoingMessages(messagesRef.current, trimmed);
+    const newMessages = historyForApi;
+
+    setMessages((prev) => {
+      const last = prev[prev.length - 1];
+      if (last?.role === 'user' && last.content.trim() === trimmed) return prev;
+      return [...prev, { id: crypto.randomUUID(), role: 'user', content: trimmed }];
+    });
     setInput('');
     setIsThinking(true);
     abortRef.current = new AbortController();
@@ -104,9 +110,10 @@ export function useAssessment(onComplete: (result: AssessmentResult) => void) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          messages: newMessages.slice(-12).map((m) => ({ role: m.role, content: m.content })),
+          messages: historyForApi,
           speech_context: speechContext,
           scenario: scenarioId,
+          greeting_already_spoken: welcomeForScenario(scenarioId),
         }),
         signal: abortRef.current.signal,
       });
@@ -131,7 +138,7 @@ export function useAssessment(onComplete: (result: AssessmentResult) => void) {
 
       const addedXP = scores
         ? Math.round(
-            (XP_PER_ANSWER + Math.min(userText.split(/\s/).length * 2, 15)) *
+            (XP_PER_ANSWER + Math.min(trimmed.split(/\s/).length * 2, 15)) *
               (answerCount >= 2 ? COMBO_MULTIPLIER : 1)
           )
         : 0;
@@ -165,7 +172,7 @@ export function useAssessment(onComplete: (result: AssessmentResult) => void) {
       setIsThinking(false);
       abortRef.current = null;
     }
-  }, [messages, answerCount, scoresHistory, xp, maxTurns, onComplete, scenarioId]);
+  }, [answerCount, scoresHistory, xp, maxTurns, onComplete, scenarioId]);
 
   const completeWithCurrent = useCallback(() => {
     const result = buildResult(scoresHistory, xp, answerCount);

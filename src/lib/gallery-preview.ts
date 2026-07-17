@@ -7,6 +7,6 @@ export type GalleryPreviewImage = {
 
 export const galleryPreviewImages: GalleryPreviewImage[] = Array.from({ length: 8 }, (_, i) => ({
   src: `/gallery-preview/${i + 1}.webp`,
-  altEn: `MLTCENTERS language workshop and study-travel activity photo ${i + 1}`,
-  altTh: `ภาพกิจกรรมเรียนภาษาและทัศนศึกษา MLTCENTERS รูปที่ ${i + 1}`,
+  altEn: `English language workshop at MLTCENTERS — students practicing speaking and learning English, photo ${i + 1}`,
+  altTh: `ภาพเวิร์กช็อปเรียนภาษาอังกฤษ MLTCENTERS — นักเรียนฝึกพูดและเรียนรู้ภาษาอังกฤษ รูปที่ ${i + 1}`,
 }));

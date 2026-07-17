@@ -13,7 +13,7 @@ const FooterSection = () => {
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 flex items-center justify-center bg-[#29303d] rounded-[5px] shrink-0">
-              <img src={BRAND_LOGO} alt="" width={32} height={32} className="w-full h-full object-contain" />
+              <img src={BRAND_LOGO} alt={t.imageAlt.brandLogo[lang]} width={32} height={32} className="w-full h-full object-contain" />
             </div>
             <div>
               <span className="font-bold text-foreground">MLT<span className="text-[#0f4c6a]">CENTERS</span></span>

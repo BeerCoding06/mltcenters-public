@@ -4,6 +4,7 @@ import { ChevronDown, X } from 'lucide-react';
 import { useI18n } from '@/lib/i18n';
 import { useParallax } from '@/hooks/useParallax';
 import { galleryPreviewImages } from '@/lib/gallery-preview';
+import { getGalleryImage } from '@/lib/gallery-images';
 import { Reveal } from '@/components/Reveal';
 import { HOME_FAQ } from '@/constants/seo-content';
 
@@ -11,14 +12,14 @@ const HomeContactSection = lazy(() => import('@/components/HomeContactSection'))
 
 const HERO_BANNER = "/hero-banner.webp";
 const HERO_BANNER_FALLBACK = "/hero-banner.jpg";
+const KRUMAM_CLUB_BANNER = "/assets/img-design-about/krumamclub.jpg";
 
-const designUrl = (file: string) => `${import.meta.env.BASE_URL}assets/img-design/${file}`;
-const aboutImages = [designUrl('5545.webp'), designUrl('5546.webp'), designUrl('esrwtsry.webp')];
-
-const heroAlt = {
-  en: 'Learn languages through technology',
-  th: 'เรียนภาษาผ่านเทคโนโลยี',
-};
+// Gallery picks aligned with aboutValue topics (album file: 38, 64, 50)
+const aboutValueImages = [
+  getGalleryImage(36),
+  getGalleryImage(62),
+  getGalleryImage(48),
+];
 
 const galleryImages = galleryPreviewImages;
 
@@ -44,9 +45,9 @@ const HomePage = () => {
           <div className="absolute bottom-[20%] left-[35%] w-36 h-36 rounded-full bg-[#FF8FAB]/20 blur-3xl animate-hero-float-slow" />
         </div>
 
-        <div className="relative z-10 container mx-auto px-6 flex flex-col md:flex-row items-center gap-8 md:gap-12 min-h-[80vh]">
-          <div className="flex-1 order-2 md:order-1 max-w-xl text-center md:text-left">
-            <div className="max-md:opacity-100 animate-hero-fade-in bg-white/90 md:bg-white/70 md:backdrop-blur-md rounded-2xl shadow-xl px-8 py-10 sm:px-10 sm:py-12 border border-white/50">
+        <div className="relative z-10 container mx-auto px-6 flex flex-col md:flex-row items-center md:items-stretch gap-8 md:gap-12 min-h-[80vh]">
+          <div className="flex-1 order-2 md:order-1 max-w-xl w-full text-center md:text-left flex">
+            <div className="w-full max-md:opacity-100 animate-hero-fade-in bg-white/90 md:bg-white/70 md:backdrop-blur-md rounded-2xl shadow-xl px-8 py-10 sm:px-10 sm:py-12 border border-white/50 md:h-full md:flex md:flex-col md:justify-center">
               <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold md:!leading-[1.3] mb-6 heading-gradient">
                 {t.hero.headline[lang]}
               </h1>
@@ -63,26 +64,40 @@ const HomePage = () => {
           </div>
 
           <div
-            className="flex-1 order-1 md:order-2 w-full max-w-lg mx-auto md:max-w-xl max-md:opacity-100 animate-hero-fade-in-delay md:transition-transform md:duration-100 md:will-change-transform"
+            className="flex-1 order-1 md:order-2 flex max-md:opacity-100 animate-hero-fade-in-delay md:transition-transform md:duration-100 md:will-change-transform"
             style={{ transform: `translate3d(0, ${parallax.image}px, 0)` }}
           >
-            <div className="relative rounded-2xl shadow-xl overflow-hidden aspect-[4/3] md:aspect-[5/4] group">
-              <picture>
-                <source srcSet="/hero-banner-mobile.webp" type="image/webp" media="(max-width: 767px)" />
-                <source srcSet="/hero-banner.webp" type="image/webp" />
-                <source srcSet="/hero-banner-mobile.jpg" media="(max-width: 767px)" />
+            <div className="flex flex-col gap-3 sm:gap-4 w-full h-full min-h-0">
+              <div className="relative rounded-2xl shadow-xl overflow-hidden aspect-[1706/651] md:aspect-auto md:flex-[651] md:min-h-0 group">
                 <img
-                  src={HERO_BANNER_FALLBACK}
-                  alt={heroAlt[lang]}
-                  width={1400}
-                  height={1050}
-                  fetchPriority="high"
+                  src={KRUMAM_CLUB_BANNER}
+                  alt={t.imageAlt.krumamClubBanner[lang]}
+                  width={1706}
+                  height={651}
                   loading="eager"
                   decoding="async"
-                  className="w-full h-full object-cover object-center img-design-style group-hover:scale-105 transition-transform duration-500"
+                  className="w-full h-full md:absolute md:inset-0 object-cover object-center img-design-style group-hover:scale-105 transition-transform duration-500"
                 />
-              </picture>
-              <div className="absolute inset-0 img-pastel-overlay pointer-events-none" aria-hidden />
+                <div className="absolute inset-0 img-pastel-overlay pointer-events-none" aria-hidden />
+              </div>
+              <div className="relative rounded-2xl shadow-xl overflow-hidden aspect-[4/3] md:aspect-auto md:flex-[800] md:min-h-0 group">
+                <picture className="block w-full h-full md:absolute md:inset-0">
+                  <source srcSet="/hero-banner-mobile.webp" type="image/webp" media="(max-width: 767px)" />
+                  <source srcSet="/hero-banner.webp" type="image/webp" />
+                  <source srcSet="/hero-banner-mobile.jpg" media="(max-width: 767px)" />
+                  <img
+                    src={HERO_BANNER_FALLBACK}
+                    alt={t.imageAlt.hero[lang]}
+                    width={1400}
+                    height={1050}
+                    fetchPriority="high"
+                    loading="eager"
+                    decoding="async"
+                    className="w-full h-full object-cover object-center img-design-style group-hover:scale-105 transition-transform duration-500"
+                  />
+                </picture>
+                <div className="absolute inset-0 img-pastel-overlay pointer-events-none" aria-hidden />
+              </div>
             </div>
           </div>
         </div>
@@ -125,8 +140,8 @@ const HomePage = () => {
                   <div className="group rounded-2xl bg-white/90 backdrop-blur-sm shadow-xl hover:shadow-2xl hover:shadow-[#5BC0FF]/15 border border-white/80 overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:scale-[1.02]">
                     <div className="relative aspect-[4/3] overflow-hidden">
                       <img
-                        src={aboutImages[i]}
-                        alt={item.title[lang]}
+                        src={aboutValueImages[i].src}
+                        alt={item.alt[lang]}
                         loading="lazy"
                         decoding="async"
                         width={800}
