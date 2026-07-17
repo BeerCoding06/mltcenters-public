@@ -31,6 +31,46 @@ const fieldIds: Record<FormField, string> = {
   email: 'register-email',
 };
 
+const inputClass =
+  'w-full px-4 py-3 rounded-xl bg-muted border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all';
+
+function RegisterField({
+  id,
+  label,
+  type = 'text',
+  required = true,
+  value,
+  onChange,
+  children,
+}: {
+  id?: string;
+  label: string;
+  type?: string;
+  required?: boolean;
+  value?: string;
+  onChange?: (value: string) => void;
+  children?: React.ReactNode;
+}) {
+  return (
+    <div>
+      <label htmlFor={id} className="block text-sm font-medium text-foreground mb-1.5">
+        {label}
+      </label>
+      {children ??
+        (id && value !== undefined && onChange ? (
+          <input
+            id={id}
+            type={type}
+            required={required}
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+            className={inputClass}
+          />
+        ) : null)}
+    </div>
+  );
+}
+
 const RegisterPage = () => {
   const { lang, t } = useI18n();
   const [form, setForm] = useState(emptyForm);
@@ -66,43 +106,6 @@ const RegisterPage = () => {
     }
   };
 
-  const inputClass =
-    'w-full px-4 py-3 rounded-xl bg-muted border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all';
-
-  const Field = ({
-    field,
-    label,
-    type = 'text',
-    required = true,
-    children,
-  }: {
-    field?: FormField;
-    label: string;
-    type?: string;
-    required?: boolean;
-    children?: React.ReactNode;
-  }) => {
-    const id = field ? fieldIds[field] : undefined;
-    return (
-      <div>
-        <label htmlFor={id} className="block text-sm font-medium text-foreground mb-1.5">
-          {label}
-        </label>
-        {children ??
-          (field ? (
-            <input
-              id={id}
-              type={type}
-              required={required}
-              value={form[field]}
-              onChange={(e) => update(field, e.target.value)}
-              className={inputClass}
-            />
-          ) : null)}
-      </div>
-    );
-  };
-
   return (
     <div className="relative py-16 min-h-screen overflow-hidden">
       <div className="absolute inset-0 -z-10 bg-gradient-to-br from-primary/10 via-background to-secondary/10">
@@ -126,18 +129,43 @@ const RegisterPage = () => {
 
           <form onSubmit={handleSubmit} className="pastel-card p-8 space-y-5" noValidate={false}>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-              <Field field="firstName" label={t.registerPage.firstName[lang]} />
-              <Field field="lastName" label={t.registerPage.lastName[lang]} />
+              <RegisterField
+                id={fieldIds.firstName}
+                label={t.registerPage.firstName[lang]}
+                value={form.firstName}
+                onChange={(v) => update('firstName', v)}
+              />
+              <RegisterField
+                id={fieldIds.lastName}
+                label={t.registerPage.lastName[lang]}
+                value={form.lastName}
+                onChange={(v) => update('lastName', v)}
+              />
             </div>
 
-            <Field field="nickname" label={t.registerPage.nickname[lang]} />
+            <RegisterField
+              id={fieldIds.nickname}
+              label={t.registerPage.nickname[lang]}
+              value={form.nickname}
+              onChange={(v) => update('nickname', v)}
+            />
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-              <Field field="company" label={t.registerPage.company[lang]} />
-              <Field field="position" label={t.registerPage.position[lang]} />
+              <RegisterField
+                id={fieldIds.company}
+                label={t.registerPage.company[lang]}
+                value={form.company}
+                onChange={(v) => update('company', v)}
+              />
+              <RegisterField
+                id={fieldIds.position}
+                label={t.registerPage.position[lang]}
+                value={form.position}
+                onChange={(v) => update('position', v)}
+              />
             </div>
 
-            <Field label={t.registerPage.educationLevel[lang]}>
+            <RegisterField label={t.registerPage.educationLevel[lang]}>
               <select
                 id={fieldIds.educationLevel}
                 required
@@ -152,14 +180,31 @@ const RegisterPage = () => {
                   </option>
                 ))}
               </select>
-            </Field>
+            </RegisterField>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-              <Field field="phone" type="tel" label={t.registerPage.phone[lang]} />
-              <Field field="lineId" label={t.registerPage.lineId[lang]} />
+              <RegisterField
+                id={fieldIds.phone}
+                type="tel"
+                label={t.registerPage.phone[lang]}
+                value={form.phone}
+                onChange={(v) => update('phone', v)}
+              />
+              <RegisterField
+                id={fieldIds.lineId}
+                label={t.registerPage.lineId[lang]}
+                value={form.lineId}
+                onChange={(v) => update('lineId', v)}
+              />
             </div>
 
-            <Field field="email" type="email" label={t.registerPage.email[lang]} />
+            <RegisterField
+              id={fieldIds.email}
+              type="email"
+              label={t.registerPage.email[lang]}
+              value={form.email}
+              onChange={(v) => update('email', v)}
+            />
 
             <button type="submit" disabled={submitting} className="w-full gradient-btn py-4 text-lg mt-2 disabled:opacity-60">
               {submitting ? t.registerPage.submitting[lang] : t.registerPage.submit[lang]}
