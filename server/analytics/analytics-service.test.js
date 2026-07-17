@@ -12,18 +12,19 @@ import {
 import { getAdminCredentials } from './analytics-controller.js';
 
 describe('admin login credentials', () => {
-  it('defaults username to admin and uses ADMIN_PASS', () => {
+  it('defaults username to admin and accepts ADMIN_PASS or TOKEN', () => {
     const prevUser = process.env.ANALYTICS_ADMIN_USER;
     const prevPass = process.env.ANALYTICS_ADMIN_PASS;
     const prevToken = process.env.ANALYTICS_ADMIN_TOKEN;
     process.env.ANALYTICS_ADMIN_USER = 'boss';
     process.env.ANALYTICS_ADMIN_PASS = 'secret-pass';
-    delete process.env.ANALYTICS_ADMIN_TOKEN;
+    process.env.ANALYTICS_ADMIN_TOKEN = 'session-token';
 
     const creds = getAdminCredentials();
     expect(creds.username).toBe('boss');
-    expect(creds.password).toBe('secret-pass');
-    expect(creds.token).toBe('secret-pass');
+    expect(creds.passwordCandidates).toContain('secret-pass');
+    expect(creds.passwordCandidates).toContain('session-token');
+    expect(creds.token).toBe('session-token');
 
     process.env.ANALYTICS_ADMIN_USER = prevUser;
     process.env.ANALYTICS_ADMIN_PASS = prevPass;

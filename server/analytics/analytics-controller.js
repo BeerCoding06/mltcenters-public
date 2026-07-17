@@ -15,31 +15,48 @@ function timingSafeEqualString(a, b) {
   return crypto.timingSafeEqual(ba, bb);
 }
 
+function stripEnvQuotes(value) {
+  const s = String(value || '').trim();
+  if (
+    (s.startsWith('"') && s.endsWith('"')) ||
+    (s.startsWith("'") && s.endsWith("'"))
+  ) {
+    return s.slice(1, -1).trim();
+  }
+  return s;
+}
+
 export function getAdminCredentials() {
-  const username = (process.env.ANALYTICS_ADMIN_USER || 'admin').trim();
-  const password = (
-    process.env.ANALYTICS_ADMIN_PASS ||
-    process.env.ANALYTICS_ADMIN_TOKEN ||
-    ''
-  ).trim();
-  const token = (process.env.ANALYTICS_ADMIN_TOKEN || password || '').trim();
-  return { username, password, token };
+  const username = stripEnvQuotes(process.env.ANALYTICS_ADMIN_USER || 'admin') || 'admin';
+  const pass = stripEnvQuotes(process.env.ANALYTICS_ADMIN_PASS);
+  const tokenEnv = stripEnvQuotes(process.env.ANALYTICS_ADMIN_TOKEN);
+  // Accept either ADMIN_PASS or ADMIN_TOKEN as the login password
+  const passwordCandidates = [...new Set([pass, tokenEnv].filter(Boolean))];
+  const token = tokenEnv || pass || '';
+  return { username, passwordCandidates, token, configured: passwordCandidates.length > 0 && Boolean(token) };
 }
 
 export async function postLogin(req, res) {
   const { username, password } = req.body || {};
   const creds = getAdminCredentials();
 
-  if (!creds.password || !creds.token) {
+  if (!creds.configured) {
+    console.warn('[analytics] admin login not configured (missing ANALYTICS_ADMIN_PASS / TOKEN)');
     return res.status(503).json({
-      error: 'Admin login is not configured. Set ANALYTICS_ADMIN_PASS or ANALYTICS_ADMIN_TOKEN.',
+      error: 'Admin login is not configured. Set ANALYTICS_ADMIN_PASS (and optionally ANALYTICS_ADMIN_TOKEN) as runtime Environment in Dokploy.',
     });
   }
 
   const userOk = timingSafeEqualString(String(username || '').trim(), creds.username);
-  const passOk = timingSafeEqualString(String(password || '').trim(), creds.password);
+  const providedPass = String(password || '').trim();
+  const passOk = creds.passwordCandidates.some((candidate) =>
+    timingSafeEqualString(providedPass, candidate)
+  );
+
   if (!userOk || !passOk) {
-    console.warn('[analytics] admin login failed');
+    console.warn(
+      `[analytics] admin login failed (userOk=${userOk}, passOk=${passOk}, expectedUser=${creds.username})`
+    );
     return res.status(401).json({ error: 'Invalid username or password' });
   }
 
