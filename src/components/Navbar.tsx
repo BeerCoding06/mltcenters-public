@@ -49,7 +49,7 @@ const Navbar = () => {
                 className="w-full h-full object-contain"
               />
             </div>
-            <span className="text-lg font-bold text-foreground">
+            <span className="hidden md:inline text-lg font-bold text-foreground">
               MLT<span className="text-[#0f4c6a]">CENTERS</span>
             </span>
           </Link>
@@ -64,7 +64,7 @@ const Navbar = () => {
                 className="w-full h-full object-cover"
               />
             </div>
-            <span className="text-lg font-bold text-foreground">
+            <span className="hidden md:inline text-lg font-bold text-foreground">
               krumam <span className="text-[#0f4c6a]">club</span>
             </span>
           </Link>
