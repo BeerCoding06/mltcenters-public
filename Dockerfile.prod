@@ -19,9 +19,12 @@ RUN npm run build
 
 FROM node:20-alpine AS runner
 WORKDIR /app
-RUN apk add --no-cache php83 php83-mbstring php83-openssl composer
+# Use PHP 8.3 only — Alpine's `composer` package pulls PHP 8.4 without ext-ctype.
+RUN apk add --no-cache php83 php83-mbstring php83-openssl php83-ctype php83-phar curl \
+    && curl -sS https://getcomposer.org/installer | php83 -- --install-dir=/usr/local/bin --filename=composer \
+    && ln -sf /usr/bin/php83 /usr/bin/php
 COPY mail/composer.json mail/composer.lock* ./mail/
-RUN cd mail && composer install --no-dev --optimize-autoloader --no-interaction
+RUN cd mail && php83 /usr/local/bin/composer install --no-dev --optimize-autoloader --no-interaction
 COPY server/package.json ./server/
 RUN cd server && npm install --omit=dev
 COPY server ./server
@@ -30,6 +33,7 @@ COPY --from=frontend /app/dist ./dist
 COPY --from=runner-frontend /app/runner-3d/frontend/dist ./dist/runner-app
 ENV NODE_ENV=production
 ENV USE_PHP_MAILER=true
+ENV PHP_BIN=/usr/bin/php83
 EXPOSE 3000
 WORKDIR /app/server
 CMD ["node", "index.js"]

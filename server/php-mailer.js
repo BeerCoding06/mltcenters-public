@@ -12,6 +12,8 @@ const MAMP_PHP_CANDIDATES = [
   '/Applications/MAMP/bin/php/php8.2.0/bin/php',
   '/Applications/MAMP/bin/php/php8.1.13/bin/php',
   '/Applications/MAMP/bin/php/php8.3.14/bin/php',
+  '/usr/bin/php83',
+  '/usr/bin/php',
 ];
 
 function resolvePhpBin() {
