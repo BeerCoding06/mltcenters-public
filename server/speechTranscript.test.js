@@ -2,6 +2,7 @@
 
 import { describe, it, expect } from 'vitest';
 import {
+  dedupeSpeechTranscript,
   isSendableTranscript,
   looksIncompleteUtterance,
   shouldIgnoreTranscript,
@@ -17,5 +18,10 @@ describe('server speechTranscript', () => {
 
   it('detects interrupted speech endings', () => {
     expect(looksIncompleteUtterance('I want pizza and')).toBe(true);
+  });
+
+  it('collapses repeated STT phrases', () => {
+    expect(dedupeSpeechTranscript('relax relax')).toBe('relax');
+    expect(dedupeSpeechTranscript('go go shopping go shopping')).toBe('go shopping');
   });
 });

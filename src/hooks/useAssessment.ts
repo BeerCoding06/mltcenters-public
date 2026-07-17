@@ -7,6 +7,7 @@ import {
 import { buildOutgoingMessages, logClientAssessDebug } from '@/lib/assessmentConversation';
 import {
   CONTINUE_PROMPT,
+  dedupeSpeechTranscript,
   filterSpeechAlternatives,
   looksIncompleteUtterance,
   shouldIgnoreTranscript,
@@ -122,7 +123,7 @@ export function useAssessment(onComplete: (result: AssessmentResult) => void) {
     userText: string,
     speechContext?: { raw: string; alternatives: string[] }
   ) => {
-    const trimmed = userText.trim();
+    const trimmed = dedupeSpeechTranscript(userText);
     if (!trimmed) return null;
 
     // Ignore filler-only / isolated conjunctions — never hit the LLM

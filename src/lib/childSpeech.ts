@@ -1,14 +1,18 @@
-import { filterSpeechAlternatives, normalizeTranscript } from '@/lib/speechTranscript';
+import {
+  dedupeSpeechTranscript,
+  filterSpeechAlternatives,
+  normalizeTranscript,
+} from '@/lib/speechTranscript';
 
-/** Keep the mic transcript as-is; only clean whitespace / drop useless alts */
-export function refineChildTranscript(primary: string, alternatives: string[] = []): string {
-  return normalizeTranscript(primary);
+/** Clean mic transcript: collapse STT word/phrase repeats */
+export function refineChildTranscript(primary: string, _alternatives: string[] = []): string {
+  return dedupeSpeechTranscript(primary);
 }
 
 export function refineSpeechContext(primary: string, alternatives: string[] = []) {
-  const raw = normalizeTranscript(primary);
+  const raw = dedupeSpeechTranscript(primary);
   return {
     raw,
-    alternatives: filterSpeechAlternatives(raw, alternatives),
+    alternatives: filterSpeechAlternatives(raw, alternatives.map(normalizeTranscript)),
   };
 }

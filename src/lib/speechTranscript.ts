@@ -34,6 +34,61 @@ export function normalizeTranscript(text: string): string {
     .trim();
 }
 
+/**
+ * Collapse STT stutter / duplicated phrases:
+ * "relax relax" → "relax"
+ * "go go shopping go shopping" → "go shopping"
+ */
+export function dedupeSpeechTranscript(text: string): string {
+  let result = normalizeTranscript(text);
+  if (!result) return '';
+
+  // 1) Consecutive identical words
+  result = result.replace(/\b(\w+)(?:\s+\1\b)+/gi, '$1');
+
+  // 2) Adjacent identical phrases (length 1..n/2), repeat until stable
+  let words = result.split(/\s+/).filter(Boolean);
+  let changed = true;
+  while (changed && words.length > 1) {
+    changed = false;
+    outer: for (let len = Math.floor(words.length / 2); len >= 1; len -= 1) {
+      for (let i = 0; i + 2 * len <= words.length; i += 1) {
+        const a = words
+          .slice(i, i + len)
+          .join(' ')
+          .toLowerCase();
+        const b = words
+          .slice(i + len, i + 2 * len)
+          .join(' ')
+          .toLowerCase();
+        if (a === b) {
+          words = [...words.slice(0, i + len), ...words.slice(i + 2 * len)];
+          changed = true;
+          break outer;
+        }
+      }
+    }
+  }
+
+  return words.join(' ').trim();
+}
+
+/** Merge buffered finals without stacking the same chunk twice */
+export function mergeSpeechChunks(previous: string, next: string): string {
+  const a = normalizeTranscript(previous);
+  const b = normalizeTranscript(next);
+  if (!a) return dedupeSpeechTranscript(b);
+  if (!b) return dedupeSpeechTranscript(a);
+
+  const al = a.toLowerCase();
+  const bl = b.toLowerCase();
+  if (al === bl) return a;
+  if (al.endsWith(bl)) return dedupeSpeechTranscript(a);
+  if (bl.startsWith(al)) return dedupeSpeechTranscript(b);
+
+  return dedupeSpeechTranscript(`${a} ${b}`);
+}
+
 export function tokenizeTranscript(text: string): string[] {
   return normalizeTranscript(text)
     .toLowerCase()

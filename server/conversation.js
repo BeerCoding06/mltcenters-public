@@ -1,12 +1,18 @@
 /** Conversation history + prompt builder for /api/assess */
 import {
   CONTINUE_PROMPT,
+  dedupeSpeechTranscript,
   filterSpeechAlternatives,
   looksIncompleteUtterance,
   shouldIgnoreTranscript,
 } from './speechTranscript.js';
 
-export { CONTINUE_PROMPT, looksIncompleteUtterance, shouldIgnoreTranscript };
+export {
+  CONTINUE_PROMPT,
+  dedupeSpeechTranscript,
+  looksIncompleteUtterance,
+  shouldIgnoreTranscript,
+};
 
 export const ANTI_REPETITION_RULES = `Conversation quality rules (strict):
 - Focus primarily on the user's latest message. Prioritize it over older turns.
@@ -117,7 +123,10 @@ export function dedupeMessages(messages) {
       seenAssistant.push(content);
     }
 
-    if (role === 'user' && shouldIgnoreTranscript(content)) continue;
+    if (role === 'user') {
+      content = dedupeSpeechTranscript(content);
+      if (!content || shouldIgnoreTranscript(content)) continue;
+    }
 
     result.push({ role, content });
   }

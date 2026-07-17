@@ -11,9 +11,11 @@ import { useTextToSpeech } from '@/hooks/useTextToSpeech';
 import { useSpeechRecognition } from '@/hooks/useSpeechRecognition';
 import { ASSESSMENT_SCENARIOS } from '@/constants/assessmentScenarios';
 import {
+  dedupeSpeechTranscript,
   filterSpeechAlternatives,
   shouldIgnoreTranscript,
 } from '@/lib/speechTranscript';
+import { refineChildTranscript } from '@/lib/childSpeech';
 import type { AvatarState, AssessmentResult } from '@/types/assessment';
 
 const ASSESSMENT_STORAGE_KEY = 'mlt-assessment-result';
@@ -106,7 +108,7 @@ export default function EnglishAssessmentPage() {
 
   const onSpeechFinal = useCallback(
     (text: string, meta?: { alternatives: string[] }) => {
-      const spoken = text.trim();
+      const spoken = refineChildTranscript(text, meta?.alternatives);
       // Interim never reaches here; still hard-block filler finals
       if (!spoken || shouldIgnoreTranscript(spoken)) {
         setInput('');
@@ -127,7 +129,7 @@ export default function EnglishAssessmentPage() {
   const onSpeechInterim = useCallback(
     (text: string) => {
       // Preview only — never queued for LLM
-      setInput(text);
+      setInput(dedupeSpeechTranscript(text));
     },
     [setInput]
   );

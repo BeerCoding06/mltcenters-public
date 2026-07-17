@@ -1,10 +1,24 @@
 import { describe, it, expect } from 'vitest';
 import {
+  dedupeSpeechTranscript,
   filterSpeechAlternatives,
   isSendableTranscript,
   looksIncompleteUtterance,
+  mergeSpeechChunks,
   shouldIgnoreTranscript,
 } from '@/lib/speechTranscript';
+
+describe('dedupeSpeechTranscript', () => {
+  it('collapses repeated words from STT', () => {
+    expect(dedupeSpeechTranscript('relax relax')).toBe('relax');
+    expect(dedupeSpeechTranscript('go go shopping go shopping')).toBe('go shopping');
+  });
+
+  it('merges buffered chunks without stacking duplicates', () => {
+    expect(mergeSpeechChunks('go shopping', 'go shopping')).toBe('go shopping');
+    expect(mergeSpeechChunks('I like', 'I like cats')).toBe('I like cats');
+  });
+});
 
 describe('partial speech / filler transcripts', () => {
   it.each(['and', 'or', 'because', 'the', 'a', 'an', 'to', 'if', 'but', 'um', 'uh', 'AND', 'Um'])(

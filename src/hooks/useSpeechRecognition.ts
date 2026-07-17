@@ -1,5 +1,10 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { normalizeTranscript, shouldIgnoreTranscript } from '@/lib/speechTranscript';
+import {
+  dedupeSpeechTranscript,
+  mergeSpeechChunks,
+  normalizeTranscript,
+  shouldIgnoreTranscript,
+} from '@/lib/speechTranscript';
 import { ANALYTICS_EVENTS } from '@/analytics/analytics-context';
 import { track } from '@/analytics/track';
 
@@ -57,8 +62,14 @@ export function useSpeechRecognition({
   }, []);
 
   const flushBuffer = useCallback(() => {
-    const text = normalizeTranscript(bufferRef.current);
-    const alternatives = [...new Set(altsRef.current.map(normalizeTranscript).filter(Boolean))];
+    const text = dedupeSpeechTranscript(bufferRef.current);
+    const alternatives = [
+      ...new Set(
+        altsRef.current
+          .map((alt) => dedupeSpeechTranscript(alt))
+          .filter(Boolean)
+      ),
+    ];
     bufferRef.current = '';
     altsRef.current = [];
 
@@ -120,7 +131,7 @@ export function useSpeechRecognition({
         const chunk = result[0]?.transcript || '';
         if (result.isFinal) {
           const parts = collectAlternatives(result);
-          bufferRef.current = normalizeTranscript(`${bufferRef.current} ${chunk}`);
+          bufferRef.current = mergeSpeechChunks(bufferRef.current, chunk);
           altsRef.current.push(...parts);
           scheduleFlush();
         } else {
@@ -128,7 +139,9 @@ export function useSpeechRecognition({
           interim += chunk;
         }
       }
-      const preview = normalizeTranscript(`${bufferRef.current} ${interim}`);
+      const preview = dedupeSpeechTranscript(
+        normalizeTranscript(`${bufferRef.current} ${interim}`)
+      );
       if (preview) onInterimRef.current?.(preview);
     };
 

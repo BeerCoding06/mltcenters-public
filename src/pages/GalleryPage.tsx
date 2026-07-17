@@ -6,9 +6,11 @@ import { ChevronLeft, ChevronRight, X } from 'lucide-react';
 import {
   Pagination,
   PaginationContent,
+  PaginationEllipsis,
   PaginationItem,
   PaginationLink,
 } from '@/components/ui/pagination';
+import { getPaginationRange } from '@/lib/pagination-range';
 
 const PAGE_SIZE = 20;
 
@@ -23,6 +25,8 @@ const GalleryPage = () => {
     const start = (page - 1) * PAGE_SIZE;
     return galleryImages.slice(start, start + PAGE_SIZE);
   }, [page]);
+
+  const pageTokens = useMemo(() => getPaginationRange(page, totalPages, 1), [page, totalPages]);
 
   const pageStartIndex = (page - 1) * PAGE_SIZE;
 
@@ -80,7 +84,7 @@ const GalleryPage = () => {
           <div className="mt-10 space-y-4">
             <p className="text-center text-sm text-muted-foreground">{pageInfo}</p>
             <Pagination>
-              <PaginationContent>
+              <PaginationContent className="flex-wrap justify-center gap-1">
                 <PaginationItem>
                   <PaginationLink
                     href="#"
@@ -97,20 +101,26 @@ const GalleryPage = () => {
                   </PaginationLink>
                 </PaginationItem>
 
-                {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
-                  <PaginationItem key={p}>
-                    <PaginationLink
-                      href="#"
-                      isActive={p === page}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        setPage(p);
-                      }}
-                    >
-                      {p}
-                    </PaginationLink>
-                  </PaginationItem>
-                ))}
+                {pageTokens.map((token, index) =>
+                  token === 'ellipsis' ? (
+                    <PaginationItem key={`ellipsis-${index}`}>
+                      <PaginationEllipsis />
+                    </PaginationItem>
+                  ) : (
+                    <PaginationItem key={token}>
+                      <PaginationLink
+                        href="#"
+                        isActive={token === page}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setPage(token);
+                        }}
+                      >
+                        {token}
+                      </PaginationLink>
+                    </PaginationItem>
+                  )
+                )}
 
                 <PaginationItem>
                   <PaginationLink

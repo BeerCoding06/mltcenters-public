@@ -34,6 +34,33 @@ export function normalizeTranscript(text) {
     .trim();
 }
 
+/** Collapse STT stutter / duplicated phrases (mirrors client) */
+export function dedupeSpeechTranscript(text) {
+  let result = normalizeTranscript(text);
+  if (!result) return '';
+
+  result = result.replace(/\b(\w+)(?:\s+\1\b)+/gi, '$1');
+
+  let words = result.split(/\s+/).filter(Boolean);
+  let changed = true;
+  while (changed && words.length > 1) {
+    changed = false;
+    outer: for (let len = Math.floor(words.length / 2); len >= 1; len -= 1) {
+      for (let i = 0; i + 2 * len <= words.length; i += 1) {
+        const a = words.slice(i, i + len).join(' ').toLowerCase();
+        const b = words.slice(i + len, i + 2 * len).join(' ').toLowerCase();
+        if (a === b) {
+          words = [...words.slice(0, i + len), ...words.slice(i + 2 * len)];
+          changed = true;
+          break outer;
+        }
+      }
+    }
+  }
+
+  return words.join(' ').trim();
+}
+
 export function tokenizeTranscript(text) {
   return normalizeTranscript(text)
     .toLowerCase()
