@@ -27,7 +27,6 @@ import {
 import {
   getMetaForPath,
   injectSeoMeta,
-  isCrawler,
   isKnownSpaPath,
 } from './seo-meta.js';
 
@@ -48,13 +47,15 @@ const EMAIL_FROM = process.env.EMAIL_FROM || 'MLTCENTERS <onboarding@resend.dev>
 const USE_GMAIL_SERVICE = !process.env.SMTP_HOST;
 
 const app = express();
+app.disable('x-powered-by');
 app.use(compression());
 
 // Redirect bare domain to www (works when traffic reaches this server)
 app.use((req, res, next) => {
-  const host = (req.get('host') || '').split(':')[0].toLowerCase();
+  const host = (req.get('x-forwarded-host') || req.get('host') || '').split(':')[0].toLowerCase();
   if (host === 'mltcenters.com') {
-    return res.redirect(301, `https://www.mltcenters.com${req.originalUrl}`);
+    const proto = req.get('x-forwarded-proto') || req.protocol || 'https';
+    return res.redirect(301, `${proto}://www.mltcenters.com${req.originalUrl}`);
   }
   next();
 });
@@ -286,11 +287,24 @@ const runnerIndexHtmlPath = path.join(runnerAppPath, 'index.html');
 
 let indexHtmlTemplate = '';
 let runnerIndexHtmlTemplate = '';
+/** @type {Map<string, string>} */
+const injectedHtmlCache = new Map();
+
 if (existsSync(indexHtmlPath)) {
   indexHtmlTemplate = readFileSync(indexHtmlPath, 'utf8');
 }
 if (existsSync(runnerIndexHtmlPath)) {
   runnerIndexHtmlTemplate = readFileSync(runnerIndexHtmlPath, 'utf8');
+}
+
+function getInjectedHtml(template, pathname) {
+  const meta = getMetaForPath(pathname);
+  const cacheKey = `${pathname}|${meta.title}|${meta.notFound ? '404' : 'ok'}`;
+  const cached = injectedHtmlCache.get(cacheKey);
+  if (cached) return cached;
+  const html = injectSeoMeta(template, meta);
+  injectedHtmlCache.set(cacheKey, html);
+  return html;
 }
 
 function sendSpaHtml(req, res, template, pathname) {
@@ -301,11 +315,8 @@ function sendSpaHtml(req, res, template, pathname) {
     res.status(404);
   }
 
-  const ua = req.get('user-agent') || '';
-  const shouldInject = template && meta.title && (isCrawler(ua) || is404);
-
-  if (shouldInject) {
-    res.type('html').send(injectSeoMeta(template, meta));
+  if (template && meta.title) {
+    res.type('html').send(getInjectedHtml(template, pathname));
     return;
   }
 

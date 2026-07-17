@@ -1,5 +1,6 @@
 /** Server-side SEO meta for crawler / social-bot HTML injection (SPA fallback). */
 import { buildJsonLdHtml } from './seo-jsonld.js';
+import { buildCrawlHtml } from './seo-crawl-body.js';
 
 export const SITE_URL = 'https://www.mltcenters.com';
 export const SITE_NAME = 'MLTCENTERS Workshop';
@@ -93,7 +94,12 @@ export const RUNNER_META = {
 };
 
 export function isCrawler(userAgent = '') {
-  return BOT_UA.test(userAgent);
+  return (
+    BOT_UA.test(userAgent) ||
+    /seobility|seoscout|semrush|ahrefs|screaming frog|lighthouse|pagespeed|petalbot|mj12bot|dotbot|serpstat|siteaudit|sitebulb/i.test(
+      userAgent,
+    )
+  );
 }
 
 export function normalizePath(pathname) {
@@ -180,10 +186,11 @@ export function injectSeoMeta(html, meta) {
     out = out.replace('</head>', `    ${jsonLd}\n  </head>`);
   }
 
-  const h1 = meta.h1 || meta.title.split('|')[0].trim();
-  const crawlBody = `<noscript><main id="seo-static"><h1>${esc(h1)}</h1><p>${esc(meta.description)}</p></main></noscript>`;
-  if (!out.includes('id="seo-static"')) {
-    out = out.replace('<div id="root"></div>', `<div id="root"></div>\n    ${crawlBody}`);
+  const crawlBody = buildCrawlHtml(meta.path, meta);
+  if (out.includes('class="seo-fallback"')) {
+    out = out.replace(/<main id="main-content" class="seo-fallback">[\s\S]*?<\/main>/, crawlBody);
+  } else if (!out.includes('id="main-content"')) {
+    out = out.replace('<div id="root"></div>', `${crawlBody}\n    <div id="root"></div>`);
   }
 
   return out;

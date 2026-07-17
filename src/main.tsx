@@ -2,6 +2,12 @@ import { createRoot } from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
 
+function removeSeoFallback() {
+  document.getElementById("seo-fallback")?.remove();
+  const main = document.getElementById("main-content");
+  if (main?.classList.contains("seo-fallback")) main.remove();
+}
+
 function loadFonts() {
   void import("./load-fonts.ts");
 }
@@ -21,3 +27,4 @@ if (import.meta.env.PROD && "serviceWorker" in navigator) {
 }
 
 createRoot(document.getElementById("root")!).render(<App />);
+removeSeoFallback();
