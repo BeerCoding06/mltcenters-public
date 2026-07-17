@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "setup:mail": "cd mail && /Applications/MAMP/bin/php/php8.2.0/bin/php /Applications/MAMP/bin/php/composer install --no-dev --no-interaction",
     "dev": "vite",
     "build": "node scripts/sync-brand-icons.mjs && vite build",
     "build:runner": "node scripts/sync-brand-icons.mjs && cd runner-3d/frontend && VITE_BASE=/runner-app/ npm run build && rsync -a --delete dist/ ../../dist/runner-app/",

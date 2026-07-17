@@ -17,7 +17,16 @@ services:
       AI_GATEWAY_BASE_URL: ${AI_GATEWAY_BASE_URL:-}
       AI_MODEL: ${AI_MODEL:-}
       DEBUG: ${DEBUG:-false}
-      REGISTER_TO_EMAIL: ${REGISTER_TO_EMAIL:-mltcenterth@gmail.com}
+      USE_PHP_MAILER: ${USE_PHP_MAILER:-true}
+      REGISTER_TO_EMAIL: ${REGISTER_TO_EMAIL:-paradon.pokpingmaung@gmail.com,mltcenterth@gmail.com}
+      MAIL_SMTP_USER: ${MAIL_SMTP_USER:-}
+      MAIL_SMTP_PASS: ${MAIL_SMTP_PASS:-}
+      MAIL_SMTP_FROM: ${MAIL_SMTP_FROM:-}
+      MAIL_SMTP_FROM_NAME: ${MAIL_SMTP_FROM_NAME:-MLTCENTERS Workshop}
+      MAIL_SMTP_HOST: ${MAIL_SMTP_HOST:-smtp.gmail.com}
+      MAIL_SMTP_PORT: ${MAIL_SMTP_PORT:-587}
+      RESEND_API_KEY: ${RESEND_API_KEY:-}
+      EMAIL_FROM: ${EMAIL_FROM:-}
       SMTP_USER: ${SMTP_USER:-}
       SMTP_PASS: ${SMTP_PASS:-}
       SMTP_HOST: ${SMTP_HOST:-smtp.gmail.com}

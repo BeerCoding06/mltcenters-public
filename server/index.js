@@ -1,10 +1,12 @@
 /**
  * Backend: OpenAI assessment proxy + registration email.
  * Run: npm install && OPENAI_API_KEY=sk-... npm start
- * Registration email (set on server):
- *   REGISTER_TO_EMAIL=mltcenterth@gmail.com
- *   SMTP_HOST=smtp.gmail.com  SMTP_PORT=587
- *   SMTP_USER=your@gmail.com  SMTP_PASS=app-password
+ * Registration email (PHPMailer via PHP — recommended on MAMP):
+ *   USE_PHP_MAILER=true
+ *   MAIL_SMTP_USER=paradon.pokpingmaung@gmail.com
+ *   MAIL_SMTP_PASS=your-gmail-app-password
+ *   REGISTER_TO_EMAIL=paradon.pokpingmaung@gmail.com,mltcenterth@gmail.com
+ *   Run: cd mail && composer install
  */
 import path from 'path';
 import { existsSync, readFileSync } from 'fs';
@@ -16,6 +18,7 @@ import OpenAI from 'openai';
 import nodemailer from 'nodemailer';
 import compression from 'compression';
 import { createRunnerRouter } from './runner-api.js';
+import { isPhpMailerReady, sendViaPhpMailer } from './php-mailer.js';
 import {
   buildAssessApiMessages,
   buildRewriteInstruction,
@@ -36,7 +39,18 @@ const distPath = path.join(__dirname, '../dist');
 dotenv.config({ path: path.join(__dirname, '.env') });
 dotenv.config({ path: path.join(__dirname, '../.env') });
 
-const REGISTER_TO_EMAIL = process.env.REGISTER_TO_EMAIL || 'mltcenterth@gmail.com';
+const REGISTER_TO_EMAILS = (process.env.REGISTER_TO_EMAIL ||
+  'paradon.pokpingmaung@gmail.com,mltcenterth@gmail.com')
+  .split(/[\s,;]+/)
+  .map((s) => s.trim())
+  .filter(Boolean);
+const MAIL_SMTP_USER = process.env.MAIL_SMTP_USER || process.env.SMTP_USER || '';
+const MAIL_SMTP_PASS = process.env.MAIL_SMTP_PASS || process.env.SMTP_PASS || '';
+const MAIL_SMTP_FROM = process.env.MAIL_SMTP_FROM || MAIL_SMTP_USER;
+const USE_PHP_MAILER =
+  process.env.USE_PHP_MAILER !== 'false' &&
+  process.env.USE_PHP_MAILER !== '0';
+const PHP_MAILER_READY = USE_PHP_MAILER && isPhpMailerReady();
 const SMTP_HOST = process.env.SMTP_HOST || 'smtp.gmail.com';
 const SMTP_PORT = Number(process.env.SMTP_PORT || 587);
 const SMTP_USER = process.env.SMTP_USER || '';
@@ -142,9 +156,18 @@ function buildRegistrationEmail(body) {
   return { text, html };
 }
 
-const emailConfigured = Boolean(RESEND_API_KEY || (SMTP_USER && SMTP_PASS));
+const emailConfigured = Boolean(
+  (PHP_MAILER_READY && MAIL_SMTP_USER && MAIL_SMTP_PASS) ||
+    RESEND_API_KEY ||
+    (SMTP_USER && SMTP_PASS && mailTransport)
+);
 
 async function sendRegistrationEmail({ replyTo, subject, text, html }) {
+  if (PHP_MAILER_READY && MAIL_SMTP_USER && MAIL_SMTP_PASS) {
+    await sendViaPhpMailer({ replyTo, subject, text, html });
+    return;
+  }
+
   if (RESEND_API_KEY) {
     const res = await fetch('https://api.resend.com/emails', {
       method: 'POST',
@@ -154,7 +177,7 @@ async function sendRegistrationEmail({ replyTo, subject, text, html }) {
       },
       body: JSON.stringify({
         from: EMAIL_FROM,
-        to: [REGISTER_TO_EMAIL],
+        to: REGISTER_TO_EMAILS,
         reply_to: replyTo,
         subject,
         html,
@@ -174,7 +197,7 @@ async function sendRegistrationEmail({ replyTo, subject, text, html }) {
 
   await mailTransport.sendMail({
     from: SMTP_FROM,
-    to: REGISTER_TO_EMAIL,
+    to: REGISTER_TO_EMAILS,
     replyTo,
     subject,
     text,
@@ -186,9 +209,9 @@ app.post('/api/register', async (req, res) => {
   if (!emailConfigured) {
     return res.status(503).json({
       error:
-        'Email is not configured. Set RESEND_API_KEY or SMTP_USER + SMTP_PASS in .env.',
+        'Email is not configured. Set MAIL_SMTP_USER + MAIL_SMTP_PASS and run cd mail && composer install, or set RESEND_API_KEY.',
       errorTh:
-        'ยังไม่ได้ตั้งค่าอีเมล กรุณาใส่ RESEND_API_KEY หรือ SMTP_USER + SMTP_PASS ในไฟล์ .env',
+        'ยังไม่ได้ตั้งค่าอีเมล กรุณาใส่ MAIL_SMTP_USER + MAIL_SMTP_PASS ใน .env และรัน cd mail && composer install',
     });
   }
 
@@ -374,10 +397,12 @@ app.listen(PORT, host, () => {
   if (mailTransport) {
     mailTransport
       .verify()
-      .then(() => console.log(`Registration email (SMTP) → ${REGISTER_TO_EMAIL}`))
+      .then(() => console.log(`Registration email (SMTP) → ${REGISTER_TO_EMAILS.join(', ')}`))
       .catch((err) => console.error('SMTP verify failed:', err.message));
+  } else if (PHP_MAILER_READY && MAIL_SMTP_USER && MAIL_SMTP_PASS) {
+    console.log(`Registration email (PHPMailer via ${MAIL_SMTP_FROM}) → ${REGISTER_TO_EMAILS.join(', ')}`);
   } else if (RESEND_API_KEY) {
-    console.log(`Registration email (Resend) → ${REGISTER_TO_EMAIL}`);
+    console.log(`Registration email (Resend) → ${REGISTER_TO_EMAILS.join(', ')}`);
   } else {
     console.warn(
       'Registration email disabled: set RESEND_API_KEY or SMTP_USER + SMTP_PASS in .env'

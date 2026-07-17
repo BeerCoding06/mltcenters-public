@@ -19,12 +19,17 @@ RUN npm run build
 
 FROM node:20-alpine AS runner
 WORKDIR /app
+RUN apk add --no-cache php83 php83-mbstring php83-openssl composer
+COPY mail/composer.json mail/composer.lock* ./mail/
+RUN cd mail && composer install --no-dev --optimize-autoloader --no-interaction
 COPY server/package.json ./server/
 RUN cd server && npm install --omit=dev
 COPY server ./server
+COPY mail ./mail
 COPY --from=frontend /app/dist ./dist
 COPY --from=runner-frontend /app/runner-3d/frontend/dist ./dist/runner-app
 ENV NODE_ENV=production
+ENV USE_PHP_MAILER=true
 EXPOSE 3000
 WORKDIR /app/server
 CMD ["node", "index.js"]
