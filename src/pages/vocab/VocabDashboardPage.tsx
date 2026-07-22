@@ -16,9 +16,7 @@ export default function VocabDashboardPage() {
       return;
     }
 
-    fetchDashboard().catch(() => {
-      navigate('/vocab/onboarding', { replace: true });
-    });
+    void fetchDashboard();
   }, [fetchDashboard, navigate]);
 
   useEffect(() => {
