@@ -301,12 +301,19 @@ function createFileModel(fileStore) {
     },
 
     async countNewWordsLearnedSince(profileId, sinceMs) {
-      return data().quiz_results.filter(
-        (r) =>
-          r.profile_id === profileId &&
-          (r.created_at || 0) >= sinceMs &&
-          r.is_correct
-      ).length;
+      // Distinct word_ids whose first-ever answer for this profile is >= sinceMs
+      const byWord = new Map();
+      for (const r of data().quiz_results) {
+        if (r.profile_id !== profileId) continue;
+        const prev = byWord.get(r.word_id);
+        const at = r.created_at || 0;
+        if (prev == null || at < prev) byWord.set(r.word_id, at);
+      }
+      let count = 0;
+      for (const firstAt of byWord.values()) {
+        if (firstAt >= sinceMs) count += 1;
+      }
+      return count;
     },
   };
 }
@@ -532,8 +539,8 @@ function createPgModel(pool) {
       };
       await pool.query(
         `INSERT INTO vocab_sessions
-           (id, profile_id, mode, started_at, ended_at, words_count, correct_count, xp_earned)
-         VALUES ($1,$2,$3,$4,$5,$6,$7,$8)`,
+           (id, profile_id, mode, started_at, ended_at, words_count, correct_count, xp_earned, items_json)
+         VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)`,
         [
           session.id,
           session.profile_id,
@@ -543,17 +550,9 @@ function createPgModel(pool) {
           session.words_count,
           session.correct_count,
           session.xp_earned,
+          session.items_json,
         ]
       );
-      // items kept in-process via items_json column if present; also return items
-      try {
-        await pool.query(`UPDATE vocab_sessions SET items_json = $2 WHERE id = $1`, [
-          session.id,
-          session.items_json,
-        ]);
-      } catch {
-        /* column optional until migrate extended */
-      }
       return { ...session, items };
     },
 
@@ -573,29 +572,33 @@ function createPgModel(pool) {
     async updateSession(sessionId, patch) {
       const cur = await this.getSession(sessionId);
       if (!cur) return null;
+      const itemsJson =
+        patch.items !== undefined
+          ? JSON.stringify(patch.items)
+          : cur.items_json != null
+            ? cur.items_json
+            : JSON.stringify(cur.items || []);
       const next = {
         ended_at: patch.ended_at !== undefined ? patch.ended_at : cur.ended_at,
         words_count: patch.words_count !== undefined ? patch.words_count : cur.words_count,
         correct_count:
           patch.correct_count !== undefined ? patch.correct_count : cur.correct_count,
         xp_earned: patch.xp_earned !== undefined ? patch.xp_earned : cur.xp_earned,
+        items_json: itemsJson,
       };
       await pool.query(
         `UPDATE vocab_sessions SET
-           ended_at = $2, words_count = $3, correct_count = $4, xp_earned = $5
+           ended_at = $2, words_count = $3, correct_count = $4, xp_earned = $5, items_json = $6
          WHERE id = $1`,
-        [sessionId, next.ended_at, next.words_count, next.correct_count, next.xp_earned]
+        [
+          sessionId,
+          next.ended_at,
+          next.words_count,
+          next.correct_count,
+          next.xp_earned,
+          next.items_json,
+        ]
       );
-      if (patch.items) {
-        try {
-          await pool.query(`UPDATE vocab_sessions SET items_json = $2 WHERE id = $1`, [
-            sessionId,
-            JSON.stringify(patch.items),
-          ]);
-        } catch {
-          /* optional */
-        }
-      }
       return this.getSession(sessionId);
     },
 
@@ -682,9 +685,15 @@ function createPgModel(pool) {
     },
 
     async countNewWordsLearnedSince(profileId, sinceMs) {
+      // Distinct word_ids whose first-ever answer for this profile is >= sinceMs
       const r = await pool.query(
-        `SELECT COUNT(DISTINCT word_id)::int AS count FROM vocab_quiz_results
-         WHERE profile_id = $1 AND created_at >= $2 AND is_correct = true`,
+        `SELECT COUNT(*)::int AS count FROM (
+           SELECT word_id, MIN(created_at) AS first_at
+           FROM vocab_quiz_results
+           WHERE profile_id = $1
+           GROUP BY word_id
+         ) firsts
+         WHERE first_at >= $2`,
         [profileId, sinceMs]
       );
       return r.rows[0]?.count ?? 0;

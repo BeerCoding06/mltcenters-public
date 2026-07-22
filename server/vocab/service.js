@@ -195,10 +195,8 @@ export function createVocabService({ model }) {
 
     const quota = newWordsPerDay();
     const dayStart = startOfUtcDayMs();
-    const answeredToday = await model.listQuizResults(profileId, dayStart);
-    const answeredWordIdsToday = new Set(answeredToday.map((r) => r.word_id));
+    const usedNewToday = await model.countNewWordsLearnedSince(profileId, dayStart);
     const freshAvailable = (await pickLearnWords(profile, 10_000)).length;
-    const usedNewToday = Math.min(quota, answeredWordIdsToday.size);
     const learnRemaining = Math.max(0, Math.min(quota - usedNewToday, freshAvailable));
 
     const reviewDue = (await model.listDueReviews(profileId, Date.now(), 50)).length;
@@ -233,8 +231,7 @@ export function createVocabService({ model }) {
     let selected = [];
     if (mode === 'learn' || mode === 'quiz') {
       const dayStart = startOfUtcDayMs();
-      const answeredToday = await model.listQuizResults(profileId, dayStart);
-      const usedToday = new Set(answeredToday.map((r) => r.word_id)).size;
+      const usedToday = await model.countNewWordsLearnedSince(profileId, dayStart);
       const remainingQuota = Math.max(0, quota - usedToday);
       const learnWords = await pickLearnWords(profile, remainingQuota);
       const dueWords = await pickDueWords(profile, MAX_REVIEW_IN_LEARN);

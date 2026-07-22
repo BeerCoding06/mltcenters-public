@@ -10,11 +10,12 @@ import { loadStarterSeed } from './seed-loader.js';
 
 let dir;
 let service;
+let model;
 
 beforeEach(async () => {
   dir = fs.mkdtempSync(path.join(os.tmpdir(), 'vocab-'));
   const store = createVocabFileStore(path.join(dir, 'vocab.json'));
-  const model = createVocabModel({ mode: 'file', fileStore: store });
+  model = createVocabModel({ mode: 'file', fileStore: store });
   await loadStarterSeed(model);
   service = createVocabService({ model });
 });
@@ -62,5 +63,48 @@ describe('vocab service', () => {
     });
     expect(result.isCorrect).toBe(false);
     expect(result.nextReviewAt).toBeLessThan(Date.now() + 24 * 3600 * 1000);
+  });
+
+  it('review answers do not reduce learnRemaining like new words', async () => {
+    const p = await service.ensureProfile('vis_quota', { goal: 'general', levelId: 'starter' });
+    const before = await service.getDashboard(p.id);
+    const remaining0 = before.today.learnRemaining;
+
+    const learnSession = await service.startSession(p.id, 'learn');
+    const item = learnSession.items[0];
+    await service.submitAnswer(p.id, learnSession.sessionId, {
+      wordId: item.wordId,
+      quizType: 'mcq',
+      userAnswer: item.expected,
+      responseMs: 1200,
+      confidence: 4,
+    });
+
+    const afterNew = await service.getDashboard(p.id);
+    expect(afterNew.today.learnRemaining).toBe(remaining0 - 1);
+
+    await model.upsertReviewSchedule({
+      profileId: p.id,
+      wordId: item.wordId,
+      nextReviewAt: Date.now() - 1000,
+      priority: 1,
+    });
+    const st = await model.getWordStat(p.id, item.wordId);
+    await model.upsertWordStat({ ...st, nextReviewAt: Date.now() - 1000 });
+
+    const reviewSession = await service.startSession(p.id, 'review');
+    const reviewItem =
+      reviewSession.items.find((i) => i.wordId === item.wordId) || reviewSession.items[0];
+    expect(reviewItem.wordId).toBe(item.wordId);
+    await service.submitAnswer(p.id, reviewSession.sessionId, {
+      wordId: reviewItem.wordId,
+      quizType: 'mcq',
+      userAnswer: reviewItem.expected,
+      responseMs: 1400,
+      confidence: 4,
+    });
+
+    const afterReview = await service.getDashboard(p.id);
+    expect(afterReview.today.learnRemaining).toBe(afterNew.today.learnRemaining);
   });
 });

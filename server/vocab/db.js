@@ -170,8 +170,9 @@ async function migratePostgres() {
     `CREATE TABLE IF NOT EXISTS vocab_sessions (
       id TEXT PRIMARY KEY, profile_id TEXT, mode TEXT,
       started_at BIGINT, ended_at BIGINT, words_count INT,
-      correct_count INT, xp_earned INT
+      correct_count INT, xp_earned INT, items_json TEXT
     )`,
+    `ALTER TABLE vocab_sessions ADD COLUMN IF NOT EXISTS items_json TEXT`,
     `CREATE TABLE IF NOT EXISTS vocab_quiz_results (
       id TEXT PRIMARY KEY, session_id TEXT, profile_id TEXT, word_id TEXT,
       quiz_type TEXT, is_correct BOOLEAN, response_ms INT,
