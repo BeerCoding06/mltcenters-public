@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useI18n } from '@/lib/i18n';
-import { PageLoader } from '@/components/PageLoader';
 import { isVocabOnboarded } from '@/vocab/useVocabProfile';
 import { VocabSessionFlow } from './VocabSessionFlow';
 
