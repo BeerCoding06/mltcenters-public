@@ -50,6 +50,25 @@ describe('vocab service', () => {
     expect(result.xpDelta).toBe(10);
   });
 
+  it('learn session mixes quiz types', async () => {
+    const p = await service.ensureProfile('vis_mix', { goal: 'general', levelId: 'starter' });
+    const session = await service.startSession(p.id, 'learn');
+    expect(session.items.length).toBeGreaterThan(2);
+    const types = new Set(session.items.slice(0, 6).map((i) => i.quizType));
+    expect(types.has('mcq')).toBe(true);
+    expect(types.has('type')).toBe(true);
+    expect(types.has('fill')).toBe(true);
+  });
+
+  it('fill item includes blank example prompt', async () => {
+    const p = await service.ensureProfile('vis_fill', { goal: 'general', levelId: 'starter' });
+    const session = await service.startSession(p.id, 'learn');
+    const fillItem = session.items.find((i) => i.quizType === 'fill');
+    expect(fillItem).toBeTruthy();
+    expect(fillItem.prompt.example_en).toContain('______');
+    expect(fillItem.prompt.meaning_th).toBeTruthy();
+  });
+
   it('wrong answer schedules short review', async () => {
     const p = await service.ensureProfile('vis_3', { goal: 'general', levelId: 'starter' });
     const session = await service.startSession(p.id, 'learn');

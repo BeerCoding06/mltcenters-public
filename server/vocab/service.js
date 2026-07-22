@@ -60,6 +60,50 @@ function gradeAnswer(word, quizType, userAnswer, expected) {
   return ans === normalizeAnswer(word.word);
 }
 
+const QUIZ_TYPES = ['mcq', 'type', 'fill'];
+
+function buildTypeItem(word) {
+  return {
+    wordId: word.id,
+    quizType: 'type',
+    expected: word.word,
+    promptMode: 'meaning_to_word',
+    prompt: {
+      word: word.word,
+      ipa: word.ipa,
+      meaning_th: word.meaning_th,
+      example_en: word.example_en,
+      example_th: word.example_th,
+    },
+  };
+}
+
+function buildFillItem(word) {
+  const exampleEn = word.example_en || `This is ${word.word}.`;
+  const re = new RegExp(`\\b${word.word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i');
+  const blanked = exampleEn.replace(re, '______');
+  return {
+    wordId: word.id,
+    quizType: 'fill',
+    expected: word.word,
+    promptMode: 'fill_blank',
+    prompt: {
+      word: word.word,
+      ipa: word.ipa,
+      meaning_th: word.meaning_th,
+      example_en: blanked,
+      example_th: word.example_th,
+    },
+  };
+}
+
+function buildSessionItem(word, levelWords, index) {
+  const quizType = QUIZ_TYPES[index % QUIZ_TYPES.length];
+  if (quizType === 'type') return buildTypeItem(word);
+  if (quizType === 'fill') return buildFillItem(word);
+  return buildMcqItem(word, levelWords);
+}
+
 function buildMcqItem(word, levelWords) {
   const promptMode = Math.random() < 0.5 ? 'word_to_meaning' : 'meaning_to_word';
   const others = levelWords.filter((w) => w.id !== word.id);
@@ -73,7 +117,13 @@ function buildMcqItem(word, levelWords) {
       quizType: 'mcq',
       expected,
       promptMode,
-      prompt: { word: word.word, ipa: word.ipa, meaning_th: null },
+      prompt: {
+        word: word.word,
+        ipa: word.ipa,
+        meaning_th: null,
+        example_en: word.example_en,
+        example_th: word.example_th,
+      },
       options,
     };
   }
@@ -85,7 +135,13 @@ function buildMcqItem(word, levelWords) {
     quizType: 'mcq',
     expected,
     promptMode,
-    prompt: { word: null, ipa: null, meaning_th: word.meaning_th },
+    prompt: {
+      word: word.word,
+      ipa: word.ipa,
+      meaning_th: word.meaning_th,
+      example_en: word.example_en,
+      example_th: word.example_th,
+    },
     options,
   };
 }
@@ -302,7 +358,7 @@ export function createVocabService({ model, openai = null, modelName = 'gpt-4o-m
       selected = (await pickLearnWords(profile, quota)).slice(0, quota);
     }
 
-    const items = selected.map((w) => buildMcqItem(w, levelWords));
+    const items = selected.map((w, i) => buildSessionItem(w, levelWords, i));
     const session = await model.createSession({ profileId, mode, items });
     return { sessionId: session.id, items };
   }

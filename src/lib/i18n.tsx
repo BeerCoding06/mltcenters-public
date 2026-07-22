@@ -107,6 +107,75 @@ export const translations = {
       ctaSentences: { en: "AI sentences", th: "ประโยคจาก AI" },
       error: { en: "Couldn't load your profile.", th: "โหลดโปรไฟล์ไม่สำเร็จ" },
     },
+    learn: {
+      reveal: { en: "Reveal meaning", th: "เปิดความหมาย" },
+      startQuiz: { en: "Quiz this word", th: "ทำแบบทดสอบคำนี้" },
+      viewDetail: { en: "View word details", th: "ดูรายละเอียดคำ" },
+      emptyTitle: { en: "No new words today", th: "ไม่มีคำใหม่วันนี้" },
+      emptyBody: {
+        en: "You've reached today's new-word limit. Try review or come back tomorrow.",
+        th: "เรียนครบโควต้าวันนี้แล้ว ลองทบทวนหรือกลับมาพรุ่งนี้",
+      },
+    },
+    review: {
+      emptyTitle: { en: "Nothing to review", th: "ยังไม่มีคำให้ทบทวน" },
+      emptyBody: {
+        en: "Learn a few words first — they'll appear here when review is due.",
+        th: "เรียนคำใหม่ก่อน — คำจะมาปรากฏที่นี่เมื่อถึงเวลาทบทวน",
+      },
+    },
+    quiz: {
+      subtitle: {
+        en: "Mixed quiz from words you've seen recently.",
+        th: "แบบทดสอบคละประเภทจากคำที่คุณเคยเรียน",
+      },
+      prompt: { en: "Your answer", th: "คำตอบของคุณ" },
+      typePlaceholder: { en: "Type the English word", th: "พิมพ์คำศัพท์ภาษาอังกฤษ" },
+      fillPlaceholder: { en: "Fill in the blank", th: "เติมคำในช่องว่าง" },
+      submit: { en: "Check answer", th: "ตรวจคำตอบ" },
+      checking: { en: "Checking…", th: "กำลังตรวจ…" },
+      correct: { en: "Correct!", th: "ถูกต้อง!" },
+      incorrect: { en: "Not quite", th: "ยังไม่ถูก" },
+      expected: { en: "Answer", th: "คำตอบ" },
+    },
+    session: {
+      progress: { en: "Progress", th: "ความคืบหน้า" },
+      next: { en: "Next word", th: "คำถัดไป" },
+      finish: { en: "Finish session", th: "จบเซสชัน" },
+      completeTitle: { en: "Session complete!", th: "จบเซสชันแล้ว!" },
+      completeSubtitle: {
+        en: "Great work — keep your streak going.",
+        th: "เยี่ยมมาก — รักษาสตรีคต่อไป",
+      },
+      xpEarned: { en: "XP earned", th: "XP ที่ได้" },
+      correctCount: { en: "Correct", th: "ตอบถูก" },
+      xpToast: { en: "You earned {xp} XP!", th: "ได้ {xp} XP!" },
+      backDashboard: { en: "Back to dashboard", th: "กลับแดชบอร์ด" },
+      retry: { en: "Try again", th: "ลองอีกครั้ง" },
+      error: { en: "Something went wrong.", th: "เกิดข้อผิดพลาด" },
+      noItems: { en: "No words available for this session.", th: "ไม่มีคำสำหรับเซสชันนี้" },
+    },
+    wordDetail: {
+      example: { en: "Example", th: "ตัวอย่างประโยค" },
+      memoryScore: { en: "Memory score", th: "คะแนนความจำ" },
+      status: { en: "Status", th: "สถานะ" },
+      error: { en: "Word not found.", th: "ไม่พบคำศัพท์" },
+      backLearn: { en: "Back to learn", th: "กลับไปเรียน" },
+    },
+    sentences: {
+      title: { en: "Today's AI sentences", th: "ประโยค AI วันนี้" },
+      subtitle: {
+        en: "Five sentences using words you know — English with Thai meaning.",
+        th: "ห้าประโยคจากคำที่คุณรู้จัก — อังกฤษพร้อมความหมายไทย",
+      },
+      cached: { en: "Saved from earlier today", th: "บันทึกไว้แล้ววันนี้" },
+      emptyTitle: { en: "Learn words first", th: "เรียนคำก่อน" },
+      emptyBody: {
+        en: "Complete a learn session to unlock AI sentences.",
+        th: "เรียนคำใหม่ก่อนเพื่อปลดล็อกประโยค AI",
+      },
+      error: { en: "Couldn't load sentences.", th: "โหลดประโยคไม่สำเร็จ" },
+    },
   },
   hero: {
     headline: {

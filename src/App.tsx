@@ -23,6 +23,11 @@ const AdminAnalyticsPage = lazy(() => import("./pages/AdminAnalyticsPage"));
 const VocabLayout = lazy(() => import("./pages/vocab/VocabLayout"));
 const VocabDashboardPage = lazy(() => import("./pages/vocab/VocabDashboardPage"));
 const VocabOnboardingPage = lazy(() => import("./pages/vocab/VocabOnboardingPage"));
+const VocabLearnPage = lazy(() => import("./pages/vocab/VocabLearnPage"));
+const VocabWordDetailPage = lazy(() => import("./pages/vocab/VocabWordDetailPage"));
+const VocabReviewPage = lazy(() => import("./pages/vocab/VocabReviewPage"));
+const VocabQuizPage = lazy(() => import("./pages/vocab/VocabQuizPage"));
+const VocabSentencesPage = lazy(() => import("./pages/vocab/VocabSentencesPage"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const App = () => (
@@ -49,6 +54,11 @@ const App = () => (
               <Route path="/vocab" element={<VocabLayout />}>
                 <Route index element={<VocabDashboardPage />} />
                 <Route path="onboarding" element={<VocabOnboardingPage />} />
+                <Route path="learn" element={<VocabLearnPage />} />
+                <Route path="learn/:wordId" element={<VocabWordDetailPage />} />
+                <Route path="review" element={<VocabReviewPage />} />
+                <Route path="quiz" element={<VocabQuizPage />} />
+                <Route path="sentences" element={<VocabSentencesPage />} />
               </Route>
               <Route path="*" element={<NotFound />} />
             </Routes>

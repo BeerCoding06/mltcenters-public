@@ -21,6 +21,12 @@ export const KNOWN_SPA_PATHS = new Set([
   '/assessment',
   '/assessment/dashboard',
   '/admin/analytics',
+  '/vocab',
+  '/vocab/onboarding',
+  '/vocab/learn',
+  '/vocab/review',
+  '/vocab/quiz',
+  '/vocab/sentences',
 ]);
 
 const NOT_FOUND_META = {
@@ -89,6 +95,43 @@ export const PAGE_META = {
     title: 'Analytics Admin | MLTCENTERS',
     h1: 'Analytics Admin',
     description: 'Internal analytics dashboard',
+    noindex: true,
+  },
+  '/vocab': {
+    title: 'เรียนศัพท์ AI | MLTCENTERS — Vocabulary Learning',
+    h1: 'เรียนศัพท์',
+    description:
+      'AI vocabulary tutor — learn new words, smart review, quizzes, and daily AI sentences. เรียนศัพท์ ทบทวน และประโยคจาก AI',
+    noindex: true,
+  },
+  '/vocab/onboarding': {
+    title: 'ตั้งเป้าหมายเรียนศัพท์ | MLTCENTERS',
+    h1: 'ตั้งเป้าหมายการเรียน',
+    description: 'Choose your vocabulary learning goal and starting level.',
+    noindex: true,
+  },
+  '/vocab/learn': {
+    title: 'เรียนคำใหม่ | MLTCENTERS Vocab',
+    h1: 'เรียนคำใหม่',
+    description: 'Learn new English vocabulary with reveal cards and instant quizzes.',
+    noindex: true,
+  },
+  '/vocab/review': {
+    title: 'ทบทวนศัพท์ | MLTCENTERS Vocab',
+    h1: 'ทบทวนอัจฉริยะ',
+    description: 'Smart spaced-repetition review for words due today.',
+    noindex: true,
+  },
+  '/vocab/quiz': {
+    title: 'แบบทดสอบศัพท์ | MLTCENTERS Vocab',
+    h1: 'แบบทดสอบ',
+    description: 'Mixed vocabulary quiz — MCQ, typing, and fill-in-the-blank.',
+    noindex: true,
+  },
+  '/vocab/sentences': {
+    title: 'ประโยค AI วันนี้ | MLTCENTERS Vocab',
+    h1: 'ประโยคจาก AI',
+    description: 'Five AI-generated sentences using words you have learned.',
     noindex: true,
   },
 };

@@ -26,6 +26,9 @@ export const ANALYTICS_EVENTS = {
   REGISTER_STARTED: 'register_started',
   REGISTER_COMPLETED: 'register_completed',
   CONTACT_SUBMIT: 'contact_submit',
+  VOCAB_SESSION_STARTED: 'vocab_session_started',
+  VOCAB_WORD_LEARNED: 'vocab_word_learned',
+  VOCAB_QUIZ_ANSWERED: 'vocab_quiz_answered',
 } as const;
 
 export type AnalyticsEventName = (typeof ANALYTICS_EVENTS)[keyof typeof ANALYTICS_EVENTS] | string;

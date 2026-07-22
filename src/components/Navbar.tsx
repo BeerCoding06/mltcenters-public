@@ -23,6 +23,7 @@ const Navbar = () => {
     { label: t.nav.schedule[lang], path: '/schedule' },
     { label: t.nav.gallery[lang], path: '/gallery' },
     { label: t.nav.assessment[lang], path: '/assessment', icon: Bot },
+    { label: t.nav.vocab[lang], path: '/vocab' },
     { label: t.nav.runner[lang], path: '/runner-app/', icon: Gamepad2, external: true },
     { label: t.nav.register[lang], path: '/register' },
     { label: t.nav.contact[lang], path: '/contact' },
@@ -30,7 +31,7 @@ const Navbar = () => {
 
   const linkClass = (path: string, external?: boolean) =>
     `flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-medium transition-colors ${
-      !external && location.pathname === path
+      !external && (location.pathname === path || (path === '/vocab' && location.pathname.startsWith('/vocab')))
         ? 'text-[#0f4c6a] bg-primary/15 font-semibold'
         : 'text-foreground/80 hover:text-foreground hover:bg-muted'
     }`;
