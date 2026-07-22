@@ -109,7 +109,7 @@ export function dedupeMessages(messages) {
   for (const raw of messages) {
     if (!raw || typeof raw !== 'object') continue;
     const role = raw.role;
-    const content = typeof raw.content === 'string' ? raw.content.trim() : '';
+    let content = typeof raw.content === 'string' ? raw.content.trim() : '';
     if (!VALID_ROLES.has(role) || !content) continue;
 
     const prev = result[result.length - 1];
