@@ -1,0 +1,4802 @@
+[
+  {
+    "id": "w_0001",
+    "word": "hello",
+    "ipa": "/həˈləʊ/",
+    "pos": "interjection",
+    "meaning_th": "สวัสดี",
+    "difficulty": 1,
+    "frequency": 300,
+    "category": "greeting",
+    "example_en": "Hello, how are you?",
+    "example_th": "สวัสดี คุณเป็นอย่างไรบ้าง?",
+    "tags": [
+      "starter",
+      "greeting"
+    ]
+  },
+  {
+    "id": "w_0002",
+    "word": "hi",
+    "ipa": "/haɪ/",
+    "pos": "interjection",
+    "meaning_th": "หวัดดี",
+    "difficulty": 1,
+    "frequency": 299,
+    "category": "greeting",
+    "example_en": "Hi, nice to meet you.",
+    "example_th": "หวัดดี ยินดีที่ได้รู้จัก",
+    "tags": [
+      "starter",
+      "greeting"
+    ]
+  },
+  {
+    "id": "w_0003",
+    "word": "goodbye",
+    "ipa": "/ˌɡʊdˈbaɪ/",
+    "pos": "interjection",
+    "meaning_th": "ลาก่อน",
+    "difficulty": 1,
+    "frequency": 298,
+    "category": "greeting",
+    "example_en": "Goodbye, see you later.",
+    "example_th": "ลาก่อน แล้วเจอกัน",
+    "tags": [
+      "starter",
+      "greeting"
+    ]
+  },
+  {
+    "id": "w_0004",
+    "word": "please",
+    "ipa": "/pliːz/",
+    "pos": "adverb",
+    "meaning_th": "กรุณา",
+    "difficulty": 1,
+    "frequency": 297,
+    "category": "polite",
+    "example_en": "Please sit down.",
+    "example_th": "กรุณานั่งลง",
+    "tags": [
+      "starter",
+      "polite"
+    ]
+  },
+  {
+    "id": "w_0005",
+    "word": "thank",
+    "ipa": "/θæŋk/",
+    "pos": "verb",
+    "meaning_th": "ขอบคุณ",
+    "difficulty": 1,
+    "frequency": 296,
+    "category": "polite",
+    "example_en": "Thank you very much.",
+    "example_th": "ขอบคุณมาก",
+    "tags": [
+      "starter",
+      "polite"
+    ]
+  },
+  {
+    "id": "w_0006",
+    "word": "sorry",
+    "ipa": "/ˈsɒri/",
+    "pos": "adjective",
+    "meaning_th": "ขอโทษ",
+    "difficulty": 1,
+    "frequency": 295,
+    "category": "polite",
+    "example_en": "I am sorry.",
+    "example_th": "ฉันขอโทษ",
+    "tags": [
+      "starter",
+      "polite"
+    ]
+  },
+  {
+    "id": "w_0007",
+    "word": "yes",
+    "ipa": "/jes/",
+    "pos": "interjection",
+    "meaning_th": "ใช่",
+    "difficulty": 1,
+    "frequency": 294,
+    "category": "basic",
+    "example_en": "Yes, I agree.",
+    "example_th": "ใช่ ฉันเห็นด้วย",
+    "tags": [
+      "starter",
+      "basic"
+    ]
+  },
+  {
+    "id": "w_0008",
+    "word": "no",
+    "ipa": "/nəʊ/",
+    "pos": "interjection",
+    "meaning_th": "ไม่",
+    "difficulty": 1,
+    "frequency": 293,
+    "category": "basic",
+    "example_en": "No, thank you.",
+    "example_th": "ไม่ ขอบคุณ",
+    "tags": [
+      "starter",
+      "basic"
+    ]
+  },
+  {
+    "id": "w_0009",
+    "word": "ok",
+    "ipa": "/ˌəʊˈkeɪ/",
+    "pos": "interjection",
+    "meaning_th": "ตกลง",
+    "difficulty": 1,
+    "frequency": 292,
+    "category": "basic",
+    "example_en": "Ok, let's go.",
+    "example_th": "ตกลง ไปกันเถอะ",
+    "tags": [
+      "starter",
+      "basic"
+    ]
+  },
+  {
+    "id": "w_0010",
+    "word": "welcome",
+    "ipa": "/ˈwelkəm/",
+    "pos": "interjection",
+    "meaning_th": "ยินดีต้อนรับ",
+    "difficulty": 1,
+    "frequency": 291,
+    "category": "greeting",
+    "example_en": "Welcome to our school.",
+    "example_th": "ยินดีต้อนรับสู่โรงเรียนของเรา",
+    "tags": [
+      "starter",
+      "greeting"
+    ]
+  },
+  {
+    "id": "w_0011",
+    "word": "name",
+    "ipa": "/neɪm/",
+    "pos": "noun",
+    "meaning_th": "ชื่อ",
+    "difficulty": 1,
+    "frequency": 290,
+    "category": "identity",
+    "example_en": "My name is Anna.",
+    "example_th": "ฉันชื่อแอนนา",
+    "tags": [
+      "starter",
+      "identity"
+    ]
+  },
+  {
+    "id": "w_0012",
+    "word": "friend",
+    "ipa": "/frend/",
+    "pos": "noun",
+    "meaning_th": "เพื่อน",
+    "difficulty": 1,
+    "frequency": 289,
+    "category": "people",
+    "example_en": "She is my friend.",
+    "example_th": "เธอเป็นเพื่อนของฉัน",
+    "tags": [
+      "starter",
+      "people"
+    ]
+  },
+  {
+    "id": "w_0013",
+    "word": "help",
+    "ipa": "/help/",
+    "pos": "verb",
+    "meaning_th": "ช่วย",
+    "difficulty": 1,
+    "frequency": 288,
+    "category": "action",
+    "example_en": "Can you help me?",
+    "example_th": "คุณช่วยฉันได้ไหม",
+    "tags": [
+      "starter",
+      "action"
+    ]
+  },
+  {
+    "id": "w_0014",
+    "word": "meet",
+    "ipa": "/miːt/",
+    "pos": "verb",
+    "meaning_th": "พบ",
+    "difficulty": 1,
+    "frequency": 287,
+    "category": "social",
+    "example_en": "Nice to meet you.",
+    "example_th": "ยินดีที่ได้พบคุณ",
+    "tags": [
+      "starter",
+      "social"
+    ]
+  },
+  {
+    "id": "w_0015",
+    "word": "see",
+    "ipa": "/siː/",
+    "pos": "verb",
+    "meaning_th": "เห็น",
+    "difficulty": 1,
+    "frequency": 286,
+    "category": "senses",
+    "example_en": "I see a bird.",
+    "example_th": "ฉันเห็นนก",
+    "tags": [
+      "starter",
+      "senses"
+    ]
+  },
+  {
+    "id": "w_0016",
+    "word": "hear",
+    "ipa": "/hɪə/",
+    "pos": "verb",
+    "meaning_th": "ได้ยิน",
+    "difficulty": 1,
+    "frequency": 285,
+    "category": "senses",
+    "example_en": "I hear music.",
+    "example_th": "ฉันได้ยินดนตรี",
+    "tags": [
+      "starter",
+      "senses"
+    ]
+  },
+  {
+    "id": "w_0017",
+    "word": "speak",
+    "ipa": "/spiːk/",
+    "pos": "verb",
+    "meaning_th": "พูด",
+    "difficulty": 1,
+    "frequency": 284,
+    "category": "language",
+    "example_en": "Please speak slowly.",
+    "example_th": "กรุณาพูดช้าๆ",
+    "tags": [
+      "starter",
+      "language"
+    ]
+  },
+  {
+    "id": "w_0018",
+    "word": "listen",
+    "ipa": "/ˈlɪsn/",
+    "pos": "verb",
+    "meaning_th": "ฟัง",
+    "difficulty": 1,
+    "frequency": 283,
+    "category": "language",
+    "example_en": "Listen carefully.",
+    "example_th": "ฟังอย่างตั้งใจ",
+    "tags": [
+      "starter",
+      "language"
+    ]
+  },
+  {
+    "id": "w_0019",
+    "word": "read",
+    "ipa": "/riːd/",
+    "pos": "verb",
+    "meaning_th": "อ่าน",
+    "difficulty": 1,
+    "frequency": 282,
+    "category": "language",
+    "example_en": "I read a book.",
+    "example_th": "ฉันอ่านหนังสือ",
+    "tags": [
+      "starter",
+      "language"
+    ]
+  },
+  {
+    "id": "w_0020",
+    "word": "write",
+    "ipa": "/raɪt/",
+    "pos": "verb",
+    "meaning_th": "เขียน",
+    "difficulty": 1,
+    "frequency": 281,
+    "category": "language",
+    "example_en": "Write your name.",
+    "example_th": "เขียนชื่อของคุณ",
+    "tags": [
+      "starter",
+      "language"
+    ]
+  },
+  {
+    "id": "w_0021",
+    "word": "ask",
+    "ipa": "/ɑːsk/",
+    "pos": "verb",
+    "meaning_th": "ถาม",
+    "difficulty": 1,
+    "frequency": 280,
+    "category": "language",
+    "example_en": "Ask a question.",
+    "example_th": "ถามคำถาม",
+    "tags": [
+      "starter",
+      "language"
+    ]
+  },
+  {
+    "id": "w_0022",
+    "word": "answer",
+    "ipa": "/ˈɑːnsə/",
+    "pos": "verb",
+    "meaning_th": "ตอบ",
+    "difficulty": 1,
+    "frequency": 279,
+    "category": "language",
+    "example_en": "Answer the question.",
+    "example_th": "ตอบคำถาม",
+    "tags": [
+      "starter",
+      "language"
+    ]
+  },
+  {
+    "id": "w_0023",
+    "word": "know",
+    "ipa": "/nəʊ/",
+    "pos": "verb",
+    "meaning_th": "รู้",
+    "difficulty": 1,
+    "frequency": 278,
+    "category": "mind",
+    "example_en": "I know the answer.",
+    "example_th": "ฉันรู้คำตอบ",
+    "tags": [
+      "starter",
+      "mind"
+    ]
+  },
+  {
+    "id": "w_0024",
+    "word": "think",
+    "ipa": "/θɪŋk/",
+    "pos": "verb",
+    "meaning_th": "คิด",
+    "difficulty": 1,
+    "frequency": 277,
+    "category": "mind",
+    "example_en": "I think so.",
+    "example_th": "ฉันคิดอย่างนั้น",
+    "tags": [
+      "starter",
+      "mind"
+    ]
+  },
+  {
+    "id": "w_0025",
+    "word": "like",
+    "ipa": "/laɪk/",
+    "pos": "verb",
+    "meaning_th": "ชอบ",
+    "difficulty": 1,
+    "frequency": 276,
+    "category": "feeling",
+    "example_en": "I like apples.",
+    "example_th": "ฉันชอบแอปเปิล",
+    "tags": [
+      "starter",
+      "feeling"
+    ]
+  },
+  {
+    "id": "w_0026",
+    "word": "one",
+    "ipa": "/wʌn/",
+    "pos": "number",
+    "meaning_th": "หนึ่ง",
+    "difficulty": 1,
+    "frequency": 275,
+    "category": "number",
+    "example_en": "I have one book.",
+    "example_th": "ฉันมีหนังสือหนึ่งเล่ม",
+    "tags": [
+      "starter",
+      "number"
+    ]
+  },
+  {
+    "id": "w_0027",
+    "word": "two",
+    "ipa": "/tuː/",
+    "pos": "number",
+    "meaning_th": "สอง",
+    "difficulty": 1,
+    "frequency": 274,
+    "category": "number",
+    "example_en": "Two cats are playing.",
+    "example_th": "แมวสองตัวกำลังเล่น",
+    "tags": [
+      "starter",
+      "number"
+    ]
+  },
+  {
+    "id": "w_0028",
+    "word": "three",
+    "ipa": "/θriː/",
+    "pos": "number",
+    "meaning_th": "สาม",
+    "difficulty": 1,
+    "frequency": 273,
+    "category": "number",
+    "example_en": "There are three chairs.",
+    "example_th": "มีเก้าอี้สามตัว",
+    "tags": [
+      "starter",
+      "number"
+    ]
+  },
+  {
+    "id": "w_0029",
+    "word": "four",
+    "ipa": "/fɔː/",
+    "pos": "number",
+    "meaning_th": "สี่",
+    "difficulty": 1,
+    "frequency": 272,
+    "category": "number",
+    "example_en": "I need four pens.",
+    "example_th": "ฉันต้องการปากกาสี่ด้าม",
+    "tags": [
+      "starter",
+      "number"
+    ]
+  },
+  {
+    "id": "w_0030",
+    "word": "five",
+    "ipa": "/faɪv/",
+    "pos": "number",
+    "meaning_th": "ห้า",
+    "difficulty": 1,
+    "frequency": 271,
+    "category": "number",
+    "example_en": "Five students are here.",
+    "example_th": "นักเรียนห้าคนอยู่ที่นี่",
+    "tags": [
+      "starter",
+      "number"
+    ]
+  },
+  {
+    "id": "w_0031",
+    "word": "six",
+    "ipa": "/sɪks/",
+    "pos": "number",
+    "meaning_th": "หก",
+    "difficulty": 1,
+    "frequency": 270,
+    "category": "number",
+    "example_en": "We have six eggs.",
+    "example_th": "เรามีไข่หกฟอง",
+    "tags": [
+      "starter",
+      "number"
+    ]
+  },
+  {
+    "id": "w_0032",
+    "word": "seven",
+    "ipa": "/ˈsevn/",
+    "pos": "number",
+    "meaning_th": "เจ็ด",
+    "difficulty": 1,
+    "frequency": 269,
+    "category": "number",
+    "example_en": "Seven days in a week.",
+    "example_th": "หนึ่งสัปดาห์มีเจ็ดวัน",
+    "tags": [
+      "starter",
+      "number"
+    ]
+  },
+  {
+    "id": "w_0033",
+    "word": "eight",
+    "ipa": "/eɪt/",
+    "pos": "number",
+    "meaning_th": "แปด",
+    "difficulty": 1,
+    "frequency": 268,
+    "category": "number",
+    "example_en": "Eight apples on the table.",
+    "example_th": "แอปเปิลแปดผลบนโต๊ะ",
+    "tags": [
+      "starter",
+      "number"
+    ]
+  },
+  {
+    "id": "w_0034",
+    "word": "nine",
+    "ipa": "/naɪn/",
+    "pos": "number",
+    "meaning_th": "เก้า",
+    "difficulty": 1,
+    "frequency": 267,
+    "category": "number",
+    "example_en": "She is nine years old.",
+    "example_th": "เธออายุเก้าปี",
+    "tags": [
+      "starter",
+      "number"
+    ]
+  },
+  {
+    "id": "w_0035",
+    "word": "ten",
+    "ipa": "/ten/",
+    "pos": "number",
+    "meaning_th": "สิบ",
+    "difficulty": 1,
+    "frequency": 266,
+    "category": "number",
+    "example_en": "Count to ten.",
+    "example_th": "นับถึงสิบ",
+    "tags": [
+      "starter",
+      "number"
+    ]
+  },
+  {
+    "id": "w_0036",
+    "word": "eleven",
+    "ipa": "/ɪˈlevn/",
+    "pos": "number",
+    "meaning_th": "สิบเอ็ด",
+    "difficulty": 1,
+    "frequency": 265,
+    "category": "number",
+    "example_en": "Eleven students came.",
+    "example_th": "นักเรียนสิบเอ็ดคนมา",
+    "tags": [
+      "starter",
+      "number"
+    ]
+  },
+  {
+    "id": "w_0037",
+    "word": "twelve",
+    "ipa": "/twelv/",
+    "pos": "number",
+    "meaning_th": "สิบสอง",
+    "difficulty": 1,
+    "frequency": 264,
+    "category": "number",
+    "example_en": "There are twelve months.",
+    "example_th": "มีสิบสองเดือน",
+    "tags": [
+      "starter",
+      "number"
+    ]
+  },
+  {
+    "id": "w_0038",
+    "word": "twenty",
+    "ipa": "/ˈtwenti/",
+    "pos": "number",
+    "meaning_th": "ยี่สิบ",
+    "difficulty": 1,
+    "frequency": 263,
+    "category": "number",
+    "example_en": "I am twenty years old.",
+    "example_th": "ฉันอายุยี่สิบปี",
+    "tags": [
+      "starter",
+      "number"
+    ]
+  },
+  {
+    "id": "w_0039",
+    "word": "thirty",
+    "ipa": "/ˈθɜːti/",
+    "pos": "number",
+    "meaning_th": "สามสิบ",
+    "difficulty": 1,
+    "frequency": 262,
+    "category": "number",
+    "example_en": "Thirty minutes left.",
+    "example_th": "เหลืออีกสามสิบนาที",
+    "tags": [
+      "starter",
+      "number"
+    ]
+  },
+  {
+    "id": "w_0040",
+    "word": "forty",
+    "ipa": "/ˈfɔːti/",
+    "pos": "number",
+    "meaning_th": "สี่สิบ",
+    "difficulty": 1,
+    "frequency": 261,
+    "category": "number",
+    "example_en": "Forty people joined.",
+    "example_th": "สี่สิบคนเข้าร่วม",
+    "tags": [
+      "starter",
+      "number"
+    ]
+  },
+  {
+    "id": "w_0041",
+    "word": "fifty",
+    "ipa": "/ˈfɪfti/",
+    "pos": "number",
+    "meaning_th": "ห้าสิบ",
+    "difficulty": 1,
+    "frequency": 260,
+    "category": "number",
+    "example_en": "Fifty books in the box.",
+    "example_th": "หนังสือห้าสิบเล่มในกล่อง",
+    "tags": [
+      "starter",
+      "number"
+    ]
+  },
+  {
+    "id": "w_0042",
+    "word": "hundred",
+    "ipa": "/ˈhʌndrəd/",
+    "pos": "number",
+    "meaning_th": "ร้อย",
+    "difficulty": 1,
+    "frequency": 259,
+    "category": "number",
+    "example_en": "One hundred students.",
+    "example_th": "นักเรียนหนึ่งร้อยคน",
+    "tags": [
+      "starter",
+      "number"
+    ]
+  },
+  {
+    "id": "w_0043",
+    "word": "first",
+    "ipa": "/fɜːst/",
+    "pos": "adjective",
+    "meaning_th": "แรก",
+    "difficulty": 1,
+    "frequency": 258,
+    "category": "order",
+    "example_en": "This is my first day.",
+    "example_th": "นี่คือวันแรกของฉัน",
+    "tags": [
+      "starter",
+      "order"
+    ]
+  },
+  {
+    "id": "w_0044",
+    "word": "second",
+    "ipa": "/ˈsekənd/",
+    "pos": "adjective",
+    "meaning_th": "ที่สอง",
+    "difficulty": 1,
+    "frequency": 257,
+    "category": "order",
+    "example_en": "The second door is open.",
+    "example_th": "ประตูที่สองเปิดอยู่",
+    "tags": [
+      "starter",
+      "order"
+    ]
+  },
+  {
+    "id": "w_0045",
+    "word": "third",
+    "ipa": "/θɜːd/",
+    "pos": "adjective",
+    "meaning_th": "ที่สาม",
+    "difficulty": 1,
+    "frequency": 256,
+    "category": "order",
+    "example_en": "He finished third.",
+    "example_th": "เขาได้อันดับที่สาม",
+    "tags": [
+      "starter",
+      "order"
+    ]
+  },
+  {
+    "id": "w_0046",
+    "word": "red",
+    "ipa": "/red/",
+    "pos": "adjective",
+    "meaning_th": "สีแดง",
+    "difficulty": 1,
+    "frequency": 255,
+    "category": "color",
+    "example_en": "The apple is red.",
+    "example_th": "แอปเปิลสีแดง",
+    "tags": [
+      "starter",
+      "color"
+    ]
+  },
+  {
+    "id": "w_0047",
+    "word": "blue",
+    "ipa": "/bluː/",
+    "pos": "adjective",
+    "meaning_th": "สีน้ำเงิน",
+    "difficulty": 1,
+    "frequency": 254,
+    "category": "color",
+    "example_en": "The sky is blue.",
+    "example_th": "ท้องฟ้าสีน้ำเงิน",
+    "tags": [
+      "starter",
+      "color"
+    ]
+  },
+  {
+    "id": "w_0048",
+    "word": "green",
+    "ipa": "/ɡriːn/",
+    "pos": "adjective",
+    "meaning_th": "สีเขียว",
+    "difficulty": 1,
+    "frequency": 253,
+    "category": "color",
+    "example_en": "Green leaves grow.",
+    "example_th": "ใบสีเขียวเติบโต",
+    "tags": [
+      "starter",
+      "color"
+    ]
+  },
+  {
+    "id": "w_0049",
+    "word": "yellow",
+    "ipa": "/ˈjeləʊ/",
+    "pos": "adjective",
+    "meaning_th": "สีเหลือง",
+    "difficulty": 1,
+    "frequency": 252,
+    "category": "color",
+    "example_en": "A yellow banana.",
+    "example_th": "กล้วยสีเหลือง",
+    "tags": [
+      "starter",
+      "color"
+    ]
+  },
+  {
+    "id": "w_0050",
+    "word": "black",
+    "ipa": "/blæk/",
+    "pos": "adjective",
+    "meaning_th": "สีดำ",
+    "difficulty": 1,
+    "frequency": 251,
+    "category": "color",
+    "example_en": "A black cat.",
+    "example_th": "แมวสีดำ",
+    "tags": [
+      "starter",
+      "color"
+    ]
+  },
+  {
+    "id": "w_0051",
+    "word": "white",
+    "ipa": "/waɪt/",
+    "pos": "adjective",
+    "meaning_th": "สีขาว",
+    "difficulty": 1,
+    "frequency": 250,
+    "category": "color",
+    "example_en": "White clouds.",
+    "example_th": "เมฆสีขาว",
+    "tags": [
+      "starter",
+      "color"
+    ]
+  },
+  {
+    "id": "w_0052",
+    "word": "orange",
+    "ipa": "/ˈɒrɪndʒ/",
+    "pos": "adjective",
+    "meaning_th": "สีส้ม",
+    "difficulty": 1,
+    "frequency": 249,
+    "category": "color",
+    "example_en": "An orange shirt.",
+    "example_th": "เสื้อสีส้ม",
+    "tags": [
+      "starter",
+      "color"
+    ]
+  },
+  {
+    "id": "w_0053",
+    "word": "pink",
+    "ipa": "/pɪŋk/",
+    "pos": "adjective",
+    "meaning_th": "สีชมพู",
+    "difficulty": 1,
+    "frequency": 248,
+    "category": "color",
+    "example_en": "A pink flower.",
+    "example_th": "ดอกไม้สีชมพู",
+    "tags": [
+      "starter",
+      "color"
+    ]
+  },
+  {
+    "id": "w_0054",
+    "word": "brown",
+    "ipa": "/braʊn/",
+    "pos": "adjective",
+    "meaning_th": "สีน้ำตาล",
+    "difficulty": 1,
+    "frequency": 247,
+    "category": "color",
+    "example_en": "Brown shoes.",
+    "example_th": "รองเท้าสีน้ำตาล",
+    "tags": [
+      "starter",
+      "color"
+    ]
+  },
+  {
+    "id": "w_0055",
+    "word": "gray",
+    "ipa": "/ɡreɪ/",
+    "pos": "adjective",
+    "meaning_th": "สีเทา",
+    "difficulty": 1,
+    "frequency": 246,
+    "category": "color",
+    "example_en": "A gray sky.",
+    "example_th": "ท้องฟ้าสีเทา",
+    "tags": [
+      "starter",
+      "color"
+    ]
+  },
+  {
+    "id": "w_0056",
+    "word": "purple",
+    "ipa": "/ˈpɜːpl/",
+    "pos": "adjective",
+    "meaning_th": "สีม่วง",
+    "difficulty": 1,
+    "frequency": 245,
+    "category": "color",
+    "example_en": "Purple grapes.",
+    "example_th": "องุ่นสีม่วง",
+    "tags": [
+      "starter",
+      "color"
+    ]
+  },
+  {
+    "id": "w_0057",
+    "word": "gold",
+    "ipa": "/ɡəʊld/",
+    "pos": "noun",
+    "meaning_th": "ทอง",
+    "difficulty": 1,
+    "frequency": 244,
+    "category": "color",
+    "example_en": "A gold ring.",
+    "example_th": "แหวนทอง",
+    "tags": [
+      "starter",
+      "color"
+    ]
+  },
+  {
+    "id": "w_0058",
+    "word": "silver",
+    "ipa": "/ˈsɪlvə/",
+    "pos": "noun",
+    "meaning_th": "เงิน",
+    "difficulty": 1,
+    "frequency": 243,
+    "category": "color",
+    "example_en": "A silver coin.",
+    "example_th": "เหรียญเงิน",
+    "tags": [
+      "starter",
+      "color"
+    ]
+  },
+  {
+    "id": "w_0059",
+    "word": "dark",
+    "ipa": "/dɑːk/",
+    "pos": "adjective",
+    "meaning_th": "มืด",
+    "difficulty": 1,
+    "frequency": 242,
+    "category": "color",
+    "example_en": "It is dark outside.",
+    "example_th": "ข้างนอกมืด",
+    "tags": [
+      "starter",
+      "color"
+    ]
+  },
+  {
+    "id": "w_0060",
+    "word": "light",
+    "ipa": "/laɪt/",
+    "pos": "adjective",
+    "meaning_th": "สว่าง",
+    "difficulty": 1,
+    "frequency": 241,
+    "category": "color",
+    "example_en": "The room is light.",
+    "example_th": "ห้องสว่าง",
+    "tags": [
+      "starter",
+      "color"
+    ]
+  },
+  {
+    "id": "w_0061",
+    "word": "family",
+    "ipa": "/ˈfæməli/",
+    "pos": "noun",
+    "meaning_th": "ครอบครัว",
+    "difficulty": 1,
+    "frequency": 240,
+    "category": "family",
+    "example_en": "I love my family.",
+    "example_th": "ฉันรักครอบครัวของฉัน",
+    "tags": [
+      "starter",
+      "family"
+    ]
+  },
+  {
+    "id": "w_0062",
+    "word": "mother",
+    "ipa": "/ˈmʌðə/",
+    "pos": "noun",
+    "meaning_th": "แม่",
+    "difficulty": 1,
+    "frequency": 239,
+    "category": "family",
+    "example_en": "My mother cooks well.",
+    "example_th": "แม่ของฉันทำอาหารเก่ง",
+    "tags": [
+      "starter",
+      "family"
+    ]
+  },
+  {
+    "id": "w_0063",
+    "word": "father",
+    "ipa": "/ˈfɑːðə/",
+    "pos": "noun",
+    "meaning_th": "พ่อ",
+    "difficulty": 1,
+    "frequency": 238,
+    "category": "family",
+    "example_en": "My father works hard.",
+    "example_th": "พ่อของฉันทำงานหนัก",
+    "tags": [
+      "starter",
+      "family"
+    ]
+  },
+  {
+    "id": "w_0064",
+    "word": "parent",
+    "ipa": "/ˈpeərənt/",
+    "pos": "noun",
+    "meaning_th": "ผู้ปกครอง",
+    "difficulty": 1,
+    "frequency": 237,
+    "category": "family",
+    "example_en": "Ask your parent.",
+    "example_th": "ถามผู้ปกครองของคุณ",
+    "tags": [
+      "starter",
+      "family"
+    ]
+  },
+  {
+    "id": "w_0065",
+    "word": "brother",
+    "ipa": "/ˈbrʌðə/",
+    "pos": "noun",
+    "meaning_th": "พี่ชาย/น้องชาย",
+    "difficulty": 1,
+    "frequency": 236,
+    "category": "family",
+    "example_en": "My brother is tall.",
+    "example_th": "พี่ชายของฉันสูง",
+    "tags": [
+      "starter",
+      "family"
+    ]
+  },
+  {
+    "id": "w_0066",
+    "word": "sister",
+    "ipa": "/ˈsɪstə/",
+    "pos": "noun",
+    "meaning_th": "พี่สาว/น้องสาว",
+    "difficulty": 1,
+    "frequency": 235,
+    "category": "family",
+    "example_en": "My sister reads a lot.",
+    "example_th": "น้องสาวของฉันอ่านหนังสือมาก",
+    "tags": [
+      "starter",
+      "family"
+    ]
+  },
+  {
+    "id": "w_0067",
+    "word": "baby",
+    "ipa": "/ˈbeɪbi/",
+    "pos": "noun",
+    "meaning_th": "ทารก",
+    "difficulty": 1,
+    "frequency": 234,
+    "category": "family",
+    "example_en": "The baby is sleeping.",
+    "example_th": "ทารกกำลังนอน",
+    "tags": [
+      "starter",
+      "family"
+    ]
+  },
+  {
+    "id": "w_0068",
+    "word": "child",
+    "ipa": "/tʃaɪld/",
+    "pos": "noun",
+    "meaning_th": "เด็ก",
+    "difficulty": 1,
+    "frequency": 233,
+    "category": "family",
+    "example_en": "Every child can learn.",
+    "example_th": "เด็กทุกคนเรียนรู้ได้",
+    "tags": [
+      "starter",
+      "family"
+    ]
+  },
+  {
+    "id": "w_0069",
+    "word": "son",
+    "ipa": "/sʌn/",
+    "pos": "noun",
+    "meaning_th": "ลูกชาย",
+    "difficulty": 1,
+    "frequency": 232,
+    "category": "family",
+    "example_en": "Their son is kind.",
+    "example_th": "ลูกชายของพวกเขาใจดี",
+    "tags": [
+      "starter",
+      "family"
+    ]
+  },
+  {
+    "id": "w_0070",
+    "word": "daughter",
+    "ipa": "/ˈdɔːtə/",
+    "pos": "noun",
+    "meaning_th": "ลูกสาว",
+    "difficulty": 1,
+    "frequency": 231,
+    "category": "family",
+    "example_en": "Their daughter sings.",
+    "example_th": "ลูกสาวของพวกเขาร้องเพลง",
+    "tags": [
+      "starter",
+      "family"
+    ]
+  },
+  {
+    "id": "w_0071",
+    "word": "uncle",
+    "ipa": "/ˈʌŋkl/",
+    "pos": "noun",
+    "meaning_th": "ลุง/อา",
+    "difficulty": 1,
+    "frequency": 230,
+    "category": "family",
+    "example_en": "My uncle visits us.",
+    "example_th": "ลุงของฉันมาเยี่ยม",
+    "tags": [
+      "starter",
+      "family"
+    ]
+  },
+  {
+    "id": "w_0072",
+    "word": "aunt",
+    "ipa": "/ɑːnt/",
+    "pos": "noun",
+    "meaning_th": "ป้า/น้า",
+    "difficulty": 1,
+    "frequency": 229,
+    "category": "family",
+    "example_en": "My aunt lives nearby.",
+    "example_th": "ป้าของฉันอยู่ใกล้ๆ",
+    "tags": [
+      "starter",
+      "family"
+    ]
+  },
+  {
+    "id": "w_0073",
+    "word": "cousin",
+    "ipa": "/ˈkʌzn/",
+    "pos": "noun",
+    "meaning_th": "ลูกพี่ลูกน้อง",
+    "difficulty": 1,
+    "frequency": 228,
+    "category": "family",
+    "example_en": "My cousin is funny.",
+    "example_th": "ลูกพี่ลูกน้องของฉันตลก",
+    "tags": [
+      "starter",
+      "family"
+    ]
+  },
+  {
+    "id": "w_0074",
+    "word": "grandma",
+    "ipa": "/ˈɡrænmɑː/",
+    "pos": "noun",
+    "meaning_th": "ยาย/ย่า",
+    "difficulty": 1,
+    "frequency": 227,
+    "category": "family",
+    "example_en": "Grandma tells stories.",
+    "example_th": "ยายเล่านิทาน",
+    "tags": [
+      "starter",
+      "family"
+    ]
+  },
+  {
+    "id": "w_0075",
+    "word": "grandpa",
+    "ipa": "/ˈɡrænpɑː/",
+    "pos": "noun",
+    "meaning_th": "ปู่/ตา",
+    "difficulty": 1,
+    "frequency": 226,
+    "category": "family",
+    "example_en": "Grandpa walks slowly.",
+    "example_th": "ปู่เดินช้าๆ",
+    "tags": [
+      "starter",
+      "family"
+    ]
+  },
+  {
+    "id": "w_0076",
+    "word": "husband",
+    "ipa": "/ˈhʌzbənd/",
+    "pos": "noun",
+    "meaning_th": "สามี",
+    "difficulty": 1,
+    "frequency": 225,
+    "category": "family",
+    "example_en": "Her husband is a teacher.",
+    "example_th": "สามีของเธอเป็นครู",
+    "tags": [
+      "starter",
+      "family"
+    ]
+  },
+  {
+    "id": "w_0077",
+    "word": "wife",
+    "ipa": "/waɪf/",
+    "pos": "noun",
+    "meaning_th": "ภรรยา",
+    "difficulty": 1,
+    "frequency": 224,
+    "category": "family",
+    "example_en": "His wife is a doctor.",
+    "example_th": "ภรรยาของเขาเป็นหมอ",
+    "tags": [
+      "starter",
+      "family"
+    ]
+  },
+  {
+    "id": "w_0078",
+    "word": "home",
+    "ipa": "/həʊm/",
+    "pos": "noun",
+    "meaning_th": "บ้าน",
+    "difficulty": 1,
+    "frequency": 223,
+    "category": "places",
+    "example_en": "I go home after school.",
+    "example_th": "ฉันกลับบ้านหลังเลิกเรียน",
+    "tags": [
+      "starter",
+      "places"
+    ]
+  },
+  {
+    "id": "w_0079",
+    "word": "house",
+    "ipa": "/haʊs/",
+    "pos": "noun",
+    "meaning_th": "บ้าน",
+    "difficulty": 1,
+    "frequency": 222,
+    "category": "places",
+    "example_en": "Their house is big.",
+    "example_th": "บ้านของพวกเขาใหญ่",
+    "tags": [
+      "starter",
+      "places"
+    ]
+  },
+  {
+    "id": "w_0080",
+    "word": "people",
+    "ipa": "/ˈpiːpl/",
+    "pos": "noun",
+    "meaning_th": "ผู้คน",
+    "difficulty": 1,
+    "frequency": 221,
+    "category": "people",
+    "example_en": "Many people are waiting.",
+    "example_th": "มีผู้คนมากมายกำลังรอ",
+    "tags": [
+      "starter",
+      "people"
+    ]
+  },
+  {
+    "id": "w_0081",
+    "word": "food",
+    "ipa": "/fuːd/",
+    "pos": "noun",
+    "meaning_th": "อาหาร",
+    "difficulty": 1,
+    "frequency": 220,
+    "category": "food",
+    "example_en": "Healthy food is important.",
+    "example_th": "อาหารเพื่อสุขภาพสำคัญ",
+    "tags": [
+      "starter",
+      "food"
+    ]
+  },
+  {
+    "id": "w_0082",
+    "word": "water",
+    "ipa": "/ˈwɔːtə/",
+    "pos": "noun",
+    "meaning_th": "น้ำ",
+    "difficulty": 1,
+    "frequency": 219,
+    "category": "food",
+    "example_en": "Drink more water.",
+    "example_th": "ดื่มน้ำให้มากขึ้น",
+    "tags": [
+      "starter",
+      "food"
+    ]
+  },
+  {
+    "id": "w_0083",
+    "word": "rice",
+    "ipa": "/raɪs/",
+    "pos": "noun",
+    "meaning_th": "ข้าว",
+    "difficulty": 1,
+    "frequency": 218,
+    "category": "food",
+    "example_en": "We eat rice every day.",
+    "example_th": "เรากินข้าวทุกวัน",
+    "tags": [
+      "starter",
+      "food"
+    ]
+  },
+  {
+    "id": "w_0084",
+    "word": "bread",
+    "ipa": "/bred/",
+    "pos": "noun",
+    "meaning_th": "ขนมปัง",
+    "difficulty": 1,
+    "frequency": 217,
+    "category": "food",
+    "example_en": "I eat bread for breakfast.",
+    "example_th": "ฉันกินขนมปังเป็นอาหารเช้า",
+    "tags": [
+      "starter",
+      "food"
+    ]
+  },
+  {
+    "id": "w_0085",
+    "word": "egg",
+    "ipa": "/eɡ/",
+    "pos": "noun",
+    "meaning_th": "ไข่",
+    "difficulty": 1,
+    "frequency": 216,
+    "category": "food",
+    "example_en": "Boil an egg.",
+    "example_th": "ต้มไข่",
+    "tags": [
+      "starter",
+      "food"
+    ]
+  },
+  {
+    "id": "w_0086",
+    "word": "milk",
+    "ipa": "/mɪlk/",
+    "pos": "noun",
+    "meaning_th": "นม",
+    "difficulty": 1,
+    "frequency": 215,
+    "category": "food",
+    "example_en": "I drink milk.",
+    "example_th": "ฉันดื่มนม",
+    "tags": [
+      "starter",
+      "food"
+    ]
+  },
+  {
+    "id": "w_0087",
+    "word": "tea",
+    "ipa": "/tiː/",
+    "pos": "noun",
+    "meaning_th": "ชา",
+    "difficulty": 1,
+    "frequency": 214,
+    "category": "food",
+    "example_en": "Would you like tea?",
+    "example_th": "คุณอยากดื่มชาไหม",
+    "tags": [
+      "starter",
+      "food"
+    ]
+  },
+  {
+    "id": "w_0088",
+    "word": "coffee",
+    "ipa": "/ˈkɒfi/",
+    "pos": "noun",
+    "meaning_th": "กาแฟ",
+    "difficulty": 1,
+    "frequency": 213,
+    "category": "food",
+    "example_en": "I like coffee.",
+    "example_th": "ฉันชอบกาแฟ",
+    "tags": [
+      "starter",
+      "food"
+    ]
+  },
+  {
+    "id": "w_0089",
+    "word": "juice",
+    "ipa": "/dʒuːs/",
+    "pos": "noun",
+    "meaning_th": "น้ำผลไม้",
+    "difficulty": 1,
+    "frequency": 212,
+    "category": "food",
+    "example_en": "Orange juice is sweet.",
+    "example_th": "น้ำส้มหวาน",
+    "tags": [
+      "starter",
+      "food"
+    ]
+  },
+  {
+    "id": "w_0090",
+    "word": "fruit",
+    "ipa": "/fruːt/",
+    "pos": "noun",
+    "meaning_th": "ผลไม้",
+    "difficulty": 1,
+    "frequency": 211,
+    "category": "food",
+    "example_en": "Eat more fruit.",
+    "example_th": "กินผลไม้ให้มากขึ้น",
+    "tags": [
+      "starter",
+      "food"
+    ]
+  },
+  {
+    "id": "w_0091",
+    "word": "apple",
+    "ipa": "/ˈæpl/",
+    "pos": "noun",
+    "meaning_th": "แอปเปิล",
+    "difficulty": 1,
+    "frequency": 210,
+    "category": "food",
+    "example_en": "An apple a day.",
+    "example_th": "แอปเปิลวันละผล",
+    "tags": [
+      "starter",
+      "food"
+    ]
+  },
+  {
+    "id": "w_0092",
+    "word": "banana",
+    "ipa": "/bəˈnɑːnə/",
+    "pos": "noun",
+    "meaning_th": "กล้วย",
+    "difficulty": 1,
+    "frequency": 209,
+    "category": "food",
+    "example_en": "The banana is ripe.",
+    "example_th": "กล้วยสุกแล้ว",
+    "tags": [
+      "starter",
+      "food"
+    ]
+  },
+  {
+    "id": "w_0093",
+    "word": "mango",
+    "ipa": "/ˈmæŋɡəʊ/",
+    "pos": "noun",
+    "meaning_th": "มะม่วง",
+    "difficulty": 1,
+    "frequency": 208,
+    "category": "food",
+    "example_en": "Mango is sweet.",
+    "example_th": "มะม่วงหวาน",
+    "tags": [
+      "starter",
+      "food"
+    ]
+  },
+  {
+    "id": "w_0094",
+    "word": "chicken",
+    "ipa": "/ˈtʃɪkɪn/",
+    "pos": "noun",
+    "meaning_th": "ไก่",
+    "difficulty": 1,
+    "frequency": 207,
+    "category": "food",
+    "example_en": "Fried chicken is popular.",
+    "example_th": "ไก่ทอดเป็นที่นิยม",
+    "tags": [
+      "starter",
+      "food"
+    ]
+  },
+  {
+    "id": "w_0095",
+    "word": "fish",
+    "ipa": "/fɪʃ/",
+    "pos": "noun",
+    "meaning_th": "ปลา",
+    "difficulty": 1,
+    "frequency": 206,
+    "category": "food",
+    "example_en": "Fish is healthy.",
+    "example_th": "ปลาดีต่อสุขภาพ",
+    "tags": [
+      "starter",
+      "food"
+    ]
+  },
+  {
+    "id": "w_0096",
+    "word": "meat",
+    "ipa": "/miːt/",
+    "pos": "noun",
+    "meaning_th": "เนื้อ",
+    "difficulty": 1,
+    "frequency": 205,
+    "category": "food",
+    "example_en": "Do you eat meat?",
+    "example_th": "คุณกินเนื้อไหม",
+    "tags": [
+      "starter",
+      "food"
+    ]
+  },
+  {
+    "id": "w_0097",
+    "word": "soup",
+    "ipa": "/suːp/",
+    "pos": "noun",
+    "meaning_th": "ซุป",
+    "difficulty": 1,
+    "frequency": 204,
+    "category": "food",
+    "example_en": "Hot soup tastes good.",
+    "example_th": "ซุปร้อนอร่อย",
+    "tags": [
+      "starter",
+      "food"
+    ]
+  },
+  {
+    "id": "w_0098",
+    "word": "salad",
+    "ipa": "/ˈsæləd/",
+    "pos": "noun",
+    "meaning_th": "สลัด",
+    "difficulty": 1,
+    "frequency": 203,
+    "category": "food",
+    "example_en": "I ordered a salad.",
+    "example_th": "ฉันสั่งสลัด",
+    "tags": [
+      "starter",
+      "food"
+    ]
+  },
+  {
+    "id": "w_0099",
+    "word": "sugar",
+    "ipa": "/ˈʃʊɡə/",
+    "pos": "noun",
+    "meaning_th": "น้ำตาล",
+    "difficulty": 1,
+    "frequency": 202,
+    "category": "food",
+    "example_en": "Less sugar is better.",
+    "example_th": "น้ำตาลน้อยดีกว่า",
+    "tags": [
+      "starter",
+      "food"
+    ]
+  },
+  {
+    "id": "w_0100",
+    "word": "salt",
+    "ipa": "/sɔːlt/",
+    "pos": "noun",
+    "meaning_th": "เกลือ",
+    "difficulty": 1,
+    "frequency": 201,
+    "category": "food",
+    "example_en": "Add a little salt.",
+    "example_th": "ใส่เกลือนิดหน่อย",
+    "tags": [
+      "starter",
+      "food"
+    ]
+  },
+  {
+    "id": "w_0101",
+    "word": "spicy",
+    "ipa": "/ˈspaɪsi/",
+    "pos": "adjective",
+    "meaning_th": "เผ็ด",
+    "difficulty": 2,
+    "frequency": 200,
+    "category": "food",
+    "example_en": "Thai food can be spicy.",
+    "example_th": "อาหารไทยอาจเผ็ด",
+    "tags": [
+      "starter",
+      "food"
+    ]
+  },
+  {
+    "id": "w_0102",
+    "word": "sweet",
+    "ipa": "/swiːt/",
+    "pos": "adjective",
+    "meaning_th": "หวาน",
+    "difficulty": 2,
+    "frequency": 199,
+    "category": "food",
+    "example_en": "This cake is sweet.",
+    "example_th": "เค้กนี้หวาน",
+    "tags": [
+      "starter",
+      "food"
+    ]
+  },
+  {
+    "id": "w_0103",
+    "word": "hungry",
+    "ipa": "/ˈhʌŋɡri/",
+    "pos": "adjective",
+    "meaning_th": "หิว",
+    "difficulty": 2,
+    "frequency": 198,
+    "category": "food",
+    "example_en": "I am hungry.",
+    "example_th": "ฉันหิว",
+    "tags": [
+      "starter",
+      "food"
+    ]
+  },
+  {
+    "id": "w_0104",
+    "word": "thirsty",
+    "ipa": "/ˈθɜːsti/",
+    "pos": "adjective",
+    "meaning_th": "กระหาย",
+    "difficulty": 2,
+    "frequency": 197,
+    "category": "food",
+    "example_en": "She is thirsty.",
+    "example_th": "เธอกระหายน้ำ",
+    "tags": [
+      "starter",
+      "food"
+    ]
+  },
+  {
+    "id": "w_0105",
+    "word": "eat",
+    "ipa": "/iːt/",
+    "pos": "verb",
+    "meaning_th": "กิน",
+    "difficulty": 2,
+    "frequency": 196,
+    "category": "food",
+    "example_en": "We eat together.",
+    "example_th": "เรากินด้วยกัน",
+    "tags": [
+      "starter",
+      "food"
+    ]
+  },
+  {
+    "id": "w_0106",
+    "word": "drink",
+    "ipa": "/drɪŋk/",
+    "pos": "verb",
+    "meaning_th": "ดื่ม",
+    "difficulty": 2,
+    "frequency": 195,
+    "category": "food",
+    "example_en": "Drink some water.",
+    "example_th": "ดื่มน้ำหน่อย",
+    "tags": [
+      "starter",
+      "food"
+    ]
+  },
+  {
+    "id": "w_0107",
+    "word": "cook",
+    "ipa": "/kʊk/",
+    "pos": "verb",
+    "meaning_th": "ทำอาหาร",
+    "difficulty": 2,
+    "frequency": 194,
+    "category": "food",
+    "example_en": "I cook dinner.",
+    "example_th": "ฉันทำอาหารเย็น",
+    "tags": [
+      "starter",
+      "food"
+    ]
+  },
+  {
+    "id": "w_0108",
+    "word": "breakfast",
+    "ipa": "/ˈbrekfəst/",
+    "pos": "noun",
+    "meaning_th": "อาหารเช้า",
+    "difficulty": 2,
+    "frequency": 193,
+    "category": "food",
+    "example_en": "Breakfast is ready.",
+    "example_th": "อาหารเช้าพร้อมแล้ว",
+    "tags": [
+      "starter",
+      "food"
+    ]
+  },
+  {
+    "id": "w_0109",
+    "word": "lunch",
+    "ipa": "/lʌntʃ/",
+    "pos": "noun",
+    "meaning_th": "อาหารกลางวัน",
+    "difficulty": 2,
+    "frequency": 192,
+    "category": "food",
+    "example_en": "Lunch is at noon.",
+    "example_th": "อาหารกลางวันตอนเที่ยง",
+    "tags": [
+      "starter",
+      "food"
+    ]
+  },
+  {
+    "id": "w_0110",
+    "word": "dinner",
+    "ipa": "/ˈdɪnə/",
+    "pos": "noun",
+    "meaning_th": "อาหารเย็น",
+    "difficulty": 2,
+    "frequency": 191,
+    "category": "food",
+    "example_en": "Dinner smells good.",
+    "example_th": "อาหารเย็นหอม",
+    "tags": [
+      "starter",
+      "food"
+    ]
+  },
+  {
+    "id": "w_0111",
+    "word": "snack",
+    "ipa": "/snæk/",
+    "pos": "noun",
+    "meaning_th": "ของว่าง",
+    "difficulty": 2,
+    "frequency": 190,
+    "category": "food",
+    "example_en": "I want a snack.",
+    "example_th": "ฉันอยากได้ของว่าง",
+    "tags": [
+      "starter",
+      "food"
+    ]
+  },
+  {
+    "id": "w_0112",
+    "word": "vegetable",
+    "ipa": "/ˈvedʒtəbl/",
+    "pos": "noun",
+    "meaning_th": "ผัก",
+    "difficulty": 2,
+    "frequency": 189,
+    "category": "food",
+    "example_en": "Eat more vegetables.",
+    "example_th": "กินผักให้มากขึ้น",
+    "tags": [
+      "starter",
+      "food"
+    ]
+  },
+  {
+    "id": "w_0113",
+    "word": "noodle",
+    "ipa": "/ˈnuːdl/",
+    "pos": "noun",
+    "meaning_th": "บะหมี่",
+    "difficulty": 2,
+    "frequency": 188,
+    "category": "food",
+    "example_en": "I like noodle soup.",
+    "example_th": "ฉันชอบบะหมี่น้ำ",
+    "tags": [
+      "starter",
+      "food"
+    ]
+  },
+  {
+    "id": "w_0114",
+    "word": "cake",
+    "ipa": "/keɪk/",
+    "pos": "noun",
+    "meaning_th": "เค้ก",
+    "difficulty": 2,
+    "frequency": 187,
+    "category": "food",
+    "example_en": "Birthday cake is fun.",
+    "example_th": "เค้กวันเกิดสนุก",
+    "tags": [
+      "starter",
+      "food"
+    ]
+  },
+  {
+    "id": "w_0115",
+    "word": "ice",
+    "ipa": "/aɪs/",
+    "pos": "noun",
+    "meaning_th": "น้ำแข็ง",
+    "difficulty": 2,
+    "frequency": 186,
+    "category": "food",
+    "example_en": "Ice in my drink.",
+    "example_th": "น้ำแข็งในเครื่องดื่ม",
+    "tags": [
+      "starter",
+      "food"
+    ]
+  },
+  {
+    "id": "w_0116",
+    "word": "school",
+    "ipa": "/skuːl/",
+    "pos": "noun",
+    "meaning_th": "โรงเรียน",
+    "difficulty": 2,
+    "frequency": 185,
+    "category": "school",
+    "example_en": "School starts at eight.",
+    "example_th": "โรงเรียนเริ่มตอนแปดโมง",
+    "tags": [
+      "starter",
+      "school"
+    ]
+  },
+  {
+    "id": "w_0117",
+    "word": "student",
+    "ipa": "/ˈstjuːdnt/",
+    "pos": "noun",
+    "meaning_th": "นักเรียน",
+    "difficulty": 2,
+    "frequency": 184,
+    "category": "school",
+    "example_en": "Every student learns.",
+    "example_th": "นักเรียนทุกคนเรียนรู้",
+    "tags": [
+      "starter",
+      "school"
+    ]
+  },
+  {
+    "id": "w_0118",
+    "word": "teacher",
+    "ipa": "/ˈtiːtʃə/",
+    "pos": "noun",
+    "meaning_th": "ครู",
+    "difficulty": 2,
+    "frequency": 183,
+    "category": "school",
+    "example_en": "Our teacher is kind.",
+    "example_th": "ครูของเราใจดี",
+    "tags": [
+      "starter",
+      "school"
+    ]
+  },
+  {
+    "id": "w_0119",
+    "word": "class",
+    "ipa": "/klɑːs/",
+    "pos": "noun",
+    "meaning_th": "ชั้นเรียน",
+    "difficulty": 2,
+    "frequency": 182,
+    "category": "school",
+    "example_en": "Class begins soon.",
+    "example_th": "ชั้นเรียนจะเริ่มเร็วๆ นี้",
+    "tags": [
+      "starter",
+      "school"
+    ]
+  },
+  {
+    "id": "w_0120",
+    "word": "lesson",
+    "ipa": "/ˈlesn/",
+    "pos": "noun",
+    "meaning_th": "บทเรียน",
+    "difficulty": 2,
+    "frequency": 181,
+    "category": "school",
+    "example_en": "This lesson is easy.",
+    "example_th": "บทเรียนนี้ง่าย",
+    "tags": [
+      "starter",
+      "school"
+    ]
+  },
+  {
+    "id": "w_0121",
+    "word": "book",
+    "ipa": "/bʊk/",
+    "pos": "noun",
+    "meaning_th": "หนังสือ",
+    "difficulty": 2,
+    "frequency": 180,
+    "category": "school",
+    "example_en": "Open your book.",
+    "example_th": "เปิดหนังสือของคุณ",
+    "tags": [
+      "starter",
+      "school"
+    ]
+  },
+  {
+    "id": "w_0122",
+    "word": "pen",
+    "ipa": "/pen/",
+    "pos": "noun",
+    "meaning_th": "ปากกา",
+    "difficulty": 2,
+    "frequency": 179,
+    "category": "school",
+    "example_en": "I need a pen.",
+    "example_th": "ฉันต้องการปากกา",
+    "tags": [
+      "starter",
+      "school"
+    ]
+  },
+  {
+    "id": "w_0123",
+    "word": "pencil",
+    "ipa": "/ˈpensl/",
+    "pos": "noun",
+    "meaning_th": "ดินสอ",
+    "difficulty": 2,
+    "frequency": 178,
+    "category": "school",
+    "example_en": "Sharpen your pencil.",
+    "example_th": "เหลาดินสอของคุณ",
+    "tags": [
+      "starter",
+      "school"
+    ]
+  },
+  {
+    "id": "w_0124",
+    "word": "paper",
+    "ipa": "/ˈpeɪpə/",
+    "pos": "noun",
+    "meaning_th": "กระดาษ",
+    "difficulty": 2,
+    "frequency": 177,
+    "category": "school",
+    "example_en": "Write on the paper.",
+    "example_th": "เขียนบนกระดาษ",
+    "tags": [
+      "starter",
+      "school"
+    ]
+  },
+  {
+    "id": "w_0125",
+    "word": "bag",
+    "ipa": "/bæɡ/",
+    "pos": "noun",
+    "meaning_th": "กระเป๋า",
+    "difficulty": 2,
+    "frequency": 176,
+    "category": "school",
+    "example_en": "My bag is heavy.",
+    "example_th": "กระเป๋าของฉันหนัก",
+    "tags": [
+      "starter",
+      "school"
+    ]
+  },
+  {
+    "id": "w_0126",
+    "word": "desk",
+    "ipa": "/desk/",
+    "pos": "noun",
+    "meaning_th": "โต๊ะเรียน",
+    "difficulty": 2,
+    "frequency": 175,
+    "category": "school",
+    "example_en": "Sit at your desk.",
+    "example_th": "นั่งที่โต๊ะเรียนของคุณ",
+    "tags": [
+      "starter",
+      "school"
+    ]
+  },
+  {
+    "id": "w_0127",
+    "word": "chair",
+    "ipa": "/tʃeə/",
+    "pos": "noun",
+    "meaning_th": "เก้าอี้",
+    "difficulty": 2,
+    "frequency": 174,
+    "category": "school",
+    "example_en": "Pull up a chair.",
+    "example_th": "ดึงเก้าอี้มา",
+    "tags": [
+      "starter",
+      "school"
+    ]
+  },
+  {
+    "id": "w_0128",
+    "word": "board",
+    "ipa": "/bɔːd/",
+    "pos": "noun",
+    "meaning_th": "กระดาน",
+    "difficulty": 2,
+    "frequency": 173,
+    "category": "school",
+    "example_en": "Look at the board.",
+    "example_th": "ดูที่กระดาน",
+    "tags": [
+      "starter",
+      "school"
+    ]
+  },
+  {
+    "id": "w_0129",
+    "word": "homework",
+    "ipa": "/ˈhəʊmwɜːk/",
+    "pos": "noun",
+    "meaning_th": "การบ้าน",
+    "difficulty": 2,
+    "frequency": 172,
+    "category": "school",
+    "example_en": "Do your homework.",
+    "example_th": "ทำการบ้านของคุณ",
+    "tags": [
+      "starter",
+      "school"
+    ]
+  },
+  {
+    "id": "w_0130",
+    "word": "test",
+    "ipa": "/test/",
+    "pos": "noun",
+    "meaning_th": "การทดสอบ",
+    "difficulty": 2,
+    "frequency": 171,
+    "category": "school",
+    "example_en": "We have a test today.",
+    "example_th": "เรามีการทดสอบวันนี้",
+    "tags": [
+      "starter",
+      "school"
+    ]
+  },
+  {
+    "id": "w_0131",
+    "word": "exam",
+    "ipa": "/ɪɡˈzæm/",
+    "pos": "noun",
+    "meaning_th": "สอบ",
+    "difficulty": 2,
+    "frequency": 170,
+    "category": "school",
+    "example_en": "The exam is hard.",
+    "example_th": "การสอบยาก",
+    "tags": [
+      "starter",
+      "school"
+    ]
+  },
+  {
+    "id": "w_0132",
+    "word": "study",
+    "ipa": "/ˈstʌdi/",
+    "pos": "verb",
+    "meaning_th": "เรียน",
+    "difficulty": 2,
+    "frequency": 169,
+    "category": "school",
+    "example_en": "I study English.",
+    "example_th": "ฉันเรียนภาษาอังกฤษ",
+    "tags": [
+      "starter",
+      "school"
+    ]
+  },
+  {
+    "id": "w_0133",
+    "word": "learn",
+    "ipa": "/lɜːn/",
+    "pos": "verb",
+    "meaning_th": "เรียนรู้",
+    "difficulty": 2,
+    "frequency": 168,
+    "category": "school",
+    "example_en": "We learn every day.",
+    "example_th": "เราเรียนรู้ทุกวัน",
+    "tags": [
+      "starter",
+      "school"
+    ]
+  },
+  {
+    "id": "w_0134",
+    "word": "teach",
+    "ipa": "/tiːtʃ/",
+    "pos": "verb",
+    "meaning_th": "สอน",
+    "difficulty": 2,
+    "frequency": 167,
+    "category": "school",
+    "example_en": "She teaches math.",
+    "example_th": "เธอสอนคณิตศาสตร์",
+    "tags": [
+      "starter",
+      "school"
+    ]
+  },
+  {
+    "id": "w_0135",
+    "word": "practice",
+    "ipa": "/ˈpræktɪs/",
+    "pos": "verb",
+    "meaning_th": "ฝึก",
+    "difficulty": 2,
+    "frequency": 166,
+    "category": "school",
+    "example_en": "Practice makes progress.",
+    "example_th": "การฝึกทำให้ก้าวหน้า",
+    "tags": [
+      "starter",
+      "school"
+    ]
+  },
+  {
+    "id": "w_0136",
+    "word": "question",
+    "ipa": "/ˈkwestʃən/",
+    "pos": "noun",
+    "meaning_th": "คำถาม",
+    "difficulty": 2,
+    "frequency": 165,
+    "category": "school",
+    "example_en": "Ask a question.",
+    "example_th": "ถามคำถาม",
+    "tags": [
+      "starter",
+      "school"
+    ]
+  },
+  {
+    "id": "w_0137",
+    "word": "word",
+    "ipa": "/wɜːd/",
+    "pos": "noun",
+    "meaning_th": "คำ",
+    "difficulty": 2,
+    "frequency": 164,
+    "category": "school",
+    "example_en": "Learn a new word.",
+    "example_th": "เรียนรู้คำใหม่",
+    "tags": [
+      "starter",
+      "school"
+    ]
+  },
+  {
+    "id": "w_0138",
+    "word": "sentence",
+    "ipa": "/ˈsentəns/",
+    "pos": "noun",
+    "meaning_th": "ประโยค",
+    "difficulty": 2,
+    "frequency": 163,
+    "category": "school",
+    "example_en": "Write a sentence.",
+    "example_th": "เขียนประโยค",
+    "tags": [
+      "starter",
+      "school"
+    ]
+  },
+  {
+    "id": "w_0139",
+    "word": "language",
+    "ipa": "/ˈlæŋɡwɪdʒ/",
+    "pos": "noun",
+    "meaning_th": "ภาษา",
+    "difficulty": 2,
+    "frequency": 162,
+    "category": "school",
+    "example_en": "English is a language.",
+    "example_th": "อังกฤษเป็นภาษาหนึ่ง",
+    "tags": [
+      "starter",
+      "school"
+    ]
+  },
+  {
+    "id": "w_0140",
+    "word": "english",
+    "ipa": "/ˈɪŋɡlɪʃ/",
+    "pos": "noun",
+    "meaning_th": "ภาษาอังกฤษ",
+    "difficulty": 2,
+    "frequency": 161,
+    "category": "school",
+    "example_en": "I study English.",
+    "example_th": "ฉันเรียนภาษาอังกฤษ",
+    "tags": [
+      "starter",
+      "school"
+    ]
+  },
+  {
+    "id": "w_0141",
+    "word": "math",
+    "ipa": "/mæθ/",
+    "pos": "noun",
+    "meaning_th": "คณิตศาสตร์",
+    "difficulty": 2,
+    "frequency": 160,
+    "category": "school",
+    "example_en": "Math is useful.",
+    "example_th": "คณิตศาสตร์มีประโยชน์",
+    "tags": [
+      "starter",
+      "school"
+    ]
+  },
+  {
+    "id": "w_0142",
+    "word": "science",
+    "ipa": "/ˈsaɪəns/",
+    "pos": "noun",
+    "meaning_th": "วิทยาศาสตร์",
+    "difficulty": 2,
+    "frequency": 159,
+    "category": "school",
+    "example_en": "Science is fun.",
+    "example_th": "วิทยาศาสตร์สนุก",
+    "tags": [
+      "starter",
+      "school"
+    ]
+  },
+  {
+    "id": "w_0143",
+    "word": "music",
+    "ipa": "/ˈmjuːzɪk/",
+    "pos": "noun",
+    "meaning_th": "ดนตรี",
+    "difficulty": 2,
+    "frequency": 158,
+    "category": "school",
+    "example_en": "I like music class.",
+    "example_th": "ฉันชอบวิชาดนตรี",
+    "tags": [
+      "starter",
+      "school"
+    ]
+  },
+  {
+    "id": "w_0144",
+    "word": "art",
+    "ipa": "/ɑːt/",
+    "pos": "noun",
+    "meaning_th": "ศิลปะ",
+    "difficulty": 2,
+    "frequency": 157,
+    "category": "school",
+    "example_en": "Art class is creative.",
+    "example_th": "วิชาศิลปะสร้างสรรค์",
+    "tags": [
+      "starter",
+      "school"
+    ]
+  },
+  {
+    "id": "w_0145",
+    "word": "library",
+    "ipa": "/ˈlaɪbrəri/",
+    "pos": "noun",
+    "meaning_th": "ห้องสมุด",
+    "difficulty": 2,
+    "frequency": 156,
+    "category": "school",
+    "example_en": "The library is quiet.",
+    "example_th": "ห้องสมุดเงียบ",
+    "tags": [
+      "starter",
+      "school"
+    ]
+  },
+  {
+    "id": "w_0146",
+    "word": "classroom",
+    "ipa": "/ˈklɑːsruːm/",
+    "pos": "noun",
+    "meaning_th": "ห้องเรียน",
+    "difficulty": 2,
+    "frequency": 155,
+    "category": "school",
+    "example_en": "Clean the classroom.",
+    "example_th": "ทำความสะอาดห้องเรียน",
+    "tags": [
+      "starter",
+      "school"
+    ]
+  },
+  {
+    "id": "w_0147",
+    "word": "notebook",
+    "ipa": "/ˈnəʊtbʊk/",
+    "pos": "noun",
+    "meaning_th": "สมุดบันทึก",
+    "difficulty": 2,
+    "frequency": 154,
+    "category": "school",
+    "example_en": "Write in your notebook.",
+    "example_th": "เขียนในสมุดของคุณ",
+    "tags": [
+      "starter",
+      "school"
+    ]
+  },
+  {
+    "id": "w_0148",
+    "word": "eraser",
+    "ipa": "/ɪˈreɪzə/",
+    "pos": "noun",
+    "meaning_th": "ยางลบ",
+    "difficulty": 2,
+    "frequency": 153,
+    "category": "school",
+    "example_en": "I need an eraser.",
+    "example_th": "ฉันต้องการยางลบ",
+    "tags": [
+      "starter",
+      "school"
+    ]
+  },
+  {
+    "id": "w_0149",
+    "word": "ruler",
+    "ipa": "/ˈruːlə/",
+    "pos": "noun",
+    "meaning_th": "ไม้บรรทัด",
+    "difficulty": 2,
+    "frequency": 152,
+    "category": "school",
+    "example_en": "Use a ruler.",
+    "example_th": "ใช้ไม้บรรทัด",
+    "tags": [
+      "starter",
+      "school"
+    ]
+  },
+  {
+    "id": "w_0150",
+    "word": "map",
+    "ipa": "/mæp/",
+    "pos": "noun",
+    "meaning_th": "แผนที่",
+    "difficulty": 2,
+    "frequency": 151,
+    "category": "school",
+    "example_en": "Look at the map.",
+    "example_th": "ดูแผนที่",
+    "tags": [
+      "starter",
+      "school"
+    ]
+  },
+  {
+    "id": "w_0151",
+    "word": "globe",
+    "ipa": "/ɡləʊb/",
+    "pos": "noun",
+    "meaning_th": "ลูกโลก",
+    "difficulty": 2,
+    "frequency": 150,
+    "category": "school",
+    "example_en": "Spin the globe.",
+    "example_th": "หมุนลูกโลก",
+    "tags": [
+      "starter",
+      "school"
+    ]
+  },
+  {
+    "id": "w_0152",
+    "word": "computer",
+    "ipa": "/kəmˈpjuːtə/",
+    "pos": "noun",
+    "meaning_th": "คอมพิวเตอร์",
+    "difficulty": 2,
+    "frequency": 149,
+    "category": "school",
+    "example_en": "Use the computer.",
+    "example_th": "ใช้คอมพิวเตอร์",
+    "tags": [
+      "starter",
+      "school"
+    ]
+  },
+  {
+    "id": "w_0153",
+    "word": "phone",
+    "ipa": "/fəʊn/",
+    "pos": "noun",
+    "meaning_th": "โทรศัพท์",
+    "difficulty": 2,
+    "frequency": 148,
+    "category": "school",
+    "example_en": "My phone is new.",
+    "example_th": "โทรศัพท์ของฉันใหม่",
+    "tags": [
+      "starter",
+      "school"
+    ]
+  },
+  {
+    "id": "w_0154",
+    "word": "internet",
+    "ipa": "/ˈɪntənet/",
+    "pos": "noun",
+    "meaning_th": "อินเทอร์เน็ต",
+    "difficulty": 2,
+    "frequency": 147,
+    "category": "school",
+    "example_en": "The internet helps us learn.",
+    "example_th": "อินเทอร์เน็ตช่วยให้เราเรียนรู้",
+    "tags": [
+      "starter",
+      "school"
+    ]
+  },
+  {
+    "id": "w_0155",
+    "word": "dictionary",
+    "ipa": "/ˈdɪkʃənri/",
+    "pos": "noun",
+    "meaning_th": "พจนานุกรม",
+    "difficulty": 2,
+    "frequency": 146,
+    "category": "school",
+    "example_en": "Check the dictionary.",
+    "example_th": "ตรวจในพจนานุกรม",
+    "tags": [
+      "starter",
+      "school"
+    ]
+  },
+  {
+    "id": "w_0156",
+    "word": "go",
+    "ipa": "/ɡəʊ/",
+    "pos": "verb",
+    "meaning_th": "ไป",
+    "difficulty": 2,
+    "frequency": 145,
+    "category": "action",
+    "example_en": "Go to school.",
+    "example_th": "ไปโรงเรียน",
+    "tags": [
+      "starter",
+      "action"
+    ]
+  },
+  {
+    "id": "w_0157",
+    "word": "come",
+    "ipa": "/kʌm/",
+    "pos": "verb",
+    "meaning_th": "มา",
+    "difficulty": 2,
+    "frequency": 144,
+    "category": "action",
+    "example_en": "Come here please.",
+    "example_th": "มาตรงนี้หน่อย",
+    "tags": [
+      "starter",
+      "action"
+    ]
+  },
+  {
+    "id": "w_0158",
+    "word": "get",
+    "ipa": "/ɡet/",
+    "pos": "verb",
+    "meaning_th": "ได้",
+    "difficulty": 2,
+    "frequency": 143,
+    "category": "action",
+    "example_en": "Get your bag.",
+    "example_th": "เอากระเป๋าของคุณ",
+    "tags": [
+      "starter",
+      "action"
+    ]
+  },
+  {
+    "id": "w_0159",
+    "word": "give",
+    "ipa": "/ɡɪv/",
+    "pos": "verb",
+    "meaning_th": "ให้",
+    "difficulty": 2,
+    "frequency": 142,
+    "category": "action",
+    "example_en": "Give me a pen.",
+    "example_th": "ให้ปากกาฉันหน่อย",
+    "tags": [
+      "starter",
+      "action"
+    ]
+  },
+  {
+    "id": "w_0160",
+    "word": "take",
+    "ipa": "/teɪk/",
+    "pos": "verb",
+    "meaning_th": "เอา",
+    "difficulty": 2,
+    "frequency": 141,
+    "category": "action",
+    "example_en": "Take this book.",
+    "example_th": "เอาหนังสือเล่มนี้",
+    "tags": [
+      "starter",
+      "action"
+    ]
+  },
+  {
+    "id": "w_0161",
+    "word": "make",
+    "ipa": "/meɪk/",
+    "pos": "verb",
+    "meaning_th": "ทำ",
+    "difficulty": 2,
+    "frequency": 140,
+    "category": "action",
+    "example_en": "Make a sandwich.",
+    "example_th": "ทำแซนด์วิช",
+    "tags": [
+      "starter",
+      "action"
+    ]
+  },
+  {
+    "id": "w_0162",
+    "word": "do",
+    "ipa": "/duː/",
+    "pos": "verb",
+    "meaning_th": "ทำ",
+    "difficulty": 2,
+    "frequency": 139,
+    "category": "action",
+    "example_en": "Do your best.",
+    "example_th": "ทำให้ดีที่สุด",
+    "tags": [
+      "starter",
+      "action"
+    ]
+  },
+  {
+    "id": "w_0163",
+    "word": "have",
+    "ipa": "/hæv/",
+    "pos": "verb",
+    "meaning_th": "มี",
+    "difficulty": 2,
+    "frequency": 138,
+    "category": "action",
+    "example_en": "I have a dog.",
+    "example_th": "ฉันมีสุนัข",
+    "tags": [
+      "starter",
+      "action"
+    ]
+  },
+  {
+    "id": "w_0164",
+    "word": "want",
+    "ipa": "/wɒnt/",
+    "pos": "verb",
+    "meaning_th": "อยากได้",
+    "difficulty": 2,
+    "frequency": 137,
+    "category": "feeling",
+    "example_en": "I want water.",
+    "example_th": "ฉันอยากได้น้ำ",
+    "tags": [
+      "starter",
+      "feeling"
+    ]
+  },
+  {
+    "id": "w_0165",
+    "word": "need",
+    "ipa": "/niːd/",
+    "pos": "verb",
+    "meaning_th": "ต้องการ",
+    "difficulty": 2,
+    "frequency": 136,
+    "category": "feeling",
+    "example_en": "I need help.",
+    "example_th": "ฉันต้องการความช่วยเหลือ",
+    "tags": [
+      "starter",
+      "feeling"
+    ]
+  },
+  {
+    "id": "w_0166",
+    "word": "love",
+    "ipa": "/lʌv/",
+    "pos": "verb",
+    "meaning_th": "รัก",
+    "difficulty": 2,
+    "frequency": 135,
+    "category": "feeling",
+    "example_en": "I love my family.",
+    "example_th": "ฉันรักครอบครัว",
+    "tags": [
+      "starter",
+      "feeling"
+    ]
+  },
+  {
+    "id": "w_0167",
+    "word": "feel",
+    "ipa": "/fiːl/",
+    "pos": "verb",
+    "meaning_th": "รู้สึก",
+    "difficulty": 2,
+    "frequency": 134,
+    "category": "feeling",
+    "example_en": "I feel happy.",
+    "example_th": "ฉันรู้สึกมีความสุข",
+    "tags": [
+      "starter",
+      "feeling"
+    ]
+  },
+  {
+    "id": "w_0168",
+    "word": "look",
+    "ipa": "/lʊk/",
+    "pos": "verb",
+    "meaning_th": "มอง",
+    "difficulty": 2,
+    "frequency": 133,
+    "category": "senses",
+    "example_en": "Look at me.",
+    "example_th": "มองฉันสิ",
+    "tags": [
+      "starter",
+      "senses"
+    ]
+  },
+  {
+    "id": "w_0169",
+    "word": "find",
+    "ipa": "/faɪnd/",
+    "pos": "verb",
+    "meaning_th": "หา",
+    "difficulty": 2,
+    "frequency": 132,
+    "category": "action",
+    "example_en": "Find your shoes.",
+    "example_th": "หารองเท้าของคุณ",
+    "tags": [
+      "starter",
+      "action"
+    ]
+  },
+  {
+    "id": "w_0170",
+    "word": "open",
+    "ipa": "/ˈəʊpən/",
+    "pos": "verb",
+    "meaning_th": "เปิด",
+    "difficulty": 2,
+    "frequency": 131,
+    "category": "action",
+    "example_en": "Open the door.",
+    "example_th": "เปิดประตู",
+    "tags": [
+      "starter",
+      "action"
+    ]
+  },
+  {
+    "id": "w_0171",
+    "word": "close",
+    "ipa": "/kləʊz/",
+    "pos": "verb",
+    "meaning_th": "ปิด",
+    "difficulty": 2,
+    "frequency": 130,
+    "category": "action",
+    "example_en": "Close the window.",
+    "example_th": "ปิดหน้าต่าง",
+    "tags": [
+      "starter",
+      "action"
+    ]
+  },
+  {
+    "id": "w_0172",
+    "word": "start",
+    "ipa": "/stɑːt/",
+    "pos": "verb",
+    "meaning_th": "เริ่ม",
+    "difficulty": 2,
+    "frequency": 129,
+    "category": "action",
+    "example_en": "Start the lesson.",
+    "example_th": "เริ่มบทเรียน",
+    "tags": [
+      "starter",
+      "action"
+    ]
+  },
+  {
+    "id": "w_0173",
+    "word": "stop",
+    "ipa": "/stɒp/",
+    "pos": "verb",
+    "meaning_th": "หยุด",
+    "difficulty": 2,
+    "frequency": 128,
+    "category": "action",
+    "example_en": "Stop talking.",
+    "example_th": "หยุดพูด",
+    "tags": [
+      "starter",
+      "action"
+    ]
+  },
+  {
+    "id": "w_0174",
+    "word": "finish",
+    "ipa": "/ˈfɪnɪʃ/",
+    "pos": "verb",
+    "meaning_th": "จบ",
+    "difficulty": 2,
+    "frequency": 127,
+    "category": "action",
+    "example_en": "Finish your work.",
+    "example_th": "ทำงานของคุณให้เสร็จ",
+    "tags": [
+      "starter",
+      "action"
+    ]
+  },
+  {
+    "id": "w_0175",
+    "word": "wait",
+    "ipa": "/weɪt/",
+    "pos": "verb",
+    "meaning_th": "รอ",
+    "difficulty": 2,
+    "frequency": 126,
+    "category": "action",
+    "example_en": "Please wait here.",
+    "example_th": "กรุณารอที่นี่",
+    "tags": [
+      "starter",
+      "action"
+    ]
+  },
+  {
+    "id": "w_0176",
+    "word": "walk",
+    "ipa": "/wɔːk/",
+    "pos": "verb",
+    "meaning_th": "เดิน",
+    "difficulty": 2,
+    "frequency": 125,
+    "category": "action",
+    "example_en": "Walk to school.",
+    "example_th": "เดินไปโรงเรียน",
+    "tags": [
+      "starter",
+      "action"
+    ]
+  },
+  {
+    "id": "w_0177",
+    "word": "run",
+    "ipa": "/rʌn/",
+    "pos": "verb",
+    "meaning_th": "วิ่ง",
+    "difficulty": 2,
+    "frequency": 124,
+    "category": "action",
+    "example_en": "Run fast.",
+    "example_th": "วิ่งเร็ว",
+    "tags": [
+      "starter",
+      "action"
+    ]
+  },
+  {
+    "id": "w_0178",
+    "word": "sit",
+    "ipa": "/sɪt/",
+    "pos": "verb",
+    "meaning_th": "นั่ง",
+    "difficulty": 2,
+    "frequency": 123,
+    "category": "action",
+    "example_en": "Sit down please.",
+    "example_th": "กรุณานั่งลง",
+    "tags": [
+      "starter",
+      "action"
+    ]
+  },
+  {
+    "id": "w_0179",
+    "word": "stand",
+    "ipa": "/stænd/",
+    "pos": "verb",
+    "meaning_th": "ยืน",
+    "difficulty": 2,
+    "frequency": 122,
+    "category": "action",
+    "example_en": "Stand up.",
+    "example_th": "ยืนขึ้น",
+    "tags": [
+      "starter",
+      "action"
+    ]
+  },
+  {
+    "id": "w_0180",
+    "word": "sleep",
+    "ipa": "/sliːp/",
+    "pos": "verb",
+    "meaning_th": "นอน",
+    "difficulty": 2,
+    "frequency": 121,
+    "category": "daily",
+    "example_en": "I sleep early.",
+    "example_th": "ฉันนอนเร็ว",
+    "tags": [
+      "starter",
+      "daily"
+    ]
+  },
+  {
+    "id": "w_0181",
+    "word": "wake",
+    "ipa": "/weɪk/",
+    "pos": "verb",
+    "meaning_th": "ตื่น",
+    "difficulty": 2,
+    "frequency": 120,
+    "category": "daily",
+    "example_en": "Wake up early.",
+    "example_th": "ตื่นเช้า",
+    "tags": [
+      "starter",
+      "daily"
+    ]
+  },
+  {
+    "id": "w_0182",
+    "word": "wash",
+    "ipa": "/wɒʃ/",
+    "pos": "verb",
+    "meaning_th": "ล้าง",
+    "difficulty": 2,
+    "frequency": 119,
+    "category": "daily",
+    "example_en": "Wash your hands.",
+    "example_th": "ล้างมือของคุณ",
+    "tags": [
+      "starter",
+      "daily"
+    ]
+  },
+  {
+    "id": "w_0183",
+    "word": "clean",
+    "ipa": "/kliːn/",
+    "pos": "verb",
+    "meaning_th": "ทำความสะอาด",
+    "difficulty": 2,
+    "frequency": 118,
+    "category": "daily",
+    "example_en": "Clean your room.",
+    "example_th": "ทำความสะอาดห้องของคุณ",
+    "tags": [
+      "starter",
+      "daily"
+    ]
+  },
+  {
+    "id": "w_0184",
+    "word": "buy",
+    "ipa": "/baɪ/",
+    "pos": "verb",
+    "meaning_th": "ซื้อ",
+    "difficulty": 2,
+    "frequency": 117,
+    "category": "daily",
+    "example_en": "Buy some fruit.",
+    "example_th": "ซื้อผลไม้หน่อย",
+    "tags": [
+      "starter",
+      "daily"
+    ]
+  },
+  {
+    "id": "w_0185",
+    "word": "sell",
+    "ipa": "/sel/",
+    "pos": "verb",
+    "meaning_th": "ขาย",
+    "difficulty": 2,
+    "frequency": 116,
+    "category": "daily",
+    "example_en": "They sell books.",
+    "example_th": "พวกเขาขายหนังสือ",
+    "tags": [
+      "starter",
+      "daily"
+    ]
+  },
+  {
+    "id": "w_0186",
+    "word": "pay",
+    "ipa": "/peɪ/",
+    "pos": "verb",
+    "meaning_th": "จ่าย",
+    "difficulty": 2,
+    "frequency": 115,
+    "category": "daily",
+    "example_en": "Pay the bill.",
+    "example_th": "จ่ายบิล",
+    "tags": [
+      "starter",
+      "daily"
+    ]
+  },
+  {
+    "id": "w_0187",
+    "word": "use",
+    "ipa": "/juːz/",
+    "pos": "verb",
+    "meaning_th": "ใช้",
+    "difficulty": 2,
+    "frequency": 114,
+    "category": "action",
+    "example_en": "Use this tool.",
+    "example_th": "ใช้เครื่องมือนี้",
+    "tags": [
+      "starter",
+      "action"
+    ]
+  },
+  {
+    "id": "w_0188",
+    "word": "try",
+    "ipa": "/traɪ/",
+    "pos": "verb",
+    "meaning_th": "ลอง",
+    "difficulty": 2,
+    "frequency": 113,
+    "category": "action",
+    "example_en": "Try again.",
+    "example_th": "ลองอีกครั้ง",
+    "tags": [
+      "starter",
+      "action"
+    ]
+  },
+  {
+    "id": "w_0189",
+    "word": "play",
+    "ipa": "/pleɪ/",
+    "pos": "verb",
+    "meaning_th": "เล่น",
+    "difficulty": 2,
+    "frequency": 112,
+    "category": "action",
+    "example_en": "Play outside.",
+    "example_th": "เล่นข้างนอก",
+    "tags": [
+      "starter",
+      "action"
+    ]
+  },
+  {
+    "id": "w_0190",
+    "word": "work",
+    "ipa": "/wɜːk/",
+    "pos": "verb",
+    "meaning_th": "ทำงาน",
+    "difficulty": 2,
+    "frequency": 111,
+    "category": "daily",
+    "example_en": "I work hard.",
+    "example_th": "ฉันทำงานหนัก",
+    "tags": [
+      "starter",
+      "daily"
+    ]
+  },
+  {
+    "id": "w_0191",
+    "word": "live",
+    "ipa": "/lɪv/",
+    "pos": "verb",
+    "meaning_th": "อาศัย",
+    "difficulty": 2,
+    "frequency": 110,
+    "category": "daily",
+    "example_en": "I live in Bangkok.",
+    "example_th": "ฉันอาศัยในกรุงเทพฯ",
+    "tags": [
+      "starter",
+      "daily"
+    ]
+  },
+  {
+    "id": "w_0192",
+    "word": "call",
+    "ipa": "/kɔːl/",
+    "pos": "verb",
+    "meaning_th": "โทร",
+    "difficulty": 2,
+    "frequency": 109,
+    "category": "daily",
+    "example_en": "Call me later.",
+    "example_th": "โทรหาฉันทีหลัง",
+    "tags": [
+      "starter",
+      "daily"
+    ]
+  },
+  {
+    "id": "w_0193",
+    "word": "send",
+    "ipa": "/send/",
+    "pos": "verb",
+    "meaning_th": "ส่ง",
+    "difficulty": 2,
+    "frequency": 108,
+    "category": "daily",
+    "example_en": "Send a message.",
+    "example_th": "ส่งข้อความ",
+    "tags": [
+      "starter",
+      "daily"
+    ]
+  },
+  {
+    "id": "w_0194",
+    "word": "show",
+    "ipa": "/ʃəʊ/",
+    "pos": "verb",
+    "meaning_th": "แสดง",
+    "difficulty": 2,
+    "frequency": 107,
+    "category": "action",
+    "example_en": "Show me your work.",
+    "example_th": "แสดงงานของคุณให้ฉันดู",
+    "tags": [
+      "starter",
+      "action"
+    ]
+  },
+  {
+    "id": "w_0195",
+    "word": "tell",
+    "ipa": "/tel/",
+    "pos": "verb",
+    "meaning_th": "บอก",
+    "difficulty": 2,
+    "frequency": 106,
+    "category": "language",
+    "example_en": "Tell me a story.",
+    "example_th": "เล่านิทานให้ฉันฟัง",
+    "tags": [
+      "starter",
+      "language"
+    ]
+  },
+  {
+    "id": "w_0196",
+    "word": "say",
+    "ipa": "/seɪ/",
+    "pos": "verb",
+    "meaning_th": "พูด",
+    "difficulty": 2,
+    "frequency": 105,
+    "category": "language",
+    "example_en": "Say it again.",
+    "example_th": "พูดอีกครั้ง",
+    "tags": [
+      "starter",
+      "language"
+    ]
+  },
+  {
+    "id": "w_0197",
+    "word": "talk",
+    "ipa": "/tɔːk/",
+    "pos": "verb",
+    "meaning_th": "คุย",
+    "difficulty": 2,
+    "frequency": 104,
+    "category": "language",
+    "example_en": "Talk to your friend.",
+    "example_th": "คุยกับเพื่อนของคุณ",
+    "tags": [
+      "starter",
+      "language"
+    ]
+  },
+  {
+    "id": "w_0198",
+    "word": "remember",
+    "ipa": "/rɪˈmembə/",
+    "pos": "verb",
+    "meaning_th": "จำ",
+    "difficulty": 2,
+    "frequency": 103,
+    "category": "mind",
+    "example_en": "Remember this word.",
+    "example_th": "จำคำนี้ไว้",
+    "tags": [
+      "starter",
+      "mind"
+    ]
+  },
+  {
+    "id": "w_0199",
+    "word": "forget",
+    "ipa": "/fəˈɡet/",
+    "pos": "verb",
+    "meaning_th": "ลืม",
+    "difficulty": 2,
+    "frequency": 102,
+    "category": "mind",
+    "example_en": "Don't forget your bag.",
+    "example_th": "อย่าลืมกระเป๋า",
+    "tags": [
+      "starter",
+      "mind"
+    ]
+  },
+  {
+    "id": "w_0200",
+    "word": "understand",
+    "ipa": "/ˌʌndəˈstænd/",
+    "pos": "verb",
+    "meaning_th": "เข้าใจ",
+    "difficulty": 2,
+    "frequency": 101,
+    "category": "mind",
+    "example_en": "I understand now.",
+    "example_th": "ตอนนี้ฉันเข้าใจแล้ว",
+    "tags": [
+      "starter",
+      "mind"
+    ]
+  },
+  {
+    "id": "w_0201",
+    "word": "choose",
+    "ipa": "/tʃuːz/",
+    "pos": "verb",
+    "meaning_th": "เลือก",
+    "difficulty": 3,
+    "frequency": 100,
+    "category": "action",
+    "example_en": "Choose a book.",
+    "example_th": "เลือกหนังสือ",
+    "tags": [
+      "starter",
+      "action"
+    ]
+  },
+  {
+    "id": "w_0202",
+    "word": "change",
+    "ipa": "/tʃeɪndʒ/",
+    "pos": "verb",
+    "meaning_th": "เปลี่ยน",
+    "difficulty": 3,
+    "frequency": 99,
+    "category": "action",
+    "example_en": "Change your clothes.",
+    "example_th": "เปลี่ยนเสื้อผ้า",
+    "tags": [
+      "starter",
+      "action"
+    ]
+  },
+  {
+    "id": "w_0203",
+    "word": "bring",
+    "ipa": "/brɪŋ/",
+    "pos": "verb",
+    "meaning_th": "นำมา",
+    "difficulty": 3,
+    "frequency": 98,
+    "category": "action",
+    "example_en": "Bring your book.",
+    "example_th": "นำหนังสือมา",
+    "tags": [
+      "starter",
+      "action"
+    ]
+  },
+  {
+    "id": "w_0204",
+    "word": "put",
+    "ipa": "/pʊt/",
+    "pos": "verb",
+    "meaning_th": "วาง",
+    "difficulty": 3,
+    "frequency": 97,
+    "category": "action",
+    "example_en": "Put it here.",
+    "example_th": "วางไว้ที่นี่",
+    "tags": [
+      "starter",
+      "action"
+    ]
+  },
+  {
+    "id": "w_0205",
+    "word": "keep",
+    "ipa": "/kiːp/",
+    "pos": "verb",
+    "meaning_th": "เก็บ",
+    "difficulty": 3,
+    "frequency": 96,
+    "category": "action",
+    "example_en": "Keep it safe.",
+    "example_th": "เก็บให้ปลอดภัย",
+    "tags": [
+      "starter",
+      "action"
+    ]
+  },
+  {
+    "id": "w_0206",
+    "word": "leave",
+    "ipa": "/liːv/",
+    "pos": "verb",
+    "meaning_th": "ออกไป",
+    "difficulty": 3,
+    "frequency": 95,
+    "category": "action",
+    "example_en": "Leave the room.",
+    "example_th": "ออกจากห้อง",
+    "tags": [
+      "starter",
+      "action"
+    ]
+  },
+  {
+    "id": "w_0207",
+    "word": "stay",
+    "ipa": "/steɪ/",
+    "pos": "verb",
+    "meaning_th": "อยู่",
+    "difficulty": 3,
+    "frequency": 94,
+    "category": "action",
+    "example_en": "Stay here.",
+    "example_th": "อยู่ที่นี่",
+    "tags": [
+      "starter",
+      "action"
+    ]
+  },
+  {
+    "id": "w_0208",
+    "word": "move",
+    "ipa": "/muːv/",
+    "pos": "verb",
+    "meaning_th": "เคลื่อน",
+    "difficulty": 3,
+    "frequency": 93,
+    "category": "action",
+    "example_en": "Move your chair.",
+    "example_th": "เลื่อนเก้าอี้ของคุณ",
+    "tags": [
+      "starter",
+      "action"
+    ]
+  },
+  {
+    "id": "w_0209",
+    "word": "turn",
+    "ipa": "/tɜːn/",
+    "pos": "verb",
+    "meaning_th": "หัน",
+    "difficulty": 3,
+    "frequency": 92,
+    "category": "action",
+    "example_en": "Turn left.",
+    "example_th": "เลี้ยวซ้าย",
+    "tags": [
+      "starter",
+      "action"
+    ]
+  },
+  {
+    "id": "w_0210",
+    "word": "follow",
+    "ipa": "/ˈfɒləʊ/",
+    "pos": "verb",
+    "meaning_th": "ตาม",
+    "difficulty": 3,
+    "frequency": 91,
+    "category": "action",
+    "example_en": "Follow me.",
+    "example_th": "ตามฉันมา",
+    "tags": [
+      "starter",
+      "action"
+    ]
+  },
+  {
+    "id": "w_0211",
+    "word": "watch",
+    "ipa": "/wɒtʃ/",
+    "pos": "verb",
+    "meaning_th": "ดู",
+    "difficulty": 3,
+    "frequency": 90,
+    "category": "senses",
+    "example_en": "Watch the video.",
+    "example_th": "ดูวิดีโอ",
+    "tags": [
+      "starter",
+      "senses"
+    ]
+  },
+  {
+    "id": "w_0212",
+    "word": "draw",
+    "ipa": "/drɔː/",
+    "pos": "verb",
+    "meaning_th": "วาด",
+    "difficulty": 3,
+    "frequency": 89,
+    "category": "action",
+    "example_en": "Draw a picture.",
+    "example_th": "วาดรูป",
+    "tags": [
+      "starter",
+      "action"
+    ]
+  },
+  {
+    "id": "w_0213",
+    "word": "sing",
+    "ipa": "/sɪŋ/",
+    "pos": "verb",
+    "meaning_th": "ร้องเพลง",
+    "difficulty": 3,
+    "frequency": 88,
+    "category": "action",
+    "example_en": "Sing a song.",
+    "example_th": "ร้องเพลง",
+    "tags": [
+      "starter",
+      "action"
+    ]
+  },
+  {
+    "id": "w_0214",
+    "word": "dance",
+    "ipa": "/dɑːns/",
+    "pos": "verb",
+    "meaning_th": "เต้น",
+    "difficulty": 3,
+    "frequency": 87,
+    "category": "action",
+    "example_en": "Dance with me.",
+    "example_th": "เต้นกับฉัน",
+    "tags": [
+      "starter",
+      "action"
+    ]
+  },
+  {
+    "id": "w_0215",
+    "word": "smile",
+    "ipa": "/smaɪl/",
+    "pos": "verb",
+    "meaning_th": "ยิ้ม",
+    "difficulty": 3,
+    "frequency": 86,
+    "category": "feeling",
+    "example_en": "Smile at people.",
+    "example_th": "ยิ้มให้ผู้คน",
+    "tags": [
+      "starter",
+      "feeling"
+    ]
+  },
+  {
+    "id": "w_0216",
+    "word": "laugh",
+    "ipa": "/lɑːf/",
+    "pos": "verb",
+    "meaning_th": "หัวเราะ",
+    "difficulty": 3,
+    "frequency": 85,
+    "category": "feeling",
+    "example_en": "We laugh together.",
+    "example_th": "เราหัวเราะด้วยกัน",
+    "tags": [
+      "starter",
+      "feeling"
+    ]
+  },
+  {
+    "id": "w_0217",
+    "word": "cry",
+    "ipa": "/kraɪ/",
+    "pos": "verb",
+    "meaning_th": "ร้องไห้",
+    "difficulty": 3,
+    "frequency": 84,
+    "category": "feeling",
+    "example_en": "Babies cry often.",
+    "example_th": "ทารกร้องไห้บ่อย",
+    "tags": [
+      "starter",
+      "feeling"
+    ]
+  },
+  {
+    "id": "w_0218",
+    "word": "hope",
+    "ipa": "/həʊp/",
+    "pos": "verb",
+    "meaning_th": "หวัง",
+    "difficulty": 3,
+    "frequency": 83,
+    "category": "feeling",
+    "example_en": "I hope you win.",
+    "example_th": "ฉันหวังว่าคุณจะชนะ",
+    "tags": [
+      "starter",
+      "feeling"
+    ]
+  },
+  {
+    "id": "w_0219",
+    "word": "wish",
+    "ipa": "/wɪʃ/",
+    "pos": "verb",
+    "meaning_th": "ปรารถนา",
+    "difficulty": 3,
+    "frequency": 82,
+    "category": "feeling",
+    "example_en": "I wish you luck.",
+    "example_th": "ฉันขอให้คุณโชคดี",
+    "tags": [
+      "starter",
+      "feeling"
+    ]
+  },
+  {
+    "id": "w_0220",
+    "word": "enjoy",
+    "ipa": "/ɪnˈdʒɔɪ/",
+    "pos": "verb",
+    "meaning_th": "สนุก",
+    "difficulty": 3,
+    "frequency": 81,
+    "category": "feeling",
+    "example_en": "Enjoy your meal.",
+    "example_th": "ขอให้อร่อย",
+    "tags": [
+      "starter",
+      "feeling"
+    ]
+  },
+  {
+    "id": "w_0221",
+    "word": "good",
+    "ipa": "/ɡʊd/",
+    "pos": "adjective",
+    "meaning_th": "ดี",
+    "difficulty": 3,
+    "frequency": 80,
+    "category": "quality",
+    "example_en": "Good job.",
+    "example_th": "ทำได้ดี",
+    "tags": [
+      "starter",
+      "quality"
+    ]
+  },
+  {
+    "id": "w_0222",
+    "word": "bad",
+    "ipa": "/bæd/",
+    "pos": "adjective",
+    "meaning_th": "แย่",
+    "difficulty": 3,
+    "frequency": 79,
+    "category": "quality",
+    "example_en": "Bad weather today.",
+    "example_th": "อากาศแย่วันนี้",
+    "tags": [
+      "starter",
+      "quality"
+    ]
+  },
+  {
+    "id": "w_0223",
+    "word": "big",
+    "ipa": "/bɪɡ/",
+    "pos": "adjective",
+    "meaning_th": "ใหญ่",
+    "difficulty": 3,
+    "frequency": 78,
+    "category": "size",
+    "example_en": "A big house.",
+    "example_th": "บ้านใหญ่",
+    "tags": [
+      "starter",
+      "size"
+    ]
+  },
+  {
+    "id": "w_0224",
+    "word": "small",
+    "ipa": "/smɔːl/",
+    "pos": "adjective",
+    "meaning_th": "เล็ก",
+    "difficulty": 3,
+    "frequency": 77,
+    "category": "size",
+    "example_en": "A small bag.",
+    "example_th": "กระเป๋าเล็ก",
+    "tags": [
+      "starter",
+      "size"
+    ]
+  },
+  {
+    "id": "w_0225",
+    "word": "long",
+    "ipa": "/lɒŋ/",
+    "pos": "adjective",
+    "meaning_th": "ยาว",
+    "difficulty": 3,
+    "frequency": 76,
+    "category": "size",
+    "example_en": "A long road.",
+    "example_th": "ถนนยาว",
+    "tags": [
+      "starter",
+      "size"
+    ]
+  },
+  {
+    "id": "w_0226",
+    "word": "short",
+    "ipa": "/ʃɔːt/",
+    "pos": "adjective",
+    "meaning_th": "สั้น",
+    "difficulty": 3,
+    "frequency": 75,
+    "category": "size",
+    "example_en": "A short story.",
+    "example_th": "เรื่องสั้น",
+    "tags": [
+      "starter",
+      "size"
+    ]
+  },
+  {
+    "id": "w_0227",
+    "word": "tall",
+    "ipa": "/tɔːl/",
+    "pos": "adjective",
+    "meaning_th": "สูง",
+    "difficulty": 3,
+    "frequency": 74,
+    "category": "size",
+    "example_en": "A tall tree.",
+    "example_th": "ต้นไม้สูง",
+    "tags": [
+      "starter",
+      "size"
+    ]
+  },
+  {
+    "id": "w_0228",
+    "word": "new",
+    "ipa": "/njuː/",
+    "pos": "adjective",
+    "meaning_th": "ใหม่",
+    "difficulty": 3,
+    "frequency": 73,
+    "category": "quality",
+    "example_en": "A new phone.",
+    "example_th": "โทรศัพท์ใหม่",
+    "tags": [
+      "starter",
+      "quality"
+    ]
+  },
+  {
+    "id": "w_0229",
+    "word": "old",
+    "ipa": "/əʊld/",
+    "pos": "adjective",
+    "meaning_th": "เก่า",
+    "difficulty": 3,
+    "frequency": 72,
+    "category": "quality",
+    "example_en": "An old book.",
+    "example_th": "หนังสือเก่า",
+    "tags": [
+      "starter",
+      "quality"
+    ]
+  },
+  {
+    "id": "w_0230",
+    "word": "young",
+    "ipa": "/jʌŋ/",
+    "pos": "adjective",
+    "meaning_th": "หนุ่ม/สาว",
+    "difficulty": 3,
+    "frequency": 71,
+    "category": "people",
+    "example_en": "A young student.",
+    "example_th": "นักเรียนหนุ่มสาว",
+    "tags": [
+      "starter",
+      "people"
+    ]
+  },
+  {
+    "id": "w_0231",
+    "word": "happy",
+    "ipa": "/ˈhæpi/",
+    "pos": "adjective",
+    "meaning_th": "มีความสุข",
+    "difficulty": 3,
+    "frequency": 70,
+    "category": "feeling",
+    "example_en": "I am happy.",
+    "example_th": "ฉันมีความสุข",
+    "tags": [
+      "starter",
+      "feeling"
+    ]
+  },
+  {
+    "id": "w_0232",
+    "word": "sad",
+    "ipa": "/sæd/",
+    "pos": "adjective",
+    "meaning_th": "เศร้า",
+    "difficulty": 3,
+    "frequency": 69,
+    "category": "feeling",
+    "example_en": "She looks sad.",
+    "example_th": "เธอดูเศร้า",
+    "tags": [
+      "starter",
+      "feeling"
+    ]
+  },
+  {
+    "id": "w_0233",
+    "word": "angry",
+    "ipa": "/ˈæŋɡri/",
+    "pos": "adjective",
+    "meaning_th": "โกรธ",
+    "difficulty": 3,
+    "frequency": 68,
+    "category": "feeling",
+    "example_en": "Don't be angry.",
+    "example_th": "อย่าโกรธ",
+    "tags": [
+      "starter",
+      "feeling"
+    ]
+  },
+  {
+    "id": "w_0234",
+    "word": "tired",
+    "ipa": "/ˈtaɪəd/",
+    "pos": "adjective",
+    "meaning_th": "เหนื่อย",
+    "difficulty": 3,
+    "frequency": 67,
+    "category": "feeling",
+    "example_en": "I am tired.",
+    "example_th": "ฉันเหนื่อย",
+    "tags": [
+      "starter",
+      "feeling"
+    ]
+  },
+  {
+    "id": "w_0235",
+    "word": "busy",
+    "ipa": "/ˈbɪzi/",
+    "pos": "adjective",
+    "meaning_th": "ยุ่ง",
+    "difficulty": 3,
+    "frequency": 66,
+    "category": "feeling",
+    "example_en": "I am busy today.",
+    "example_th": "วันนี้ฉันยุ่ง",
+    "tags": [
+      "starter",
+      "feeling"
+    ]
+  },
+  {
+    "id": "w_0236",
+    "word": "easy",
+    "ipa": "/ˈiːzi/",
+    "pos": "adjective",
+    "meaning_th": "ง่าย",
+    "difficulty": 3,
+    "frequency": 65,
+    "category": "quality",
+    "example_en": "This is easy.",
+    "example_th": "นี่ง่าย",
+    "tags": [
+      "starter",
+      "quality"
+    ]
+  },
+  {
+    "id": "w_0237",
+    "word": "hard",
+    "ipa": "/hɑːd/",
+    "pos": "adjective",
+    "meaning_th": "ยาก",
+    "difficulty": 3,
+    "frequency": 64,
+    "category": "quality",
+    "example_en": "This is hard.",
+    "example_th": "นี่ยาก",
+    "tags": [
+      "starter",
+      "quality"
+    ]
+  },
+  {
+    "id": "w_0238",
+    "word": "fast",
+    "ipa": "/fɑːst/",
+    "pos": "adjective",
+    "meaning_th": "เร็ว",
+    "difficulty": 3,
+    "frequency": 63,
+    "category": "quality",
+    "example_en": "A fast car.",
+    "example_th": "รถเร็ว",
+    "tags": [
+      "starter",
+      "quality"
+    ]
+  },
+  {
+    "id": "w_0239",
+    "word": "slow",
+    "ipa": "/sləʊ/",
+    "pos": "adjective",
+    "meaning_th": "ช้า",
+    "difficulty": 3,
+    "frequency": 62,
+    "category": "quality",
+    "example_en": "A slow walk.",
+    "example_th": "การเดินช้า",
+    "tags": [
+      "starter",
+      "quality"
+    ]
+  },
+  {
+    "id": "w_0240",
+    "word": "hot",
+    "ipa": "/hɒt/",
+    "pos": "adjective",
+    "meaning_th": "ร้อน",
+    "difficulty": 3,
+    "frequency": 61,
+    "category": "weather",
+    "example_en": "It is hot today.",
+    "example_th": "วันนี้อากาศร้อน",
+    "tags": [
+      "starter",
+      "weather"
+    ]
+  },
+  {
+    "id": "w_0241",
+    "word": "cold",
+    "ipa": "/kəʊld/",
+    "pos": "adjective",
+    "meaning_th": "เย็น",
+    "difficulty": 3,
+    "frequency": 60,
+    "category": "weather",
+    "example_en": "It is cold outside.",
+    "example_th": "ข้างนอกเย็น",
+    "tags": [
+      "starter",
+      "weather"
+    ]
+  },
+  {
+    "id": "w_0242",
+    "word": "warm",
+    "ipa": "/wɔːm/",
+    "pos": "adjective",
+    "meaning_th": "อุ่น",
+    "difficulty": 3,
+    "frequency": 59,
+    "category": "weather",
+    "example_en": "A warm day.",
+    "example_th": "วันอุ่นๆ",
+    "tags": [
+      "starter",
+      "weather"
+    ]
+  },
+  {
+    "id": "w_0243",
+    "word": "cool",
+    "ipa": "/kuːl/",
+    "pos": "adjective",
+    "meaning_th": "เย็นสบาย",
+    "difficulty": 3,
+    "frequency": 58,
+    "category": "weather",
+    "example_en": "A cool breeze.",
+    "example_th": "ลมเย็นสบาย",
+    "tags": [
+      "starter",
+      "weather"
+    ]
+  },
+  {
+    "id": "w_0244",
+    "word": "beautiful",
+    "ipa": "/ˈbjuːtɪfl/",
+    "pos": "adjective",
+    "meaning_th": "สวย",
+    "difficulty": 3,
+    "frequency": 57,
+    "category": "quality",
+    "example_en": "A beautiful flower.",
+    "example_th": "ดอกไม้สวย",
+    "tags": [
+      "starter",
+      "quality"
+    ]
+  },
+  {
+    "id": "w_0245",
+    "word": "ugly",
+    "ipa": "/ˈʌɡli/",
+    "pos": "adjective",
+    "meaning_th": "น่าเกลียด",
+    "difficulty": 3,
+    "frequency": 56,
+    "category": "quality",
+    "example_en": "An ugly building.",
+    "example_th": "อาคารน่าเกลียด",
+    "tags": [
+      "starter",
+      "quality"
+    ]
+  },
+  {
+    "id": "w_0246",
+    "word": "strong",
+    "ipa": "/strɒŋ/",
+    "pos": "adjective",
+    "meaning_th": "แข็งแรง",
+    "difficulty": 3,
+    "frequency": 55,
+    "category": "quality",
+    "example_en": "A strong person.",
+    "example_th": "คนแข็งแรง",
+    "tags": [
+      "starter",
+      "quality"
+    ]
+  },
+  {
+    "id": "w_0247",
+    "word": "weak",
+    "ipa": "/wiːk/",
+    "pos": "adjective",
+    "meaning_th": "อ่อนแอ",
+    "difficulty": 3,
+    "frequency": 54,
+    "category": "quality",
+    "example_en": "I feel weak.",
+    "example_th": "ฉันรู้สึกอ่อนแอ",
+    "tags": [
+      "starter",
+      "quality"
+    ]
+  },
+  {
+    "id": "w_0248",
+    "word": "rich",
+    "ipa": "/rɪtʃ/",
+    "pos": "adjective",
+    "meaning_th": "รวย",
+    "difficulty": 3,
+    "frequency": 53,
+    "category": "quality",
+    "example_en": "A rich city.",
+    "example_th": "เมืองที่รวย",
+    "tags": [
+      "starter",
+      "quality"
+    ]
+  },
+  {
+    "id": "w_0249",
+    "word": "poor",
+    "ipa": "/pɔː/",
+    "pos": "adjective",
+    "meaning_th": "จน",
+    "difficulty": 3,
+    "frequency": 52,
+    "category": "quality",
+    "example_en": "Help poor people.",
+    "example_th": "ช่วยคนจน",
+    "tags": [
+      "starter",
+      "quality"
+    ]
+  },
+  {
+    "id": "w_0250",
+    "word": "kind",
+    "ipa": "/kaɪnd/",
+    "pos": "adjective",
+    "meaning_th": "ใจดี",
+    "difficulty": 3,
+    "frequency": 51,
+    "category": "quality",
+    "example_en": "Be kind to others.",
+    "example_th": "ใจดีกับผู้อื่น",
+    "tags": [
+      "starter",
+      "quality"
+    ]
+  },
+  {
+    "id": "w_0251",
+    "word": "funny",
+    "ipa": "/ˈfʌni/",
+    "pos": "adjective",
+    "meaning_th": "ตลก",
+    "difficulty": 3,
+    "frequency": 50,
+    "category": "quality",
+    "example_en": "A funny story.",
+    "example_th": "เรื่องตลก",
+    "tags": [
+      "starter",
+      "quality"
+    ]
+  },
+  {
+    "id": "w_0252",
+    "word": "quiet",
+    "ipa": "/ˈkwaɪət/",
+    "pos": "adjective",
+    "meaning_th": "เงียบ",
+    "difficulty": 3,
+    "frequency": 49,
+    "category": "quality",
+    "example_en": "Be quiet please.",
+    "example_th": "กรุณาเงียบ",
+    "tags": [
+      "starter",
+      "quality"
+    ]
+  },
+  {
+    "id": "w_0253",
+    "word": "loud",
+    "ipa": "/laʊd/",
+    "pos": "adjective",
+    "meaning_th": "ดัง",
+    "difficulty": 3,
+    "frequency": 48,
+    "category": "quality",
+    "example_en": "Loud music.",
+    "example_th": "เพลงดัง",
+    "tags": [
+      "starter",
+      "quality"
+    ]
+  },
+  {
+    "id": "w_0254",
+    "word": "safe",
+    "ipa": "/seɪf/",
+    "pos": "adjective",
+    "meaning_th": "ปลอดภัย",
+    "difficulty": 3,
+    "frequency": 47,
+    "category": "quality",
+    "example_en": "Stay safe.",
+    "example_th": "อยู่ให้ปลอดภัย",
+    "tags": [
+      "starter",
+      "quality"
+    ]
+  },
+  {
+    "id": "w_0255",
+    "word": "ready",
+    "ipa": "/ˈredi/",
+    "pos": "adjective",
+    "meaning_th": "พร้อม",
+    "difficulty": 3,
+    "frequency": 46,
+    "category": "quality",
+    "example_en": "Are you ready?",
+    "example_th": "คุณพร้อมหรือยัง",
+    "tags": [
+      "starter",
+      "quality"
+    ]
+  },
+  {
+    "id": "w_0256",
+    "word": "day",
+    "ipa": "/deɪ/",
+    "pos": "noun",
+    "meaning_th": "วัน",
+    "difficulty": 3,
+    "frequency": 45,
+    "category": "time",
+    "example_en": "Have a nice day.",
+    "example_th": "ขอให้เป็นวันที่ดี",
+    "tags": [
+      "starter",
+      "time"
+    ]
+  },
+  {
+    "id": "w_0257",
+    "word": "night",
+    "ipa": "/naɪt/",
+    "pos": "noun",
+    "meaning_th": "กลางคืน",
+    "difficulty": 3,
+    "frequency": 44,
+    "category": "time",
+    "example_en": "Good night.",
+    "example_th": "ราตรีสวัสดิ์",
+    "tags": [
+      "starter",
+      "time"
+    ]
+  },
+  {
+    "id": "w_0258",
+    "word": "morning",
+    "ipa": "/ˈmɔːnɪŋ/",
+    "pos": "noun",
+    "meaning_th": "เช้า",
+    "difficulty": 3,
+    "frequency": 43,
+    "category": "time",
+    "example_en": "Good morning.",
+    "example_th": "สวัสดีตอนเช้า",
+    "tags": [
+      "starter",
+      "time"
+    ]
+  },
+  {
+    "id": "w_0259",
+    "word": "afternoon",
+    "ipa": "/ˌɑːftəˈnuːn/",
+    "pos": "noun",
+    "meaning_th": "บ่าย",
+    "difficulty": 3,
+    "frequency": 42,
+    "category": "time",
+    "example_en": "Good afternoon.",
+    "example_th": "สวัสดีตอนบ่าย",
+    "tags": [
+      "starter",
+      "time"
+    ]
+  },
+  {
+    "id": "w_0260",
+    "word": "evening",
+    "ipa": "/ˈiːvnɪŋ/",
+    "pos": "noun",
+    "meaning_th": "เย็น",
+    "difficulty": 3,
+    "frequency": 41,
+    "category": "time",
+    "example_en": "Good evening.",
+    "example_th": "สวัสดีตอนเย็น",
+    "tags": [
+      "starter",
+      "time"
+    ]
+  },
+  {
+    "id": "w_0261",
+    "word": "today",
+    "ipa": "/təˈdeɪ/",
+    "pos": "adverb",
+    "meaning_th": "วันนี้",
+    "difficulty": 3,
+    "frequency": 40,
+    "category": "time",
+    "example_en": "Today is Monday.",
+    "example_th": "วันนี้คือวันจันทร์",
+    "tags": [
+      "starter",
+      "time"
+    ]
+  },
+  {
+    "id": "w_0262",
+    "word": "tomorrow",
+    "ipa": "/təˈmɒrəʊ/",
+    "pos": "adverb",
+    "meaning_th": "พรุ่งนี้",
+    "difficulty": 3,
+    "frequency": 39,
+    "category": "time",
+    "example_en": "See you tomorrow.",
+    "example_th": "เจอกันพรุ่งนี้",
+    "tags": [
+      "starter",
+      "time"
+    ]
+  },
+  {
+    "id": "w_0263",
+    "word": "yesterday",
+    "ipa": "/ˈjestədeɪ/",
+    "pos": "adverb",
+    "meaning_th": "เมื่อวาน",
+    "difficulty": 3,
+    "frequency": 38,
+    "category": "time",
+    "example_en": "Yesterday was fun.",
+    "example_th": "เมื่อวานสนุก",
+    "tags": [
+      "starter",
+      "time"
+    ]
+  },
+  {
+    "id": "w_0264",
+    "word": "week",
+    "ipa": "/wiːk/",
+    "pos": "noun",
+    "meaning_th": "สัปดาห์",
+    "difficulty": 3,
+    "frequency": 37,
+    "category": "time",
+    "example_en": "This week is busy.",
+    "example_th": "สัปดาห์นี้ยุ่ง",
+    "tags": [
+      "starter",
+      "time"
+    ]
+  },
+  {
+    "id": "w_0265",
+    "word": "month",
+    "ipa": "/mʌnθ/",
+    "pos": "noun",
+    "meaning_th": "เดือน",
+    "difficulty": 3,
+    "frequency": 36,
+    "category": "time",
+    "example_en": "Next month is July.",
+    "example_th": "เดือนหน้าคือกรกฎาคม",
+    "tags": [
+      "starter",
+      "time"
+    ]
+  },
+  {
+    "id": "w_0266",
+    "word": "year",
+    "ipa": "/jɪə/",
+    "pos": "noun",
+    "meaning_th": "ปี",
+    "difficulty": 3,
+    "frequency": 35,
+    "category": "time",
+    "example_en": "Happy new year.",
+    "example_th": "สวัสดีปีใหม่",
+    "tags": [
+      "starter",
+      "time"
+    ]
+  },
+  {
+    "id": "w_0267",
+    "word": "time",
+    "ipa": "/taɪm/",
+    "pos": "noun",
+    "meaning_th": "เวลา",
+    "difficulty": 3,
+    "frequency": 34,
+    "category": "time",
+    "example_en": "What time is it?",
+    "example_th": "ตอนนี้กี่โมง",
+    "tags": [
+      "starter",
+      "time"
+    ]
+  },
+  {
+    "id": "w_0268",
+    "word": "hour",
+    "ipa": "/ˈaʊə/",
+    "pos": "noun",
+    "meaning_th": "ชั่วโมง",
+    "difficulty": 3,
+    "frequency": 33,
+    "category": "time",
+    "example_en": "Wait one hour.",
+    "example_th": "รอหนึ่งชั่วโมง",
+    "tags": [
+      "starter",
+      "time"
+    ]
+  },
+  {
+    "id": "w_0269",
+    "word": "minute",
+    "ipa": "/ˈmɪnɪt/",
+    "pos": "noun",
+    "meaning_th": "นาที",
+    "difficulty": 3,
+    "frequency": 32,
+    "category": "time",
+    "example_en": "Five minutes left.",
+    "example_th": "เหลือห้านาที",
+    "tags": [
+      "starter",
+      "time"
+    ]
+  },
+  {
+    "id": "w_0270",
+    "word": "now",
+    "ipa": "/naʊ/",
+    "pos": "adverb",
+    "meaning_th": "ตอนนี้",
+    "difficulty": 3,
+    "frequency": 31,
+    "category": "time",
+    "example_en": "Do it now.",
+    "example_th": "ทำตอนนี้",
+    "tags": [
+      "starter",
+      "time"
+    ]
+  },
+  {
+    "id": "w_0271",
+    "word": "later",
+    "ipa": "/ˈleɪtə/",
+    "pos": "adverb",
+    "meaning_th": "ทีหลัง",
+    "difficulty": 3,
+    "frequency": 30,
+    "category": "time",
+    "example_en": "See you later.",
+    "example_th": "แล้วเจอกัน",
+    "tags": [
+      "starter",
+      "time"
+    ]
+  },
+  {
+    "id": "w_0272",
+    "word": "early",
+    "ipa": "/ˈɜːli/",
+    "pos": "adverb",
+    "meaning_th": "เช้า/ก่อน",
+    "difficulty": 3,
+    "frequency": 29,
+    "category": "time",
+    "example_en": "Come early.",
+    "example_th": "มาเช้า",
+    "tags": [
+      "starter",
+      "time"
+    ]
+  },
+  {
+    "id": "w_0273",
+    "word": "late",
+    "ipa": "/leɪt/",
+    "pos": "adjective",
+    "meaning_th": "สาย",
+    "difficulty": 3,
+    "frequency": 28,
+    "category": "time",
+    "example_en": "I am late.",
+    "example_th": "ฉันสาย",
+    "tags": [
+      "starter",
+      "time"
+    ]
+  },
+  {
+    "id": "w_0274",
+    "word": "monday",
+    "ipa": "/ˈmʌndeɪ/",
+    "pos": "noun",
+    "meaning_th": "วันจันทร์",
+    "difficulty": 3,
+    "frequency": 27,
+    "category": "time",
+    "example_en": "Monday is busy.",
+    "example_th": "วันจันทร์ยุ่ง",
+    "tags": [
+      "starter",
+      "time"
+    ]
+  },
+  {
+    "id": "w_0275",
+    "word": "friday",
+    "ipa": "/ˈfraɪdeɪ/",
+    "pos": "noun",
+    "meaning_th": "วันศุกร์",
+    "difficulty": 3,
+    "frequency": 26,
+    "category": "time",
+    "example_en": "Friday is fun.",
+    "example_th": "วันศุกร์สนุก",
+    "tags": [
+      "starter",
+      "time"
+    ]
+  },
+  {
+    "id": "w_0276",
+    "word": "sunday",
+    "ipa": "/ˈsʌndeɪ/",
+    "pos": "noun",
+    "meaning_th": "วันอาทิตย์",
+    "difficulty": 3,
+    "frequency": 25,
+    "category": "time",
+    "example_en": "Sunday is rest day.",
+    "example_th": "วันอาทิตย์เป็นวันพัก",
+    "tags": [
+      "starter",
+      "time"
+    ]
+  },
+  {
+    "id": "w_0277",
+    "word": "city",
+    "ipa": "/ˈsɪti/",
+    "pos": "noun",
+    "meaning_th": "เมือง",
+    "difficulty": 3,
+    "frequency": 24,
+    "category": "places",
+    "example_en": "Bangkok is a big city.",
+    "example_th": "กรุงเทพฯ เป็นเมืองใหญ่",
+    "tags": [
+      "starter",
+      "places"
+    ]
+  },
+  {
+    "id": "w_0278",
+    "word": "town",
+    "ipa": "/taʊn/",
+    "pos": "noun",
+    "meaning_th": "เมืองเล็ก",
+    "difficulty": 3,
+    "frequency": 23,
+    "category": "places",
+    "example_en": "I live in a small town.",
+    "example_th": "ฉันอยู่เมืองเล็ก",
+    "tags": [
+      "starter",
+      "places"
+    ]
+  },
+  {
+    "id": "w_0279",
+    "word": "street",
+    "ipa": "/striːt/",
+    "pos": "noun",
+    "meaning_th": "ถนน",
+    "difficulty": 3,
+    "frequency": 22,
+    "category": "places",
+    "example_en": "Cross the street carefully.",
+    "example_th": "ข้ามถนนอย่างระวัง",
+    "tags": [
+      "starter",
+      "places"
+    ]
+  },
+  {
+    "id": "w_0280",
+    "word": "park",
+    "ipa": "/pɑːk/",
+    "pos": "noun",
+    "meaning_th": "สวนสาธารณะ",
+    "difficulty": 3,
+    "frequency": 21,
+    "category": "places",
+    "example_en": "We play in the park.",
+    "example_th": "เราเล่นในสวน",
+    "tags": [
+      "starter",
+      "places"
+    ]
+  },
+  {
+    "id": "w_0281",
+    "word": "shop",
+    "ipa": "/ʃɒp/",
+    "pos": "noun",
+    "meaning_th": "ร้านค้า",
+    "difficulty": 3,
+    "frequency": 20,
+    "category": "places",
+    "example_en": "The shop is open.",
+    "example_th": "ร้านเปิดอยู่",
+    "tags": [
+      "starter",
+      "places"
+    ]
+  },
+  {
+    "id": "w_0282",
+    "word": "market",
+    "ipa": "/ˈmɑːkɪt/",
+    "pos": "noun",
+    "meaning_th": "ตลาด",
+    "difficulty": 3,
+    "frequency": 19,
+    "category": "places",
+    "example_en": "Go to the market.",
+    "example_th": "ไปตลาด",
+    "tags": [
+      "starter",
+      "places"
+    ]
+  },
+  {
+    "id": "w_0283",
+    "word": "hospital",
+    "ipa": "/ˈhɒspɪtl/",
+    "pos": "noun",
+    "meaning_th": "โรงพยาบาล",
+    "difficulty": 3,
+    "frequency": 18,
+    "category": "places",
+    "example_en": "The hospital is near.",
+    "example_th": "โรงพยาบาลอยู่ใกล้",
+    "tags": [
+      "starter",
+      "places"
+    ]
+  },
+  {
+    "id": "w_0284",
+    "word": "bank",
+    "ipa": "/bæŋk/",
+    "pos": "noun",
+    "meaning_th": "ธนาคาร",
+    "difficulty": 3,
+    "frequency": 17,
+    "category": "places",
+    "example_en": "I go to the bank.",
+    "example_th": "ฉันไปธนาคาร",
+    "tags": [
+      "starter",
+      "places"
+    ]
+  },
+  {
+    "id": "w_0285",
+    "word": "station",
+    "ipa": "/ˈsteɪʃn/",
+    "pos": "noun",
+    "meaning_th": "สถานี",
+    "difficulty": 3,
+    "frequency": 16,
+    "category": "places",
+    "example_en": "Wait at the station.",
+    "example_th": "รอที่สถานี",
+    "tags": [
+      "starter",
+      "places"
+    ]
+  },
+  {
+    "id": "w_0286",
+    "word": "airport",
+    "ipa": "/ˈeəpɔːt/",
+    "pos": "noun",
+    "meaning_th": "สนามบิน",
+    "difficulty": 3,
+    "frequency": 15,
+    "category": "places",
+    "example_en": "The airport is busy.",
+    "example_th": "สนามบินยุ่ง",
+    "tags": [
+      "starter",
+      "places"
+    ]
+  },
+  {
+    "id": "w_0287",
+    "word": "hotel",
+    "ipa": "/həʊˈtel/",
+    "pos": "noun",
+    "meaning_th": "โรงแรม",
+    "difficulty": 3,
+    "frequency": 14,
+    "category": "places",
+    "example_en": "The hotel is clean.",
+    "example_th": "โรงแรมสะอาด",
+    "tags": [
+      "starter",
+      "places"
+    ]
+  },
+  {
+    "id": "w_0288",
+    "word": "room",
+    "ipa": "/ruːm/",
+    "pos": "noun",
+    "meaning_th": "ห้อง",
+    "difficulty": 3,
+    "frequency": 13,
+    "category": "places",
+    "example_en": "My room is tidy.",
+    "example_th": "ห้องของฉันเป็นระเบียบ",
+    "tags": [
+      "starter",
+      "places"
+    ]
+  },
+  {
+    "id": "w_0289",
+    "word": "door",
+    "ipa": "/dɔː/",
+    "pos": "noun",
+    "meaning_th": "ประตู",
+    "difficulty": 3,
+    "frequency": 12,
+    "category": "places",
+    "example_en": "Open the door.",
+    "example_th": "เปิดประตู",
+    "tags": [
+      "starter",
+      "places"
+    ]
+  },
+  {
+    "id": "w_0290",
+    "word": "window",
+    "ipa": "/ˈwɪndəʊ/",
+    "pos": "noun",
+    "meaning_th": "หน้าต่าง",
+    "difficulty": 3,
+    "frequency": 11,
+    "category": "places",
+    "example_en": "Close the window.",
+    "example_th": "ปิดหน้าต่าง",
+    "tags": [
+      "starter",
+      "places"
+    ]
+  },
+  {
+    "id": "w_0291",
+    "word": "table",
+    "ipa": "/ˈteɪbl/",
+    "pos": "noun",
+    "meaning_th": "โต๊ะ",
+    "difficulty": 3,
+    "frequency": 10,
+    "category": "places",
+    "example_en": "Put it on the table.",
+    "example_th": "วางบนโต๊ะ",
+    "tags": [
+      "starter",
+      "places"
+    ]
+  },
+  {
+    "id": "w_0292",
+    "word": "bed",
+    "ipa": "/bed/",
+    "pos": "noun",
+    "meaning_th": "เตียง",
+    "difficulty": 3,
+    "frequency": 9,
+    "category": "places",
+    "example_en": "Go to bed.",
+    "example_th": "ไปนอน",
+    "tags": [
+      "starter",
+      "places"
+    ]
+  },
+  {
+    "id": "w_0293",
+    "word": "car",
+    "ipa": "/kɑː/",
+    "pos": "noun",
+    "meaning_th": "รถยนต์",
+    "difficulty": 3,
+    "frequency": 8,
+    "category": "transport",
+    "example_en": "The car is red.",
+    "example_th": "รถสีแดง",
+    "tags": [
+      "starter",
+      "transport"
+    ]
+  },
+  {
+    "id": "w_0294",
+    "word": "bus",
+    "ipa": "/bʌs/",
+    "pos": "noun",
+    "meaning_th": "รถเมล์",
+    "difficulty": 3,
+    "frequency": 7,
+    "category": "transport",
+    "example_en": "I take the bus.",
+    "example_th": "ฉันนั่งรถเมล์",
+    "tags": [
+      "starter",
+      "transport"
+    ]
+  },
+  {
+    "id": "w_0295",
+    "word": "train",
+    "ipa": "/treɪn/",
+    "pos": "noun",
+    "meaning_th": "รถไฟ",
+    "difficulty": 3,
+    "frequency": 6,
+    "category": "transport",
+    "example_en": "The train is late.",
+    "example_th": "รถไฟสาย",
+    "tags": [
+      "starter",
+      "transport"
+    ]
+  },
+  {
+    "id": "w_0296",
+    "word": "bike",
+    "ipa": "/baɪk/",
+    "pos": "noun",
+    "meaning_th": "จักรยาน",
+    "difficulty": 3,
+    "frequency": 5,
+    "category": "transport",
+    "example_en": "I ride a bike.",
+    "example_th": "ฉันขี่จักรยาน",
+    "tags": [
+      "starter",
+      "transport"
+    ]
+  },
+  {
+    "id": "w_0297",
+    "word": "road",
+    "ipa": "/rəʊd/",
+    "pos": "noun",
+    "meaning_th": "ถนน",
+    "difficulty": 3,
+    "frequency": 4,
+    "category": "places",
+    "example_en": "The road is long.",
+    "example_th": "ถนนยาว",
+    "tags": [
+      "starter",
+      "places"
+    ]
+  },
+  {
+    "id": "w_0298",
+    "word": "weather",
+    "ipa": "/ˈweðə/",
+    "pos": "noun",
+    "meaning_th": "อากาศ",
+    "difficulty": 3,
+    "frequency": 3,
+    "category": "weather",
+    "example_en": "The weather is nice.",
+    "example_th": "อากาศดี",
+    "tags": [
+      "starter",
+      "weather"
+    ]
+  },
+  {
+    "id": "w_0299",
+    "word": "rain",
+    "ipa": "/reɪn/",
+    "pos": "noun",
+    "meaning_th": "ฝน",
+    "difficulty": 3,
+    "frequency": 2,
+    "category": "weather",
+    "example_en": "Rain is falling.",
+    "example_th": "ฝนกำลังตก",
+    "tags": [
+      "starter",
+      "weather"
+    ]
+  },
+  {
+    "id": "w_0300",
+    "word": "sun",
+    "ipa": "/sʌn/",
+    "pos": "noun",
+    "meaning_th": "ดวงอาทิตย์",
+    "difficulty": 3,
+    "frequency": 1,
+    "category": "weather",
+    "example_en": "The sun is bright.",
+    "example_th": "ดวงอาทิตย์สว่าง",
+    "tags": [
+      "starter",
+      "weather"
+    ]
+  }
+]
