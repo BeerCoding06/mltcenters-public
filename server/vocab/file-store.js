@@ -78,6 +78,10 @@ export function createVocabFileStore(filePath) {
       }
       schedulePersist();
     },
+    /** Schedule a debounced persist (profiles/sessions/stats mutations). */
+    touch() {
+      schedulePersist();
+    },
     close() {
       if (writeTimer) {
         clearTimeout(writeTimer);
