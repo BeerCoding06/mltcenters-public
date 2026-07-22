@@ -37,6 +37,15 @@ import {
 } from './seo-meta.js';
 import { createAnalyticsRouter } from './analytics/analytics-router.js';
 import { initAnalyticsDb } from './analytics/db.js';
+import {
+  initVocabDb,
+  getVocabDbMode,
+  getVocabFileStore,
+  getVocabPgPool,
+} from './vocab/db.js';
+import { createVocabRouter } from './vocab/router.js';
+import { createVocabModel } from './vocab/model.js';
+import { createVocabService } from './vocab/service.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const distPath = path.join(__dirname, '../dist');
@@ -104,6 +113,9 @@ const openai = AI_API_KEY
       ...(AI_BASE_URL ? { baseURL: AI_BASE_URL } : {}),
     })
   : null;
+
+const VOCAB_ENABLED =
+  process.env.VOCAB_ENABLED !== 'false' && process.env.VOCAB_ENABLED !== '0';
 
 const mailTransport =
   SMTP_USER && SMTP_PASS
@@ -419,11 +431,31 @@ if (existsSync(distPath)) {
 const PORT = process.env.PORT || 3000;
 const host = process.env.HOST || '0.0.0.0';
 
-initAnalyticsDb()
-  .catch((err) => {
+Promise.all([
+  initAnalyticsDb().catch((err) => {
     console.error('[analytics] failed to init database:', err);
-  })
-  .finally(() => {
+  }),
+  VOCAB_ENABLED
+    ? initVocabDb().catch((err) => {
+        console.error('[vocab] failed to init database:', err);
+      })
+    : Promise.resolve(),
+]).finally(() => {
+    if (VOCAB_ENABLED && getVocabDbMode() !== 'none') {
+      const model = createVocabModel({
+        mode: getVocabDbMode(),
+        fileStore: getVocabFileStore(),
+        pgPool: getVocabPgPool(),
+      });
+      const vocabService = createVocabService({
+        model,
+        openai,
+        modelName: AI_MODEL,
+      });
+      app.use('/api/vocab', createVocabRouter({ service: vocabService }));
+      console.info('[vocab] routes mounted at /api/vocab');
+    }
+
     app.listen(PORT, host, () => {
       console.log(`Server listening on http://${host}:${PORT}`);
       if (openai) {

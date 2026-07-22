@@ -315,6 +315,47 @@ function createFileModel(fileStore) {
       }
       return count;
     },
+
+    async getGeneratedSentences(profileId, dateKey) {
+      const row = data().generated_sentences.find(
+        (r) => r.profile_id === profileId && r.date_key === dateKey
+      );
+      if (!row) return null;
+      let sentences = [];
+      try {
+        sentences = row.content_json ? JSON.parse(row.content_json) : [];
+      } catch {
+        sentences = [];
+      }
+      return { ...row, sentences };
+    },
+
+    async upsertGeneratedSentences({ profileId, dateKey, sentences }) {
+      const d = data();
+      const content_json = JSON.stringify(sentences);
+      const idx = d.generated_sentences.findIndex(
+        (r) => r.profile_id === profileId && r.date_key === dateKey
+      );
+      if (idx >= 0) {
+        d.generated_sentences[idx] = {
+          ...d.generated_sentences[idx],
+          content_json,
+          created_at: nowMs(),
+        };
+        touch();
+        return { sentences, row: d.generated_sentences[idx] };
+      }
+      const row = {
+        id: nextId('gsent'),
+        profile_id: profileId,
+        date_key: dateKey,
+        content_json,
+        created_at: nowMs(),
+      };
+      d.generated_sentences.push(row);
+      touch();
+      return { sentences, row };
+    },
   };
 }
 
@@ -697,6 +738,42 @@ function createPgModel(pool) {
         [profileId, sinceMs]
       );
       return r.rows[0]?.count ?? 0;
+    },
+
+    async getGeneratedSentences(profileId, dateKey) {
+      const r = await pool.query(
+        `SELECT * FROM vocab_generated_sentences WHERE profile_id = $1 AND date_key = $2`,
+        [profileId, dateKey]
+      );
+      const row = r.rows[0];
+      if (!row) return null;
+      let sentences = [];
+      try {
+        sentences = row.content_json ? JSON.parse(row.content_json) : [];
+      } catch {
+        sentences = [];
+      }
+      return { ...row, sentences };
+    },
+
+    async upsertGeneratedSentences({ profileId, dateKey, sentences }) {
+      const content_json = JSON.stringify(sentences);
+      const existing = await this.getGeneratedSentences(profileId, dateKey);
+      if (existing) {
+        await pool.query(
+          `UPDATE vocab_generated_sentences SET content_json = $3, created_at = $4
+           WHERE profile_id = $1 AND date_key = $2`,
+          [profileId, dateKey, content_json, nowMs()]
+        );
+        return { sentences };
+      }
+      const id = nextId('gsent');
+      await pool.query(
+        `INSERT INTO vocab_generated_sentences (id, profile_id, date_key, content_json, created_at)
+         VALUES ($1, $2, $3, $4, $5)`,
+        [id, profileId, dateKey, content_json, nowMs()]
+      );
+      return { sentences };
     },
   };
 }

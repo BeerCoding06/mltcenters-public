@@ -3,6 +3,11 @@ import {
   masteryFromScore,
   nextReviewAfterAnswer,
 } from './memory.js';
+import {
+  buildSentencesPrompt,
+  buildTemplateSentences,
+  parseSentencesResponse,
+} from './ai-sentences.js';
 
 const DEFAULT_NEW_WORDS_PER_DAY = 15;
 const MAX_REVIEW_IN_LEARN = 20;
@@ -103,7 +108,30 @@ function applyStreak(profile) {
   return { streak_days: streakDays, last_active_date: today };
 }
 
-export function createVocabService({ model }) {
+function mapSentenceWordIds(parsedSentences, knownWords) {
+  const byWord = new Map(knownWords.map((w) => [w.word.toLowerCase(), w.id]));
+  return parsedSentences.slice(0, 5).map((s) => {
+    const wordIds = [];
+    for (const word of s.words || []) {
+      const id = byWord.get(String(word).toLowerCase());
+      if (id) wordIds.push(id);
+    }
+    if (wordIds.length === 0) {
+      for (const w of knownWords) {
+        if (s.en.toLowerCase().includes(w.word.toLowerCase())) {
+          wordIds.push(w.id);
+        }
+      }
+    }
+    return {
+      en: s.en,
+      th: s.th,
+      wordIds: [...new Set(wordIds)],
+    };
+  });
+}
+
+export function createVocabService({ model, openai = null, modelName = 'gpt-4o-mini' }) {
   async function ensureProfile(visitorId, { goal, levelId } = {}) {
     let profile = await model.getProfileByVisitorId(visitorId);
     if (!profile) {
@@ -133,6 +161,25 @@ export function createVocabService({ model }) {
       return !st || st.status === 'new';
     });
     return fresh.slice(0, limit);
+  }
+
+  async function loadKnownWords(profile) {
+    const stats = await model.listWordStats(profile.id);
+    const known = [];
+    for (const s of stats) {
+      if (
+        (s.memoryScore ?? 0) >= 40 ||
+        ['learning', 'reviewing', 'mastered'].includes(s.status)
+      ) {
+        const w = await model.getWord(s.wordId);
+        if (w) known.push(w);
+      }
+    }
+    if (known.length === 0) {
+      const levelId = profile.current_level_id || 'starter';
+      return (await model.listWordsByLevel(levelId)).slice(0, 20);
+    }
+    return known;
   }
 
   async function pickDueWords(profile, limit) {
@@ -200,6 +247,8 @@ export function createVocabService({ model }) {
     const learnRemaining = Math.max(0, Math.min(quota - usedNewToday, freshAvailable));
 
     const reviewDue = (await model.listDueReviews(profileId, Date.now(), 50)).length;
+    const knownWords = await loadKnownWords(profile);
+    const sentencesReady = knownWords.length > 0;
 
     return {
       profileId: profile.id,
@@ -214,7 +263,7 @@ export function createVocabService({ model }) {
       today: {
         learnRemaining,
         reviewDue,
-        sentencesReady: 0,
+        sentencesReady,
       },
       coachTip: COACH_TIP_TH,
     };
@@ -397,13 +446,61 @@ export function createVocabService({ model }) {
     const profile = await model.getProfileById(profileId);
     if (!profile) throw new Error('Profile not found');
     const quota = newWordsPerDay();
-    const learn = await pickLearnWords(profile, quota);
+    const dayStart = startOfUtcDayMs();
+    const usedNewToday = await model.countNewWordsLearnedSince(profileId, dayStart);
+    const remainingQuota = Math.max(0, quota - usedNewToday);
+    const learn = await pickLearnWords(profile, remainingQuota);
     const review = await pickDueWords(profile, MAX_REVIEW_IN_LEARN);
     return {
       learn: learn.map((w) => ({ id: w.id, word: w.word, meaning_th: w.meaning_th })),
       review: review.map((w) => ({ id: w.id, word: w.word, meaning_th: w.meaning_th })),
       newWordsPerDay: quota,
     };
+  }
+
+  async function listLevels() {
+    return model.listLevels();
+  }
+
+  async function getWordDetail(profileId, wordId) {
+    const word = await model.getWord(wordId);
+    if (!word) throw new Error('Word not found');
+    const stat = await model.getWordStat(profileId, wordId);
+    return { ...word, stat: stat || null };
+  }
+
+  async function getOrCreateDailySentences(profileId) {
+    const profile = await model.getProfileById(profileId);
+    if (!profile) throw new Error('Profile not found');
+
+    const dateKey = utcDateKey();
+    const cached = await model.getGeneratedSentences(profileId, dateKey);
+    if (cached?.sentences?.length) {
+      return { sentences: cached.sentences, cached: true };
+    }
+
+    const knownWords = await loadKnownWords(profile);
+    if (knownWords.length === 0) {
+      throw new Error('No known words available for sentences');
+    }
+
+    let sentences;
+    if (!openai) {
+      sentences = buildTemplateSentences(knownWords);
+    } else {
+      const completion = await openai.chat.completions.create({
+        model: modelName,
+        messages: buildSentencesPrompt(knownWords),
+        max_tokens: 800,
+        temperature: 0.7,
+      });
+      const text = completion.choices[0]?.message?.content?.trim() || '';
+      const parsed = parseSentencesResponse(text);
+      sentences = mapSentenceWordIds(parsed, knownWords);
+    }
+
+    await model.upsertGeneratedSentences({ profileId, dateKey, sentences });
+    return { sentences, cached: false };
   }
 
   return {
@@ -414,5 +511,8 @@ export function createVocabService({ model }) {
     completeSession,
     getReviewQueue,
     getRecommendToday,
+    listLevels,
+    getWordDetail,
+    getOrCreateDailySentences,
   };
 }
