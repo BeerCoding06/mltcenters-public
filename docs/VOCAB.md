@@ -48,7 +48,7 @@ All routes require `X-Visitor-Id`. Base path: `/api/vocab`.
 | GET | `/levels` | Available levels. |
 | GET | `/words/:id` | Word detail + learner stats. |
 | POST | `/sessions` | `{ mode: "learn" \| "review" \| "quiz" }` — start session. |
-| POST | `/sessions/:id/answer` | `{ wordId, quizType, isCorrect, … }` — submit answer. |
+| POST | `/sessions/:id/answer` | `{ wordId, quizType, userAnswer, responseMs, confidence }` — submit answer; response includes `isCorrect`. |
 | POST | `/sessions/:id/complete` | Finish session. |
 | GET | `/review/queue` | Due review items. |
 | GET | `/recommend/today` | Today’s learn pack. |

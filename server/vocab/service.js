@@ -157,7 +157,7 @@ function applyStreak(profile) {
   if (last && last === yesterdayUtc(today)) {
     streakDays += 1;
   } else if (!last) {
-    streakDays = 0;
+    streakDays = 1;
   } else {
     streakDays = 0;
   }

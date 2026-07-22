@@ -48,6 +48,8 @@ describe('vocab service', () => {
     expect(result.isCorrect).toBe(true);
     expect(result.memoryScore).toBeGreaterThan(0);
     expect(result.xpDelta).toBe(10);
+    const dash = await service.getDashboard(p.id);
+    expect(dash.streakDays).toBe(1);
   });
 
   it('learn session mixes quiz types', async () => {
