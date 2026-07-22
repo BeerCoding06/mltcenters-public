@@ -20,6 +20,9 @@ const EnglishAssessmentPage = lazy(() => import("./pages/EnglishAssessmentPage")
 const AssessmentDashboard = lazy(() => import("./pages/AssessmentDashboard"));
 const RunnerRedirectPage = lazy(() => import("./pages/RunnerRedirectPage"));
 const AdminAnalyticsPage = lazy(() => import("./pages/AdminAnalyticsPage"));
+const VocabLayout = lazy(() => import("./pages/vocab/VocabLayout"));
+const VocabDashboardPage = lazy(() => import("./pages/vocab/VocabDashboardPage"));
+const VocabOnboardingPage = lazy(() => import("./pages/vocab/VocabOnboardingPage"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const App = () => (
@@ -43,6 +46,10 @@ const App = () => (
               <Route path="/assessment/dashboard" element={<AssessmentDashboard />} />
               <Route path="/runner-app/*" element={<RunnerRedirectPage />} />
               <Route path="/admin/analytics" element={<AdminAnalyticsPage />} />
+              <Route path="/vocab" element={<VocabLayout />}>
+                <Route index element={<VocabDashboardPage />} />
+                <Route path="onboarding" element={<VocabOnboardingPage />} />
+              </Route>
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>
