@@ -1,0 +1,1452 @@
+[
+  {
+    "id": "listening-001",
+    "category": "LISTENING",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "What will the speaker do next?",
+    "passage": null,
+    "audioUrl": "Good morning everyone. Thank you for coming. We have a lot to cover today, so let's begin.",
+    "explanation": "The speaker says 'Let's begin'.",
+    "hint": "Listen for next action.",
+    "choices": [
+      {
+        "label": "Cancel the meeting",
+        "isCorrect": false
+      },
+      {
+        "label": "Order lunch",
+        "isCorrect": false
+      },
+      {
+        "label": "Start the presentation",
+        "isCorrect": true
+      },
+      {
+        "label": "Leave the room",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "listening-002",
+    "category": "LISTENING",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "Where does this announcement likely take place?",
+    "passage": null,
+    "audioUrl": "Attention passengers: Flight 302 to Tokyo is now boarding at Gate 12.",
+    "explanation": "Gate changes are announced at airports.",
+    "hint": "Context clues: gate, boarding.",
+    "choices": [
+      {
+        "label": "At an airport",
+        "isCorrect": true
+      },
+      {
+        "label": "In a library",
+        "isCorrect": false
+      },
+      {
+        "label": "At a restaurant",
+        "isCorrect": false
+      },
+      {
+        "label": "At a gym",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "listening-003",
+    "category": "LISTENING",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "Which gate should passengers go to?",
+    "passage": null,
+    "audioUrl": "Flight 302 to Tokyo is now boarding at Gate 12.",
+    "explanation": "The announcement says Gate 12.",
+    "hint": "Specific gate number.",
+    "choices": [
+      {
+        "label": "Gate 2",
+        "isCorrect": false
+      },
+      {
+        "label": "Gate 22",
+        "isCorrect": false
+      },
+      {
+        "label": "Gate 20",
+        "isCorrect": false
+      },
+      {
+        "label": "Gate 12",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "id": "listening-004",
+    "category": "LISTENING",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "What is the woman asking about?",
+    "passage": null,
+    "audioUrl": "W: Excuse me, what time does the meeting start? M: It starts at three sharp.",
+    "explanation": "She asks 'What time does the meeting start?'",
+    "hint": "Question about schedule.",
+    "choices": [
+      {
+        "label": "A printer problem",
+        "isCorrect": false
+      },
+      {
+        "label": "A hotel reservation",
+        "isCorrect": false
+      },
+      {
+        "label": "The meeting time",
+        "isCorrect": true
+      },
+      {
+        "label": "The lunch menu",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "listening-005",
+    "category": "LISTENING",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "When does the meeting start?",
+    "passage": null,
+    "audioUrl": "M: It starts at three sharp.",
+    "explanation": "The man says 'three sharp'.",
+    "hint": "Exact time given.",
+    "choices": [
+      {
+        "label": "At 3:30",
+        "isCorrect": false
+      },
+      {
+        "label": "At 3:00",
+        "isCorrect": true
+      },
+      {
+        "label": "At 2:00",
+        "isCorrect": false
+      },
+      {
+        "label": "At 4:00",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "listening-006",
+    "category": "LISTENING",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "Why is the man calling?",
+    "passage": null,
+    "audioUrl": "M: Hi, this is Mr. Lopez. I need to reschedule my appointment from Wednesday to Friday afternoon.",
+    "explanation": "He asks to move the appointment to Friday.",
+    "hint": "Purpose of call.",
+    "choices": [
+      {
+        "label": "To reschedule an appointment",
+        "isCorrect": true
+      },
+      {
+        "label": "To place a food order",
+        "isCorrect": false
+      },
+      {
+        "label": "To report a fire",
+        "isCorrect": false
+      },
+      {
+        "label": "To apply for a job",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "listening-007",
+    "category": "LISTENING",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "Which day does he prefer?",
+    "passage": null,
+    "audioUrl": "I need to reschedule my appointment from Wednesday to Friday afternoon.",
+    "explanation": "He requests Friday afternoon.",
+    "hint": "Preferred day.",
+    "choices": [
+      {
+        "label": "Wednesday",
+        "isCorrect": false
+      },
+      {
+        "label": "Monday",
+        "isCorrect": false
+      },
+      {
+        "label": "Sunday",
+        "isCorrect": false
+      },
+      {
+        "label": "Friday",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "id": "listening-008",
+    "category": "LISTENING",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "What problem does the woman mention?",
+    "passage": null,
+    "audioUrl": "W: The copier is jammed again. Could maintenance take a look before the rush?",
+    "explanation": "She says the copier is jammed again.",
+    "hint": "Stated problem.",
+    "choices": [
+      {
+        "label": "The copier is jammed",
+        "isCorrect": true
+      },
+      {
+        "label": "The elevator is stuck",
+        "isCorrect": false
+      },
+      {
+        "label": "The lights are out",
+        "isCorrect": false
+      },
+      {
+        "label": "The phone line is dead",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "listening-009",
+    "category": "LISTENING",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "Who does she want to help?",
+    "passage": null,
+    "audioUrl": "Could maintenance take a look before the rush?",
+    "explanation": "She asks maintenance to take a look.",
+    "hint": "Who should respond.",
+    "choices": [
+      {
+        "label": "Security",
+        "isCorrect": false
+      },
+      {
+        "label": "Maintenance staff",
+        "isCorrect": true
+      },
+      {
+        "label": "Cleaning crew",
+        "isCorrect": false
+      },
+      {
+        "label": "IT support",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "listening-010",
+    "category": "LISTENING",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "What does the speaker recommend?",
+    "passage": null,
+    "audioUrl": "Welcome to the conference. Please arrive thirty minutes early tomorrow for registration and badge pickup.",
+    "explanation": "Arrive thirty minutes early for registration.",
+    "hint": "Recommendation given.",
+    "choices": [
+      {
+        "label": "Bringing food",
+        "isCorrect": false
+      },
+      {
+        "label": "Parking on the street",
+        "isCorrect": false
+      },
+      {
+        "label": "Skipping the keynote",
+        "isCorrect": false
+      },
+      {
+        "label": "Arriving early for registration",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "id": "listening-011",
+    "category": "LISTENING",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "How early should attendees arrive?",
+    "passage": null,
+    "audioUrl": "Please arrive thirty minutes early tomorrow for registration.",
+    "explanation": "Thirty minutes early is advised.",
+    "hint": "Time before event.",
+    "choices": [
+      {
+        "label": "30 minutes",
+        "isCorrect": true
+      },
+      {
+        "label": "Two hours",
+        "isCorrect": false
+      },
+      {
+        "label": "One hour",
+        "isCorrect": false
+      },
+      {
+        "label": "10 minutes",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "listening-012",
+    "category": "LISTENING",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "What will happen this afternoon?",
+    "passage": null,
+    "audioUrl": "M: Heads up—the shipment from Denver is due this afternoon around two.",
+    "explanation": "A shipment is due this afternoon.",
+    "hint": "Scheduled event.",
+    "choices": [
+      {
+        "label": "The office will close",
+        "isCorrect": false
+      },
+      {
+        "label": "A delivery will arrive",
+        "isCorrect": true
+      },
+      {
+        "label": "A flight will depart",
+        "isCorrect": false
+      },
+      {
+        "label": "A interview will be cancelled",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "listening-013",
+    "category": "LISTENING",
+    "type": "MCQ",
+    "difficulty": "HARD",
+    "stem": "What is the man's opinion of the proposal?",
+    "passage": null,
+    "audioUrl": "W: Should we approve the proposal today? M: I'd rather wait until we have more data from the pilot test.",
+    "explanation": "He says they need more data before deciding.",
+    "hint": "Opinion in response.",
+    "choices": [
+      {
+        "label": "He wants to reject it immediately",
+        "isCorrect": false
+      },
+      {
+        "label": "He fully supports it",
+        "isCorrect": false
+      },
+      {
+        "label": "He thinks it needs more data",
+        "isCorrect": true
+      },
+      {
+        "label": "He has not read it",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "listening-014",
+    "category": "LISTENING",
+    "type": "MCQ",
+    "difficulty": "HARD",
+    "stem": "What does the woman suggest doing?",
+    "passage": null,
+    "audioUrl": "W: Could we push the deadline back a week? M: That might work if the client agrees.",
+    "explanation": "She proposes pushing the deadline back a week.",
+    "hint": "Her suggestion.",
+    "choices": [
+      {
+        "label": "Closing the branch",
+        "isCorrect": false
+      },
+      {
+        "label": "Buying new software",
+        "isCorrect": false
+      },
+      {
+        "label": "Firing a contractor",
+        "isCorrect": false
+      },
+      {
+        "label": "Extending the deadline",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "id": "listening-015",
+    "category": "LISTENING",
+    "type": "MCQ",
+    "difficulty": "HARD",
+    "stem": "What condition does the man mention?",
+    "passage": null,
+    "audioUrl": "M: That might work if the client agrees.",
+    "explanation": "He says it might work if the client agrees.",
+    "hint": "Condition stated.",
+    "choices": [
+      {
+        "label": "The client must agree",
+        "isCorrect": true
+      },
+      {
+        "label": "Staff must travel",
+        "isCorrect": false
+      },
+      {
+        "label": "Weather must improve",
+        "isCorrect": false
+      },
+      {
+        "label": "Payment must be made",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "listening-016",
+    "category": "LISTENING",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "What is being announced?",
+    "passage": null,
+    "audioUrl": "Attention shoppers: The store will close at six tonight for inventory.",
+    "explanation": "The store will close at six tonight.",
+    "hint": "Main announcement.",
+    "choices": [
+      {
+        "label": "A new product launch",
+        "isCorrect": false
+      },
+      {
+        "label": "A price increase",
+        "isCorrect": false
+      },
+      {
+        "label": "A store closing early",
+        "isCorrect": true
+      },
+      {
+        "label": "A job opening",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "listening-017",
+    "category": "LISTENING",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "Why will the store close early?",
+    "passage": null,
+    "audioUrl": "The store will close at six tonight for inventory.",
+    "explanation": "Closing is for inventory.",
+    "hint": "Reason given.",
+    "choices": [
+      {
+        "label": "For inventory",
+        "isCorrect": true
+      },
+      {
+        "label": "Because of weather",
+        "isCorrect": false
+      },
+      {
+        "label": "For a holiday",
+        "isCorrect": false
+      },
+      {
+        "label": "For renovation",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "listening-018",
+    "category": "LISTENING",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "What does the man want to know?",
+    "passage": null,
+    "audioUrl": "M: Did you send the quarterly report to the board yet? W: I finished it, but I haven't emailed it.",
+    "explanation": "He asks if she sent the report.",
+    "hint": "Information sought.",
+    "choices": [
+      {
+        "label": "Where the cafeteria is",
+        "isCorrect": false
+      },
+      {
+        "label": "When the train leaves",
+        "isCorrect": false
+      },
+      {
+        "label": "Who won the contract",
+        "isCorrect": false
+      },
+      {
+        "label": "Whether the report was sent",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "id": "listening-019",
+    "category": "LISTENING",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "Has the report been emailed?",
+    "passage": null,
+    "audioUrl": "W: I finished it, but I haven't emailed it.",
+    "explanation": "She hasn't emailed it yet.",
+    "hint": "Status of email.",
+    "choices": [
+      {
+        "label": "It was cancelled",
+        "isCorrect": false
+      },
+      {
+        "label": "It was lost",
+        "isCorrect": false
+      },
+      {
+        "label": "Not yet",
+        "isCorrect": true
+      },
+      {
+        "label": "Yes, this morning",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "listening-020",
+    "category": "LISTENING",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "Where is the conversation taking place?",
+    "passage": null,
+    "audioUrl": "W: Welcome to the Grand Plaza. Do you have a reservation? M: Yes, under the name Chen.",
+    "explanation": "Check-in and room keys suggest a hotel.",
+    "hint": "Setting clues.",
+    "choices": [
+      {
+        "label": "At a hotel front desk",
+        "isCorrect": true
+      },
+      {
+        "label": "At a factory",
+        "isCorrect": false
+      },
+      {
+        "label": "On an airplane",
+        "isCorrect": false
+      },
+      {
+        "label": "In a classroom",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "listening-021",
+    "category": "LISTENING",
+    "type": "MCQ",
+    "difficulty": "HARD",
+    "stem": "What will the team do first?",
+    "passage": null,
+    "audioUrl": "Let's start with the budget figures, then we'll discuss staffing.",
+    "explanation": "The leader says they'll start with the budget.",
+    "hint": "First step in plan.",
+    "choices": [
+      {
+        "label": "Sign the contract",
+        "isCorrect": false
+      },
+      {
+        "label": "Book flights",
+        "isCorrect": false
+      },
+      {
+        "label": "Hire consultants",
+        "isCorrect": false
+      },
+      {
+        "label": "Review the budget figures",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "id": "listening-022",
+    "category": "LISTENING",
+    "type": "MCQ",
+    "difficulty": "HARD",
+    "stem": "What will they discuss after the budget?",
+    "passage": null,
+    "audioUrl": "Let's start with the budget figures, then we'll discuss staffing.",
+    "explanation": "After budget, they'll discuss staffing.",
+    "hint": "Second agenda item.",
+    "choices": [
+      {
+        "label": "Staffing",
+        "isCorrect": true
+      },
+      {
+        "label": "Office furniture",
+        "isCorrect": false
+      },
+      {
+        "label": "Cafeteria menus",
+        "isCorrect": false
+      },
+      {
+        "label": "Marketing colors",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "listening-023",
+    "category": "LISTENING",
+    "type": "MCQ",
+    "difficulty": "HARD",
+    "stem": "What is implied about the project timeline?",
+    "passage": null,
+    "audioUrl": "We're running out of time, so please keep your updates brief.",
+    "explanation": "The speaker says they're running out of time.",
+    "hint": "Implied urgency.",
+    "choices": [
+      {
+        "label": "It has been extended",
+        "isCorrect": false
+      },
+      {
+        "label": "It is tight",
+        "isCorrect": true
+      },
+      {
+        "label": "It hasn't started",
+        "isCorrect": false
+      },
+      {
+        "label": "It was cancelled",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "listening-024",
+    "category": "LISTENING",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "What should listeners do?",
+    "passage": null,
+    "audioUrl": "Please silence your mobile phones during the session.",
+    "explanation": "Phones should be silenced during the session.",
+    "hint": "Instruction given.",
+    "choices": [
+      {
+        "label": "Turn off mobile phones",
+        "isCorrect": true
+      },
+      {
+        "label": "Take a survey",
+        "isCorrect": false
+      },
+      {
+        "label": "Buy tickets",
+        "isCorrect": false
+      },
+      {
+        "label": "Submit homework",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "listening-025",
+    "category": "LISTENING",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "What transportation change is announced?",
+    "passage": null,
+    "audioUrl": "Notice: The shuttle bus route has changed. Pickup is now at the north entrance.",
+    "explanation": "The shuttle route has changed.",
+    "hint": "Transport update.",
+    "choices": [
+      {
+        "label": "Trains are cancelled",
+        "isCorrect": false
+      },
+      {
+        "label": "Flights are delayed",
+        "isCorrect": false
+      },
+      {
+        "label": "Taxis are free",
+        "isCorrect": false
+      },
+      {
+        "label": "The shuttle bus route has changed",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "id": "listening-026",
+    "category": "LISTENING",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "What does the speaker ask employees to do?",
+    "passage": null,
+    "audioUrl": "Please update your passwords by the end of the day for security.",
+    "explanation": "Password update is requested.",
+    "hint": "Instruction given.",
+    "choices": [
+      {
+        "label": "Update their passwords",
+        "isCorrect": true
+      },
+      {
+        "label": "Cancel meetings",
+        "isCorrect": false
+      },
+      {
+        "label": "Take a vacation",
+        "isCorrect": false
+      },
+      {
+        "label": "Work overtime",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "listening-027",
+    "category": "LISTENING",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "By when should passwords be updated?",
+    "passage": null,
+    "audioUrl": "Please update your passwords by the end of the day.",
+    "explanation": "End of the day deadline.",
+    "hint": "Deadline phrase.",
+    "choices": [
+      {
+        "label": "Next month",
+        "isCorrect": false
+      },
+      {
+        "label": "By the end of the day",
+        "isCorrect": true
+      },
+      {
+        "label": "In two weeks",
+        "isCorrect": false
+      },
+      {
+        "label": "Never",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "listening-028",
+    "category": "LISTENING",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "Where is the woman?",
+    "passage": null,
+    "audioUrl": "W: I'd like a medium latte to go, please. M: Sure, that'll be ready in a minute.",
+    "explanation": "She orders a latte.",
+    "hint": "Setting clues.",
+    "choices": [
+      {
+        "label": "In a hospital",
+        "isCorrect": false
+      },
+      {
+        "label": "At a airport gate",
+        "isCorrect": false
+      },
+      {
+        "label": "In a coffee shop",
+        "isCorrect": true
+      },
+      {
+        "label": "On a boat",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "listening-029",
+    "category": "LISTENING",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "What does she order?",
+    "passage": null,
+    "audioUrl": "W: I'd like a medium latte to go, please.",
+    "explanation": "She asks for a medium latte.",
+    "hint": "Order detail.",
+    "choices": [
+      {
+        "label": "A salad",
+        "isCorrect": false
+      },
+      {
+        "label": "Tea only",
+        "isCorrect": false
+      },
+      {
+        "label": "A sandwich",
+        "isCorrect": false
+      },
+      {
+        "label": "A medium latte",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "id": "listening-030",
+    "category": "LISTENING",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "Why is the man calling IT support?",
+    "passage": null,
+    "audioUrl": "M: My laptop won't connect to the network after the update.",
+    "explanation": "Network connection issue.",
+    "hint": "Problem described.",
+    "choices": [
+      {
+        "label": "He lost his badge",
+        "isCorrect": false
+      },
+      {
+        "label": "He wants catering",
+        "isCorrect": false
+      },
+      {
+        "label": "His computer won't connect to the network",
+        "isCorrect": true
+      },
+      {
+        "label": "He needs vacation approval",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "listening-031",
+    "category": "LISTENING",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "When did the problem start?",
+    "passage": null,
+    "audioUrl": "My laptop won't connect to the network after the update.",
+    "explanation": "Problem began after the update.",
+    "hint": "Timing clue.",
+    "choices": [
+      {
+        "label": "After an update",
+        "isCorrect": true
+      },
+      {
+        "label": "After a promotion",
+        "isCorrect": false
+      },
+      {
+        "label": "After a holiday",
+        "isCorrect": false
+      },
+      {
+        "label": "After lunch only",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "listening-032",
+    "category": "LISTENING",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "What does the tour guide mention?",
+    "passage": null,
+    "audioUrl": "Guide: Photography is not allowed in the gallery, but you may take pictures in the courtyard.",
+    "explanation": "No photography rule.",
+    "hint": "Rule announced.",
+    "choices": [
+      {
+        "label": "Food is free",
+        "isCorrect": false
+      },
+      {
+        "label": "The exit is locked",
+        "isCorrect": false
+      },
+      {
+        "label": "Tickets are refundable",
+        "isCorrect": false
+      },
+      {
+        "label": "Photography is not allowed in the gallery",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "id": "listening-033",
+    "category": "LISTENING",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "Where may visitors take pictures?",
+    "passage": null,
+    "audioUrl": "You may take pictures in the courtyard.",
+    "explanation": "Courtyard is permitted.",
+    "hint": "Allowed location.",
+    "choices": [
+      {
+        "label": "In the storage room",
+        "isCorrect": false
+      },
+      {
+        "label": "Nowhere",
+        "isCorrect": false
+      },
+      {
+        "label": "In the courtyard",
+        "isCorrect": true
+      },
+      {
+        "label": "In the gallery",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "listening-034",
+    "category": "LISTENING",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "What will happen at noon?",
+    "passage": null,
+    "audioUrl": "The keynote will begin at noon in the main hall.",
+    "explanation": "Keynote starts at noon.",
+    "hint": "Scheduled event.",
+    "choices": [
+      {
+        "label": "Registration will open",
+        "isCorrect": false
+      },
+      {
+        "label": "The keynote will begin",
+        "isCorrect": true
+      },
+      {
+        "label": "The building will close",
+        "isCorrect": false
+      },
+      {
+        "label": "Lunch will be cancelled",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "listening-035",
+    "category": "LISTENING",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "Where will the keynote take place?",
+    "passage": null,
+    "audioUrl": "The keynote will begin at noon in the main hall.",
+    "explanation": "Main hall location.",
+    "hint": "Venue stated.",
+    "choices": [
+      {
+        "label": "In the main hall",
+        "isCorrect": true
+      },
+      {
+        "label": "At the airport",
+        "isCorrect": false
+      },
+      {
+        "label": "In the parking lot",
+        "isCorrect": false
+      },
+      {
+        "label": "Online only",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "listening-036",
+    "category": "LISTENING",
+    "type": "MCQ",
+    "difficulty": "HARD",
+    "stem": "What is the woman's main concern?",
+    "passage": null,
+    "audioUrl": "W: I'm worried the timeline is too aggressive given the staffing constraints.",
+    "explanation": "She says the timeline is too aggressive.",
+    "hint": "Concern expressed.",
+    "choices": [
+      {
+        "label": "The budget is too large",
+        "isCorrect": false
+      },
+      {
+        "label": "The food is too spicy",
+        "isCorrect": false
+      },
+      {
+        "label": "The venue is too small",
+        "isCorrect": false
+      },
+      {
+        "label": "The timeline is too aggressive",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "id": "listening-037",
+    "category": "LISTENING",
+    "type": "MCQ",
+    "difficulty": "HARD",
+    "stem": "What constraint does she mention?",
+    "passage": null,
+    "audioUrl": "Given the staffing constraints, the timeline is too aggressive.",
+    "explanation": "Staffing constraints cited.",
+    "hint": "Constraint type.",
+    "choices": [
+      {
+        "label": "Currency",
+        "isCorrect": false
+      },
+      {
+        "label": "Advertising",
+        "isCorrect": false
+      },
+      {
+        "label": "Staffing",
+        "isCorrect": true
+      },
+      {
+        "label": "Weather",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "listening-038",
+    "category": "LISTENING",
+    "type": "MCQ",
+    "difficulty": "HARD",
+    "stem": "What does the man propose?",
+    "passage": null,
+    "audioUrl": "M: What if we phase the rollout in two stages instead?",
+    "explanation": "Two-stage rollout proposed.",
+    "hint": "Proposal made.",
+    "choices": [
+      {
+        "label": "Launching overnight",
+        "isCorrect": false
+      },
+      {
+        "label": "Phasing the rollout in two stages",
+        "isCorrect": true
+      },
+      {
+        "label": "Canceling the project",
+        "isCorrect": false
+      },
+      {
+        "label": "Hiring no one",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "listening-039",
+    "category": "LISTENING",
+    "type": "MCQ",
+    "difficulty": "HARD",
+    "stem": "How does the woman respond?",
+    "passage": null,
+    "audioUrl": "W: That could work if we communicate clearly to stakeholders.",
+    "explanation": "She says it could work.",
+    "hint": "Response tone.",
+    "choices": [
+      {
+        "label": "She thinks it could work",
+        "isCorrect": true
+      },
+      {
+        "label": "She rejects it immediately",
+        "isCorrect": false
+      },
+      {
+        "label": "She leaves the room",
+        "isCorrect": false
+      },
+      {
+        "label": "She increases the budget",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "listening-040",
+    "category": "LISTENING",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "What number should callers dial?",
+    "passage": null,
+    "audioUrl": "For billing questions, please dial extension 220.",
+    "explanation": "Extension 220 given.",
+    "hint": "Extension number.",
+    "choices": [
+      {
+        "label": "Extension 220",
+        "isCorrect": true
+      },
+      {
+        "label": "Extension 22",
+        "isCorrect": false
+      },
+      {
+        "label": "Extension 2020",
+        "isCorrect": false
+      },
+      {
+        "label": "Extension 002",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "listening-041",
+    "category": "LISTENING",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "What department handles billing questions?",
+    "passage": null,
+    "audioUrl": "For billing questions, please dial extension 220 in accounting.",
+    "explanation": "Billing → accounting context.",
+    "hint": "Department inferred.",
+    "choices": [
+      {
+        "label": "Marketing",
+        "isCorrect": false
+      },
+      {
+        "label": "Accounting",
+        "isCorrect": true
+      },
+      {
+        "label": "Facilities",
+        "isCorrect": false
+      },
+      {
+        "label": "Security",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "listening-042",
+    "category": "LISTENING",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "What is the man looking for?",
+    "passage": null,
+    "audioUrl": "M: Excuse me, could you tell me where the HR office is?",
+    "explanation": "He asks for directions to HR.",
+    "hint": "Destination sought.",
+    "choices": [
+      {
+        "label": "The loading dock",
+        "isCorrect": false
+      },
+      {
+        "label": "The cafeteria",
+        "isCorrect": false
+      },
+      {
+        "label": "The HR office",
+        "isCorrect": true
+      },
+      {
+        "label": "The roof",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "listening-043",
+    "category": "LISTENING",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "Where is HR located?",
+    "passage": null,
+    "audioUrl": "W: HR is on the second floor, room 204.",
+    "explanation": "Second floor direction.",
+    "hint": "Location answer.",
+    "choices": [
+      {
+        "label": "Across the street",
+        "isCorrect": false
+      },
+      {
+        "label": "At the airport",
+        "isCorrect": false
+      },
+      {
+        "label": "In the basement",
+        "isCorrect": false
+      },
+      {
+        "label": "On the second floor",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "id": "listening-044",
+    "category": "LISTENING",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "What problem does the announcement address?",
+    "passage": null,
+    "audioUrl": "Elevator maintenance will occur from 2 to 4 p.m. Please use the stairs.",
+    "explanation": "Elevator maintenance announced.",
+    "hint": "Topic of announcement.",
+    "choices": [
+      {
+        "label": "Elevator maintenance",
+        "isCorrect": true
+      },
+      {
+        "label": "Parking fees",
+        "isCorrect": false
+      },
+      {
+        "label": "Power upgrade",
+        "isCorrect": false
+      },
+      {
+        "label": "Fire drill",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "listening-045",
+    "category": "LISTENING",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "What should people use instead?",
+    "passage": null,
+    "audioUrl": "Please use the stairs during maintenance.",
+    "explanation": "Use stairs during maintenance.",
+    "hint": "Alternative instructed.",
+    "choices": [
+      {
+        "label": "The windows",
+        "isCorrect": false
+      },
+      {
+        "label": "The roof",
+        "isCorrect": false
+      },
+      {
+        "label": "The stairs",
+        "isCorrect": true
+      },
+      {
+        "label": "The shuttle",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "listening-046",
+    "category": "LISTENING",
+    "type": "MCQ",
+    "difficulty": "HARD",
+    "stem": "What does the speaker imply about attendance?",
+    "passage": null,
+    "audioUrl": "With the storm warning, we should expect lower attendance than usual.",
+    "explanation": "Bad weather may reduce attendance.",
+    "hint": "Implied outcome.",
+    "choices": [
+      {
+        "label": "Attendance may be lower than usual",
+        "isCorrect": true
+      },
+      {
+        "label": "Attendance doubled",
+        "isCorrect": false
+      },
+      {
+        "label": "Everyone cancelled",
+        "isCorrect": false
+      },
+      {
+        "label": "Only VIPs may attend",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "listening-047",
+    "category": "LISTENING",
+    "type": "MCQ",
+    "difficulty": "HARD",
+    "stem": "Why might attendance be affected?",
+    "passage": null,
+    "audioUrl": "With the storm warning, we should expect lower attendance.",
+    "explanation": "Storm warning cited.",
+    "hint": "Cause stated.",
+    "choices": [
+      {
+        "label": "A pay raise",
+        "isCorrect": false
+      },
+      {
+        "label": "A holiday bonus",
+        "isCorrect": false
+      },
+      {
+        "label": "A product launch",
+        "isCorrect": false
+      },
+      {
+        "label": "A storm warning",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "id": "listening-048",
+    "category": "LISTENING",
+    "type": "MCQ",
+    "difficulty": "HARD",
+    "stem": "What backup plan is mentioned?",
+    "passage": null,
+    "audioUrl": "If needed, we'll stream the session online for remote participants.",
+    "explanation": "Online stream as backup.",
+    "hint": "Contingency plan.",
+    "choices": [
+      {
+        "label": "Streaming the session online",
+        "isCorrect": true
+      },
+      {
+        "label": "Canceling all sales",
+        "isCorrect": false
+      },
+      {
+        "label": "Moving abroad",
+        "isCorrect": false
+      },
+      {
+        "label": "Closing permanently",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "listening-049",
+    "category": "LISTENING",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "What should passengers remember?",
+    "passage": null,
+    "audioUrl": "Please keep your belongings with you at all times.",
+    "explanation": "Keep belongings with you.",
+    "hint": "Safety reminder.",
+    "choices": [
+      {
+        "label": "To run on the platform",
+        "isCorrect": false
+      },
+      {
+        "label": "To smoke in the cabin",
+        "isCorrect": false
+      },
+      {
+        "label": "To keep their belongings with them",
+        "isCorrect": true
+      },
+      {
+        "label": "To leave bags unattended",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "listening-050",
+    "category": "LISTENING",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "What change affects tomorrow's schedule?",
+    "passage": null,
+    "audioUrl": "Update: The client visit was moved to the afternoon due to traffic concerns.",
+    "explanation": "Visit moved to afternoon.",
+    "hint": "Schedule change.",
+    "choices": [
+      {
+        "label": "The office is closed all week",
+        "isCorrect": false
+      },
+      {
+        "label": "The CEO resigned",
+        "isCorrect": false
+      },
+      {
+        "label": "All meetings were cancelled",
+        "isCorrect": false
+      },
+      {
+        "label": "The client visit was moved to the afternoon",
+        "isCorrect": true
+      }
+    ]
+  }
+]

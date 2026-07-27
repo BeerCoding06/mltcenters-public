@@ -1,0 +1,1452 @@
+[
+  {
+    "id": "grammar-001",
+    "category": "GRAMMAR",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "The presentation ___ at 2 p.m. tomorrow.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Future time 'tomorrow' requires future tense.",
+    "hint": "Match tense to 'tomorrow'.",
+    "choices": [
+      {
+        "label": "begin",
+        "isCorrect": false
+      },
+      {
+        "label": "will begin",
+        "isCorrect": true
+      },
+      {
+        "label": "beginning",
+        "isCorrect": false
+      },
+      {
+        "label": "began",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "grammar-002",
+    "category": "GRAMMAR",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "Ms. Park ___ in the accounting department since 2019.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Since + point in time → present perfect.",
+    "hint": "'Since 2019' signals present perfect.",
+    "choices": [
+      {
+        "label": "worked",
+        "isCorrect": false
+      },
+      {
+        "label": "work",
+        "isCorrect": false
+      },
+      {
+        "label": "has worked",
+        "isCorrect": true
+      },
+      {
+        "label": "working",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "grammar-003",
+    "category": "GRAMMAR",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "Neither the manager nor the assistants ___ available.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "With 'nor', verb agrees with nearer plural subject.",
+    "hint": "Agreement with nearer subject.",
+    "choices": [
+      {
+        "label": "was",
+        "isCorrect": false
+      },
+      {
+        "label": "be",
+        "isCorrect": false
+      },
+      {
+        "label": "is",
+        "isCorrect": false
+      },
+      {
+        "label": "are",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "id": "grammar-004",
+    "category": "GRAMMAR",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "Please send the documents ___ you finish reviewing them.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "'When' introduces a time clause.",
+    "hint": "Time conjunction.",
+    "choices": [
+      {
+        "label": "when",
+        "isCorrect": true
+      },
+      {
+        "label": "whose",
+        "isCorrect": false
+      },
+      {
+        "label": "who",
+        "isCorrect": false
+      },
+      {
+        "label": "which",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "grammar-005",
+    "category": "GRAMMAR",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "The report ___ by the team last week.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Passive past: was + past participle.",
+    "hint": "Passive voice in past.",
+    "choices": [
+      {
+        "label": "completed",
+        "isCorrect": false
+      },
+      {
+        "label": "completes",
+        "isCorrect": false
+      },
+      {
+        "label": "was completed",
+        "isCorrect": true
+      },
+      {
+        "label": "completing",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "grammar-006",
+    "category": "GRAMMAR",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "We look forward ___ meeting you in person.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "'Look forward to' + gerund.",
+    "hint": "Gerund after 'look forward to'.",
+    "choices": [
+      {
+        "label": "to meeting",
+        "isCorrect": true
+      },
+      {
+        "label": "meeting",
+        "isCorrect": false
+      },
+      {
+        "label": "to meet",
+        "isCorrect": false
+      },
+      {
+        "label": "meet",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "grammar-007",
+    "category": "GRAMMAR",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "There ___ several errors in the first draft.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "'Several errors' is plural.",
+    "hint": "Plural subject 'errors'.",
+    "choices": [
+      {
+        "label": "was",
+        "isCorrect": false
+      },
+      {
+        "label": "be",
+        "isCorrect": false
+      },
+      {
+        "label": "is",
+        "isCorrect": false
+      },
+      {
+        "label": "are",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "id": "grammar-008",
+    "category": "GRAMMAR",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "He asked whether we ___ the venue yet.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Reported speech: past perfect for earlier action.",
+    "hint": "Past perfect in reported question.",
+    "choices": [
+      {
+        "label": "had booked",
+        "isCorrect": true
+      },
+      {
+        "label": "books",
+        "isCorrect": false
+      },
+      {
+        "label": "booking",
+        "isCorrect": false
+      },
+      {
+        "label": "book",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "grammar-009",
+    "category": "GRAMMAR",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "The laptop, along with the cables, ___ in the cabinet.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Subject is singular 'laptop'.",
+    "hint": "Singular subject despite 'along with'.",
+    "choices": [
+      {
+        "label": "are",
+        "isCorrect": false
+      },
+      {
+        "label": "be",
+        "isCorrect": false
+      },
+      {
+        "label": "is",
+        "isCorrect": true
+      },
+      {
+        "label": "were",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "grammar-010",
+    "category": "GRAMMAR",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "If it ___ tomorrow, the outdoor event will be canceled.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "First conditional: if + present, will + base.",
+    "hint": "Present in if-clause.",
+    "choices": [
+      {
+        "label": "rain",
+        "isCorrect": false
+      },
+      {
+        "label": "raining",
+        "isCorrect": false
+      },
+      {
+        "label": "rained",
+        "isCorrect": false
+      },
+      {
+        "label": "rains",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "id": "grammar-011",
+    "category": "GRAMMAR",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "The contract must ___ by both parties before execution.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Modal passive: must be + past participle.",
+    "hint": "Passive after modal.",
+    "choices": [
+      {
+        "label": "signed",
+        "isCorrect": false
+      },
+      {
+        "label": "signing",
+        "isCorrect": false
+      },
+      {
+        "label": "be signed",
+        "isCorrect": true
+      },
+      {
+        "label": "sign",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "grammar-012",
+    "category": "GRAMMAR",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "Not only did she finish early, ___ she also checked the figures.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Correlative: 'Not only... but also'.",
+    "hint": "Second part of correlative pair.",
+    "choices": [
+      {
+        "label": "yet",
+        "isCorrect": false
+      },
+      {
+        "label": "but",
+        "isCorrect": true
+      },
+      {
+        "label": "and",
+        "isCorrect": false
+      },
+      {
+        "label": "so",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "grammar-013",
+    "category": "GRAMMAR",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "The seminar is worth attending, ___ the high registration fee.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "'Despite' + noun phrase.",
+    "hint": "Preposition + noun.",
+    "choices": [
+      {
+        "label": "despite",
+        "isCorrect": true
+      },
+      {
+        "label": "although",
+        "isCorrect": false
+      },
+      {
+        "label": "however",
+        "isCorrect": false
+      },
+      {
+        "label": "because",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "grammar-014",
+    "category": "GRAMMAR",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "By the time you arrive, we ___ the setup.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Future perfect for action before future point.",
+    "hint": "Completion before future time.",
+    "choices": [
+      {
+        "label": "finish",
+        "isCorrect": false
+      },
+      {
+        "label": "finished",
+        "isCorrect": false
+      },
+      {
+        "label": "will finish",
+        "isCorrect": false
+      },
+      {
+        "label": "will have finished",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "id": "grammar-015",
+    "category": "GRAMMAR",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "The candidate whom we ___ last week accepted the offer.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Past action in relative clause.",
+    "hint": "Past tense verb.",
+    "choices": [
+      {
+        "label": "interviewed",
+        "isCorrect": true
+      },
+      {
+        "label": "interviews",
+        "isCorrect": false
+      },
+      {
+        "label": "interviewing",
+        "isCorrect": false
+      },
+      {
+        "label": "interview",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "grammar-016",
+    "category": "GRAMMAR",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "Hardly ___ the meeting started when the fire alarm rang.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "'Hardly had... when' inversion.",
+    "hint": "Inversion after 'hardly'.",
+    "choices": [
+      {
+        "label": "has",
+        "isCorrect": false
+      },
+      {
+        "label": "had",
+        "isCorrect": true
+      },
+      {
+        "label": "was",
+        "isCorrect": false
+      },
+      {
+        "label": "have",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "grammar-017",
+    "category": "GRAMMAR",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "Each of the applicants ___ required to bring identification.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "'Each' is singular.",
+    "hint": "Singular verb with 'each'.",
+    "choices": [
+      {
+        "label": "were",
+        "isCorrect": false
+      },
+      {
+        "label": "are",
+        "isCorrect": false
+      },
+      {
+        "label": "is",
+        "isCorrect": true
+      },
+      {
+        "label": "be",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "grammar-018",
+    "category": "GRAMMAR",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "The more carefully you proofread, ___ mistakes you will find.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Comparative parallel: the more..., the fewer...",
+    "hint": "Double comparative structure.",
+    "choices": [
+      {
+        "label": "fewer",
+        "isCorrect": false
+      },
+      {
+        "label": "the less",
+        "isCorrect": false
+      },
+      {
+        "label": "few",
+        "isCorrect": false
+      },
+      {
+        "label": "the fewer",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "id": "grammar-019",
+    "category": "GRAMMAR",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "I would appreciate it if you ___ me informed.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Subjunctive-like past after 'would appreciate if'.",
+    "hint": "Past form in polite request.",
+    "choices": [
+      {
+        "label": "kept",
+        "isCorrect": true
+      },
+      {
+        "label": "keeping",
+        "isCorrect": false
+      },
+      {
+        "label": "keeps",
+        "isCorrect": false
+      },
+      {
+        "label": "keep",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "grammar-020",
+    "category": "GRAMMAR",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "The data ___ analyzed before the board meeting.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "'Data' often treated as singular in business English.",
+    "hint": "Singular verb with 'data' here.",
+    "choices": [
+      {
+        "label": "are",
+        "isCorrect": false
+      },
+      {
+        "label": "were",
+        "isCorrect": false
+      },
+      {
+        "label": "was",
+        "isCorrect": true
+      },
+      {
+        "label": "be",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "grammar-021",
+    "category": "GRAMMAR",
+    "type": "MCQ",
+    "difficulty": "HARD",
+    "stem": "Scarcely ___ the announcement been made when shares surged.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Inversion: Scarcely had...",
+    "hint": "Inversion with 'scarcely'.",
+    "choices": [
+      {
+        "label": "have",
+        "isCorrect": false
+      },
+      {
+        "label": "was",
+        "isCorrect": false
+      },
+      {
+        "label": "has",
+        "isCorrect": false
+      },
+      {
+        "label": "had",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "id": "grammar-022",
+    "category": "GRAMMAR",
+    "type": "MCQ",
+    "difficulty": "HARD",
+    "stem": "The proposal, ___ was revised twice, finally gained approval.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Non-restrictive clause for things uses 'which'.",
+    "hint": "Relative pronoun for things.",
+    "choices": [
+      {
+        "label": "which",
+        "isCorrect": true
+      },
+      {
+        "label": "whose",
+        "isCorrect": false
+      },
+      {
+        "label": "whom",
+        "isCorrect": false
+      },
+      {
+        "label": "who",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "grammar-023",
+    "category": "GRAMMAR",
+    "type": "MCQ",
+    "difficulty": "HARD",
+    "stem": "Were it not for her intervention, the deal ___ collapsed.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Subjunctive conditional past.",
+    "hint": "Unreal past conditional.",
+    "choices": [
+      {
+        "label": "will have",
+        "isCorrect": false
+      },
+      {
+        "label": "has",
+        "isCorrect": false
+      },
+      {
+        "label": "would have",
+        "isCorrect": true
+      },
+      {
+        "label": "had",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "grammar-024",
+    "category": "GRAMMAR",
+    "type": "MCQ",
+    "difficulty": "HARD",
+    "stem": "No sooner ___ the email sent than replies flooded in.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Inversion: No sooner was...",
+    "hint": "Singular inversion.",
+    "choices": [
+      {
+        "label": "was",
+        "isCorrect": true
+      },
+      {
+        "label": "is",
+        "isCorrect": false
+      },
+      {
+        "label": "were",
+        "isCorrect": false
+      },
+      {
+        "label": "are",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "grammar-025",
+    "category": "GRAMMAR",
+    "type": "MCQ",
+    "difficulty": "HARD",
+    "stem": "The manager insisted that every employee ___ the training.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Subjunctive after 'insisted that': base verb.",
+    "hint": "Base verb in that-clause.",
+    "choices": [
+      {
+        "label": "attends",
+        "isCorrect": false
+      },
+      {
+        "label": "attending",
+        "isCorrect": false
+      },
+      {
+        "label": "attended",
+        "isCorrect": false
+      },
+      {
+        "label": "attend",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "id": "grammar-026",
+    "category": "GRAMMAR",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "She ___ to the office by bus every day.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Habitual present: third person -s.",
+    "hint": "Simple present habit.",
+    "choices": [
+      {
+        "label": "going",
+        "isCorrect": false
+      },
+      {
+        "label": "gone",
+        "isCorrect": false
+      },
+      {
+        "label": "goes",
+        "isCorrect": true
+      },
+      {
+        "label": "go",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "grammar-027",
+    "category": "GRAMMAR",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "We have already ___ the payment.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Present perfect: have + past participle.",
+    "hint": "Past participle after 'have'.",
+    "choices": [
+      {
+        "label": "receives",
+        "isCorrect": false
+      },
+      {
+        "label": "received",
+        "isCorrect": true
+      },
+      {
+        "label": "receive",
+        "isCorrect": false
+      },
+      {
+        "label": "receiving",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "grammar-028",
+    "category": "GRAMMAR",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "This is the office ___ I work.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Relative adverb of place.",
+    "hint": "Relative word for place.",
+    "choices": [
+      {
+        "label": "where",
+        "isCorrect": true
+      },
+      {
+        "label": "which",
+        "isCorrect": false
+      },
+      {
+        "label": "who",
+        "isCorrect": false
+      },
+      {
+        "label": "whose",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "grammar-029",
+    "category": "GRAMMAR",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "Could you tell me where the conference room ___?",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Embedded question keeps statement order.",
+    "hint": "No inversion in embedded question.",
+    "choices": [
+      {
+        "label": "are",
+        "isCorrect": false
+      },
+      {
+        "label": "be",
+        "isCorrect": false
+      },
+      {
+        "label": "were",
+        "isCorrect": false
+      },
+      {
+        "label": "is",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "id": "grammar-030",
+    "category": "GRAMMAR",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "The tickets were ___ expensive for our budget.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "'Too' + adjective = excessive.",
+    "hint": "Excess meaning.",
+    "choices": [
+      {
+        "label": "very",
+        "isCorrect": false
+      },
+      {
+        "label": "too",
+        "isCorrect": true
+      },
+      {
+        "label": "much",
+        "isCorrect": false
+      },
+      {
+        "label": "so",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "grammar-031",
+    "category": "GRAMMAR",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "The committee ___ discussing the budget all morning.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Duration with 'all morning' → present perfect continuous.",
+    "hint": "Ongoing until now.",
+    "choices": [
+      {
+        "label": "was",
+        "isCorrect": false
+      },
+      {
+        "label": "is",
+        "isCorrect": false
+      },
+      {
+        "label": "has been",
+        "isCorrect": true
+      },
+      {
+        "label": "will be",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "grammar-032",
+    "category": "GRAMMAR",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "The invoice should ___ within thirty days.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Passive modal: should be paid.",
+    "hint": "Passive after 'should'.",
+    "choices": [
+      {
+        "label": "pay",
+        "isCorrect": false
+      },
+      {
+        "label": "paid",
+        "isCorrect": false
+      },
+      {
+        "label": "paying",
+        "isCorrect": false
+      },
+      {
+        "label": "be paid",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "id": "grammar-033",
+    "category": "GRAMMAR",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "He speaks English fluently, ___ he has never lived abroad.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "'Although' + clause contrasts ideas.",
+    "hint": "Contrast conjunction + clause.",
+    "choices": [
+      {
+        "label": "although",
+        "isCorrect": true
+      },
+      {
+        "label": "because",
+        "isCorrect": false
+      },
+      {
+        "label": "therefore",
+        "isCorrect": false
+      },
+      {
+        "label": "despite",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "grammar-034",
+    "category": "GRAMMAR",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "Either Ms. Gomez or Mr. Chen ___ the presentation.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Verb agrees with nearer subject.",
+    "hint": "Agreement with nearer subject.",
+    "choices": [
+      {
+        "label": "give",
+        "isCorrect": false
+      },
+      {
+        "label": "will give",
+        "isCorrect": true
+      },
+      {
+        "label": "giving",
+        "isCorrect": false
+      },
+      {
+        "label": "gives",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "grammar-035",
+    "category": "GRAMMAR",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "The package arrived ___ than we expected.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Comparative adverb.",
+    "hint": "Comparative form.",
+    "choices": [
+      {
+        "label": "latest",
+        "isCorrect": false
+      },
+      {
+        "label": "late",
+        "isCorrect": false
+      },
+      {
+        "label": "later",
+        "isCorrect": true
+      },
+      {
+        "label": "lately",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "grammar-036",
+    "category": "GRAMMAR",
+    "type": "MCQ",
+    "difficulty": "HARD",
+    "stem": "Little ___ that the policy would change so quickly.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Negative inversion: Little did they...",
+    "hint": "Inversion after 'little'.",
+    "choices": [
+      {
+        "label": "they realize",
+        "isCorrect": false
+      },
+      {
+        "label": "they had realized",
+        "isCorrect": false
+      },
+      {
+        "label": "they realized",
+        "isCorrect": false
+      },
+      {
+        "label": "did they realize",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "id": "grammar-037",
+    "category": "GRAMMAR",
+    "type": "MCQ",
+    "difficulty": "HARD",
+    "stem": "The project is scheduled to be completed by next month, ___ delays occur.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "'Unless' = if not.",
+    "hint": "Conditional unless.",
+    "choices": [
+      {
+        "label": "unless",
+        "isCorrect": true
+      },
+      {
+        "label": "since",
+        "isCorrect": false
+      },
+      {
+        "label": "when",
+        "isCorrect": false
+      },
+      {
+        "label": "if",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "grammar-038",
+    "category": "GRAMMAR",
+    "type": "MCQ",
+    "difficulty": "HARD",
+    "stem": "It is essential that the report ___ accurate.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Subjunctive after 'essential that'.",
+    "hint": "Base verb subjunctive.",
+    "choices": [
+      {
+        "label": "is",
+        "isCorrect": false
+      },
+      {
+        "label": "being",
+        "isCorrect": false
+      },
+      {
+        "label": "be",
+        "isCorrect": true
+      },
+      {
+        "label": "was",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "grammar-039",
+    "category": "GRAMMAR",
+    "type": "MCQ",
+    "difficulty": "HARD",
+    "stem": "The number of applicants ___ increased this year.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "'The number' is singular.",
+    "hint": "Singular 'number'.",
+    "choices": [
+      {
+        "label": "has",
+        "isCorrect": true
+      },
+      {
+        "label": "are",
+        "isCorrect": false
+      },
+      {
+        "label": "have",
+        "isCorrect": false
+      },
+      {
+        "label": "were",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "grammar-040",
+    "category": "GRAMMAR",
+    "type": "MCQ",
+    "difficulty": "HARD",
+    "stem": "Not until Monday ___ the final version approved.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Inversion after 'Not until'.",
+    "hint": "Inversion structure.",
+    "choices": [
+      {
+        "label": "is",
+        "isCorrect": false
+      },
+      {
+        "label": "are",
+        "isCorrect": false
+      },
+      {
+        "label": "was",
+        "isCorrect": true
+      },
+      {
+        "label": "were",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "grammar-041",
+    "category": "GRAMMAR",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "I ___ see you at the trade fair next month.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Future with 'next month'.",
+    "hint": "Future marker.",
+    "choices": [
+      {
+        "label": "been",
+        "isCorrect": false
+      },
+      {
+        "label": "will",
+        "isCorrect": true
+      },
+      {
+        "label": "am",
+        "isCorrect": false
+      },
+      {
+        "label": "was",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "grammar-042",
+    "category": "GRAMMAR",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "The files are ___ the shared drive.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Digital location often 'on' a drive.",
+    "hint": "Preposition for platform.",
+    "choices": [
+      {
+        "label": "on",
+        "isCorrect": true
+      },
+      {
+        "label": "in",
+        "isCorrect": false
+      },
+      {
+        "label": "at",
+        "isCorrect": false
+      },
+      {
+        "label": "by",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "grammar-043",
+    "category": "GRAMMAR",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "Who ___ the keynote speech last year?",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Past time 'last year'.",
+    "hint": "Simple past.",
+    "choices": [
+      {
+        "label": "give",
+        "isCorrect": false
+      },
+      {
+        "label": "giving",
+        "isCorrect": false
+      },
+      {
+        "label": "given",
+        "isCorrect": false
+      },
+      {
+        "label": "gave",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "id": "grammar-044",
+    "category": "GRAMMAR",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "We need ___ copies for every participant.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "'Enough' before plural countable noun.",
+    "hint": "Quantifier before noun.",
+    "choices": [
+      {
+        "label": "muchly",
+        "isCorrect": false
+      },
+      {
+        "label": "many",
+        "isCorrect": false
+      },
+      {
+        "label": "enough",
+        "isCorrect": true
+      },
+      {
+        "label": "enoughly",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "grammar-045",
+    "category": "GRAMMAR",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "The workshop was cancelled owing ___ low enrollment.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Fixed: 'owing to'.",
+    "hint": "Preposition phrase.",
+    "choices": [
+      {
+        "label": "with",
+        "isCorrect": false
+      },
+      {
+        "label": "to",
+        "isCorrect": true
+      },
+      {
+        "label": "for",
+        "isCorrect": false
+      },
+      {
+        "label": "of",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "grammar-046",
+    "category": "GRAMMAR",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "Had I known about the traffic, I ___ earlier.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Third conditional inversion.",
+    "hint": "Unreal past result.",
+    "choices": [
+      {
+        "label": "would have left",
+        "isCorrect": true
+      },
+      {
+        "label": "leave",
+        "isCorrect": false
+      },
+      {
+        "label": "left",
+        "isCorrect": false
+      },
+      {
+        "label": "will leave",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "grammar-047",
+    "category": "GRAMMAR",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "The CEO, as well as the directors, ___ attending.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Subject 'CEO' is singular.",
+    "hint": "Singular main subject.",
+    "choices": [
+      {
+        "label": "are",
+        "isCorrect": false
+      },
+      {
+        "label": "were",
+        "isCorrect": false
+      },
+      {
+        "label": "be",
+        "isCorrect": false
+      },
+      {
+        "label": "is",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "id": "grammar-048",
+    "category": "GRAMMAR",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "Please do not hesitate to contact us should you ___ questions.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Formal: 'should you have'.",
+    "hint": "Subjunctive-like 'should'.",
+    "choices": [
+      {
+        "label": "have",
+        "isCorrect": true
+      },
+      {
+        "label": "had",
+        "isCorrect": false
+      },
+      {
+        "label": "having",
+        "isCorrect": false
+      },
+      {
+        "label": "has",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "grammar-049",
+    "category": "GRAMMAR",
+    "type": "MCQ",
+    "difficulty": "HARD",
+    "stem": "Seldom ___ such a thorough analysis.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Inversion after 'seldom'.",
+    "hint": "Auxiliary inversion.",
+    "choices": [
+      {
+        "label": "we see",
+        "isCorrect": false
+      },
+      {
+        "label": "do we see",
+        "isCorrect": true
+      },
+      {
+        "label": "we have seen",
+        "isCorrect": false
+      },
+      {
+        "label": "we saw",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "grammar-050",
+    "category": "GRAMMAR",
+    "type": "MCQ",
+    "difficulty": "HARD",
+    "stem": "The goods ___ delivered by Friday at the latest.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Plural 'goods' + scheduled passive.",
+    "hint": "Formal scheduled passive.",
+    "choices": [
+      {
+        "label": "are being",
+        "isCorrect": false
+      },
+      {
+        "label": "was to be",
+        "isCorrect": false
+      },
+      {
+        "label": "is to be",
+        "isCorrect": false
+      },
+      {
+        "label": "are to be",
+        "isCorrect": true
+      }
+    ]
+  }
+]

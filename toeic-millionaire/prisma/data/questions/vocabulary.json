@@ -1,0 +1,1452 @@
+[
+  {
+    "id": "vocab-001",
+    "category": "VOCABULARY",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "The manager asked us to submit the report ___ Friday.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "'By Friday' means no later than Friday.",
+    "hint": "Which preposition shows a deadline?",
+    "choices": [
+      {
+        "label": "at",
+        "isCorrect": false
+      },
+      {
+        "label": "since",
+        "isCorrect": false
+      },
+      {
+        "label": "by",
+        "isCorrect": true
+      },
+      {
+        "label": "on",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "vocab-002",
+    "category": "VOCABULARY",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "Please ___ the form before leaving the office.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "'Complete' means to finish filling out.",
+    "hint": "Which word means 'finish filling out'?",
+    "choices": [
+      {
+        "label": "complete",
+        "isCorrect": true
+      },
+      {
+        "label": "complaint",
+        "isCorrect": false
+      },
+      {
+        "label": "compete",
+        "isCorrect": false
+      },
+      {
+        "label": "compile",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "vocab-003",
+    "category": "VOCABULARY",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "The new employee needs ___ training before starting.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "An adjective is needed before the noun 'training'.",
+    "hint": "Look for the adjective form.",
+    "choices": [
+      {
+        "label": "addition",
+        "isCorrect": false
+      },
+      {
+        "label": "added",
+        "isCorrect": false
+      },
+      {
+        "label": "additionally",
+        "isCorrect": false
+      },
+      {
+        "label": "additional",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "id": "vocab-004",
+    "category": "VOCABULARY",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "Customers can ___ a refund within thirty days.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "'Request' fits the modal 'can' + base verb pattern.",
+    "hint": "Which verb means 'ask for'?",
+    "choices": [
+      {
+        "label": "requesting",
+        "isCorrect": false
+      },
+      {
+        "label": "requested",
+        "isCorrect": false
+      },
+      {
+        "label": "request",
+        "isCorrect": true
+      },
+      {
+        "label": "require",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "vocab-005",
+    "category": "VOCABULARY",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "The conference room is ___ the elevator on the third floor.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "'Near' is a preposition showing location.",
+    "hint": "Which word shows location?",
+    "choices": [
+      {
+        "label": "nearer",
+        "isCorrect": false
+      },
+      {
+        "label": "near",
+        "isCorrect": true
+      },
+      {
+        "label": "nearly",
+        "isCorrect": false
+      },
+      {
+        "label": "nearest",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "vocab-006",
+    "category": "VOCABULARY",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "We need to ___ the meeting because the director is traveling.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "'Postpone' means to delay to a later time.",
+    "hint": "Which word means 'delay'?",
+    "choices": [
+      {
+        "label": "postpone",
+        "isCorrect": true
+      },
+      {
+        "label": "prevent",
+        "isCorrect": false
+      },
+      {
+        "label": "prepare",
+        "isCorrect": false
+      },
+      {
+        "label": "promote",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "vocab-007",
+    "category": "VOCABULARY",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "The invoice must be paid ___ receipt.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "'Upon receipt' is a fixed business phrase.",
+    "hint": "Which preposition follows 'paid' in this idiom?",
+    "choices": [
+      {
+        "label": "under",
+        "isCorrect": false
+      },
+      {
+        "label": "above",
+        "isCorrect": false
+      },
+      {
+        "label": "behind",
+        "isCorrect": false
+      },
+      {
+        "label": "upon",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "id": "vocab-008",
+    "category": "VOCABULARY",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "Her ___ to detail makes her an excellent proofreader.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "A noun is needed after the possessive 'Her'.",
+    "hint": "Which noun fits after 'Her'?",
+    "choices": [
+      {
+        "label": "attention",
+        "isCorrect": true
+      },
+      {
+        "label": "attend",
+        "isCorrect": false
+      },
+      {
+        "label": "attended",
+        "isCorrect": false
+      },
+      {
+        "label": "attentive",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "vocab-009",
+    "category": "VOCABULARY",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "The company will ___ free lunch during the workshop.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Future 'will' takes the base verb 'provide'.",
+    "hint": "Base verb after 'will'.",
+    "choices": [
+      {
+        "label": "providing",
+        "isCorrect": false
+      },
+      {
+        "label": "provide",
+        "isCorrect": true
+      },
+      {
+        "label": "provision",
+        "isCorrect": false
+      },
+      {
+        "label": "provider",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "vocab-010",
+    "category": "VOCABULARY",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "Please keep all confidential documents in a ___ place.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "An adjective modifies the noun 'place'.",
+    "hint": "Adjective before 'place'.",
+    "choices": [
+      {
+        "label": "securely",
+        "isCorrect": false
+      },
+      {
+        "label": "secured",
+        "isCorrect": false
+      },
+      {
+        "label": "security",
+        "isCorrect": false
+      },
+      {
+        "label": "secure",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "id": "vocab-011",
+    "category": "VOCABULARY",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "The board approved a ___ increase in the marketing budget.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "'Substantial' means large or significant.",
+    "hint": "Adjective modifying 'increase'.",
+    "choices": [
+      {
+        "label": "substantial",
+        "isCorrect": true
+      },
+      {
+        "label": "substitute",
+        "isCorrect": false
+      },
+      {
+        "label": "substantially",
+        "isCorrect": false
+      },
+      {
+        "label": "substance",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "vocab-012",
+    "category": "VOCABULARY",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "Applicants must ___ three years of relevant experience.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "'Possess' means to have or hold.",
+    "hint": "Formal verb for 'have'.",
+    "choices": [
+      {
+        "label": "possession",
+        "isCorrect": false
+      },
+      {
+        "label": "possess",
+        "isCorrect": true
+      },
+      {
+        "label": "possibly",
+        "isCorrect": false
+      },
+      {
+        "label": "possible",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "vocab-013",
+    "category": "VOCABULARY",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "The software update will ___ several known issues.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "'Resolve' means to fix or solve.",
+    "hint": "Which verb means 'fix'?",
+    "choices": [
+      {
+        "label": "resolved",
+        "isCorrect": false
+      },
+      {
+        "label": "resolution",
+        "isCorrect": false
+      },
+      {
+        "label": "resolve",
+        "isCorrect": true
+      },
+      {
+        "label": "resolving",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "vocab-014",
+    "category": "VOCABULARY",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "All employees are ___ to wear identification badges.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Passive: 'are required to'.",
+    "hint": "Past participle in passive.",
+    "choices": [
+      {
+        "label": "requirement",
+        "isCorrect": false
+      },
+      {
+        "label": "requiring",
+        "isCorrect": false
+      },
+      {
+        "label": "require",
+        "isCorrect": false
+      },
+      {
+        "label": "required",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "id": "vocab-015",
+    "category": "VOCABULARY",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "The warehouse operates twenty-four hours a day on a ___ basis.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "'Continuous' describes uninterrupted operation.",
+    "hint": "Adjective before 'basis'.",
+    "choices": [
+      {
+        "label": "continuous",
+        "isCorrect": true
+      },
+      {
+        "label": "continue",
+        "isCorrect": false
+      },
+      {
+        "label": "continuation",
+        "isCorrect": false
+      },
+      {
+        "label": "continually",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "vocab-016",
+    "category": "VOCABULARY",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "Mr. Tanaka's ___ was announced at this morning's staff meeting.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "A noun is needed as the subject complement.",
+    "hint": "Noun form of 'promote'.",
+    "choices": [
+      {
+        "label": "promote",
+        "isCorrect": false
+      },
+      {
+        "label": "promotional",
+        "isCorrect": false
+      },
+      {
+        "label": "promotion",
+        "isCorrect": true
+      },
+      {
+        "label": "promoted",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "vocab-017",
+    "category": "VOCABULARY",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "The client expressed ___ with the delayed shipment.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Noun after 'expressed'.",
+    "hint": "Noun form needed.",
+    "choices": [
+      {
+        "label": "dissatisfaction",
+        "isCorrect": true
+      },
+      {
+        "label": "dissatisfied",
+        "isCorrect": false
+      },
+      {
+        "label": "dissatisfy",
+        "isCorrect": false
+      },
+      {
+        "label": "dissatisfying",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "vocab-018",
+    "category": "VOCABULARY",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "We cannot ___ the contract until legal review is finished.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "'Finalize' means to complete the last steps.",
+    "hint": "Verb meaning 'complete formally'.",
+    "choices": [
+      {
+        "label": "final",
+        "isCorrect": false
+      },
+      {
+        "label": "finalization",
+        "isCorrect": false
+      },
+      {
+        "label": "finally",
+        "isCorrect": false
+      },
+      {
+        "label": "finalize",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "id": "vocab-019",
+    "category": "VOCABULARY",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "The seminar focuses on ___ communication skills.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Adjective modifying 'communication skills'.",
+    "hint": "Adjective form.",
+    "choices": [
+      {
+        "label": "effectively",
+        "isCorrect": false
+      },
+      {
+        "label": "effectiveness",
+        "isCorrect": false
+      },
+      {
+        "label": "effective",
+        "isCorrect": true
+      },
+      {
+        "label": "effect",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "vocab-020",
+    "category": "VOCABULARY",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "Inventory levels are lower than ___ for this season.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Comparative with past participle as adjective.",
+    "hint": "Expected / foreseen.",
+    "choices": [
+      {
+        "label": "anticipated",
+        "isCorrect": true
+      },
+      {
+        "label": "anticipate",
+        "isCorrect": false
+      },
+      {
+        "label": "anticipation",
+        "isCorrect": false
+      },
+      {
+        "label": "anticipating",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "vocab-021",
+    "category": "VOCABULARY",
+    "type": "MCQ",
+    "difficulty": "HARD",
+    "stem": "The merger will ___ both companies' market share.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "'Consolidate' means to combine and strengthen.",
+    "hint": "Verb: combine into one stronger unit.",
+    "choices": [
+      {
+        "label": "consolidation",
+        "isCorrect": false
+      },
+      {
+        "label": "consolidated",
+        "isCorrect": false
+      },
+      {
+        "label": "consolidating",
+        "isCorrect": false
+      },
+      {
+        "label": "consolidate",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "id": "vocab-022",
+    "category": "VOCABULARY",
+    "type": "MCQ",
+    "difficulty": "HARD",
+    "stem": "Her proposal was met with ___ from the finance team.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Noun after preposition 'with'.",
+    "hint": "Noun: doubt or questioning.",
+    "choices": [
+      {
+        "label": "skepticism",
+        "isCorrect": true
+      },
+      {
+        "label": "skeptic",
+        "isCorrect": false
+      },
+      {
+        "label": "skeptically",
+        "isCorrect": false
+      },
+      {
+        "label": "skeptical",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "vocab-023",
+    "category": "VOCABULARY",
+    "type": "MCQ",
+    "difficulty": "HARD",
+    "stem": "The audit revealed several ___ in the expense reports.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Plural noun after 'several'.",
+    "hint": "Plural noun: inconsistencies.",
+    "choices": [
+      {
+        "label": "discrepant",
+        "isCorrect": false
+      },
+      {
+        "label": "discrepancies",
+        "isCorrect": true
+      },
+      {
+        "label": "discrepantly",
+        "isCorrect": false
+      },
+      {
+        "label": "discrepancy",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "vocab-024",
+    "category": "VOCABULARY",
+    "type": "MCQ",
+    "difficulty": "HARD",
+    "stem": "The CEO emphasized the need for ___ across all departments.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Noun after 'for'.",
+    "hint": "Noun: responsibility for actions.",
+    "choices": [
+      {
+        "label": "accountability",
+        "isCorrect": true
+      },
+      {
+        "label": "accountable",
+        "isCorrect": false
+      },
+      {
+        "label": "account",
+        "isCorrect": false
+      },
+      {
+        "label": "accounting",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "vocab-025",
+    "category": "VOCABULARY",
+    "type": "MCQ",
+    "difficulty": "HARD",
+    "stem": "Regulations require firms to ___ data privacy standards.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Phrasal verb 'adhere to' means follow rules.",
+    "hint": "Fixed phrase with 'to'.",
+    "choices": [
+      {
+        "label": "adhere",
+        "isCorrect": false
+      },
+      {
+        "label": "adapt to",
+        "isCorrect": false
+      },
+      {
+        "label": "adopt",
+        "isCorrect": false
+      },
+      {
+        "label": "adhere to",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "id": "vocab-026",
+    "category": "VOCABULARY",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "The flight to Singapore has been ___ due to weather.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Past participle as adjective after 'been'.",
+    "hint": "Past participle describing status.",
+    "choices": [
+      {
+        "label": "delayed",
+        "isCorrect": true
+      },
+      {
+        "label": "delaying",
+        "isCorrect": false
+      },
+      {
+        "label": "delays",
+        "isCorrect": false
+      },
+      {
+        "label": "delay",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "vocab-027",
+    "category": "VOCABULARY",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "Guests should ___ at the front desk upon arrival.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Modal 'should' + base verb.",
+    "hint": "Base verb after modal.",
+    "choices": [
+      {
+        "label": "registration",
+        "isCorrect": false
+      },
+      {
+        "label": "register",
+        "isCorrect": true
+      },
+      {
+        "label": "registrar",
+        "isCorrect": false
+      },
+      {
+        "label": "registered",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "vocab-028",
+    "category": "VOCABULARY",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "The brochure contains ___ about local attractions.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Uncountable noun after 'contains'.",
+    "hint": "Uncountable noun.",
+    "choices": [
+      {
+        "label": "informative",
+        "isCorrect": false
+      },
+      {
+        "label": "inform",
+        "isCorrect": false
+      },
+      {
+        "label": "information",
+        "isCorrect": true
+      },
+      {
+        "label": "informed",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "vocab-029",
+    "category": "VOCABULARY",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "Please ___ your seat belt before takeoff.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Imperative: base verb.",
+    "hint": "Command form.",
+    "choices": [
+      {
+        "label": "fastened",
+        "isCorrect": false
+      },
+      {
+        "label": "fastening",
+        "isCorrect": false
+      },
+      {
+        "label": "fast",
+        "isCorrect": false
+      },
+      {
+        "label": "fasten",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "id": "vocab-030",
+    "category": "VOCABULARY",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "The restaurant received excellent ___ from reviewers.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Plural noun as direct object.",
+    "hint": "Plural noun matching 'excellent'.",
+    "choices": [
+      {
+        "label": "reviewing",
+        "isCorrect": false
+      },
+      {
+        "label": "reviewer",
+        "isCorrect": false
+      },
+      {
+        "label": "reviews",
+        "isCorrect": true
+      },
+      {
+        "label": "reviewed",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "vocab-031",
+    "category": "VOCABULARY",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "The technician will ___ the equipment this afternoon.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Future: 'will' + base verb.",
+    "hint": "Base verb after 'will'.",
+    "choices": [
+      {
+        "label": "inspect",
+        "isCorrect": true
+      },
+      {
+        "label": "inspector",
+        "isCorrect": false
+      },
+      {
+        "label": "inspection",
+        "isCorrect": false
+      },
+      {
+        "label": "inspected",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "vocab-032",
+    "category": "VOCABULARY",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "Sales figures exceeded our most ___ projections.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Superlative + adjective before noun.",
+    "hint": "Adjective before 'projections'.",
+    "choices": [
+      {
+        "label": "optimism",
+        "isCorrect": false
+      },
+      {
+        "label": "optimize",
+        "isCorrect": false
+      },
+      {
+        "label": "optimistically",
+        "isCorrect": false
+      },
+      {
+        "label": "optimistic",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "id": "vocab-033",
+    "category": "VOCABULARY",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "The handbook ___ guidelines for remote work.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Singular subject 'handbook' needs -s verb.",
+    "hint": "Third-person singular verb.",
+    "choices": [
+      {
+        "label": "outlined",
+        "isCorrect": false
+      },
+      {
+        "label": "outlining",
+        "isCorrect": false
+      },
+      {
+        "label": "outlines",
+        "isCorrect": true
+      },
+      {
+        "label": "outline",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "vocab-034",
+    "category": "VOCABULARY",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "We appreciate your ___ response to our inquiry.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Adjective modifying 'response'.",
+    "hint": "Adjective: quick.",
+    "choices": [
+      {
+        "label": "prompted",
+        "isCorrect": false
+      },
+      {
+        "label": "prompt",
+        "isCorrect": true
+      },
+      {
+        "label": "promptly",
+        "isCorrect": false
+      },
+      {
+        "label": "promptness",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "vocab-035",
+    "category": "VOCABULARY",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "The venue can ___ up to five hundred attendees.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Modal 'can' + base verb.",
+    "hint": "Verb: provide space for.",
+    "choices": [
+      {
+        "label": "accommodate",
+        "isCorrect": true
+      },
+      {
+        "label": "accommodation",
+        "isCorrect": false
+      },
+      {
+        "label": "accommodating",
+        "isCorrect": false
+      },
+      {
+        "label": "accommodated",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "vocab-036",
+    "category": "VOCABULARY",
+    "type": "MCQ",
+    "difficulty": "HARD",
+    "stem": "The committee reached a ___ after lengthy negotiations.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "'Consensus' means general agreement.",
+    "hint": "Noun: general agreement.",
+    "choices": [
+      {
+        "label": "consent",
+        "isCorrect": false
+      },
+      {
+        "label": "consented",
+        "isCorrect": false
+      },
+      {
+        "label": "consensual",
+        "isCorrect": false
+      },
+      {
+        "label": "consensus",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "id": "vocab-037",
+    "category": "VOCABULARY",
+    "type": "MCQ",
+    "difficulty": "HARD",
+    "stem": "Shareholders voted to ___ the proposed acquisition.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "'Ratify' means to formally approve.",
+    "hint": "Formal verb: approve officially.",
+    "choices": [
+      {
+        "label": "ratified",
+        "isCorrect": false
+      },
+      {
+        "label": "ratifying",
+        "isCorrect": false
+      },
+      {
+        "label": "ratify",
+        "isCorrect": true
+      },
+      {
+        "label": "ratification",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "vocab-038",
+    "category": "VOCABULARY",
+    "type": "MCQ",
+    "difficulty": "HARD",
+    "stem": "The policy aims to ___ workplace harassment.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Infinitive 'to' + base verb.",
+    "hint": "Verb: remove completely.",
+    "choices": [
+      {
+        "label": "eliminating",
+        "isCorrect": false
+      },
+      {
+        "label": "eliminate",
+        "isCorrect": true
+      },
+      {
+        "label": "elimination",
+        "isCorrect": false
+      },
+      {
+        "label": "eliminated",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "vocab-039",
+    "category": "VOCABULARY",
+    "type": "MCQ",
+    "difficulty": "HARD",
+    "stem": "Managers must ensure ___ treatment of all staff.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "'Equitable' means fair and impartial.",
+    "hint": "Adjective: fair.",
+    "choices": [
+      {
+        "label": "equitable",
+        "isCorrect": true
+      },
+      {
+        "label": "equity",
+        "isCorrect": false
+      },
+      {
+        "label": "equitably",
+        "isCorrect": false
+      },
+      {
+        "label": "equal",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "vocab-040",
+    "category": "VOCABULARY",
+    "type": "MCQ",
+    "difficulty": "HARD",
+    "stem": "The report cites a ___ decline in customer retention.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Adjective modifying 'decline'.",
+    "hint": "Adjective: sudden and steep.",
+    "choices": [
+      {
+        "label": "precipitous",
+        "isCorrect": true
+      },
+      {
+        "label": "precipitation",
+        "isCorrect": false
+      },
+      {
+        "label": "precipitously",
+        "isCorrect": false
+      },
+      {
+        "label": "precipitate",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "vocab-041",
+    "category": "VOCABULARY",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "The store opens ___ nine o'clock every morning.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Clock times use 'at'.",
+    "hint": "Preposition for clock time.",
+    "choices": [
+      {
+        "label": "in",
+        "isCorrect": false
+      },
+      {
+        "label": "at",
+        "isCorrect": true
+      },
+      {
+        "label": "by",
+        "isCorrect": false
+      },
+      {
+        "label": "on",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "vocab-042",
+    "category": "VOCABULARY",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "Ms. Lee is responsible ___ coordinating travel arrangements.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Fixed: 'responsible for'.",
+    "hint": "Preposition after 'responsible'.",
+    "choices": [
+      {
+        "label": "with",
+        "isCorrect": false
+      },
+      {
+        "label": "to",
+        "isCorrect": false
+      },
+      {
+        "label": "for",
+        "isCorrect": true
+      },
+      {
+        "label": "of",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "vocab-043",
+    "category": "VOCABULARY",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "The copier is out of ___; please order more.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Uncountable in this context.",
+    "hint": "Material noun.",
+    "choices": [
+      {
+        "label": "papering",
+        "isCorrect": false
+      },
+      {
+        "label": "papered",
+        "isCorrect": false
+      },
+      {
+        "label": "papers",
+        "isCorrect": false
+      },
+      {
+        "label": "paper",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "id": "vocab-044",
+    "category": "VOCABULARY",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "All visitors must sign the ___ book at reception.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Compound noun 'guest book'.",
+    "hint": "Noun modifying 'book'.",
+    "choices": [
+      {
+        "label": "guest",
+        "isCorrect": true
+      },
+      {
+        "label": "guested",
+        "isCorrect": false
+      },
+      {
+        "label": "guesting",
+        "isCorrect": false
+      },
+      {
+        "label": "guests",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "vocab-045",
+    "category": "VOCABULARY",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "The project timeline is subject ___ change.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Fixed phrase 'subject to'.",
+    "hint": "Idiom with 'subject'.",
+    "choices": [
+      {
+        "label": "for",
+        "isCorrect": false
+      },
+      {
+        "label": "at",
+        "isCorrect": false
+      },
+      {
+        "label": "to",
+        "isCorrect": true
+      },
+      {
+        "label": "with",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "vocab-046",
+    "category": "VOCABULARY",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "Please ___ the attached file for the updated schedule.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Phrasal: 'refer to' means look at.",
+    "hint": "Phrasal verb + object.",
+    "choices": [
+      {
+        "label": "refer to",
+        "isCorrect": true
+      },
+      {
+        "label": "referring",
+        "isCorrect": false
+      },
+      {
+        "label": "refer",
+        "isCorrect": false
+      },
+      {
+        "label": "reference",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "vocab-047",
+    "category": "VOCABULARY",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "The factory has strict ___ for quality control.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Plural after 'strict'.",
+    "hint": "Plural noun.",
+    "choices": [
+      {
+        "label": "protocol",
+        "isCorrect": false
+      },
+      {
+        "label": "protocoling",
+        "isCorrect": false
+      },
+      {
+        "label": "protocoled",
+        "isCorrect": false
+      },
+      {
+        "label": "protocols",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "id": "vocab-048",
+    "category": "VOCABULARY",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "Employees are encouraged to ___ suggestions to HR.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "To-infinitive after 'encouraged to'.",
+    "hint": "Base verb after 'to'.",
+    "choices": [
+      {
+        "label": "submitted",
+        "isCorrect": false
+      },
+      {
+        "label": "submitting",
+        "isCorrect": false
+      },
+      {
+        "label": "submit",
+        "isCorrect": true
+      },
+      {
+        "label": "submission",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "vocab-049",
+    "category": "VOCABULARY",
+    "type": "MCQ",
+    "difficulty": "HARD",
+    "stem": "The firm's ___ approach reduced operational costs.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Past participle as adjective.",
+    "hint": "Adjective: simplified and efficient.",
+    "choices": [
+      {
+        "label": "streamline",
+        "isCorrect": false
+      },
+      {
+        "label": "streamliner",
+        "isCorrect": false
+      },
+      {
+        "label": "streamlined",
+        "isCorrect": true
+      },
+      {
+        "label": "streamlining",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "vocab-050",
+    "category": "VOCABULARY",
+    "type": "MCQ",
+    "difficulty": "HARD",
+    "stem": "Contractors must ___ with all safety regulations.",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "'Comply with' is the correct collocation.",
+    "hint": "Verb + 'with' for rules.",
+    "choices": [
+      {
+        "label": "compliance",
+        "isCorrect": false
+      },
+      {
+        "label": "complying",
+        "isCorrect": false
+      },
+      {
+        "label": "compliant",
+        "isCorrect": false
+      },
+      {
+        "label": "comply",
+        "isCorrect": true
+      }
+    ]
+  }
+]

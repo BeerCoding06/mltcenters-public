@@ -1,0 +1,1452 @@
+[
+  {
+    "id": "reading-001",
+    "category": "READING",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "What is the main purpose of the notice?",
+    "passage": "NOTICE: Starting Monday, employee parking will move to Lot C. Please update your permit at the security desk.",
+    "audioUrl": null,
+    "explanation": "The notice focuses on parking policy updates.",
+    "hint": "Look for the primary topic.",
+    "choices": [
+      {
+        "label": "To inform staff about parking changes",
+        "isCorrect": true
+      },
+      {
+        "label": "To announce a holiday party",
+        "isCorrect": false
+      },
+      {
+        "label": "To request vacation forms",
+        "isCorrect": false
+      },
+      {
+        "label": "To advertise a sale",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "reading-002",
+    "category": "READING",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "When does the new policy take effect?",
+    "passage": "NOTICE: Starting Monday, employee parking will move to Lot C.",
+    "audioUrl": null,
+    "explanation": "The notice states 'Starting Monday'.",
+    "hint": "Find the start date.",
+    "choices": [
+      {
+        "label": "Friday",
+        "isCorrect": false
+      },
+      {
+        "label": "Next month",
+        "isCorrect": false
+      },
+      {
+        "label": "Immediately today",
+        "isCorrect": false
+      },
+      {
+        "label": "Monday",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "id": "reading-003",
+    "category": "READING",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "Where should employees update their permits?",
+    "passage": "Please update your permit at the security desk.",
+    "audioUrl": null,
+    "explanation": "Permits are updated at the security desk.",
+    "hint": "Location for permit update.",
+    "choices": [
+      {
+        "label": "At the security desk",
+        "isCorrect": true
+      },
+      {
+        "label": "At the HR office",
+        "isCorrect": false
+      },
+      {
+        "label": "Online only",
+        "isCorrect": false
+      },
+      {
+        "label": "At Lot C",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "reading-004",
+    "category": "READING",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "What product is being advertised?",
+    "passage": "Email: Save 20% on ergonomic office chairs this week only.",
+    "audioUrl": null,
+    "explanation": "The email promotes ergonomic office chairs.",
+    "hint": "Product mentioned in subject.",
+    "choices": [
+      {
+        "label": "Computer monitors",
+        "isCorrect": false
+      },
+      {
+        "label": "Office chairs",
+        "isCorrect": true
+      },
+      {
+        "label": "Filing cabinets",
+        "isCorrect": false
+      },
+      {
+        "label": "Desk lamps",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "reading-005",
+    "category": "READING",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "How long is the discount available?",
+    "passage": "Save 20% on ergonomic office chairs this week only.",
+    "audioUrl": null,
+    "explanation": "'This week only' limits the offer.",
+    "hint": "Duration of promotion.",
+    "choices": [
+      {
+        "label": "One day",
+        "isCorrect": false
+      },
+      {
+        "label": "All month",
+        "isCorrect": false
+      },
+      {
+        "label": "This week only",
+        "isCorrect": true
+      },
+      {
+        "label": "Until next year",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "reading-006",
+    "category": "READING",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "Why was the shipment delayed?",
+    "passage": "Memo: Your order was held for a routine customs inspection and will ship tomorrow.",
+    "audioUrl": null,
+    "explanation": "The memo cites customs inspection.",
+    "hint": "Reason for delay.",
+    "choices": [
+      {
+        "label": "Because the order was cancelled",
+        "isCorrect": false
+      },
+      {
+        "label": "Because the warehouse closed",
+        "isCorrect": false
+      },
+      {
+        "label": "Because of a typhoon",
+        "isCorrect": false
+      },
+      {
+        "label": "Because of a customs inspection",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "id": "reading-007",
+    "category": "READING",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "When will the order ship?",
+    "passage": "Your order was held for a routine customs inspection and will ship tomorrow.",
+    "audioUrl": null,
+    "explanation": "The memo says it will ship tomorrow.",
+    "hint": "Shipping timeline.",
+    "choices": [
+      {
+        "label": "Tomorrow",
+        "isCorrect": true
+      },
+      {
+        "label": "It will not ship",
+        "isCorrect": false
+      },
+      {
+        "label": "Next week",
+        "isCorrect": false
+      },
+      {
+        "label": "Today",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "reading-008",
+    "category": "READING",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "What should recipients do if they cannot attend?",
+    "passage": "Invitation: Please reply by Thursday if you cannot attend the quarterly review.",
+    "audioUrl": null,
+    "explanation": "RSVP instructions say reply by Thursday.",
+    "hint": "Follow RSVP instructions.",
+    "choices": [
+      {
+        "label": "Call the help desk",
+        "isCorrect": false
+      },
+      {
+        "label": "Visit the branch",
+        "isCorrect": false
+      },
+      {
+        "label": "Reply by Thursday",
+        "isCorrect": true
+      },
+      {
+        "label": "Send payment",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "reading-009",
+    "category": "READING",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "What event is mentioned?",
+    "passage": "Please reply by Thursday if you cannot attend the quarterly review.",
+    "audioUrl": null,
+    "explanation": "The invitation is for the quarterly review.",
+    "hint": "Event name in invitation.",
+    "choices": [
+      {
+        "label": "A training workshop",
+        "isCorrect": false
+      },
+      {
+        "label": "A product launch",
+        "isCorrect": false
+      },
+      {
+        "label": "The quarterly review",
+        "isCorrect": true
+      },
+      {
+        "label": "A company picnic",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "reading-010",
+    "category": "READING",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "According to the article, what caused higher sales?",
+    "passage": "Article: Sales rose 15% after the new marketing campaign targeted younger customers.",
+    "audioUrl": null,
+    "explanation": "The article links sales growth to the campaign.",
+    "hint": "Cause of sales increase.",
+    "choices": [
+      {
+        "label": "A new marketing campaign",
+        "isCorrect": true
+      },
+      {
+        "label": "Reduced staff",
+        "isCorrect": false
+      },
+      {
+        "label": "A store relocation",
+        "isCorrect": false
+      },
+      {
+        "label": "Lower prices only",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "reading-011",
+    "category": "READING",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "By how much did sales rise?",
+    "passage": "Sales rose 15% after the new marketing campaign.",
+    "audioUrl": null,
+    "explanation": "The article states sales rose 15%.",
+    "hint": "Numeric detail.",
+    "choices": [
+      {
+        "label": "5%",
+        "isCorrect": false
+      },
+      {
+        "label": "1%",
+        "isCorrect": false
+      },
+      {
+        "label": "15%",
+        "isCorrect": true
+      },
+      {
+        "label": "50%",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "reading-012",
+    "category": "READING",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "Who is the intended audience of the memo?",
+    "passage": "Memo to All Department Heads: Submit budget proposals by March 1.",
+    "audioUrl": null,
+    "explanation": "The memo addresses department heads.",
+    "hint": "Salutation indicates audience.",
+    "choices": [
+      {
+        "label": "All department heads",
+        "isCorrect": true
+      },
+      {
+        "label": "Temporary interns",
+        "isCorrect": false
+      },
+      {
+        "label": "External clients",
+        "isCorrect": false
+      },
+      {
+        "label": "Retail customers",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "reading-013",
+    "category": "READING",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "What is the deadline mentioned?",
+    "passage": "Submit budget proposals by March 1.",
+    "audioUrl": null,
+    "explanation": "Budget proposals are due March 1.",
+    "hint": "Deadline date.",
+    "choices": [
+      {
+        "label": "March 10",
+        "isCorrect": false
+      },
+      {
+        "label": "February 15",
+        "isCorrect": false
+      },
+      {
+        "label": "April 1",
+        "isCorrect": false
+      },
+      {
+        "label": "March 1",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "id": "reading-014",
+    "category": "READING",
+    "type": "MCQ",
+    "difficulty": "HARD",
+    "stem": "What can be inferred about the company's expansion?",
+    "passage": "Press Release: The firm will open a regional hub downtown and hire 200 staff from the local workforce.",
+    "audioUrl": null,
+    "explanation": "The press release mentions hiring locally.",
+    "hint": "Inference from hiring plans.",
+    "choices": [
+      {
+        "label": "It will close the main office",
+        "isCorrect": false
+      },
+      {
+        "label": "It has already failed",
+        "isCorrect": false
+      },
+      {
+        "label": "It will create new jobs locally",
+        "isCorrect": true
+      },
+      {
+        "label": "It will reduce headcount",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "reading-015",
+    "category": "READING",
+    "type": "MCQ",
+    "difficulty": "HARD",
+    "stem": "How many staff will be hired?",
+    "passage": "The firm will open a regional hub downtown and hire 200 staff.",
+    "audioUrl": null,
+    "explanation": "The release specifies 200 staff.",
+    "hint": "Number in text.",
+    "choices": [
+      {
+        "label": "100",
+        "isCorrect": false
+      },
+      {
+        "label": "200",
+        "isCorrect": true
+      },
+      {
+        "label": "20",
+        "isCorrect": false
+      },
+      {
+        "label": "2,000",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "reading-016",
+    "category": "READING",
+    "type": "MCQ",
+    "difficulty": "HARD",
+    "stem": "What is the author's tone toward the policy change?",
+    "passage": "Editorial: While the policy should improve efficiency, managers must ensure it does not overburden teams.",
+    "audioUrl": null,
+    "explanation": "The editorial acknowledges benefits but notes risks.",
+    "hint": "Tone from word choice.",
+    "choices": [
+      {
+        "label": "Cautiously supportive",
+        "isCorrect": true
+      },
+      {
+        "label": "Strongly opposed",
+        "isCorrect": false
+      },
+      {
+        "label": "Indifferent",
+        "isCorrect": false
+      },
+      {
+        "label": "Sarcastic",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "reading-017",
+    "category": "READING",
+    "type": "MCQ",
+    "difficulty": "HARD",
+    "stem": "What concern does the editorial raise?",
+    "passage": "Managers must ensure it does not overburden teams.",
+    "audioUrl": null,
+    "explanation": "The editorial warns against overburdening teams.",
+    "hint": "Stated concern.",
+    "choices": [
+      {
+        "label": "Costs will double",
+        "isCorrect": false
+      },
+      {
+        "label": "The policy is illegal",
+        "isCorrect": false
+      },
+      {
+        "label": "Customers will leave",
+        "isCorrect": false
+      },
+      {
+        "label": "Teams may become overburdened",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "id": "reading-018",
+    "category": "READING",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "What is being offered in the email?",
+    "passage": "Email: Enjoy free shipping on all orders over $50 this weekend.",
+    "audioUrl": null,
+    "explanation": "The email advertises free shipping.",
+    "hint": "Offer in subject line.",
+    "choices": [
+      {
+        "label": "Free shipping",
+        "isCorrect": true
+      },
+      {
+        "label": "A cash refund",
+        "isCorrect": false
+      },
+      {
+        "label": "Extended warranty",
+        "isCorrect": false
+      },
+      {
+        "label": "Free installation",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "reading-019",
+    "category": "READING",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "What is the minimum order for free shipping?",
+    "passage": "Free shipping on all orders over $50 this weekend.",
+    "audioUrl": null,
+    "explanation": "Free shipping applies over $50.",
+    "hint": "Threshold amount.",
+    "choices": [
+      {
+        "label": "$25",
+        "isCorrect": false
+      },
+      {
+        "label": "$50",
+        "isCorrect": true
+      },
+      {
+        "label": "$500",
+        "isCorrect": false
+      },
+      {
+        "label": "$100",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "reading-020",
+    "category": "READING",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "Why is the office closed on Friday?",
+    "passage": "Announcement: The office will be closed Friday for scheduled system maintenance.",
+    "audioUrl": null,
+    "explanation": "The announcement cites system maintenance.",
+    "hint": "Reason for closure.",
+    "choices": [
+      {
+        "label": "Due to renovation",
+        "isCorrect": false
+      },
+      {
+        "label": "Because of a strike",
+        "isCorrect": false
+      },
+      {
+        "label": "For a public holiday",
+        "isCorrect": false
+      },
+      {
+        "label": "For system maintenance",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "id": "reading-021",
+    "category": "READING",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "What should employees do during the closure?",
+    "passage": "Staff should work remotely if possible during the outage.",
+    "audioUrl": null,
+    "explanation": "Staff are asked to work remotely.",
+    "hint": "Instruction during closure.",
+    "choices": [
+      {
+        "label": "Work remotely if possible",
+        "isCorrect": true
+      },
+      {
+        "label": "Cancel all meetings",
+        "isCorrect": false
+      },
+      {
+        "label": "Come to the office",
+        "isCorrect": false
+      },
+      {
+        "label": "Take unpaid leave",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "reading-022",
+    "category": "READING",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "What does the survey ask about?",
+    "passage": "Survey: Please rate your satisfaction with cafeteria services.",
+    "audioUrl": null,
+    "explanation": "The survey topic is cafeteria services.",
+    "hint": "Survey subject.",
+    "choices": [
+      {
+        "label": "Interest in gym membership",
+        "isCorrect": false
+      },
+      {
+        "label": "Satisfaction with cafeteria services",
+        "isCorrect": true
+      },
+      {
+        "label": "Travel reimbursement",
+        "isCorrect": false
+      },
+      {
+        "label": "Preferred office location",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "reading-023",
+    "category": "READING",
+    "type": "MCQ",
+    "difficulty": "HARD",
+    "stem": "Which statement best summarizes the report?",
+    "passage": "Report: Online sales increased 22% year-over-year, while in-store sales fell 3%.",
+    "audioUrl": null,
+    "explanation": "The report contrasts channel performance.",
+    "hint": "Summary of trends.",
+    "choices": [
+      {
+        "label": "In-store sales doubled",
+        "isCorrect": false
+      },
+      {
+        "label": "All channels declined",
+        "isCorrect": false
+      },
+      {
+        "label": "Online sales grew while in-store sales declined slightly",
+        "isCorrect": true
+      },
+      {
+        "label": "Online sales collapsed",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "reading-024",
+    "category": "READING",
+    "type": "MCQ",
+    "difficulty": "HARD",
+    "stem": "By what percentage did online sales increase?",
+    "passage": "Online sales increased 22% year-over-year.",
+    "audioUrl": null,
+    "explanation": "Online sales increased 22%.",
+    "hint": "Percentage for online channel.",
+    "choices": [
+      {
+        "label": "12%",
+        "isCorrect": false
+      },
+      {
+        "label": "32%",
+        "isCorrect": false
+      },
+      {
+        "label": "3%",
+        "isCorrect": false
+      },
+      {
+        "label": "22%",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "id": "reading-025",
+    "category": "READING",
+    "type": "MCQ",
+    "difficulty": "HARD",
+    "stem": "What action does the letter request?",
+    "passage": "Letter: Kindly confirm your attendance at the supplier forum by replying to this message.",
+    "audioUrl": null,
+    "explanation": "The letter asks recipients to confirm attendance.",
+    "hint": "Requested action.",
+    "choices": [
+      {
+        "label": "Confirmation of attendance",
+        "isCorrect": true
+      },
+      {
+        "label": "Cancellation of a subscription",
+        "isCorrect": false
+      },
+      {
+        "label": "Submission of a resume",
+        "isCorrect": false
+      },
+      {
+        "label": "Payment of an invoice",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "reading-026",
+    "category": "READING",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "What is the flyer advertising?",
+    "passage": "Flyer: Annual Job Fair — meet recruiters from top companies this Saturday.",
+    "audioUrl": null,
+    "explanation": "The flyer promotes a job fair.",
+    "hint": "Event type.",
+    "choices": [
+      {
+        "label": "A concert",
+        "isCorrect": false
+      },
+      {
+        "label": "A cooking class",
+        "isCorrect": false
+      },
+      {
+        "label": "A job fair",
+        "isCorrect": true
+      },
+      {
+        "label": "A furniture sale",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "reading-027",
+    "category": "READING",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "When is the job fair?",
+    "passage": "Annual Job Fair — meet recruiters this Saturday.",
+    "audioUrl": null,
+    "explanation": "The flyer says 'this Saturday'.",
+    "hint": "Day mentioned.",
+    "choices": [
+      {
+        "label": "Saturday",
+        "isCorrect": true
+      },
+      {
+        "label": "Next month",
+        "isCorrect": false
+      },
+      {
+        "label": "Monday",
+        "isCorrect": false
+      },
+      {
+        "label": "Every day",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "reading-028",
+    "category": "READING",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "What should tenants do by the first?",
+    "passage": "Reminder: Rent is due on the first of each month.",
+    "audioUrl": null,
+    "explanation": "The notice reminds tenants to pay rent.",
+    "hint": "Tenant obligation.",
+    "choices": [
+      {
+        "label": "Move out",
+        "isCorrect": false
+      },
+      {
+        "label": "Schedule inspections",
+        "isCorrect": false
+      },
+      {
+        "label": "Renew leases online",
+        "isCorrect": false
+      },
+      {
+        "label": "Pay rent",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "id": "reading-029",
+    "category": "READING",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "What item is on sale?",
+    "passage": "Ad: Save 15% on printer paper through Sunday.",
+    "audioUrl": null,
+    "explanation": "The ad highlights printer paper.",
+    "hint": "Product on sale.",
+    "choices": [
+      {
+        "label": "Coffee machines",
+        "isCorrect": false
+      },
+      {
+        "label": "Desk phones",
+        "isCorrect": false
+      },
+      {
+        "label": "Printer paper",
+        "isCorrect": true
+      },
+      {
+        "label": "Office chairs",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "reading-030",
+    "category": "READING",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "Why was the webinar rescheduled?",
+    "passage": "Update: Due to the presenter's illness, the webinar will be held next Tuesday.",
+    "audioUrl": null,
+    "explanation": "An illness caused the reschedule.",
+    "hint": "Reason stated.",
+    "choices": [
+      {
+        "label": "The presenter became ill",
+        "isCorrect": true
+      },
+      {
+        "label": "The platform crashed permanently",
+        "isCorrect": false
+      },
+      {
+        "label": "Tickets sold out",
+        "isCorrect": false
+      },
+      {
+        "label": "The topic changed",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "reading-031",
+    "category": "READING",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "When is the new webinar date?",
+    "passage": "The webinar will be held next Tuesday.",
+    "audioUrl": null,
+    "explanation": "The update says next Tuesday.",
+    "hint": "New date.",
+    "choices": [
+      {
+        "label": "This Friday",
+        "isCorrect": false
+      },
+      {
+        "label": "Next year",
+        "isCorrect": false
+      },
+      {
+        "label": "Tomorrow morning",
+        "isCorrect": false
+      },
+      {
+        "label": "Next Tuesday",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "id": "reading-032",
+    "category": "READING",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "What does the policy require?",
+    "passage": "Policy: All visitors and staff must display ID badges at all times.",
+    "audioUrl": null,
+    "explanation": "Badges must be visible.",
+    "hint": "Policy requirement.",
+    "choices": [
+      {
+        "label": "Badge display at all times",
+        "isCorrect": true
+      },
+      {
+        "label": "Silent phones only",
+        "isCorrect": false
+      },
+      {
+        "label": "Weekly reports",
+        "isCorrect": false
+      },
+      {
+        "label": "Paid parking off-site",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "reading-033",
+    "category": "READING",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "Who must follow the badge policy?",
+    "passage": "All visitors and staff must display ID badges.",
+    "audioUrl": null,
+    "explanation": "Both visitors and staff are included.",
+    "hint": "Scope of policy.",
+    "choices": [
+      {
+        "label": "Contractors only",
+        "isCorrect": false
+      },
+      {
+        "label": "Visitors and staff",
+        "isCorrect": true
+      },
+      {
+        "label": "Guests without appointments",
+        "isCorrect": false
+      },
+      {
+        "label": "Executives only",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "reading-034",
+    "category": "READING",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "What benefit does the program offer?",
+    "passage": "Brochure: Eligible employees may receive tuition reimbursement for approved courses.",
+    "audioUrl": null,
+    "explanation": "The brochure mentions tuition reimbursement.",
+    "hint": "Program benefit.",
+    "choices": [
+      {
+        "label": "Tuition reimbursement",
+        "isCorrect": true
+      },
+      {
+        "label": "Free housing",
+        "isCorrect": false
+      },
+      {
+        "label": "Company cars",
+        "isCorrect": false
+      },
+      {
+        "label": "Unlimited vacation",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "reading-035",
+    "category": "READING",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "Who is eligible?",
+    "passage": "Eligible employees may receive tuition reimbursement for approved courses.",
+    "audioUrl": null,
+    "explanation": "Eligible employees in approved courses.",
+    "hint": "Eligibility.",
+    "choices": [
+      {
+        "label": "All retirees",
+        "isCorrect": false
+      },
+      {
+        "label": "External vendors",
+        "isCorrect": false
+      },
+      {
+        "label": "Temporary interns only",
+        "isCorrect": false
+      },
+      {
+        "label": "Employees in approved courses",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "id": "reading-036",
+    "category": "READING",
+    "type": "MCQ",
+    "difficulty": "HARD",
+    "stem": "What trend does the analyst note?",
+    "passage": "Analyst Note: Consumer demand continues shifting toward online channels.",
+    "audioUrl": null,
+    "explanation": "The analyst describes channel shift.",
+    "hint": "Trend described.",
+    "choices": [
+      {
+        "label": "Demand is shifting to online channels",
+        "isCorrect": true
+      },
+      {
+        "label": "Prices will be fixed",
+        "isCorrect": false
+      },
+      {
+        "label": "Staff will be cut in half",
+        "isCorrect": false
+      },
+      {
+        "label": "Stores will all close",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "reading-037",
+    "category": "READING",
+    "type": "MCQ",
+    "difficulty": "HARD",
+    "stem": "What recommendation is made?",
+    "passage": "We recommend investing in digital infrastructure to meet changing demand.",
+    "audioUrl": null,
+    "explanation": "Investment in digital infrastructure is advised.",
+    "hint": "Recommendation.",
+    "choices": [
+      {
+        "label": "Eliminate customer service",
+        "isCorrect": false
+      },
+      {
+        "label": "Invest in digital infrastructure",
+        "isCorrect": true
+      },
+      {
+        "label": "Reduce product quality",
+        "isCorrect": false
+      },
+      {
+        "label": "Stop online sales",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "reading-038",
+    "category": "READING",
+    "type": "MCQ",
+    "difficulty": "HARD",
+    "stem": "What is the primary concern in the memo?",
+    "passage": "Memo: Ensure data security protocols are followed during the system migration.",
+    "audioUrl": null,
+    "explanation": "Security during migration is the focus.",
+    "hint": "Memo topic.",
+    "choices": [
+      {
+        "label": "Holiday scheduling",
+        "isCorrect": false
+      },
+      {
+        "label": "Office cafeteria menus",
+        "isCorrect": false
+      },
+      {
+        "label": "Data security during the migration",
+        "isCorrect": true
+      },
+      {
+        "label": "Logo redesign",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "reading-039",
+    "category": "READING",
+    "type": "MCQ",
+    "difficulty": "HARD",
+    "stem": "When must protocols be followed?",
+    "passage": "Ensure data security protocols are followed during the system migration.",
+    "audioUrl": null,
+    "explanation": "During migration is specified.",
+    "hint": "Timing.",
+    "choices": [
+      {
+        "label": "Only on weekends",
+        "isCorrect": false
+      },
+      {
+        "label": "Before hiring",
+        "isCorrect": false
+      },
+      {
+        "label": "After retirement",
+        "isCorrect": false
+      },
+      {
+        "label": "During the system migration",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "id": "reading-040",
+    "category": "READING",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "What is included with the registration?",
+    "passage": "Registration includes a complimentary lunch and conference materials.",
+    "audioUrl": null,
+    "explanation": "Registration includes lunch.",
+    "hint": "Registration perk.",
+    "choices": [
+      {
+        "label": "A free laptop",
+        "isCorrect": false
+      },
+      {
+        "label": "Hotel stay",
+        "isCorrect": false
+      },
+      {
+        "label": "A complimentary lunch",
+        "isCorrect": true
+      },
+      {
+        "label": "Airfare",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "reading-041",
+    "category": "READING",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "What must drivers do in Lot B?",
+    "passage": "Drivers must display a valid permit when parking in Lot B.",
+    "audioUrl": null,
+    "explanation": "Valid permits are required.",
+    "hint": "Parking rule.",
+    "choices": [
+      {
+        "label": "Display a valid permit",
+        "isCorrect": true
+      },
+      {
+        "label": "Park on grass",
+        "isCorrect": false
+      },
+      {
+        "label": "Pay hourly cash only",
+        "isCorrect": false
+      },
+      {
+        "label": "Leave engines running",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "reading-042",
+    "category": "READING",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "What caused the refund?",
+    "passage": "We issued a refund because your account was charged twice.",
+    "audioUrl": null,
+    "explanation": "Duplicate charge triggered refund.",
+    "hint": "Refund reason.",
+    "choices": [
+      {
+        "label": "A late delivery reward",
+        "isCorrect": false
+      },
+      {
+        "label": "A survey prize",
+        "isCorrect": false
+      },
+      {
+        "label": "A loyalty bonus",
+        "isCorrect": false
+      },
+      {
+        "label": "A duplicate charge",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "id": "reading-043",
+    "category": "READING",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "How will the refund be issued?",
+    "passage": "The refund will appear on your original payment method within five days.",
+    "audioUrl": null,
+    "explanation": "Refund goes to original payment method.",
+    "hint": "Refund method.",
+    "choices": [
+      {
+        "label": "By check mailed weekly",
+        "isCorrect": false
+      },
+      {
+        "label": "In cash at the desk",
+        "isCorrect": false
+      },
+      {
+        "label": "To the original payment method",
+        "isCorrect": true
+      },
+      {
+        "label": "As store credit only",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "reading-044",
+    "category": "READING",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "What is the purpose of the agenda?",
+    "passage": "Agenda: Board meeting topics include budget review and succession planning.",
+    "audioUrl": null,
+    "explanation": "Agenda lists board meeting topics.",
+    "hint": "Document purpose.",
+    "choices": [
+      {
+        "label": "To schedule vacations",
+        "isCorrect": false
+      },
+      {
+        "label": "To outline topics for the board meeting",
+        "isCorrect": true
+      },
+      {
+        "label": "To list employee birthdays",
+        "isCorrect": false
+      },
+      {
+        "label": "To advertise products",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "reading-045",
+    "category": "READING",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "Which topics are listed?",
+    "passage": "Topics include budget review and succession planning.",
+    "audioUrl": null,
+    "explanation": "Those two topics appear on the agenda.",
+    "hint": "Listed topics.",
+    "choices": [
+      {
+        "label": "Budget review and succession planning",
+        "isCorrect": true
+      },
+      {
+        "label": "Cafeteria hours and parking",
+        "isCorrect": false
+      },
+      {
+        "label": "Office plants and decor",
+        "isCorrect": false
+      },
+      {
+        "label": "Sports club membership",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "reading-046",
+    "category": "READING",
+    "type": "MCQ",
+    "difficulty": "HARD",
+    "stem": "What can be inferred about Q3 performance?",
+    "passage": "Q3 results exceeded internal forecasts across all regions.",
+    "audioUrl": null,
+    "explanation": "Beating forecasts is stated.",
+    "hint": "Performance inference.",
+    "choices": [
+      {
+        "label": "It missed all targets",
+        "isCorrect": false
+      },
+      {
+        "label": "It caused layoffs",
+        "isCorrect": false
+      },
+      {
+        "label": "It was never measured",
+        "isCorrect": false
+      },
+      {
+        "label": "It exceeded internal forecasts",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "id": "reading-047",
+    "category": "READING",
+    "type": "MCQ",
+    "difficulty": "HARD",
+    "stem": "Where did performance improve?",
+    "passage": "Q3 results exceeded internal forecasts across all regions.",
+    "audioUrl": null,
+    "explanation": "All regions improved.",
+    "hint": "Geographic scope.",
+    "choices": [
+      {
+        "label": "Only online",
+        "isCorrect": false
+      },
+      {
+        "label": "Only overseas",
+        "isCorrect": false
+      },
+      {
+        "label": "Across all regions",
+        "isCorrect": true
+      },
+      {
+        "label": "In one city only",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "reading-048",
+    "category": "READING",
+    "type": "MCQ",
+    "difficulty": "HARD",
+    "stem": "What limitation does the contract note?",
+    "passage": "Either party may terminate this agreement with thirty days' written notice.",
+    "audioUrl": null,
+    "explanation": "30-day notice termination clause.",
+    "hint": "Contract term.",
+    "choices": [
+      {
+        "label": "Termination requires a court order",
+        "isCorrect": false
+      },
+      {
+        "label": "Either party may terminate with 30 days' notice",
+        "isCorrect": true
+      },
+      {
+        "label": "No termination is allowed",
+        "isCorrect": false
+      },
+      {
+        "label": "Only the buyer may cancel",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "reading-049",
+    "category": "READING",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "What should readers do after finishing the manual?",
+    "passage": "After reading the manual, complete the short quiz to receive credit.",
+    "audioUrl": null,
+    "explanation": "A quiz follows the manual.",
+    "hint": "Next step.",
+    "choices": [
+      {
+        "label": "Complete the short quiz",
+        "isCorrect": true
+      },
+      {
+        "label": "Submit a resume",
+        "isCorrect": false
+      },
+      {
+        "label": "Purchase equipment",
+        "isCorrect": false
+      },
+      {
+        "label": "Book travel",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "reading-050",
+    "category": "READING",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "What reward is offered for completing the quiz?",
+    "passage": "Complete the short quiz to receive training credit.",
+    "audioUrl": null,
+    "explanation": "Credit is awarded.",
+    "hint": "Completion reward.",
+    "choices": [
+      {
+        "label": "Training credit",
+        "isCorrect": true
+      },
+      {
+        "label": "Free parking for a year",
+        "isCorrect": false
+      },
+      {
+        "label": "A company car",
+        "isCorrect": false
+      },
+      {
+        "label": "A cash bonus",
+        "isCorrect": false
+      }
+    ]
+  }
+]

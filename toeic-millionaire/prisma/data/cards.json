@@ -1,0 +1,322 @@
+[
+  {
+    "id": "lucky-01",
+    "deck": "LUCKY",
+    "title": "Bonus Coins",
+    "body": "You found a briefcase full of coins on the way to work!",
+    "effect": { "type": "coins", "amount": 200 },
+    "weight": 3
+  },
+  {
+    "id": "lucky-02",
+    "deck": "LUCKY",
+    "title": "Pay Raise",
+    "body": "Your boss recognizes your hard work with a small bonus.",
+    "effect": { "type": "coins", "amount": 300 },
+    "weight": 2
+  },
+  {
+    "id": "lucky-03",
+    "deck": "LUCKY",
+    "title": "Study Boost",
+    "body": "A helpful tutor shares tips that sharpen your skills.",
+    "effect": { "type": "exp", "amount": 40 },
+    "weight": 3
+  },
+  {
+    "id": "lucky-04",
+    "deck": "LUCKY",
+    "title": "Fast Track",
+    "body": "You catch an express shuttle and move ahead quickly.",
+    "effect": { "type": "move", "steps": 2 },
+    "weight": 2
+  },
+  {
+    "id": "lucky-05",
+    "deck": "LUCKY",
+    "title": "Big Advance",
+    "body": "A mentor opens doors and you leap forward on the board.",
+    "effect": { "type": "move", "steps": 4 },
+    "weight": 1
+  },
+  {
+    "id": "lucky-06",
+    "deck": "LUCKY",
+    "title": "Free Hint",
+    "body": "Your study app unlocks a free hint for your next quiz.",
+    "effect": { "type": "freeHint" },
+    "weight": 2
+  },
+  {
+    "id": "lucky-07",
+    "deck": "LUCKY",
+    "title": "Jackpot",
+    "body": "You win the office raffle!",
+    "effect": { "type": "coins", "amount": 500 },
+    "weight": 1
+  },
+  {
+    "id": "lucky-08",
+    "deck": "LUCKY",
+    "title": "Vocabulary Drill",
+    "body": "A quick vocab review earns you experience points.",
+    "effect": { "type": "bonusQuiz", "category": "VOCABULARY", "reward": { "coins": 100, "exp": 20 } },
+    "weight": 2
+  },
+  {
+    "id": "lucky-09",
+    "deck": "LUCKY",
+    "title": "Grammar Guru",
+    "body": "You ace a mini grammar challenge on the train.",
+    "effect": { "type": "bonusQuiz", "category": "GRAMMAR", "reward": { "coins": 100, "exp": 20 } },
+    "weight": 2
+  },
+  {
+    "id": "lucky-10",
+    "deck": "LUCKY",
+    "title": "Networking Event",
+    "body": "You meet a recruiter who shares valuable insights.",
+    "effect": { "type": "exp", "amount": 60 },
+    "weight": 2
+  },
+  {
+    "id": "lucky-11",
+    "deck": "LUCKY",
+    "title": "Overtime Pay",
+    "body": "Extra hours translate into extra coins.",
+    "effect": { "type": "coins", "amount": 150 },
+    "weight": 3
+  },
+  {
+    "id": "lucky-12",
+    "deck": "LUCKY",
+    "title": "Shortcut",
+    "body": "You discover a faster route through the business district.",
+    "effect": { "type": "move", "steps": 3 },
+    "weight": 2
+  },
+  {
+    "id": "lucky-13",
+    "deck": "LUCKY",
+    "title": "Reading Club",
+    "body": "Today's reading circle boosts your comprehension.",
+    "effect": { "type": "bonusQuiz", "category": "READING", "reward": { "coins": 120, "exp": 25 } },
+    "weight": 2
+  },
+  {
+    "id": "lucky-14",
+    "deck": "LUCKY",
+    "title": "Podcast Lesson",
+    "body": "A business podcast improves your listening skills.",
+    "effect": { "type": "bonusQuiz", "category": "LISTENING", "reward": { "coins": 120, "exp": 25 } },
+    "weight": 2
+  },
+  {
+    "id": "lucky-15",
+    "deck": "LUCKY",
+    "title": "Client Tip",
+    "body": "A satisfied client leaves a generous gratuity.",
+    "effect": { "type": "coins", "amount": 250 },
+    "weight": 2
+  },
+  {
+    "id": "lucky-16",
+    "deck": "LUCKY",
+    "title": "Promotion Track",
+    "body": "Your performance review goes exceptionally well.",
+    "effect": { "type": "exp", "amount": 80 },
+    "weight": 1
+  },
+  {
+    "id": "lucky-17",
+    "deck": "LUCKY",
+    "title": "Business Workshop",
+    "body": "You attend a free workshop on professional email writing.",
+    "effect": { "type": "bonusQuiz", "category": "BUSINESS_ENGLISH", "reward": { "coins": 120, "exp": 25 } },
+    "weight": 2
+  },
+  {
+    "id": "lucky-18",
+    "deck": "LUCKY",
+    "title": "Lucky Find",
+    "body": "You recover coins you thought were lost.",
+    "effect": { "type": "coins", "amount": 100 },
+    "weight": 3
+  },
+  {
+    "id": "lucky-19",
+    "deck": "LUCKY",
+    "title": "Mentor's Gift",
+    "body": "Your mentor gives you study materials and encouragement.",
+    "effect": { "type": "exp", "amount": 50 },
+    "weight": 2
+  },
+  {
+    "id": "lucky-20",
+    "deck": "LUCKY",
+    "title": "Golden Opportunity",
+    "body": "A rare chance propels you forward on the career path.",
+    "effect": { "type": "move", "steps": 5 },
+    "weight": 1
+  },
+  {
+    "id": "event-01",
+    "deck": "EVENT",
+    "title": "Traffic Jam",
+    "body": "Heavy traffic slows you down on the commute.",
+    "effect": { "type": "move", "steps": -2 },
+    "weight": 2
+  },
+  {
+    "id": "event-02",
+    "deck": "EVENT",
+    "title": "Missed Alarm",
+    "body": "You oversleep and lose a turn getting ready.",
+    "effect": { "type": "skipTurn" },
+    "weight": 2
+  },
+  {
+    "id": "event-03",
+    "deck": "EVENT",
+    "title": "Office Tax",
+    "body": "Unexpected fees drain some of your savings.",
+    "effect": { "type": "coins", "amount": -150 },
+    "weight": 2
+  },
+  {
+    "id": "event-04",
+    "deck": "EVENT",
+    "title": "Surprise Audit",
+    "body": "Paperwork delays you, but you learn from the process.",
+    "effect": { "type": "exp", "amount": 30 },
+    "weight": 2
+  },
+  {
+    "id": "event-05",
+    "deck": "EVENT",
+    "title": "Equipment Failure",
+    "body": "The projector fails and the meeting runs long.",
+    "effect": { "type": "skipTurn" },
+    "weight": 1
+  },
+  {
+    "id": "event-06",
+    "deck": "EVENT",
+    "title": "Refund",
+    "body": "A cancelled subscription is refunded to your account.",
+    "effect": { "type": "coins", "amount": 180 },
+    "weight": 2
+  },
+  {
+    "id": "event-07",
+    "deck": "EVENT",
+    "title": "Detour",
+    "body": "Road construction forces you to take a longer route.",
+    "effect": { "type": "move", "steps": -3 },
+    "weight": 1
+  },
+  {
+    "id": "event-08",
+    "deck": "EVENT",
+    "title": "Team Lunch",
+    "body": "You treat the team — coins well spent for morale.",
+    "effect": { "type": "coins", "amount": -100 },
+    "weight": 2
+  },
+  {
+    "id": "event-09",
+    "deck": "EVENT",
+    "title": "Flash Quiz",
+    "body": "Your manager springs a quick grammar check.",
+    "effect": { "type": "bonusQuiz", "category": "GRAMMAR", "reward": { "coins": 80, "exp": 15 } },
+    "weight": 2
+  },
+  {
+    "id": "event-10",
+    "deck": "EVENT",
+    "title": "Power Outage",
+    "body": "The office loses power and work pauses briefly.",
+    "effect": { "type": "skipTurn" },
+    "weight": 1
+  },
+  {
+    "id": "event-11",
+    "deck": "EVENT",
+    "title": "Charity Drive",
+    "body": "You donate to the company charity fund.",
+    "effect": { "type": "coins", "amount": -80 },
+    "weight": 2
+  },
+  {
+    "id": "event-12",
+    "deck": "EVENT",
+    "title": "Helpful Colleague",
+    "body": "A coworker covers your shift so you can study.",
+    "effect": { "type": "exp", "amount": 45 },
+    "weight": 2
+  },
+  {
+    "id": "event-13",
+    "deck": "EVENT",
+    "title": "Flight Delay",
+    "body": "Your business trip is delayed, setting you back.",
+    "effect": { "type": "move", "steps": -2 },
+    "weight": 2
+  },
+  {
+    "id": "event-14",
+    "deck": "EVENT",
+    "title": "Contract Bonus",
+    "body": "A client signs early and you share in the reward.",
+    "effect": { "type": "coins", "amount": 220 },
+    "weight": 2
+  },
+  {
+    "id": "event-15",
+    "deck": "EVENT",
+    "title": "Reading Assignment",
+    "body": "Mandatory reading keeps you sharp.",
+    "effect": { "type": "bonusQuiz", "category": "READING", "reward": { "coins": 70, "exp": 15 } },
+    "weight": 2
+  },
+  {
+    "id": "event-16",
+    "deck": "EVENT",
+    "title": "Late Fee",
+    "body": "A missed payment deadline costs you.",
+    "effect": { "type": "coins", "amount": -120 },
+    "weight": 2
+  },
+  {
+    "id": "event-17",
+    "deck": "EVENT",
+    "title": "Conference Call",
+    "body": "A long call tests your listening skills.",
+    "effect": { "type": "bonusQuiz", "category": "LISTENING", "reward": { "coins": 70, "exp": 15 } },
+    "weight": 2
+  },
+  {
+    "id": "event-18",
+    "deck": "EVENT",
+    "title": "Elevator Breakdown",
+    "body": "You take the stairs and arrive late.",
+    "effect": { "type": "move", "steps": -1 },
+    "weight": 3
+  },
+  {
+    "id": "event-19",
+    "deck": "EVENT",
+    "title": "Vendor Discount",
+    "body": "A supplier offers a limited-time discount.",
+    "effect": { "type": "coins", "amount": 160 },
+    "weight": 2
+  },
+  {
+    "id": "event-20",
+    "deck": "EVENT",
+    "title": "Email Blunder",
+    "body": "A typo in a client email sends you back to proofread.",
+    "effect": { "type": "bonusQuiz", "category": "BUSINESS_ENGLISH", "reward": { "coins": 70, "exp": 15 } },
+    "weight": 2
+  }
+]

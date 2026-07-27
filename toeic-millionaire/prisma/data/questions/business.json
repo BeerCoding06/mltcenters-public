@@ -1,0 +1,1452 @@
+[
+  {
+    "id": "business-001",
+    "category": "BUSINESS_ENGLISH",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "Choose the best response to: 'Could you send me the agenda?'",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Professional polite confirmation.",
+    "hint": "Polite offer to send.",
+    "choices": [
+      {
+        "label": "Certainly, I will email it shortly.",
+        "isCorrect": true
+      },
+      {
+        "label": "No, I am agenda.",
+        "isCorrect": false
+      },
+      {
+        "label": "Agenda is send now.",
+        "isCorrect": false
+      },
+      {
+        "label": "I agenda you.",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "business-002",
+    "category": "BUSINESS_ENGLISH",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "Which subject line is most appropriate for a meeting confirmation?",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Clear, professional subject with topic and date.",
+    "hint": "Formal subject line.",
+    "choices": [
+      {
+        "label": "Hey!!!",
+        "isCorrect": false
+      },
+      {
+        "label": "Stuff",
+        "isCorrect": false
+      },
+      {
+        "label": "???",
+        "isCorrect": false
+      },
+      {
+        "label": "Confirmation: Strategy Meeting on April 5",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "id": "business-003",
+    "category": "BUSINESS_ENGLISH",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "In an email, how should you address an unknown recipient formally?",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Standard formal salutation.",
+    "hint": "Formal greeting.",
+    "choices": [
+      {
+        "label": "Yo,",
+        "isCorrect": false
+      },
+      {
+        "label": "What's up,",
+        "isCorrect": false
+      },
+      {
+        "label": "Dear Sir or Madam,",
+        "isCorrect": true
+      },
+      {
+        "label": "Hey you,",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "business-004",
+    "category": "BUSINESS_ENGLISH",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "Which closing is appropriate for a business letter?",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "'Sincerely' is standard formal closing.",
+    "hint": "Professional sign-off.",
+    "choices": [
+      {
+        "label": "Ciao babe,",
+        "isCorrect": false
+      },
+      {
+        "label": "Sincerely,",
+        "isCorrect": true
+      },
+      {
+        "label": "Love,",
+        "isCorrect": false
+      },
+      {
+        "label": "Later,",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "business-005",
+    "category": "BUSINESS_ENGLISH",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "What does 'ASAP' mean in office communication?",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Common abbreviation in business email.",
+    "hint": "Standard acronym.",
+    "choices": [
+      {
+        "label": "As soon as possible",
+        "isCorrect": true
+      },
+      {
+        "label": "At some actual place",
+        "isCorrect": false
+      },
+      {
+        "label": "After sales and profit",
+        "isCorrect": false
+      },
+      {
+        "label": "Always stay at post",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "business-006",
+    "category": "BUSINESS_ENGLISH",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "Which phrase best declines a meeting politely?",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Polite decline with reason.",
+    "hint": "Professional refusal.",
+    "choices": [
+      {
+        "label": "No way.",
+        "isCorrect": false
+      },
+      {
+        "label": "Go away.",
+        "isCorrect": false
+      },
+      {
+        "label": "Meetings are dumb.",
+        "isCorrect": false
+      },
+      {
+        "label": "I'm afraid I have a prior commitment that day.",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "id": "business-007",
+    "category": "BUSINESS_ENGLISH",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "In a negotiation, 'We are willing to compromise' means:",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "'Compromise' implies mutual concessions.",
+    "hint": "Meaning of compromise.",
+    "choices": [
+      {
+        "label": "We can accept some changes to reach agreement",
+        "isCorrect": true
+      },
+      {
+        "label": "We will leave immediately",
+        "isCorrect": false
+      },
+      {
+        "label": "We demand full payment now",
+        "isCorrect": false
+      },
+      {
+        "label": "We will not change anything",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "business-008",
+    "category": "BUSINESS_ENGLISH",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "Which is the best way to follow up on an unanswered email?",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Neutral professional follow-up.",
+    "hint": "Polite follow-up phrasing.",
+    "choices": [
+      {
+        "label": "Why are you ignoring me?",
+        "isCorrect": false
+      },
+      {
+        "label": "I wanted to follow up on my message below.",
+        "isCorrect": true
+      },
+      {
+        "label": "You are rude.",
+        "isCorrect": false
+      },
+      {
+        "label": "Answer me now!!!",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "business-009",
+    "category": "BUSINESS_ENGLISH",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "What does 'net 30' on an invoice mean?",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Standard payment term.",
+    "hint": "Invoice payment term.",
+    "choices": [
+      {
+        "label": "Delivery in 30 hours",
+        "isCorrect": false
+      },
+      {
+        "label": "A 30% discount applies",
+        "isCorrect": false
+      },
+      {
+        "label": "Payment is due within 30 days",
+        "isCorrect": true
+      },
+      {
+        "label": "Thirty items included",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "business-010",
+    "category": "BUSINESS_ENGLISH",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "Which expression best introduces a conference call?",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Neutral facilitator language.",
+    "hint": "Call opening phrase.",
+    "choices": [
+      {
+        "label": "Let's go ahead and get started.",
+        "isCorrect": true
+      },
+      {
+        "label": "I hate calls.",
+        "isCorrect": false
+      },
+      {
+        "label": "This is boring.",
+        "isCorrect": false
+      },
+      {
+        "label": "Shut up everyone.",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "business-011",
+    "category": "BUSINESS_ENGLISH",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "In business English, 'touch base' means:",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Idiom for short contact.",
+    "hint": "Business idiom.",
+    "choices": [
+      {
+        "label": "To play baseball",
+        "isCorrect": false
+      },
+      {
+        "label": "To cancel a contract",
+        "isCorrect": false
+      },
+      {
+        "label": "To make brief contact or check in",
+        "isCorrect": true
+      },
+      {
+        "label": "To touch a foundation",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "business-012",
+    "category": "BUSINESS_ENGLISH",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "Which sentence is correct for scheduling?",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Polite question with specific time.",
+    "hint": "Scheduling question form.",
+    "choices": [
+      {
+        "label": "Would Thursday at 10 a.m. work for you?",
+        "isCorrect": true
+      },
+      {
+        "label": "You work Thursday maybe?",
+        "isCorrect": false
+      },
+      {
+        "label": "Thursday 10 you work?",
+        "isCorrect": false
+      },
+      {
+        "label": "10 Thursday is you?",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "business-013",
+    "category": "BUSINESS_ENGLISH",
+    "type": "MCQ",
+    "difficulty": "HARD",
+    "stem": "What is the purpose of an MOU?",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "MOU = memorandum of understanding.",
+    "hint": "Document purpose.",
+    "choices": [
+      {
+        "label": "To terminate employment",
+        "isCorrect": false
+      },
+      {
+        "label": "To ship goods internationally",
+        "isCorrect": false
+      },
+      {
+        "label": "To pay taxes",
+        "isCorrect": false
+      },
+      {
+        "label": "To outline terms of a preliminary agreement",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "id": "business-014",
+    "category": "BUSINESS_ENGLISH",
+    "type": "MCQ",
+    "difficulty": "HARD",
+    "stem": "Which statement best reflects 'due diligence'?",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Due diligence is thorough review.",
+    "hint": "Business term definition.",
+    "choices": [
+      {
+        "label": "Skipping legal review",
+        "isCorrect": false
+      },
+      {
+        "label": "Rushing without analysis",
+        "isCorrect": false
+      },
+      {
+        "label": "Careful investigation before a business decision",
+        "isCorrect": true
+      },
+      {
+        "label": "Ignoring financial records",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "business-015",
+    "category": "BUSINESS_ENGLISH",
+    "type": "MCQ",
+    "difficulty": "HARD",
+    "stem": "In email, 'Please find attached' is used to:",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Standard attachment phrase.",
+    "hint": "Email convention.",
+    "choices": [
+      {
+        "label": "Ask the reader to search the office",
+        "isCorrect": false
+      },
+      {
+        "label": "Cancel a shipment",
+        "isCorrect": false
+      },
+      {
+        "label": "Indicate a file is included with the message",
+        "isCorrect": true
+      },
+      {
+        "label": "Report a lost attachment",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "business-016",
+    "category": "BUSINESS_ENGLISH",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "Which reply best accepts a lunch invitation?",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Polite acceptance.",
+    "hint": "Accept invitation.",
+    "choices": [
+      {
+        "label": "Thank you. I'd be happy to join you.",
+        "isCorrect": true
+      },
+      {
+        "label": "Food is bad.",
+        "isCorrect": false
+      },
+      {
+        "label": "No lunch ever.",
+        "isCorrect": false
+      },
+      {
+        "label": "I hate you.",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "business-017",
+    "category": "BUSINESS_ENGLISH",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "What should you include when introducing yourself on a call?",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Professional introduction basics.",
+    "hint": "Call introduction.",
+    "choices": [
+      {
+        "label": "Your favorite movie",
+        "isCorrect": false
+      },
+      {
+        "label": "Your salary",
+        "isCorrect": false
+      },
+      {
+        "label": "Your pet's name",
+        "isCorrect": false
+      },
+      {
+        "label": "Your name and company",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "id": "business-018",
+    "category": "BUSINESS_ENGLISH",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "Which word completes: 'Please ___ your availability for next week.'",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Imperative + base verb.",
+    "hint": "Verb after 'please'.",
+    "choices": [
+      {
+        "label": "confirmed",
+        "isCorrect": false
+      },
+      {
+        "label": "confirming",
+        "isCorrect": false
+      },
+      {
+        "label": "confirm",
+        "isCorrect": true
+      },
+      {
+        "label": "confirmation",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "business-019",
+    "category": "BUSINESS_ENGLISH",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "Which phrase signals the end of a presentation?",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Formal closing remark.",
+    "hint": "Presentation ending.",
+    "choices": [
+      {
+        "label": "Stop listening.",
+        "isCorrect": false
+      },
+      {
+        "label": "That concludes my presentation. Thank you for your attention.",
+        "isCorrect": true
+      },
+      {
+        "label": "I'm done, bye.",
+        "isCorrect": false
+      },
+      {
+        "label": "Whatever.",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "business-020",
+    "category": "BUSINESS_ENGLISH",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "What does 'FYI' indicate?",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Email abbreviation.",
+    "hint": "Common acronym.",
+    "choices": [
+      {
+        "label": "For your invoice",
+        "isCorrect": false
+      },
+      {
+        "label": "From your instructor",
+        "isCorrect": false
+      },
+      {
+        "label": "Finish your interview",
+        "isCorrect": false
+      },
+      {
+        "label": "For your information",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "id": "business-021",
+    "category": "BUSINESS_ENGLISH",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "Best way to apologize for a delay:",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Professional apology.",
+    "hint": "Apology phrasing.",
+    "choices": [
+      {
+        "label": "I apologize for the delay and appreciate your patience.",
+        "isCorrect": true
+      },
+      {
+        "label": "Deal with it.",
+        "isCorrect": false
+      },
+      {
+        "label": "Delays happen, shrug.",
+        "isCorrect": false
+      },
+      {
+        "label": "Not my fault.",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "business-022",
+    "category": "BUSINESS_ENGLISH",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "In a meeting, 'action items' refer to:",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Meeting follow-up tasks.",
+    "hint": "Meeting vocabulary.",
+    "choices": [
+      {
+        "label": "Snacks served at lunch",
+        "isCorrect": false
+      },
+      {
+        "label": "Tasks assigned to be completed after the meeting",
+        "isCorrect": true
+      },
+      {
+        "label": "Historical company facts",
+        "isCorrect": false
+      },
+      {
+        "label": "Decorations in the room",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "business-023",
+    "category": "BUSINESS_ENGLISH",
+    "type": "MCQ",
+    "difficulty": "HARD",
+    "stem": "Which sentence uses 'leverage' correctly in business?",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Business sense: use advantage strategically.",
+    "hint": "Business usage of leverage.",
+    "choices": [
+      {
+        "label": "Leverage is a color.",
+        "isCorrect": false
+      },
+      {
+        "label": "We leverage the door open.",
+        "isCorrect": false
+      },
+      {
+        "label": "We can leverage our brand to enter new markets.",
+        "isCorrect": true
+      },
+      {
+        "label": "Please leverage your lunch.",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "business-024",
+    "category": "BUSINESS_ENGLISH",
+    "type": "MCQ",
+    "difficulty": "HARD",
+    "stem": "What is an 'elevator pitch'?",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Short persuasive summary.",
+    "hint": "Business term.",
+    "choices": [
+      {
+        "label": "A long annual report",
+        "isCorrect": false
+      },
+      {
+        "label": "A type of invoice",
+        "isCorrect": false
+      },
+      {
+        "label": "A speech given in an elevator malfunction",
+        "isCorrect": false
+      },
+      {
+        "label": "A brief summary of an idea or product",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "id": "business-025",
+    "category": "BUSINESS_ENGLISH",
+    "type": "MCQ",
+    "difficulty": "HARD",
+    "stem": "Which email best requests a status update?",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Polite status request.",
+    "hint": "Professional request.",
+    "choices": [
+      {
+        "label": "Could you please provide an update on the project's progress?",
+        "isCorrect": true
+      },
+      {
+        "label": "Why so slow?",
+        "isCorrect": false
+      },
+      {
+        "label": "Status???",
+        "isCorrect": false
+      },
+      {
+        "label": "Tell me now or else.",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "business-026",
+    "category": "BUSINESS_ENGLISH",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "Which greeting is appropriate for a known client?",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Formal name salutation.",
+    "hint": "Client greeting.",
+    "choices": [
+      {
+        "label": "Hey Nakamura!!!",
+        "isCorrect": false
+      },
+      {
+        "label": "Yo client,",
+        "isCorrect": false
+      },
+      {
+        "label": "Dear Ms. Nakamura,",
+        "isCorrect": true
+      },
+      {
+        "label": "To whom it may never concern,",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "business-027",
+    "category": "BUSINESS_ENGLISH",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "What does 'EOD' commonly mean?",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Standard office abbreviation.",
+    "hint": "Acronym meaning.",
+    "choices": [
+      {
+        "label": "Every other day",
+        "isCorrect": false
+      },
+      {
+        "label": "End of decade",
+        "isCorrect": false
+      },
+      {
+        "label": "End of day",
+        "isCorrect": true
+      },
+      {
+        "label": "Email on demand",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "business-028",
+    "category": "BUSINESS_ENGLISH",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "Best response when receiving a meeting invite:",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Polite acceptance.",
+    "hint": "Accept invite.",
+    "choices": [
+      {
+        "label": "Meetings are useless.",
+        "isCorrect": false
+      },
+      {
+        "label": "Why invite me?",
+        "isCorrect": false
+      },
+      {
+        "label": "Ignore it.",
+        "isCorrect": false
+      },
+      {
+        "label": "Thank you. I accept the invitation.",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "id": "business-029",
+    "category": "BUSINESS_ENGLISH",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "Which phrase introduces an attachment politely?",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Standard attachment phrase.",
+    "hint": "Attachment intro.",
+    "choices": [
+      {
+        "label": "Please find the report attached.",
+        "isCorrect": true
+      },
+      {
+        "label": "File!!!",
+        "isCorrect": false
+      },
+      {
+        "label": "Attachment maybe.",
+        "isCorrect": false
+      },
+      {
+        "label": "Grab the thing.",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "business-030",
+    "category": "BUSINESS_ENGLISH",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "In negotiations, a 'counteroffer' is:",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Counteroffer modifies proposed terms.",
+    "hint": "Negotiation term.",
+    "choices": [
+      {
+        "label": "A response proposing different terms",
+        "isCorrect": true
+      },
+      {
+        "label": "A legal penalty",
+        "isCorrect": false
+      },
+      {
+        "label": "Immediate agreement",
+        "isCorrect": false
+      },
+      {
+        "label": "A marketing slogan",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "business-031",
+    "category": "BUSINESS_ENGLISH",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "Which sentence sets a clear deadline?",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Specific day and time.",
+    "hint": "Clear deadline.",
+    "choices": [
+      {
+        "label": "Feedback sometime.",
+        "isCorrect": false
+      },
+      {
+        "label": "Do it never.",
+        "isCorrect": false
+      },
+      {
+        "label": "Friday maybe if you want.",
+        "isCorrect": false
+      },
+      {
+        "label": "Please submit your feedback by Friday at 5 p.m.",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "id": "business-032",
+    "category": "BUSINESS_ENGLISH",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "What does 'CC' mean on an email?",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Carbon copy additional recipients.",
+    "hint": "Email field.",
+    "choices": [
+      {
+        "label": "Confirm the call",
+        "isCorrect": false
+      },
+      {
+        "label": "Close the client",
+        "isCorrect": false
+      },
+      {
+        "label": "Send a copy to additional recipients",
+        "isCorrect": true
+      },
+      {
+        "label": "Cancel the contract",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "business-033",
+    "category": "BUSINESS_ENGLISH",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "Which is the best way to start a conference call as host?",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Professional opener.",
+    "hint": "Call opening.",
+    "choices": [
+      {
+        "label": "I'm tired.",
+        "isCorrect": false
+      },
+      {
+        "label": "Thank you all for joining today.",
+        "isCorrect": true
+      },
+      {
+        "label": "You're late.",
+        "isCorrect": false
+      },
+      {
+        "label": "Let's argue.",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "business-034",
+    "category": "BUSINESS_ENGLISH",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "'Reach out' in business email means:",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Informal phrasal verb for contact.",
+    "hint": "Business phrasal verb.",
+    "choices": [
+      {
+        "label": "To contact someone",
+        "isCorrect": true
+      },
+      {
+        "label": "To stretch your arm",
+        "isCorrect": false
+      },
+      {
+        "label": "To reach a destination",
+        "isCorrect": false
+      },
+      {
+        "label": "To delete a file",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "business-035",
+    "category": "BUSINESS_ENGLISH",
+    "type": "MCQ",
+    "difficulty": "HARD",
+    "stem": "Which sentence uses ' stakeholders ' appropriately?",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Stakeholders are interested parties.",
+    "hint": "Term usage.",
+    "choices": [
+      {
+        "label": "Stakeholders are a type of steak.",
+        "isCorrect": false
+      },
+      {
+        "label": "Please stakeholders the door.",
+        "isCorrect": false
+      },
+      {
+        "label": "Stakeholders only on holidays.",
+        "isCorrect": false
+      },
+      {
+        "label": "We should update stakeholders before the announcement.",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "id": "business-036",
+    "category": "BUSINESS_ENGLISH",
+    "type": "MCQ",
+    "difficulty": "HARD",
+    "stem": "What is a 'procurement' team responsible for?",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Procurement handles purchasing.",
+    "hint": "Department role.",
+    "choices": [
+      {
+        "label": "Purchasing goods and services",
+        "isCorrect": true
+      },
+      {
+        "label": "Writing novels",
+        "isCorrect": false
+      },
+      {
+        "label": "Cleaning carpets only",
+        "isCorrect": false
+      },
+      {
+        "label": "Designing logos",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "business-037",
+    "category": "BUSINESS_ENGLISH",
+    "type": "MCQ",
+    "difficulty": "HARD",
+    "stem": "Which closing requests a reply?",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Invites questions and reply.",
+    "hint": "Reply-request closing.",
+    "choices": [
+      {
+        "label": "Do not reply ever.",
+        "isCorrect": false
+      },
+      {
+        "label": "Please let me know if you have any questions.",
+        "isCorrect": true
+      },
+      {
+        "label": "No communication.",
+        "isCorrect": false
+      },
+      {
+        "label": "Questions are banned.",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "business-038",
+    "category": "BUSINESS_ENGLISH",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "Which phrase confirms receipt of an email?",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Acknowledges receipt politely.",
+    "hint": "Receipt confirmation.",
+    "choices": [
+      {
+        "label": "Go away.",
+        "isCorrect": false
+      },
+      {
+        "label": "What email?",
+        "isCorrect": false
+      },
+      {
+        "label": "Thank you for your email.",
+        "isCorrect": true
+      },
+      {
+        "label": "Never received.",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "business-039",
+    "category": "BUSINESS_ENGLISH",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "Best way to sign off an internal team email:",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Professional internal closing.",
+    "hint": "Team email sign-off.",
+    "choices": [
+      {
+        "label": "Forever yours,",
+        "isCorrect": false
+      },
+      {
+        "label": "XOXO,",
+        "isCorrect": false
+      },
+      {
+        "label": "Smell ya later,",
+        "isCorrect": false
+      },
+      {
+        "label": "Best regards,",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "id": "business-040",
+    "category": "BUSINESS_ENGLISH",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "What does 'PO' stand for in purchasing?",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Standard purchasing term.",
+    "hint": "Purchasing acronym.",
+    "choices": [
+      {
+        "label": "Post office",
+        "isCorrect": false
+      },
+      {
+        "label": "Purchase order",
+        "isCorrect": true
+      },
+      {
+        "label": "Project only",
+        "isCorrect": false
+      },
+      {
+        "label": "Private offer",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "business-041",
+    "category": "BUSINESS_ENGLISH",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "Which phrase delegates a task clearly?",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Clear polite delegation.",
+    "hint": "Delegation phrasing.",
+    "choices": [
+      {
+        "label": "Maybe sort of try.",
+        "isCorrect": false
+      },
+      {
+        "label": "Do everything forever.",
+        "isCorrect": false
+      },
+      {
+        "label": "Could you please handle the vendor calls this week?",
+        "isCorrect": true
+      },
+      {
+        "label": "Vendor calls are magic.",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "business-042",
+    "category": "BUSINESS_ENGLISH",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "In a meeting, 'table a discussion' in American English means:",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "US usage: postpone the topic.",
+    "hint": "Meeting idiom (US).",
+    "choices": [
+      {
+        "label": "To approve it immediately",
+        "isCorrect": false
+      },
+      {
+        "label": "To cancel the company",
+        "isCorrect": false
+      },
+      {
+        "label": "To put it on the table physically",
+        "isCorrect": false
+      },
+      {
+        "label": "To postpone discussing it",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "id": "business-043",
+    "category": "BUSINESS_ENGLISH",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "Which subject line is clearest for a shipment delay?",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Specific informative subject.",
+    "hint": "Clear subject line.",
+    "choices": [
+      {
+        "label": "Update: Shipment Delay — Order #4821",
+        "isCorrect": true
+      },
+      {
+        "label": "Read this maybe",
+        "isCorrect": false
+      },
+      {
+        "label": "Stuff happened",
+        "isCorrect": false
+      },
+      {
+        "label": "Hello!!!",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "business-044",
+    "category": "BUSINESS_ENGLISH",
+    "type": "MCQ",
+    "difficulty": "HARD",
+    "stem": "Which sentence correctly uses ' pursuant to '?",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Formal: in accordance with.",
+    "hint": "Formal legal/business phrase.",
+    "choices": [
+      {
+        "label": "Pursuant the lunch was tasty.",
+        "isCorrect": false
+      },
+      {
+        "label": "Pursuant is a color.",
+        "isCorrect": false
+      },
+      {
+        "label": "Pursuant to our agreement, payment is due on receipt.",
+        "isCorrect": true
+      },
+      {
+        "label": "Pursuant to run fast.",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "business-045",
+    "category": "BUSINESS_ENGLISH",
+    "type": "MCQ",
+    "difficulty": "HARD",
+    "stem": "What is ' ROI '?",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Financial performance measure.",
+    "hint": "Finance acronym.",
+    "choices": [
+      {
+        "label": "Return on investment",
+        "isCorrect": true
+      },
+      {
+        "label": "Report on inventory",
+        "isCorrect": false
+      },
+      {
+        "label": "Rate of interest only",
+        "isCorrect": false
+      },
+      {
+        "label": "Reply on invoice",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "business-046",
+    "category": "BUSINESS_ENGLISH",
+    "type": "MCQ",
+    "difficulty": "HARD",
+    "stem": "Best way to disagree professionally in a meeting:",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Acknowledge then counter.",
+    "hint": "Professional disagreement.",
+    "choices": [
+      {
+        "label": "You're wrong.",
+        "isCorrect": false
+      },
+      {
+        "label": "No.",
+        "isCorrect": false
+      },
+      {
+        "label": "That's stupid.",
+        "isCorrect": false
+      },
+      {
+        "label": "I see your point; however, I'd like to suggest another approach.",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "id": "business-047",
+    "category": "BUSINESS_ENGLISH",
+    "type": "MCQ",
+    "difficulty": "EASY",
+    "stem": "Which phrase schedules a call?",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Polite scheduling question.",
+    "hint": "Schedule call.",
+    "choices": [
+      {
+        "label": "Never call.",
+        "isCorrect": false
+      },
+      {
+        "label": "Phones are bad.",
+        "isCorrect": false
+      },
+      {
+        "label": "Are you available for a brief call tomorrow?",
+        "isCorrect": true
+      },
+      {
+        "label": "Call me now at 3 a.m.",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "business-048",
+    "category": "BUSINESS_ENGLISH",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "What does 'TBD' mean on an agenda?",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Placeholder for undecided item.",
+    "hint": "Agenda abbreviation.",
+    "choices": [
+      {
+        "label": "Try before dinner",
+        "isCorrect": false
+      },
+      {
+        "label": "To be determined",
+        "isCorrect": true
+      },
+      {
+        "label": "To be deleted",
+        "isCorrect": false
+      },
+      {
+        "label": "Total business day",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "business-049",
+    "category": "BUSINESS_ENGLISH",
+    "type": "MCQ",
+    "difficulty": "MEDIUM",
+    "stem": "Which reply best confirms a reservation?",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Confirms date, time, party size.",
+    "hint": "Reservation confirmation.",
+    "choices": [
+      {
+        "label": "Thank you. I confirm the reservation for two on June 10 at 7 p.m.",
+        "isCorrect": true
+      },
+      {
+        "label": "Maybe.",
+        "isCorrect": false
+      },
+      {
+        "label": "Reservation is food.",
+        "isCorrect": false
+      },
+      {
+        "label": "No details.",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "business-050",
+    "category": "BUSINESS_ENGLISH",
+    "type": "MCQ",
+    "difficulty": "HARD",
+    "stem": "Which email tone is appropriate when rejecting a proposal politely?",
+    "passage": null,
+    "audioUrl": null,
+    "explanation": "Thanks + clear decision + professional tone.",
+    "hint": "Polite rejection.",
+    "choices": [
+      {
+        "label": "Thank you for the proposal. After careful review, we have decided not to move forward at this time.",
+        "isCorrect": true
+      },
+      {
+        "label": "Rejected!!!",
+        "isCorrect": false
+      },
+      {
+        "label": "Try again never.",
+        "isCorrect": false
+      },
+      {
+        "label": "Your proposal is terrible.",
+        "isCorrect": false
+      }
+    ]
+  }
+]
