@@ -1,0 +1,176 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum QuestionCategory {
+  VOCABULARY
+  GRAMMAR
+  READING
+  LISTENING
+  BUSINESS_ENGLISH
+  RANDOM
+}
+
+enum QuestionType {
+  MCQ
+  SENTENCE_COMPLETION
+  ERROR_IDENTIFICATION
+}
+
+enum Difficulty {
+  EASY
+  MEDIUM
+  HARD
+}
+
+enum CardDeck {
+  LUCKY
+  EVENT
+}
+
+enum GameStatus {
+  ACTIVE
+  COMPLETED
+  ABANDONED
+}
+
+model PlayerProfile {
+  id                String       @id @default(cuid())
+  supabaseUserId    String?      @unique
+  guestId           String?      @unique
+  displayName       String
+  coins             Int          @default(1500)
+  diamonds          Int          @default(0)
+  exp               Int          @default(0)
+  level             Int          @default(1)
+  title             String       @default("Rookie")
+  vocabAccuracy     Float        @default(0)
+  grammarAccuracy   Float        @default(0)
+  readingAccuracy   Float        @default(0)
+  listeningAccuracy Float        @default(0)
+  gamesPlayed       Int          @default(0)
+  gamesWon          Int          @default(0)
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
+  gamePlayers       GamePlayer[]
+}
+
+model Question {
+  id          String               @id @default(cuid())
+  category    QuestionCategory
+  type        QuestionType         @default(MCQ)
+  difficulty  Difficulty
+  stem        String
+  passage     String?
+  audioUrl    String?
+  imageUrl    String?
+  explanation String
+  hint        String?
+  stemTh      String?
+  passageTh   String?
+  active      Boolean              @default(true)
+  choices     Choice[]
+  translation QuestionTranslation?
+  attempts    QuizAttempt[]
+  createdAt   DateTime             @default(now())
+}
+
+model Choice {
+  id         String   @id @default(cuid())
+  questionId String
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  label      String
+  isCorrect  Boolean  @default(false)
+  sortOrder  Int
+}
+
+model QuestionTranslation {
+  id         String   @id @default(cuid())
+  questionId String   @unique
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  stemTh     String
+  passageTh  String?
+  choicesTh  Json
+  source     String   @default("llm")
+  createdAt  DateTime @default(now())
+}
+
+model CardDefinition {
+  id     String     @id @default(cuid())
+  deck   CardDeck
+  title  String
+  body   String
+  effect Json
+  weight Int        @default(1)
+  draws  CardDraw[]
+}
+
+model GameSession {
+  id           String        @id @default(cuid())
+  status       GameStatus    @default(ACTIVE)
+  difficulty   Difficulty    @default(MEDIUM)
+  turnCount    Int           @default(0)
+  maxTurns     Int           @default(30)
+  lapsToWin    Int           @default(2)
+  currentIndex Int           @default(0)
+  players      GamePlayer[]
+  turns        TurnLog[]
+  attempts     QuizAttempt[]
+  cardDraws    CardDraw[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+model GamePlayer {
+  id          String         @id @default(cuid())
+  sessionId   String
+  session     GameSession    @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  profileId   String?
+  profile     PlayerProfile? @relation(fields: [profileId], references: [id])
+  displayName String
+  isBot       Boolean        @default(false)
+  position    Int            @default(0)
+  lap         Int            @default(0)
+  coins       Int            @default(1500)
+  exp         Int            @default(0)
+  skipNext    Boolean        @default(false)
+  sortOrder   Int            @default(0)
+}
+
+model TurnLog {
+  id        String      @id @default(cuid())
+  sessionId String
+  session   GameSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  playerId  String
+  dice      Int
+  fromPos   Int
+  toPos     Int
+  tileType  String
+  createdAt DateTime    @default(now())
+}
+
+model QuizAttempt {
+  id         String      @id @default(cuid())
+  sessionId  String
+  session    GameSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  playerId   String
+  questionId String
+  question   Question    @relation(fields: [questionId], references: [id])
+  isCorrect  Boolean
+  responseMs Int
+  createdAt  DateTime    @default(now())
+}
+
+model CardDraw {
+  id        String         @id @default(cuid())
+  sessionId String
+  session   GameSession    @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  playerId  String
+  cardId    String
+  card      CardDefinition @relation(fields: [cardId], references: [id])
+  createdAt DateTime       @default(now())
+}
