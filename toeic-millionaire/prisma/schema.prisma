@@ -54,9 +54,11 @@ model PlayerProfile {
   listeningAccuracy Float        @default(0)
   gamesPlayed       Int          @default(0)
   gamesWon          Int          @default(0)
-  createdAt         DateTime     @default(now())
-  updatedAt         DateTime     @updatedAt
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
   gamePlayers       GamePlayer[]
+  coinTransactions  CoinTransaction[]
+  playerAchievements PlayerAchievement[]
 }
 
 model Question {
@@ -119,10 +121,11 @@ model GameSession {
   currentIndex Int           @default(0)
   players      GamePlayer[]
   turns        TurnLog[]
-  attempts     QuizAttempt[]
-  cardDraws    CardDraw[]
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
+  attempts         QuizAttempt[]
+  cardDraws        CardDraw[]
+  coinTransactions CoinTransaction[]
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
 }
 
 model GamePlayer {
@@ -173,4 +176,36 @@ model CardDraw {
   cardId    String
   card      CardDefinition @relation(fields: [cardId], references: [id])
   createdAt DateTime       @default(now())
+}
+
+model CoinTransaction {
+  id        String        @id @default(cuid())
+  profileId String
+  profile   PlayerProfile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  sessionId String?
+  session   GameSession?  @relation(fields: [sessionId], references: [id], onDelete: SetNull)
+  delta     Int
+  reason    String
+  createdAt DateTime      @default(now())
+}
+
+model Achievement {
+  id           String              @id @default(cuid())
+  code         String              @unique
+  title        String
+  titleTh      String
+  description  String
+  criteriaJson Json
+  unlocks      PlayerAchievement[]
+}
+
+model PlayerAchievement {
+  id            String        @id @default(cuid())
+  profileId     String
+  profile       PlayerProfile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  achievementId String
+  achievement   Achievement   @relation(fields: [achievementId], references: [id], onDelete: Cascade)
+  unlockedAt    DateTime      @default(now())
+
+  @@unique([profileId, achievementId])
 }
