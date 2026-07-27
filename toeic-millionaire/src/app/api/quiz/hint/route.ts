@@ -2,14 +2,12 @@ import { NextResponse } from "next/server";
 import { ZodError } from "zod";
 import { createOpenAIClient } from "@/features/ai/openai-client";
 import { prisma } from "@/shared/db/prisma";
-import { createHintService } from "@/features/quiz/hint-service";
 import {
-  createQuizService,
-  QuizError,
-  submitAnswerSchema,
-} from "@/features/quiz/quiz-service";
+  createHintService,
+  HintError,
+  requestHintSchema,
+} from "@/features/quiz/hint-service";
 
-const quizService = createQuizService(prisma);
 const hintService = createHintService(prisma, createOpenAIClient());
 
 function handleError(err: unknown) {
@@ -19,13 +17,17 @@ function handleError(err: unknown) {
       { status: 400 },
     );
   }
-  if (err instanceof QuizError) {
+  if (err instanceof HintError) {
     const status =
       err.code === "NOT_FOUND"
         ? 404
         : err.code === "NOT_ACTIVE"
           ? 409
-          : 400;
+          : err.code === "INSUFFICIENT_COINS"
+            ? 402
+            : err.code === "LLM_FAILED"
+              ? 502
+              : 400;
     return NextResponse.json({ error: err.message, code: err.code }, { status });
   }
   console.error(err);
@@ -34,15 +36,9 @@ function handleError(err: unknown) {
 
 export async function POST(request: Request) {
   try {
-    const body = submitAnswerSchema.parse(await request.json());
-    const result = await quizService.submitAnswer(body);
-    const explanationTh = await hintService.enrichExplanation({
-      questionId: body.questionId,
-      choiceId: body.choiceId,
-      isCorrect: result.isCorrect,
-      fallbackExplanation: result.explanation,
-    });
-    return NextResponse.json({ ...result, explanationTh });
+    const body = requestHintSchema.parse(await request.json());
+    const result = await hintService.requestHint(body);
+    return NextResponse.json(result);
   } catch (err) {
     return handleError(err);
   }

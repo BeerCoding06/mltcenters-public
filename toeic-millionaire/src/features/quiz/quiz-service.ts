@@ -56,6 +56,7 @@ export interface SubmitAnswerDto {
   coinsDelta: number;
   expDelta: number;
   explanation: string;
+  explanationTh?: string;
   streak: number;
 }
 
