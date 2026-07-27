@@ -1,4 +1,4 @@
-import type { PrismaClient } from "@prisma/client";
+import { Prisma, type PrismaClient } from "@prisma/client";
 import { z } from "zod";
 import type { OpenAIClient } from "@/features/ai/openai-client";
 
@@ -118,7 +118,7 @@ export function createTranslateService(db: PrismaClient, llm: OpenAIClient) {
           questionId,
           stemTh: result.stemTh,
           passageTh: result.passageTh,
-          choicesTh: result.choicesTh,
+          choicesTh: result.choicesTh as unknown as Prisma.InputJsonValue,
           source: "llm",
         },
       });

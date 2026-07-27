@@ -3,6 +3,7 @@ import { readFileSync, readdirSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import {
+  Prisma,
   PrismaClient,
   QuestionCategory,
   QuestionType,
@@ -79,7 +80,7 @@ export async function seedDatabase(prisma: PrismaClient) {
         deck: card.deck as CardDeck,
         title: card.title,
         body: card.body,
-        effect: card.effect,
+        effect: card.effect as Prisma.InputJsonValue,
         weight: card.weight ?? 1,
       },
     });
