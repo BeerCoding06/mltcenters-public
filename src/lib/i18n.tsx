@@ -12,8 +12,9 @@ export const translations = {
     register: { en: "Register", th: "ลงทะเบียน" },
     contact: { en: "Contact", th: "ติดต่อ" },
     assessment: { en: "Chat English", th: "คุยภาษาอังกฤษ" },
-    vocab: { en: "Vocab", th: "ศัพท์" },
-    toeicGame: { en: "Quiz", th: "ตอบคำถาม" },
+    quizMenu: { en: "Quiz", th: "ตอบคำถาม" },
+    vocab: { en: "Vocabulary", th: "ศัพท์" },
+    quizBoard: { en: "Board Quiz", th: "เกมกระดาน" },
     runner: { en: "3D Runner Game", th: "เกมวิ่ง 3D" },
   },
   assessmentPage: {

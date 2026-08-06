@@ -1,48 +1,99 @@
 import { useI18n } from '@/lib/i18n';
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Globe, Bot, Gamepad2, Trophy } from 'lucide-react';
+import {
+  Menu,
+  X,
+  Globe,
+  Bot,
+  Gamepad2,
+  Trophy,
+  BookOpen,
+  ChevronDown,
+} from 'lucide-react';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 
 const BRAND_LOGO = '/logo-nav.png';
 const KRUMAM_AVATAR = '/assets/img-design-about/krumam.jpg';
 
+const TOEIC_GAME_URL =
+  import.meta.env.VITE_TOEIC_GAME_URL ||
+  (import.meta.env.DEV ? 'http://localhost:3001' : 'https://toeic.mltcenters.com');
+
+type NavLink = {
+  label: string;
+  path: string;
+  icon?: typeof Bot;
+  external?: boolean;
+};
+
 const Navbar = () => {
   const { lang, setLang, t } = useI18n();
   const [open, setOpen] = useState(false);
+  const [quizOpen, setQuizOpen] = useState(false);
   const location = useLocation();
 
-  const links: Array<{
-    label: string;
-    path: string;
-    icon?: typeof Bot;
-    external?: boolean;
-  }> = [
+  const linksBefore: NavLink[] = [
     { label: t.nav.home[lang], path: '/' },
     { label: t.nav.about[lang], path: '/about' },
     { label: t.nav.activities[lang], path: '/activities' },
     { label: t.nav.schedule[lang], path: '/schedule' },
     { label: t.nav.gallery[lang], path: '/gallery' },
     { label: t.nav.assessment[lang], path: '/assessment', icon: Bot },
-    { label: t.nav.vocab[lang], path: '/vocab' },
-    {
-      label: t.nav.toeicGame[lang],
-      path:
-        import.meta.env.VITE_TOEIC_GAME_URL ||
-        (import.meta.env.DEV ? "http://localhost:3001" : "https://toeic.mltcenters.com"),
-      icon: Trophy,
-      external: true,
-    },
+  ];
+
+  const linksAfter: NavLink[] = [
     { label: t.nav.runner[lang], path: '/runner-app/', icon: Gamepad2, external: true },
     { label: t.nav.register[lang], path: '/register' },
     { label: t.nav.contact[lang], path: '/contact' },
   ];
 
-  const linkClass = (path: string, external?: boolean) =>
+  const quizActive =
+    location.pathname === '/vocab' || location.pathname.startsWith('/vocab');
+
+  const linkClass = (path: string, external?: boolean, active?: boolean) =>
     `flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-medium transition-colors ${
-      !external && (location.pathname === path || (path === '/vocab' && location.pathname.startsWith('/vocab')))
+      active ||
+      (!external &&
+        (location.pathname === path ||
+          (path === '/vocab' && location.pathname.startsWith('/vocab'))))
         ? 'text-[#0f4c6a] bg-primary/15 font-semibold'
         : 'text-foreground/80 hover:text-foreground hover:bg-muted'
     }`;
+
+  const renderLink = (l: NavLink, onNavigate?: () => void) => {
+    const Icon = l.icon ?? null;
+    if (l.external) {
+      return (
+        <a
+          key={l.path}
+          href={l.path}
+          className={linkClass(l.path, true)}
+          rel="noopener noreferrer"
+          onClick={onNavigate}
+        >
+          {Icon && <Icon size={16} className="shrink-0" />}
+          {l.label}
+        </a>
+      );
+    }
+    return (
+      <Link
+        key={l.path}
+        to={l.path}
+        className={linkClass(l.path)}
+        onClick={onNavigate}
+      >
+        {Icon && <Icon size={16} className="shrink-0" />}
+        {l.label}
+      </Link>
+    );
+  };
 
   return (
     <nav className="sticky top-0 z-50 bg-card/80 backdrop-blur-lg border-b border-border/50 shadow-sm">
@@ -81,41 +132,50 @@ const Navbar = () => {
 
         {/* Desktop */}
         <div className="hidden lg:flex items-center gap-1">
-          {links.map((l) => {
-            const Icon = l.icon ?? null;
-            if (l.external) {
-              return (
+          {linksBefore.map((l) => renderLink(l))}
+
+          <DropdownMenu>
+            <DropdownMenuTrigger
+              className={`${linkClass('/vocab', false, quizActive)} outline-none`}
+            >
+              <Trophy size={16} className="shrink-0" />
+              {t.nav.quizMenu[lang]}
+              <ChevronDown size={14} className="opacity-70" />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="start" className="min-w-[11rem]">
+              <DropdownMenuItem asChild>
+                <Link to="/vocab" className="flex cursor-pointer items-center gap-2">
+                  <BookOpen size={16} />
+                  {t.nav.vocab[lang]}
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
                 <a
-                  key={l.path}
-                  href={l.path}
-                  className={linkClass(l.path, true)}
+                  href={TOEIC_GAME_URL}
                   rel="noopener noreferrer"
+                  className="flex cursor-pointer items-center gap-2"
                 >
-                  {Icon && <Icon size={16} className="shrink-0" />}
-                  {l.label}
+                  <Trophy size={16} />
+                  {t.nav.quizBoard[lang]}
                 </a>
-              );
-            }
-            return (
-              <Link key={l.path} to={l.path} className={linkClass(l.path)}>
-                {Icon && <Icon size={16} className="shrink-0" />}
-                {l.label}
-              </Link>
-            );
-          })}
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          {linksAfter.map((l) => renderLink(l))}
         </div>
 
         <div className="flex items-center gap-2">
           <button
             type="button"
-            onClick={() => setLang(lang === "en" ? "th" : "en")}
+            onClick={() => setLang(lang === 'en' ? 'th' : 'en')}
             aria-label={
-              lang === "en" ? "เปลี่ยนเป็นภาษาไทย" : "Switch to English"
+              lang === 'en' ? 'เปลี่ยนเป็นภาษาไทย' : 'Switch to English'
             }
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-muted text-sm font-semibold text-foreground hover:bg-primary/10 hover:text-primary transition-colors"
           >
             <Globe size={15} />
-            {lang === "en" ? "TH" : "EN"}
+            {lang === 'en' ? 'TH' : 'EN'}
           </button>
 
           <button
@@ -123,12 +183,12 @@ const Navbar = () => {
             onClick={() => setOpen(!open)}
             aria-label={
               open
-                ? lang === "en"
-                  ? "Close menu"
-                  : "ปิดเมนู"
-                : lang === "en"
-                  ? "Open menu"
-                  : "เปิดเมนู"
+                ? lang === 'en'
+                  ? 'Close menu'
+                  : 'ปิดเมนู'
+                : lang === 'en'
+                  ? 'Open menu'
+                  : 'เปิดเมนู'
             }
             aria-expanded={open}
             className="lg:hidden text-foreground p-1"
@@ -142,34 +202,46 @@ const Navbar = () => {
       {open && (
         <div className="lg:hidden border-t border-border/50 bg-card/95 backdrop-blur-lg">
           <div className="px-4 py-3 space-y-1">
-            {links.map((l) => {
-              const Icon = l.icon ?? null;
-              if (l.external) {
-                return (
-                  <a
-                    key={l.path}
-                    href={l.path}
-                    rel="noopener noreferrer"
-                    onClick={() => setOpen(false)}
-                    className={linkClass(l.path, true)}
-                  >
-                    {Icon && <Icon size={16} className="shrink-0" />}
-                    {l.label}
-                  </a>
-                );
-              }
-              return (
+            {linksBefore.map((l) => renderLink(l, () => setOpen(false)))}
+
+            <button
+              type="button"
+              onClick={() => setQuizOpen((v) => !v)}
+              className={`${linkClass('/vocab', false, quizActive)} w-full justify-between`}
+              aria-expanded={quizOpen}
+            >
+              <span className="flex items-center gap-1.5">
+                <Trophy size={16} className="shrink-0" />
+                {t.nav.quizMenu[lang]}
+              </span>
+              <ChevronDown
+                size={16}
+                className={`transition-transform ${quizOpen ? 'rotate-180' : ''}`}
+              />
+            </button>
+            {quizOpen && (
+              <div className="ml-4 space-y-1 border-l border-border/60 pl-3">
                 <Link
-                  key={l.path}
-                  to={l.path}
+                  to="/vocab"
                   onClick={() => setOpen(false)}
-                  className={linkClass(l.path)}
+                  className={linkClass('/vocab')}
                 >
-                  {Icon && <Icon size={16} className="shrink-0" />}
-                  {l.label}
+                  <BookOpen size={16} className="shrink-0" />
+                  {t.nav.vocab[lang]}
                 </Link>
-              );
-            })}
+                <a
+                  href={TOEIC_GAME_URL}
+                  rel="noopener noreferrer"
+                  onClick={() => setOpen(false)}
+                  className={linkClass(TOEIC_GAME_URL, true)}
+                >
+                  <Trophy size={16} className="shrink-0" />
+                  {t.nav.quizBoard[lang]}
+                </a>
+              </div>
+            )}
+
+            {linksAfter.map((l) => renderLink(l, () => setOpen(false)))}
           </div>
         </div>
       )}
