@@ -1,13 +1,7 @@
 import { NextResponse } from "next/server";
 import { ZodError } from "zod";
-import { prisma } from "@/shared/db/prisma";
-import {
-  createGameService,
-  GameError,
-  rollQuerySchema,
-} from "@/features/game/game-service";
-
-const gameService = createGameService(prisma);
+import { GameError, rollQuerySchema } from "@/features/game/game-service";
+import { memoryGame } from "@/features/store/services";
 
 function handleError(err: unknown) {
   if (err instanceof ZodError) {
@@ -41,7 +35,7 @@ export async function POST(
     const query = rollQuerySchema.parse({
       playerId: url.searchParams.get("playerId") ?? undefined,
     });
-    const result = await gameService.roll(id, query.playerId);
+    const result = await memoryGame.roll(id, query.playerId);
     return NextResponse.json(result);
   } catch (err) {
     return handleError(err);

@@ -1,13 +1,7 @@
 import { NextResponse } from "next/server";
 import { ZodError } from "zod";
-import { prisma } from "@/shared/db/prisma";
-import {
-  createGameService,
-  GameError,
-  startGameSchema,
-} from "@/features/game/game-service";
-
-const gameService = createGameService(prisma);
+import { GameError, startGameSchema } from "@/features/game/game-service";
+import { memoryGame } from "@/features/store/services";
 
 function jsonError(message: string, status: number) {
   return NextResponse.json({ error: message }, { status });
@@ -38,21 +32,9 @@ function handleError(err: unknown) {
 export async function POST(request: Request) {
   try {
     const body = startGameSchema.parse(await request.json());
-    const result = await gameService.startGame(body);
+    const result = await memoryGame.startGame(body);
     return NextResponse.json(result, { status: 201 });
   } catch (err) {
-    const message = err instanceof Error ? err.message : String(err);
-    if (
-      /ECONNREFUSED|timeout|Can't reach database|Connection terminated|ENOTFOUND/i.test(
-        message,
-      )
-    ) {
-      console.error("[game/start] database error:", message);
-      return jsonError(
-        "Database unavailable. Set DATABASE_URL for the millionaire app and run prisma migrate deploy + db:seed.",
-        503,
-      );
-    }
     return handleError(err);
   }
 }

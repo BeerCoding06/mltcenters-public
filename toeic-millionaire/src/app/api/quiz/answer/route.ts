@@ -1,16 +1,7 @@
 import { NextResponse } from "next/server";
 import { ZodError } from "zod";
-import { createOpenAIClient } from "@/features/ai/openai-client";
-import { prisma } from "@/shared/db/prisma";
-import { createHintService } from "@/features/quiz/hint-service";
-import {
-  createQuizService,
-  QuizError,
-  submitAnswerSchema,
-} from "@/features/quiz/quiz-service";
-
-const quizService = createQuizService(prisma);
-const hintService = createHintService(prisma, createOpenAIClient());
+import { QuizError, submitAnswerSchema } from "@/features/quiz/quiz-service";
+import { memoryHints, memoryQuiz } from "@/features/store/services";
 
 function handleError(err: unknown) {
   if (err instanceof ZodError) {
@@ -35,10 +26,9 @@ function handleError(err: unknown) {
 export async function POST(request: Request) {
   try {
     const body = submitAnswerSchema.parse(await request.json());
-    const result = await quizService.submitAnswer(body);
-    const explanationTh = await hintService.enrichExplanation({
+    const result = await memoryQuiz.submitAnswer(body);
+    const explanationTh = await memoryHints.enrichExplanation({
       questionId: body.questionId,
-      choiceId: body.choiceId,
       isCorrect: result.isCorrect,
       fallbackExplanation: result.explanation,
     });

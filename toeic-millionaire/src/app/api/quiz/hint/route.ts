@@ -1,14 +1,7 @@
 import { NextResponse } from "next/server";
 import { ZodError } from "zod";
-import { createOpenAIClient } from "@/features/ai/openai-client";
-import { prisma } from "@/shared/db/prisma";
-import {
-  createHintService,
-  HintError,
-  requestHintSchema,
-} from "@/features/quiz/hint-service";
-
-const hintService = createHintService(prisma, createOpenAIClient());
+import { HintError, requestHintSchema } from "@/features/quiz/hint-service";
+import { memoryHints } from "@/features/store/services";
 
 function handleError(err: unknown) {
   if (err instanceof ZodError) {
@@ -37,7 +30,7 @@ function handleError(err: unknown) {
 export async function POST(request: Request) {
   try {
     const body = requestHintSchema.parse(await request.json());
-    const result = await hintService.requestHint(body);
+    const result = await memoryHints.requestHint(body);
     return NextResponse.json(result);
   } catch (err) {
     return handleError(err);

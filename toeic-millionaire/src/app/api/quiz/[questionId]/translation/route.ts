@@ -1,15 +1,6 @@
 import { NextResponse } from "next/server";
-import { createOpenAIClient } from "@/features/ai/openai-client";
-import { prisma } from "@/shared/db/prisma";
-import {
-  createTranslateService,
-  TranslateError,
-} from "@/features/quiz/translate-service";
-
-const translateService = createTranslateService(
-  prisma,
-  createOpenAIClient(),
-);
+import { TranslateError } from "@/features/quiz/translate-service";
+import { memoryTranslate } from "@/features/store/services";
 
 function handleError(err: unknown) {
   if (err instanceof TranslateError) {
@@ -26,7 +17,7 @@ export async function GET(
 ) {
   try {
     const { questionId } = await context.params;
-    const translation = await translateService.translateQuestion(questionId);
+    const translation = await memoryTranslate.translateQuestion(questionId);
     return NextResponse.json(translation);
   } catch (err) {
     return handleError(err);

@@ -1,13 +1,7 @@
 import { NextResponse } from "next/server";
 import { ZodError } from "zod";
-import { prisma } from "@/shared/db/prisma";
-import {
-  createGameService,
-  GameError,
-  endGameSchema,
-} from "@/features/game/game-service";
-
-const gameService = createGameService(prisma);
+import { GameError, endGameSchema } from "@/features/game/game-service";
+import { memoryGame } from "@/features/store/services";
 
 function handleError(err: unknown) {
   if (err instanceof ZodError) {
@@ -36,7 +30,7 @@ export async function POST(
   try {
     const { id } = await params;
     const body = endGameSchema.parse(await request.json().catch(() => ({})));
-    const state = await gameService.endGame(id, body);
+    const state = await memoryGame.endGame(id, body);
     return NextResponse.json(state);
   } catch (err) {
     return handleError(err);

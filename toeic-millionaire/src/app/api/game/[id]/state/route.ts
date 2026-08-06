@@ -1,8 +1,6 @@
 import { NextResponse } from "next/server";
-import { prisma } from "@/shared/db/prisma";
-import { createGameService, GameError } from "@/features/game/game-service";
-
-const gameService = createGameService(prisma);
+import { GameError } from "@/features/game/game-service";
+import { memoryGame } from "@/features/store/services";
 
 function handleError(err: unknown) {
   if (err instanceof GameError) {
@@ -21,7 +19,7 @@ export async function GET(
 ) {
   try {
     const { id } = await params;
-    const state = await gameService.getState(id);
+    const state = await memoryGame.getState(id);
     return NextResponse.json(state);
   } catch (err) {
     return handleError(err);

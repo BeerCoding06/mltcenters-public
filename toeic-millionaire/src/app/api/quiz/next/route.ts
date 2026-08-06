@@ -1,13 +1,10 @@
 import { NextResponse } from "next/server";
 import { ZodError } from "zod";
-import { prisma } from "@/shared/db/prisma";
 import {
-  createQuizService,
   nextQuestionQuerySchema,
   QuizError,
 } from "@/features/quiz/quiz-service";
-
-const quizService = createQuizService(prisma);
+import { memoryQuiz } from "@/features/store/services";
 
 function handleError(err: unknown) {
   if (err instanceof ZodError) {
@@ -39,7 +36,7 @@ export async function GET(request: Request) {
       category: url.searchParams.get("category"),
       difficulty: url.searchParams.get("difficulty"),
     });
-    const question = await quizService.getNextQuestion(query);
+    const question = await memoryQuiz.getNextQuestion(query);
     return NextResponse.json(question);
   } catch (err) {
     return handleError(err);

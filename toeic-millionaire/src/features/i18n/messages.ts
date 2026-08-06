@@ -128,9 +128,8 @@ export const messages: Record<GameLang, Messages> = {
     startGame: "Start Game",
     starting: "Starting…",
     failedStart: "Failed to start game",
-    startTimeout:
-      "Start timed out. Set DATABASE_URL for the game and run prisma migrate + seed.",
-    dbHint: "Database not ready. Set DATABASE_URL, then migrate + seed.",
+    startTimeout: "Could not start the game. Please try again.",
+    dbHint: "Could not start the game. Please try again.",
     loadingBoard: "Loading board…",
     gameNotFound: "Game not found",
     youWin: "You win!",
@@ -230,9 +229,8 @@ export const messages: Record<GameLang, Messages> = {
     startGame: "เริ่มเกม",
     starting: "กำลังเริ่ม…",
     failedStart: "เริ่มเกมไม่สำเร็จ",
-    startTimeout:
-      "เริ่มเกมหมดเวลา — ตั้งค่า DATABASE_URL แล้วรัน prisma migrate + seed",
-    dbHint: "ฐานข้อมูลยังไม่พร้อม — ตั้ง DATABASE_URL แล้ว migrate + seed",
+    startTimeout: "เริ่มเกมไม่สำเร็จ กรุณาลองใหม่",
+    dbHint: "เริ่มเกมไม่สำเร็จ กรุณาลองใหม่",
     loadingBoard: "กำลังโหลดกระดาน…",
     gameNotFound: "ไม่พบเกม",
     youWin: "คุณชนะ!",

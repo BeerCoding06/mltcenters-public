@@ -1,13 +1,7 @@
 import { NextResponse } from "next/server";
 import { ZodError } from "zod";
-import { prisma } from "@/shared/db/prisma";
-import {
-  CardError,
-  createCardService,
-  drawCardSchema,
-} from "@/features/cards/card-service";
-
-const cardService = createCardService(prisma);
+import { CardError, drawCardSchema } from "@/features/cards/card-service";
+import { memoryCards } from "@/features/store/services";
 
 function handleError(err: unknown) {
   if (err instanceof ZodError) {
@@ -32,7 +26,7 @@ function handleError(err: unknown) {
 export async function POST(request: Request) {
   try {
     const body = drawCardSchema.parse(await request.json());
-    const result = await cardService.drawCard(body);
+    const result = await memoryCards.drawCard(body);
     return NextResponse.json({
       card: result.card,
       effectResult: result.effectResult,

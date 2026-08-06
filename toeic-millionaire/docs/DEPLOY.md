@@ -88,14 +88,19 @@ Dropdown **AI/คำศัพท์** → **TOEIC เกมส์เศรษฐ
 | Empty quizzes | Run `prisma migrate deploy` + `db:seed` |
 | Build fails on Prisma | Ensure `openssl` in image; `DATABASE_URL` placeholder at build is OK |
 
+## Game data (no database)
+
+The live game uses an **in-memory** store with an embedded bank:
+
+- `src/data/toeic-questions.json` — **200** TOEIC questions (choices + correct answers)
+- `src/data/cards.json` — lucky/event cards
+
+`DATABASE_URL` is **not required** to play. Sessions live in the Node process (reset on container restart).
+
+Health: `GET /millionaire/api/health` → `{ ok: true, mode: "memory", questions: 200 }`
+
 ### Dokploy checklist after deploy
 
-1. Remove any `VITE_TOEIC_GAME_URL=https://toeic.mltcenters.com` env/build-arg
-2. Set **runtime** env (container env, not only build-arg):
-   - `DATABASE_URL` / `DIRECT_URL` (Postgres for game — can share analytics DB)
-   - `NEXT_PUBLIC_APP_URL=https://www.mltcenters.com/millionaire`
-3. Redeploy full image (`Dockerfile.prod`) — `start.sh` auto-runs `prisma migrate deploy` + seed
-4. Smoke test:
-   - `GET /millionaire/api/health` → `{ ok: true, questions: N }`
-   - Lobby → Start Game → Network `POST /millionaire/api/game/start` **201**
-5. Fonts: Poppins + Noto Sans Thai (same as main site navbar)
+1. Redeploy `Dockerfile.prod` (no Postgres setup needed for Millionaire)
+2. Smoke test Start Game → `POST /millionaire/api/game/start` **201**
+3. Fonts: Poppins + Noto Sans Thai (same as main site navbar)
