@@ -441,17 +441,38 @@ toeic-millionaire/
 
 ## 15. UI / UX (P1)
 
-### Visual direction
-- Modern cute, glassmorphism, rounded-2xl/3xl
-- Colors: gold (#FBBF24), emerald (#10B981), navy (#1E293B), accent purple
-- Dark/Light via `next-themes`
-- Responsive: mobile board zoom/pan; desktop full board
+### Visual direction — Who Wants to Be a Millionaire (TH) tone
+อ้างอิงโทนจากเกมโชว์ **ใครอยากเป็นเศรษฐี** (dark studio + silver pill UI):
+
+| Token | Hex | ใช้ที่ |
+|-------|-----|--------|
+| `--bg-deep` | `#05070F` → `#0A1628` | พื้นหลังเกม / studio |
+| `--bg-panel` | `#000000` | กล่องโจทย์ / ตัวเลือก |
+| `--border-silver` | `#C0C8D4` / `#E5E7EB` | ขอบโลหะบางรอบ pill |
+| `--text-primary` | `#FFFFFF` | ข้อความโจทย์ / ตัวเลือก |
+| `--accent-cyan` | `#5BC0FF` / `#7DD3FC` | ไฟ bokeh / highlight |
+| `--accent-gold` | `#FBBF24` / `#EAB308` | lifeline icons, coins, titles |
+| `--correct` | `#10B981` | ตอบถูก (glow green) |
+| `--wrong` | `#EF4444` | ตอบผิด / lifeline used (X) |
+| `--stage-glow` | soft cyan radial | ambient light behind board |
+
+**UI shapes (quiz)**
+- Question: กล่อง **pill** ยาว (มุมโค้งครึ่งวงกลม) พื้นดำ + ขอบเงินบาง
+- Answers: pill 4 ช่อง จัด 2×2 ใต้โจทย์ — ตัวเลข `1.`–`4.` ชิดซ้าย
+- Lifelines / helper icons: สี่เหลี่ยมขอบทอง มุมขวาบน (แปลไทย / hint / 50:50 ภายหลัง)
+- Board HUD: dark glass + silver hairline; ไม่ใช้ pastel แบบเว็บหลัก
+
+**Modes**
+- **Default = Dark Millionaire** (primary P1 look)
+- Light mode optional (ลด contrast) — ไม่บังคับใน P1 board screen
+
+**Responsive:** mobile board zoom/pan; desktop full board
 
 ### Key screens
-1. Landing — CTA Play Guest / Login
+1. Landing — CTA Play Guest / Login (dark hero + cyan glow)
 2. Lobby — difficulty, AI count, start
 3. Board — tiles, avatars, dice, HUD (coins, exp, turn)
-4. Quiz modal — question, choices, timer, **ปุ่มแปลไทย**, hint, explanation
+4. Quiz modal — pill Q&A, timer, **ปุ่มแปลไทย**, hint, explanation
 5. Card draw — flip animation
 6. End game — stats, login CTA, play again
 
@@ -460,11 +481,13 @@ toeic-millionaire/
 - Token move along path
 - Coins pop + confetti on correct
 - Card flip
+- Answer select: silver border → gold/cyan pulse; correct = green fill
 
 ### Accessibility
 - Keyboard: 1–4 เลือก choice, Enter submit
 - `aria-live` สำหรับ turn changes
 - Reduced motion respect
+- Contrast: white on black meets WCAG AA
 
 ---
 

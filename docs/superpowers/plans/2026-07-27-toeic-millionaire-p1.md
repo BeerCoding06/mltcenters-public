@@ -23,6 +23,7 @@
 - Server validates dice rolls and quiz answers
 - Deploy: Vercel + Supabase; domain `toeic.mltcenters.com`
 - MLTCENTERS: external Navbar link only (Task 12); keep `/vocab` unchanged
+- **Visual tone (Millionaire TH):** dark studio `#05070F`–`#0A1628`, black panels, silver pill borders `#C0C8D4`, white text, cyan glow `#5BC0FF`, gold accents `#FBBF24` — quiz modal = pill Q + 2×2 answer pills (see spec §15)
 - Commits: conventional `feat(toeic): …` / `fix(toeic): …`
 - Tests: Vitest unit + API integration; Playwright smoke for guest flow
 
