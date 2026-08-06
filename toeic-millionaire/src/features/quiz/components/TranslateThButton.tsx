@@ -1,7 +1,9 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
+import { Languages } from "lucide-react";
 import type { TranslationResult } from "@/features/quiz/translate-service";
+import { cn } from "@/lib/utils";
 
 async function fetchTranslation(questionId: string): Promise<TranslationResult> {
   const res = await fetch(`/api/quiz/${questionId}/translation`);
@@ -35,12 +37,20 @@ export function TranslateThButton({
   return (
     <button
       type="button"
+      title={showTh ? "Show English" : "Translate to Thai"}
       onClick={() => onToggle(!showTh)}
       disabled={showTh && isLoading}
-      className="rounded-lg border border-border bg-background px-2.5 py-1 text-xs font-medium hover:bg-muted disabled:opacity-50"
+      className={cn(
+        "millionaire-lifeline",
+        showTh && "millionaire-lifeline-active",
+      )}
       aria-pressed={showTh}
     >
-      {showTh ? "EN" : "🇹🇭 แปลเป็นภาษาไทย"}
+      {showTh && isLoading ? (
+        <span className="text-xs">…</span>
+      ) : (
+        <Languages className="size-4" />
+      )}
     </button>
   );
 }

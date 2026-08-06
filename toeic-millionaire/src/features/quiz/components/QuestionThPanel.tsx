@@ -20,22 +20,22 @@ export function QuestionThPanel({
 }: QuestionThPanelProps) {
   if (isLoading) {
     return (
-      <div className="space-y-2 rounded-lg border border-border/60 bg-muted/30 p-3">
-        <Skeleton className="h-4 w-full" />
-        <Skeleton className="h-4 w-3/4" />
-        <Skeleton className="h-4 w-1/2" />
+      <div className="millionaire-pill space-y-2">
+        <Skeleton className="h-4 w-full bg-[var(--millionaire-silver)]/20" />
+        <Skeleton className="h-4 w-3/4 bg-[var(--millionaire-silver)]/20" />
+        <Skeleton className="h-4 w-1/2 bg-[var(--millionaire-silver)]/20" />
       </div>
     );
   }
 
   if (isError) {
     return (
-      <div className="rounded-lg border border-destructive/30 bg-destructive/5 p-3 text-sm">
-        <p className="text-destructive">โหลดคำแปลไม่สำเร็จ</p>
+      <div className="millionaire-pill border-[var(--millionaire-wrong)] text-sm">
+        <p className="text-[var(--millionaire-wrong)]">โหลดคำแปลไม่สำเร็จ</p>
         <button
           type="button"
           onClick={onRetry}
-          className="mt-2 text-xs font-medium underline"
+          className="mt-2 text-xs font-medium text-[var(--millionaire-cyan)] underline"
         >
           ลองอีกครั้ง
         </button>
@@ -48,17 +48,17 @@ export function QuestionThPanel({
   }
 
   return (
-    <div className="space-y-3 rounded-lg border border-border/60 bg-muted/30 p-3 text-sm">
+    <div className="millionaire-pill space-y-3 text-sm">
       <p className="leading-relaxed">{translation.stemTh}</p>
       {translation.passageTh ? (
-        <p className="leading-relaxed text-muted-foreground">
+        <p className="leading-relaxed text-[var(--millionaire-silver)]">
           {translation.passageTh}
         </p>
       ) : null}
       <ul className="space-y-1.5">
         {translation.choicesTh.map((choice) => (
           <li key={choice.choiceId} className="flex gap-2">
-            <span className="font-medium text-muted-foreground">
+            <span className="font-bold text-[var(--millionaire-gold)]">
               {choiceLabels[choice.choiceId] ?? "?"}
             </span>
             <span>{choice.labelTh}</span>

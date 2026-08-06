@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { ThemeToggle } from "@/components/ThemeToggle";
 import { Button } from "@/components/ui/button";
 import { ensureGuestId } from "@/features/auth/guest-id";
 import { useGameStore } from "@/features/game/useGameStore";
@@ -64,40 +63,42 @@ export default function PlayLobbyPage() {
   }
 
   return (
-    <div className="flex min-h-full flex-col bg-gradient-to-b from-[#1E293B]/20 to-background">
+    <div className="flex min-h-full flex-col">
       <header className="flex items-center justify-between px-6 py-4">
-        <Link href="/" className="text-sm text-muted-foreground hover:text-foreground">
+        <Link
+          href="/"
+          className="text-sm text-[var(--millionaire-silver)] hover:text-[var(--millionaire-cyan)]"
+        >
           ← Home
         </Link>
-        <ThemeToggle />
       </header>
 
       <main className="mx-auto flex w-full max-w-md flex-1 flex-col gap-6 px-6 py-8">
         <div>
-          <h1 className="text-2xl font-bold">Game Lobby</h1>
-          <p className="text-sm text-muted-foreground">
+          <h1 className="text-2xl font-bold text-white">Game Lobby</h1>
+          <p className="text-sm text-[var(--millionaire-silver)]">
             Configure your solo match against AI bots.
           </p>
         </div>
 
-        <div className="space-y-4 rounded-2xl border border-white/10 bg-card/60 p-5 backdrop-blur-xl">
+        <div className="space-y-4 rounded-2xl border border-[var(--millionaire-silver)]/50 bg-black p-5 shadow-[0_0_24px_rgb(91_192_255_/_8%)]">
           <label className="block space-y-1.5">
-            <span className="text-sm font-medium">Display name</span>
+            <span className="text-sm font-medium text-white">Display name</span>
             <input
               type="text"
               maxLength={50}
               value={displayName}
               onChange={(e) => setName(e.target.value)}
-              className="w-full rounded-lg border border-input bg-background px-3 py-2 text-sm outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/50"
+              className="w-full rounded-full border border-[var(--millionaire-silver)]/50 bg-black px-4 py-2 text-sm text-white outline-none focus-visible:ring-2 focus-visible:ring-[var(--millionaire-cyan)]/50"
             />
           </label>
 
           <label className="block space-y-1.5">
-            <span className="text-sm font-medium">Difficulty</span>
+            <span className="text-sm font-medium text-white">Difficulty</span>
             <select
               value={difficulty}
               onChange={(e) => setDifficulty(e.target.value as Difficulty)}
-              className="w-full rounded-lg border border-input bg-background px-3 py-2 text-sm outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/50"
+              className="w-full rounded-full border border-[var(--millionaire-silver)]/50 bg-black px-4 py-2 text-sm text-white outline-none focus-visible:ring-2 focus-visible:ring-[var(--millionaire-cyan)]/50"
             >
               <option value="EASY">Easy</option>
               <option value="MEDIUM">Medium</option>
@@ -106,16 +107,18 @@ export default function PlayLobbyPage() {
           </label>
 
           <label className="block space-y-1.5">
-            <span className="text-sm font-medium">Bot opponents ({botCount})</span>
+            <span className="text-sm font-medium text-white">
+              Bot opponents ({botCount})
+            </span>
             <input
               type="range"
               min={1}
               max={3}
               value={botCount}
               onChange={(e) => setBotCount(Number(e.target.value))}
-              className="w-full accent-emerald-500"
+              className="w-full accent-[var(--millionaire-gold)]"
             />
-            <div className="flex justify-between text-xs text-muted-foreground">
+            <div className="flex justify-between text-xs text-[var(--millionaire-silver)]">
               <span>1</span>
               <span>2</span>
               <span>3</span>
@@ -123,13 +126,15 @@ export default function PlayLobbyPage() {
           </label>
         </div>
 
-        {error ? <p className="text-sm text-destructive">{error}</p> : null}
+        {error ? (
+          <p className="text-sm text-[var(--millionaire-wrong)]">{error}</p>
+        ) : null}
 
         <Button
           size="lg"
           disabled={loading}
           onClick={() => void handleStart()}
-          className="w-full bg-emerald-500 text-white hover:bg-emerald-400"
+          className="w-full rounded-full border-2 border-[var(--millionaire-gold)] bg-[var(--millionaire-gold)] text-black hover:bg-[var(--millionaire-gold)]/90"
         >
           {loading ? "Starting…" : "Start Game"}
         </Button>

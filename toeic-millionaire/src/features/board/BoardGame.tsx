@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useCallback, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Dices } from "lucide-react";
-import { ThemeToggle } from "@/components/ThemeToggle";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { toast } from "@/components/ui/toast";
 import { CardDrawModal } from "@/features/cards/CardDrawModal";
@@ -284,7 +283,7 @@ export function BoardGame({ sessionId }: BoardGameProps) {
 
   if (isLoading) {
     return (
-      <div className="flex min-h-full items-center justify-center text-muted-foreground">
+      <div className="flex min-h-full items-center justify-center text-[var(--millionaire-silver)]">
         Loading board…
       </div>
     );
@@ -293,10 +292,17 @@ export function BoardGame({ sessionId }: BoardGameProps) {
   if (error || !state) {
     return (
       <div className="flex min-h-full flex-col items-center justify-center gap-4">
-        <p className="text-destructive">
+        <p className="text-[var(--millionaire-wrong)]">
           {error instanceof Error ? error.message : "Game not found"}
         </p>
-        <Link href="/play" className={buttonVariants({ variant: "outline" })}>
+        <Link
+          href="/play"
+          className={buttonVariants({
+            variant: "outline",
+            className:
+              "border-[var(--millionaire-silver)] text-white hover:bg-black/50",
+          })}
+        >
           Back to lobby
         </Link>
       </div>
@@ -321,17 +327,17 @@ export function BoardGame({ sessionId }: BoardGameProps) {
         <motion.div
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
-          className="max-w-md space-y-4 rounded-3xl border border-white/10 bg-card/70 p-8 text-center backdrop-blur-xl"
+          className="max-w-md space-y-4 rounded-3xl border border-[var(--millionaire-silver)] bg-black p-8 text-center shadow-[0_0_40px_rgb(91_192_255_/_15%)]"
         >
-          <h1 className="text-3xl font-bold">
+          <h1 className="text-3xl font-bold text-[var(--millionaire-gold)]">
             {humanWon ? "You win!" : "Game over"}
           </h1>
-          <p className="text-muted-foreground">
-            Winner: <strong>{winner?.displayName ?? "—"}</strong> with{" "}
+          <p className="text-[var(--millionaire-silver)]">
+            Winner: <strong className="text-white">{winner?.displayName ?? "—"}</strong> with{" "}
             {winner?.coins ?? 0} coins
           </p>
           {humanPlayer ? (
-            <p className="text-sm">
+            <p className="text-sm text-[var(--millionaire-silver)]">
               Your score: {humanPlayer.coins} coins · {humanPlayer.exp} EXP · Lap{" "}
               {humanPlayer.lap}
             </p>
@@ -341,12 +347,19 @@ export function BoardGame({ sessionId }: BoardGameProps) {
               href="/play"
               className={cn(
                 buttonVariants(),
-                "bg-emerald-500 text-white hover:bg-emerald-400",
+                "rounded-full border-2 border-[var(--millionaire-gold)] bg-[var(--millionaire-gold)] text-black hover:bg-[var(--millionaire-gold)]/90",
               )}
             >
               Play again
             </Link>
-            <Link href="/" className={buttonVariants({ variant: "outline" })}>
+            <Link
+              href="/"
+              className={buttonVariants({
+                variant: "outline",
+                className:
+                  "rounded-full border-[var(--millionaire-silver)] text-white hover:bg-black/50",
+              })}
+            >
               Home
             </Link>
           </div>
@@ -356,12 +369,14 @@ export function BoardGame({ sessionId }: BoardGameProps) {
   }
 
   return (
-    <div className="flex min-h-full flex-col bg-gradient-to-b from-[#1E293B]/30 to-background">
+    <div className="flex min-h-full flex-col">
       <header className="flex items-center justify-between px-4 py-3 sm:px-6">
-        <Link href="/play" className="text-sm text-muted-foreground hover:text-foreground">
+        <Link
+          href="/play"
+          className="text-sm text-[var(--millionaire-silver)] hover:text-[var(--millionaire-cyan)]"
+        >
           Lobby
         </Link>
-        <ThemeToggle />
       </header>
 
       <div className="mx-auto flex w-full max-w-5xl flex-1 flex-col gap-4 px-4 pb-8 sm:px-6">
@@ -379,7 +394,7 @@ export function BoardGame({ sessionId }: BoardGameProps) {
 
         <div className="flex flex-col items-center gap-3">
           <motion.div
-            className="flex size-16 items-center justify-center rounded-2xl border border-amber-400/30 bg-[#1E293B]/60 text-3xl font-bold text-amber-400 shadow-lg backdrop-blur-xl"
+            className="flex size-16 items-center justify-center rounded-2xl border-2 border-[var(--millionaire-gold)] bg-black text-3xl font-bold text-[var(--millionaire-gold)] shadow-[0_0_20px_rgb(251_191_36_/_25%)]"
             animate={diceAnimating ? { rotate: [0, 15, -15, 0] } : {}}
             transition={{ repeat: diceAnimating ? Infinity : 0, duration: 0.3 }}
           >
@@ -390,14 +405,14 @@ export function BoardGame({ sessionId }: BoardGameProps) {
             size="lg"
             disabled={!canRoll}
             onClick={() => void performRoll()}
-            className="gap-2 bg-amber-400 text-[#1E293B] hover:bg-amber-300 disabled:opacity-50"
+            className="gap-2 rounded-full border-2 border-[var(--millionaire-gold)] bg-[var(--millionaire-gold)] text-black hover:bg-[var(--millionaire-gold)]/90 disabled:opacity-50"
           >
             <Dices className="size-5" />
             {isRolling ? "Rolling…" : isHumanTurn ? "Roll dice" : "Waiting…"}
           </Button>
 
           {!isHumanTurn && current?.isBot ? (
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-[var(--millionaire-silver)]">
               {current.displayName} is thinking…
             </p>
           ) : null}

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Languages, Lightbulb } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -15,6 +16,7 @@ import {
   useQuestionTranslation,
 } from "@/features/quiz/components/TranslateThButton";
 import type { QuizChoiceDto } from "@/features/quiz/quiz-service";
+import { cn } from "@/lib/utils";
 
 export interface QuizModalQuestion {
   questionId: string;
@@ -41,7 +43,17 @@ interface QuizModalProps {
   onAnswered?: (result: QuizAnswerResult) => void;
 }
 
-const CHOICE_LETTERS = ["A", "B", "C", "D", "E"];
+function choiceStateClass(
+  choiceId: string,
+  selectedChoiceId: string | null,
+  answered: boolean,
+  isCorrect: boolean | null,
+): string {
+  if (!answered || selectedChoiceId !== choiceId) {
+    return selectedChoiceId === choiceId ? "millionaire-choice-selected" : "";
+  }
+  return isCorrect ? "millionaire-choice-correct" : "millionaire-choice-wrong";
+}
 
 export function QuizModal({
   open,
@@ -71,7 +83,7 @@ export function QuizModal({
   const choiceLabels = Object.fromEntries(
     (question?.choices ?? []).map((choice, index) => [
       choice.id,
-      CHOICE_LETTERS[index] ?? String(index + 1),
+      String(index + 1),
     ]),
   );
 
@@ -166,68 +178,80 @@ export function QuizModal({
         onOpenChange(next);
       }}
     >
-      <DialogContent className="sm:max-w-lg">
-        <DialogHeader className="relative pr-8">
-          <DialogTitle>Quiz</DialogTitle>
+      <DialogContent className="border-[var(--millionaire-silver)] bg-black/95 text-white ring-[var(--millionaire-silver)]/30 sm:max-w-xl">
+        <DialogHeader className="relative">
+          <DialogTitle className="sr-only">Quiz</DialogTitle>
           {question ? (
-            <div className="absolute top-0 right-0">
+            <div className="absolute top-0 right-0 flex gap-2">
               <TranslateThButton
                 showTh={showTh}
                 isLoading={isLoading}
                 onToggle={setShowTh}
               />
+              <button
+                type="button"
+                title="Hint (-5 coins)"
+                disabled={hintUsed || hintLoading || answered}
+                onClick={() => void handleHint()}
+                className={cn(
+                  "millionaire-lifeline",
+                  hintUsed && "millionaire-lifeline-active",
+                )}
+              >
+                {hintLoading ? (
+                  <span className="text-xs">…</span>
+                ) : (
+                  <Lightbulb className="size-4" />
+                )}
+              </button>
             </div>
           ) : null}
         </DialogHeader>
 
         {question ? (
-          <div className="space-y-4">
-            <div className="space-y-3">
+          <div className="space-y-4 pt-2">
+            <div className="millionaire-pill space-y-2">
               <p className="text-sm leading-relaxed">{question.stem}</p>
               {question.passage ? (
-                <p className="text-sm leading-relaxed text-muted-foreground">
+                <p className="text-sm leading-relaxed text-[var(--millionaire-silver)]">
                   {question.passage}
                 </p>
               ) : null}
-              <ul className="space-y-2">
-                {question.choices.map((choice, index) => (
-                  <li key={choice.id}>
-                    <button
-                      type="button"
-                      disabled={answered || submitting}
-                      onClick={() => setSelectedChoiceId(choice.id)}
-                      className={`w-full rounded-lg border px-3 py-2 text-left text-sm transition-colors ${
-                        selectedChoiceId === choice.id
-                          ? "border-primary bg-primary/5"
-                          : "border-border hover:bg-muted/50"
-                      } disabled:opacity-60`}
-                    >
-                      <span className="mr-2 font-medium text-muted-foreground">
-                        {CHOICE_LETTERS[index] ?? index + 1}.
-                      </span>
-                      {choice.label}
-                    </button>
-                  </li>
-                ))}
-              </ul>
+            </div>
+
+            <div className="grid grid-cols-2 gap-2 sm:gap-3">
+              {question.choices.map((choice, index) => (
+                <button
+                  key={choice.id}
+                  type="button"
+                  disabled={answered || submitting}
+                  onClick={() => setSelectedChoiceId(choice.id)}
+                  className={cn(
+                    "millionaire-choice",
+                    choiceStateClass(
+                      choice.id,
+                      selectedChoiceId,
+                      answered,
+                      answerResult?.isCorrect ?? null,
+                    ),
+                  )}
+                >
+                  <span className="flex size-6 shrink-0 items-center justify-center rounded-full border border-[var(--millionaire-gold)] text-xs font-bold text-[var(--millionaire-gold)]">
+                    {index + 1}
+                  </span>
+                  <span className="line-clamp-3">{choice.label}</span>
+                </button>
+              ))}
             </div>
 
             {!answered ? (
-              <div className="flex flex-wrap items-center gap-2">
+              <div className="flex justify-center pt-1">
                 <Button
                   type="button"
-                  variant="outline"
-                  size="sm"
-                  disabled={hintUsed || hintLoading}
-                  onClick={() => void handleHint()}
-                >
-                  {hintLoading ? "กำลังโหลด..." : "💡 Hint (-5 coins)"}
-                </Button>
-                <Button
-                  type="button"
-                  size="sm"
+                  size="lg"
                   disabled={!selectedChoiceId || submitting}
                   onClick={() => void handleSubmit()}
+                  className="rounded-full border-2 border-[var(--millionaire-gold)] bg-[var(--millionaire-gold)] px-8 font-semibold text-black hover:bg-[var(--millionaire-gold)]/90"
                 >
                   {submitting ? "กำลังส่ง..." : "Submit"}
                 </Button>
@@ -235,12 +259,14 @@ export function QuizModal({
             ) : null}
 
             {hintError ? (
-              <p className="text-xs text-destructive">{hintError}</p>
+              <p className="text-center text-xs text-[var(--millionaire-wrong)]">
+                {hintError}
+              </p>
             ) : null}
 
             {hint ? (
-              <div className="rounded-lg border border-amber-500/30 bg-amber-500/5 p-3 text-sm">
-                <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-amber-700 dark:text-amber-400">
+              <div className="millionaire-pill border-[var(--millionaire-gold)]/60 text-sm">
+                <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-[var(--millionaire-gold)]">
                   Hint
                 </p>
                 <p className="leading-relaxed">{hint}</p>

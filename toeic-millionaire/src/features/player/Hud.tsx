@@ -14,21 +14,21 @@ export function Hud({ state, humanPlayer }: HudProps) {
   const isHumanTurn = current?.id === humanPlayer?.id;
 
   return (
-    <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-white/10 bg-[#1E293B]/50 px-4 py-3 backdrop-blur-xl">
+    <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-[var(--millionaire-silver)]/50 bg-black px-4 py-3 shadow-[0_0_24px_rgb(91_192_255_/_8%)]">
       <div className="flex items-center gap-4">
-        <div className="flex items-center gap-1.5 text-amber-400">
+        <div className="flex items-center gap-1.5 text-[var(--millionaire-gold)]">
           <Coins className="size-4" />
           <span className="font-semibold tabular-nums">
             {humanPlayer?.coins ?? 0}
           </span>
         </div>
-        <div className="flex items-center gap-1.5 text-emerald-400">
+        <div className="flex items-center gap-1.5 text-[var(--millionaire-cyan)]">
           <Sparkles className="size-4" />
           <span className="font-semibold tabular-nums">
             {humanPlayer?.exp ?? 0} EXP
           </span>
         </div>
-        <div className="text-xs text-muted-foreground">
+        <div className="text-xs text-[var(--millionaire-silver)]">
           Lap {humanPlayer?.lap ?? 0}/{state.lapsToWin}
         </div>
       </div>
@@ -38,21 +38,23 @@ export function Hud({ state, humanPlayer }: HudProps) {
         aria-live="polite"
         aria-atomic="true"
       >
-        <User className="size-4 text-muted-foreground" />
+        <User className="size-4 text-[var(--millionaire-silver)]" />
         <span
           className={cn(
             "font-medium",
-            isHumanTurn ? "text-emerald-400" : "text-violet-400",
+            isHumanTurn
+              ? "text-[var(--millionaire-cyan)]"
+              : "text-[var(--millionaire-gold)]",
           )}
         >
           {current?.displayName ?? "—"}
         </span>
-        <span className="text-muted-foreground">
+        <span className="text-[var(--millionaire-silver)]">
           {isHumanTurn ? "(Your turn)" : current?.isBot ? "(Bot)" : ""}
         </span>
       </div>
 
-      <div className="text-xs text-muted-foreground">
+      <div className="text-xs text-[var(--millionaire-silver)]">
         Turn {state.turnCount} · {state.difficulty}
       </div>
     </div>

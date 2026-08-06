@@ -1,5 +1,7 @@
 "use client";
 
+import { cn } from "@/lib/utils";
+
 interface ExplanationPanelProps {
   explanationTh: string;
   isCorrect: boolean;
@@ -11,16 +13,20 @@ export function ExplanationPanel({
 }: ExplanationPanelProps) {
   return (
     <div
-      className={`rounded-lg border p-3 text-sm ${
+      className={cn(
+        "millionaire-pill text-sm",
         isCorrect
-          ? "border-emerald-500/30 bg-emerald-500/5"
-          : "border-destructive/30 bg-destructive/5"
-      }`}
+          ? "border-[var(--millionaire-correct)] bg-[var(--millionaire-correct)]/10"
+          : "border-[var(--millionaire-wrong)] bg-[var(--millionaire-wrong)]/10",
+      )}
     >
       <p
-        className={`mb-1 text-xs font-semibold uppercase tracking-wide ${
-          isCorrect ? "text-emerald-700 dark:text-emerald-400" : "text-destructive"
-        }`}
+        className={cn(
+          "mb-1 text-xs font-semibold uppercase tracking-wide",
+          isCorrect
+            ? "text-[var(--millionaire-correct)]"
+            : "text-[var(--millionaire-wrong)]",
+        )}
       >
         {isCorrect ? "ถูกต้อง" : "ไม่ถูกต้อง"}
       </p>

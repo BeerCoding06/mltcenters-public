@@ -10,35 +10,35 @@ import { cn } from "@/lib/utils";
 const tiles = tilesData as TileDefinition[];
 
 const TILE_COLORS: Partial<Record<TileType, string>> = {
-  START: "from-amber-400/80 to-yellow-500/80 border-amber-300/50",
-  VOCABULARY: "from-emerald-500/70 to-emerald-600/70 border-emerald-400/40",
-  GRAMMAR: "from-emerald-500/70 to-teal-600/70 border-emerald-400/40",
-  READING: "from-emerald-500/70 to-green-600/70 border-emerald-400/40",
-  LISTENING: "from-emerald-500/70 to-cyan-600/70 border-emerald-400/40",
-  BUSINESS_EMAIL: "from-violet-500/70 to-purple-600/70 border-violet-400/40",
-  BUSINESS_MEETING: "from-violet-500/70 to-purple-600/70 border-violet-400/40",
-  LUCKY_CARD: "from-amber-400/80 to-orange-500/80 border-amber-300/50",
-  EVENT_CARD: "from-fuchsia-500/70 to-purple-600/70 border-fuchsia-400/40",
-  BONUS: "from-yellow-400/80 to-amber-500/80 border-yellow-300/50",
-  SALARY: "from-yellow-400/80 to-amber-500/80 border-yellow-300/50",
-  PROMOTION: "from-yellow-400/80 to-amber-500/80 border-yellow-300/50",
-  TAX: "from-red-500/70 to-rose-600/70 border-red-400/40",
-  REST: "from-slate-400/60 to-slate-500/60 border-slate-300/40",
-  BOSS_QUIZ: "from-red-600/80 to-orange-600/80 border-red-400/50",
-  GOLD_CHEST: "from-yellow-400/90 to-amber-600/90 border-yellow-300/60",
-  DIAMOND_CHEST: "from-cyan-400/80 to-blue-500/80 border-cyan-300/50",
-  TREASURE: "from-amber-300/90 to-yellow-500/90 border-amber-200/60",
+  START: "from-[#FBBF24]/30 to-[#FBBF24]/10 border-[#FBBF24]/50",
+  VOCABULARY: "from-[#10B981]/25 to-black border-[#10B981]/40",
+  GRAMMAR: "from-[#5BC0FF]/20 to-black border-[#5BC0FF]/40",
+  READING: "from-[#10B981]/20 to-black border-[#10B981]/35",
+  LISTENING: "from-[#5BC0FF]/25 to-black border-[#5BC0FF]/45",
+  BUSINESS_EMAIL: "from-[#FBBF24]/15 to-black border-[#FBBF24]/35",
+  BUSINESS_MEETING: "from-[#FBBF24]/15 to-black border-[#FBBF24]/35",
+  LUCKY_CARD: "from-[#FBBF24]/35 to-black border-[#FBBF24]/55",
+  EVENT_CARD: "from-[#5BC0FF]/20 to-black border-[#5BC0FF]/40",
+  BONUS: "from-[#FBBF24]/30 to-black border-[#FBBF24]/50",
+  SALARY: "from-[#FBBF24]/30 to-black border-[#FBBF24]/50",
+  PROMOTION: "from-[#FBBF24]/30 to-black border-[#FBBF24]/50",
+  TAX: "from-[#EF4444]/25 to-black border-[#EF4444]/45",
+  REST: "from-[#C0C8D4]/10 to-black border-[#C0C8D4]/25",
+  BOSS_QUIZ: "from-[#EF4444]/30 to-black border-[#EF4444]/55",
+  GOLD_CHEST: "from-[#FBBF24]/40 to-black border-[#FBBF24]/60",
+  DIAMOND_CHEST: "from-[#5BC0FF]/30 to-black border-[#5BC0FF]/55",
+  TREASURE: "from-[#FBBF24]/35 to-black border-[#FBBF24]/55",
 };
 
 const PLAYER_COLORS = [
-  "bg-emerald-500",
-  "bg-violet-500",
-  "bg-amber-400",
-  "bg-sky-500",
+  "bg-[#10B981]",
+  "bg-[#5BC0FF]",
+  "bg-[#FBBF24]",
+  "bg-[#EF4444]",
 ];
 
 function defaultTileColor(type: TileType): string {
-  return TILE_COLORS[type] ?? "from-slate-700/60 to-slate-800/60 border-white/10";
+  return TILE_COLORS[type] ?? "from-black to-black border-[#C0C8D4]/20";
 }
 
 interface BoardCanvasProps {
@@ -60,9 +60,9 @@ export function BoardCanvas({
   }
 
   return (
-    <div className="relative w-full max-w-4xl mx-auto aspect-square p-2 sm:p-4">
+    <div className="relative mx-auto aspect-square w-full max-w-4xl p-2 sm:p-4">
       <div
-        className="grid h-full w-full gap-1 sm:gap-1.5 rounded-3xl border border-white/10 bg-[#1E293B]/40 p-2 sm:p-3 backdrop-blur-xl shadow-2xl dark:bg-[#1E293B]/60"
+        className="grid h-full w-full gap-1 rounded-3xl border border-[var(--millionaire-silver)]/40 bg-black p-2 shadow-[0_0_40px_rgb(91_192_255_/_12%)] sm:gap-1.5 sm:p-3"
         style={{
           gridTemplateRows: `repeat(${BOARD_GRID.rows}, minmax(0, 1fr))`,
           gridTemplateColumns: `repeat(${BOARD_GRID.cols}, minmax(0, 1fr))`,
@@ -80,7 +80,7 @@ export function BoardCanvas({
             return (
               <div
                 key={`empty-${row}-${col}`}
-                className="rounded-lg bg-[#0f172a]/30"
+                className="rounded-lg bg-[#05070F]/80"
                 style={{ gridRow: row + 1, gridColumn: col + 1 }}
               />
             );
@@ -95,17 +95,18 @@ export function BoardCanvas({
               key={tile.id}
               layout
               className={cn(
-                "relative flex flex-col items-center justify-center rounded-lg sm:rounded-xl border bg-gradient-to-br p-0.5 sm:p-1 text-center shadow-md backdrop-blur-sm transition-shadow",
+                "relative flex flex-col items-center justify-center rounded-lg border bg-gradient-to-br p-0.5 text-center shadow-md transition-shadow sm:rounded-xl sm:p-1",
                 defaultTileColor(tile.type),
-                onPath && "ring-2 ring-amber-400 ring-offset-1 ring-offset-[#1E293B]",
+                onPath &&
+                  "ring-2 ring-[var(--millionaire-gold)] ring-offset-1 ring-offset-black",
               )}
               style={{ gridRow: pos.row + 1, gridColumn: pos.col + 1 }}
               title={tile.label}
             >
-              <span className="text-[6px] sm:text-[8px] font-bold leading-tight text-white drop-shadow">
+              <span className="text-[6px] font-bold leading-tight text-white drop-shadow sm:text-[8px]">
                 {tile.id}
               </span>
-              <span className="hidden sm:block text-[7px] font-medium leading-tight text-white/90 line-clamp-2">
+              <span className="hidden line-clamp-2 text-[7px] font-medium leading-tight text-white/90 sm:block">
                 {tile.label}
               </span>
               <div className="absolute -top-1 left-1/2 flex -translate-x-1/2 gap-0.5">
@@ -114,9 +115,9 @@ export function BoardCanvas({
                     key={p.id}
                     layout
                     className={cn(
-                      "size-2 sm:size-3 rounded-full border border-white/80 shadow",
+                      "size-2 rounded-full border border-white/80 shadow sm:size-3",
                       PLAYER_COLORS[p.sortOrder % PLAYER_COLORS.length],
-                      p.id === currentPlayerId && "ring-1 ring-white animate-pulse",
+                      p.id === currentPlayerId && "animate-pulse ring-1 ring-[var(--millionaire-cyan)]",
                     )}
                     title={p.displayName}
                     initial={{ scale: 0.5 }}
