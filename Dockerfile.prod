@@ -1,13 +1,12 @@
-# Multi-stage: build Vite app + 3D runner, then run Express + static (same origin /api).
+# Multi-stage: Vite app + 3D runner + TOEIC Millionaire (Next), then Express + proxy.
 FROM node:20-alpine AS frontend
 WORKDIR /app
-# Optional: regenerate icons from logo when Python + Pillow are available
 RUN apk add --no-cache python3 py3-pillow
 COPY package.json package-lock.json ./
 RUN npm ci
 COPY . .
-# Bake production TOEIC game URL into the Vite bundle (build-time only)
-ARG VITE_TOEIC_GAME_URL=https://toeic.mltcenters.com
+# Same-origin path (no separate subdomain)
+ARG VITE_TOEIC_GAME_URL=/millionaire
 ENV VITE_TOEIC_GAME_URL=$VITE_TOEIC_GAME_URL
 RUN npm run build
 
@@ -20,11 +19,28 @@ ENV VITE_BASE=/runner-app/
 ENV VITE_API_URL=/runner-api
 RUN npm run build
 
+FROM node:20-alpine AS millionaire
+WORKDIR /app/toeic-millionaire
+RUN apk add --no-cache openssl
+COPY toeic-millionaire/package.json toeic-millionaire/package-lock.json ./
+RUN npm ci
+COPY toeic-millionaire/ .
+# prisma generate needs a placeholder URL
+ENV DATABASE_URL="postgresql://postgres:postgres@127.0.0.1:5432/toeic"
+ENV DIRECT_URL="postgresql://postgres:postgres@127.0.0.1:5432/toeic"
+ENV NEXT_TELEMETRY_DISABLED=1
+RUN npx prisma generate
+RUN npm run build
+# Standalone nests as .next/standalone/toeic-millionaire/server.js
+RUN mkdir -p /out \
+  && cp -r .next/standalone/toeic-millionaire/. /out/ \
+  && mkdir -p /out/.next \
+  && cp -r .next/static /out/.next/static \
+  && if [ -d public ]; then cp -r public /out/public; fi
+
 FROM node:20-alpine AS runner
 WORKDIR /app
-# PHP 8.3 for PHPMailer — avoid Alpine `composer` package (pulls PHP 8.4 without ctype).
-# Analytics uses pure JS file store (or Postgres via DATABASE_URL) — no native sqlite build.
-RUN apk add --no-cache php83 php83-mbstring php83-openssl php83-ctype php83-phar curl \
+RUN apk add --no-cache php83 php83-mbstring php83-openssl php83-ctype php83-phar curl openssl \
     && curl -sS https://getcomposer.org/installer | php83 -- --install-dir=/usr/local/bin --filename=composer \
     && ln -sf /usr/bin/php83 /usr/bin/php
 COPY mail/composer.json mail/composer.lock* ./mail/
@@ -35,10 +51,13 @@ COPY server ./server
 COPY mail ./mail
 COPY --from=frontend /app/dist ./dist
 COPY --from=runner-frontend /app/runner-3d/frontend/dist ./dist/runner-app
+COPY --from=millionaire /out ./millionaire
+RUN chmod +x /app/server/start.sh
 ENV NODE_ENV=production
 ENV USE_PHP_MAILER=true
 ENV PHP_BIN=/usr/bin/php83
 ENV ANALYTICS_ENABLED=true
+ENV MILLIONAIRE_ORIGIN=http://127.0.0.1:3002
 EXPOSE 3000
 WORKDIR /app/server
-CMD ["node", "index.js"]
+CMD ["./start.sh"]

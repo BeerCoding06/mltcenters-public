@@ -23,8 +23,7 @@ const BRAND_LOGO = '/logo-nav.png';
 const KRUMAM_AVATAR = '/assets/img-design-about/krumam.jpg';
 
 const TOEIC_GAME_URL =
-  import.meta.env.VITE_TOEIC_GAME_URL ||
-  (import.meta.env.DEV ? 'http://localhost:3001' : 'https://toeic.mltcenters.com');
+  import.meta.env.VITE_TOEIC_GAME_URL || '/millionaire';
 
 type NavLink = {
   label: string;

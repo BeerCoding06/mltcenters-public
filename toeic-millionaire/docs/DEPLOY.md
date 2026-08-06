@@ -1,111 +1,85 @@
-# Deploy TOEIC Millionaire
+# Deploy TOEIC เกมส์เศรษฐี (`/millionaire`)
 
-Production target: **Vercel** (Next.js app) + **Supabase** (Postgres + Auth).  
-Domain: **`toeic.mltcenters.com`**
+The game runs **inside the main MLTCENTERS site** at:
 
-## 1. Supabase
+**https://www.mltcenters.com/millionaire**
 
-1. Create a project at [supabase.com](https://supabase.com).
-2. **Database** → copy the connection strings:
-   - `DATABASE_URL` — use the **Transaction pooler** URI (port 6543)
-   - `DIRECT_URL` — use the **Direct** URI (port 5432) for migrations
-3. **Authentication** → enable Email (magic link) and/or Google OAuth.
-4. **Authentication → URL configuration**:
-   - Site URL: `https://toeic.mltcenters.com`
-   - Redirect URLs: `https://toeic.mltcenters.com/auth/callback`
-5. Copy **Project URL** → `NEXT_PUBLIC_SUPABASE_URL`
-6. Copy **anon public** key → `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-7. Copy **service_role** key → `SUPABASE_SERVICE_ROLE_KEY` (server only, never expose to client)
+Not a separate subdomain. Express reverse-proxies `/millionaire` → Next.js (port 3002) in the same Docker container.
 
-### Run migrations against Supabase
+## Architecture
 
-From your machine (with `DIRECT_URL` pointing at Supabase):
+```
+Browser → https://www.mltcenters.com/millionaire
+       → Express (:3000) proxy
+       → Next.js standalone (:3002, basePath=/millionaire)
+       → Postgres (DATABASE_URL) + optional Supabase Auth
+```
+
+## Dokploy / Docker
+
+`Dockerfile.prod` already builds:
+
+1. Vite main site (with `VITE_TOEIC_GAME_URL=/millionaire`)
+2. Runner 3D
+3. `toeic-millionaire` Next.js standalone
+4. Starts both Next (:3002) and Express (:3000) via `server/start.sh`
+
+### Required runtime env (Dokploy)
+
+| Variable | Purpose |
+|----------|---------|
+| `DATABASE_URL` | Postgres for game data (can share analytics Postgres) |
+| `DIRECT_URL` | Direct Postgres URL for migrations |
+| `OPENAI_API_KEY` / `AI_GATEWAY_*` | Optional — Thai translate / hints |
+| `NEXT_PUBLIC_SUPABASE_URL` | Optional — login |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Optional |
+| `SUPABASE_SERVICE_ROLE_KEY` | Optional |
+| `ADMIN_EMAIL_ALLOWLIST` | Admin `/millionaire/questions` |
+| `NEXT_PUBLIC_APP_URL` | `https://www.mltcenters.com/millionaire` |
+| `MILLIONAIRE_ORIGIN` | Default `http://127.0.0.1:3002` (internal) |
+
+### First-time DB setup
+
+From a machine with network access to production Postgres:
 
 ```bash
 cd toeic-millionaire
-npm run db:migrate
+export DATABASE_URL=... DIRECT_URL=...
+npx prisma migrate deploy
 npm run db:seed
 ```
 
-Or use Supabase SQL editor to verify tables after migrate.
+## Local development
 
-## 2. Vercel
+```bash
+# Terminal 1 — Express API (port from your .env, often 3000)
+cd server && npm start
 
-1. Import the `toeic-millionaire` directory (monorepo root or subdirectory project).
-2. **Framework preset:** Next.js  
-3. **Root directory:** `toeic-millionaire` (if repo is MLTCENTERS monorepo)
-4. **Build command:** `npm run build` (runs `prisma generate` via postinstall if configured, else add build step)
-5. Add environment variables (Production + Preview):
+# Terminal 2 — Next game
+cd toeic-millionaire && npm run dev   # :3002 + basePath /millionaire
 
-| Variable | Example |
-|----------|---------|
-| `DATABASE_URL` | Supabase pooler URI |
-| `DIRECT_URL` | Supabase direct URI |
-| `NEXT_PUBLIC_SUPABASE_URL` | `https://xxx.supabase.co` |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | `eyJ...` |
-| `SUPABASE_SERVICE_ROLE_KEY` | `eyJ...` (encrypted) |
-| `ADMIN_EMAIL_ALLOWLIST` | `admin@mltcenters.com` |
-| `NEXT_PUBLIC_APP_URL` | `https://toeic.mltcenters.com` |
-| `OPENAI_API_KEY` | Optional — hints / translation |
-| `OPENAI_BASE_URL` | Optional — e.g. Groq endpoint |
-| `OPENAI_MODEL` | Optional |
-
-6. Deploy. Confirm `/`, `/play`, and `/api/game/start` respond.
-
-### Prisma on Vercel
-
-Ensure `prisma generate` runs before build. Add to `package.json` if needed:
-
-```json
-"postinstall": "prisma generate"
+# Terminal 3 — Vite
+npm run dev   # :8080, proxies /millionaire → :3002
 ```
 
-Apply migrations locally against production `DIRECT_URL` before first deploy, or use a CI step.
+Open: http://localhost:8080/millionaire  
 
-## 3. Custom domain
+Or directly: http://localhost:3002/millionaire
 
-1. Vercel project → **Settings → Domains** → add `toeic.mltcenters.com`.
-2. At your DNS provider (MLTCENTERS), add:
+## Supabase Auth (optional)
 
-| Type | Name | Value |
-|------|------|-------|
-| CNAME | `toeic` | `cname.vercel-dns.com` |
+Site URL: `https://www.mltcenters.com`  
+Redirect: `https://www.mltcenters.com/millionaire/auth/callback`
 
-(Vercel shows the exact CNAME target after you add the domain.)
+## Navbar
 
-3. Wait for SSL provisioning (usually minutes).
-4. Update Supabase redirect URLs if you added preview domains.
-
-## 4. Link from MLTCENTERS main site
-
-In the parent MLTCENTERS app (Vite), set:
-
-```env
-VITE_TOEIC_GAME_URL=https://toeic.mltcenters.com
-```
-
-Redeploy MLTCENTERS. The navbar **TOEIC Game** item opens the deployed game in a new tab.
-
-Local dev default: `VITE_TOEIC_GAME_URL=http://localhost:3001`
-
-## 5. Post-deploy checks
-
-- [ ] HTTPS loads at `https://toeic.mltcenters.com`
-- [ ] Guest can start a game end-to-end
-- [ ] Supabase sign-in callback works
-- [ ] Admin `/questions` accessible only for allowlisted emails
-- [ ] Database has seeded questions (`npm run db:seed` was run once)
-
-## 6. Admin access in production
-
-Set `ADMIN_EMAIL_ALLOWLIST` in Vercel to comma-separated admin emails.  
-Sign in at `https://toeic.mltcenters.com/login`, then open `/questions`.
+Dropdown **AI/คำศัพท์** → **TOEIC เกมส์เศรษฐี** links to `/millionaire` (same origin).
 
 ## Troubleshooting
 
 | Issue | Fix |
 |-------|-----|
-| Auth redirect loop | Match Supabase Site URL and redirect URLs to production domain |
-| DB connection errors on Vercel | Use pooler `DATABASE_URL`; keep `DIRECT_URL` for migrations only |
-| Empty quiz pool | Run `npm run db:seed` against production DB |
-| 403 on `/questions` | Add your email to `ADMIN_EMAIL_ALLOWLIST` and redeploy |
+| 503 on `/millionaire` | Next process not running — check Docker logs for `[millionaire] starting` |
+| Empty quizzes | Run `prisma migrate deploy` + `db:seed` |
+| Build fails on Prisma | Ensure `openssl` in image; `DATABASE_URL` placeholder at build is OK |
+| SPA steals `/millionaire` | Express must proxy `/millionaire` **before** SPA `*` route (already wired) |

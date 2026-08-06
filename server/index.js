@@ -18,6 +18,7 @@ import OpenAI from 'openai';
 import nodemailer from 'nodemailer';
 import compression from 'compression';
 import { createRunnerRouter } from './runner-api.js';
+import { createMillionaireProxy } from './millionaire-proxy.js';
 import { isPhpMailerReady, sendViaPhpMailer } from './php-mailer.js';
 import {
   buildAssessApiMessages,
@@ -349,6 +350,9 @@ app.post('/api/assess', async (req, res) => {
 // 3D English Runner game API
 app.use('/runner-api', createRunnerRouter(openai, AI_MODEL));
 
+// TOEIC เกมส์เศรษฐี — Next.js app proxied at /millionaire
+app.use(createMillionaireProxy());
+
 const runnerAppPath = path.join(distPath, 'runner-app');
 const indexHtmlPath = path.join(distPath, 'index.html');
 const runnerIndexHtmlPath = path.join(runnerAppPath, 'index.html');
@@ -407,7 +411,8 @@ if (existsSync(distPath)) {
     if (
       req.path.startsWith('/api') ||
       req.path.startsWith('/runner-api') ||
-      req.path.startsWith('/runner-app')
+      req.path.startsWith('/runner-app') ||
+      req.path.startsWith('/millionaire')
     ) {
       return next();
     }

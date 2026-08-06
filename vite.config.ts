@@ -16,6 +16,7 @@ export default defineConfig(({ mode }) => {
       "/api": { target: `http://localhost:${apiPort}`, changeOrigin: true },
       "/runner-api": { target: `http://localhost:${apiPort}`, changeOrigin: true },
       "/runner-app": { target: `http://localhost:${apiPort}`, changeOrigin: true },
+      "/millionaire": { target: "http://localhost:3002", changeOrigin: true },
     },
   },
   plugins: [
