@@ -16,7 +16,7 @@ export default function LandingPage() {
     <div className="dark millionaire-studio-bg relative flex min-h-full flex-col">
       <header className="flex items-center justify-between px-6 py-4">
         <span className="text-lg font-bold tracking-tight text-[var(--millionaire-gold)]">
-          ตอบคำถาม
+          TOEIC เกมส์เศรษฐี
         </span>
         <ThemeToggle />
       </header>

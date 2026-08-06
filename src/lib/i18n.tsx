@@ -14,7 +14,7 @@ export const translations = {
     assessment: { en: "Chat English", th: "คุยภาษาอังกฤษ" },
     quizMenu: { en: "Quiz", th: "ตอบคำถาม" },
     vocab: { en: "Vocabulary", th: "ศัพท์" },
-    quizBoard: { en: "Board Quiz", th: "เกมกระดาน" },
+    quizBoard: { en: "TOEIC Millionaire", th: "TOEIC เกมส์เศรษฐี" },
     runner: { en: "3D Runner Game", th: "เกมวิ่ง 3D" },
   },
   assessmentPage: {

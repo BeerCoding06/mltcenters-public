@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "ตอบคำถาม | MLTCENTERS",
+  title: "TOEIC เกมส์เศรษฐี | MLTCENTERS",
   description: "เกมตอบคำถามภาษาอังกฤษแบบกระดาน — ฝึก TOEIC แบบสนุก",
 };
 
