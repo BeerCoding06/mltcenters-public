@@ -1,7 +1,7 @@
 import { useI18n } from '@/lib/i18n';
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Globe, Bot, Gamepad2 } from 'lucide-react';
+import { Menu, X, Globe, Bot, Gamepad2, Trophy } from 'lucide-react';
 
 const BRAND_LOGO = '/logo-nav.png';
 const KRUMAM_AVATAR = '/assets/img-design-about/krumam.jpg';
@@ -24,6 +24,7 @@ const Navbar = () => {
     { label: t.nav.gallery[lang], path: '/gallery' },
     { label: t.nav.assessment[lang], path: '/assessment', icon: Bot },
     { label: t.nav.vocab[lang], path: '/vocab' },
+    { label: t.nav.toeicGame[lang], path: import.meta.env.VITE_TOEIC_GAME_URL || "http://localhost:3001", icon: Trophy, external: true },
     { label: t.nav.runner[lang], path: '/runner-app/', icon: Gamepad2, external: true },
     { label: t.nav.register[lang], path: '/register' },
     { label: t.nav.contact[lang], path: '/contact' },
