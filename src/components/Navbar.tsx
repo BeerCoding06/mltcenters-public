@@ -24,7 +24,14 @@ const Navbar = () => {
     { label: t.nav.gallery[lang], path: '/gallery' },
     { label: t.nav.assessment[lang], path: '/assessment', icon: Bot },
     { label: t.nav.vocab[lang], path: '/vocab' },
-    { label: t.nav.toeicGame[lang], path: import.meta.env.VITE_TOEIC_GAME_URL || "http://localhost:3001", icon: Trophy, external: true },
+    {
+      label: t.nav.toeicGame[lang],
+      path:
+        import.meta.env.VITE_TOEIC_GAME_URL ||
+        (import.meta.env.DEV ? "http://localhost:3001" : "https://toeic.mltcenters.com"),
+      icon: Trophy,
+      external: true,
+    },
     { label: t.nav.runner[lang], path: '/runner-app/', icon: Gamepad2, external: true },
     { label: t.nav.register[lang], path: '/register' },
     { label: t.nav.contact[lang], path: '/contact' },

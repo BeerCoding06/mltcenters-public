@@ -6,6 +6,9 @@ RUN apk add --no-cache python3 py3-pillow
 COPY package.json package-lock.json ./
 RUN npm ci
 COPY . .
+# Bake production TOEIC game URL into the Vite bundle (build-time only)
+ARG VITE_TOEIC_GAME_URL=https://toeic.mltcenters.com
+ENV VITE_TOEIC_GAME_URL=$VITE_TOEIC_GAME_URL
 RUN npm run build
 
 FROM node:20-alpine AS runner-frontend
