@@ -5,13 +5,14 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ensureGuestId } from "@/features/auth/guest-id";
+import { safeNextPath } from "@/features/auth/safe-next-path";
 import { createSupabaseBrowserClient } from "@/features/auth/supabase-browser";
 import { isSupabaseConfigured } from "@/features/auth/supabase-config";
 
 function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const next = searchParams.get("next") ?? "/play";
+  const next = safeNextPath(searchParams.get("next"));
   const authError = searchParams.get("error");
 
   const [email, setEmail] = useState("");

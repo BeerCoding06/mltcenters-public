@@ -1,5 +1,6 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
+import { safeNextPath } from "@/features/auth/safe-next-path";
 import {
   getSupabaseAnonKey,
   getSupabaseUrl,
@@ -9,7 +10,7 @@ import {
 export async function GET(request: NextRequest) {
   const { searchParams, origin } = new URL(request.url);
   const code = searchParams.get("code");
-  const next = searchParams.get("next") ?? "/play";
+  const next = safeNextPath(searchParams.get("next"));
 
   if (!code || !isSupabaseConfigured()) {
     return NextResponse.redirect(`${origin}/login?error=auth`);
