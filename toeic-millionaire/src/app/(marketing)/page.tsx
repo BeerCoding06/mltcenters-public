@@ -16,7 +16,7 @@ export default function LandingPage() {
     <div className="dark millionaire-studio-bg relative flex min-h-full flex-col">
       <header className="flex items-center justify-between px-6 py-4">
         <span className="text-lg font-bold tracking-tight text-[var(--millionaire-gold)]">
-          TOEIC Millionaire
+          ตอบคำถาม
         </span>
         <ThemeToggle />
       </header>
@@ -24,14 +24,14 @@ export default function LandingPage() {
       <main className="mx-auto flex w-full max-w-3xl flex-1 flex-col items-center justify-center gap-8 px-6 pb-16 text-center">
         <div className="space-y-4">
           <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl">
-            Roll. Learn.{" "}
+            ทอยลูกเต๋า. เรียนรู้.{" "}
             <span className="bg-gradient-to-r from-[var(--millionaire-gold)] to-[var(--millionaire-cyan)] bg-clip-text text-transparent">
-              Win.
+              ชนะ.
             </span>
           </h1>
           <p className="mx-auto max-w-lg text-[var(--millionaire-silver)]">
-            Monopoly-style board game meets TOEIC practice. Answer quizzes,
-            draw lucky cards, and race bots to the finish.
+            เกมกระดานสไตล์ Monopoly ผสมฝึก TOEIC — ตอบคำถาม เปิดการ์ดโชคดี
+            และแข่งกับบอทสู่เส้นชัย
           </p>
         </div>
 
@@ -43,7 +43,7 @@ export default function LandingPage() {
               "rounded-full border-2 border-[var(--millionaire-gold)] bg-[var(--millionaire-gold)] text-black hover:bg-[var(--millionaire-gold)]/90",
             )}
           >
-            Play as Guest
+            เล่นเลย
           </Link>
           <Link
             href="/play"
@@ -54,12 +54,12 @@ export default function LandingPage() {
                 "rounded-full border-[var(--millionaire-silver)] text-white hover:bg-black/50",
             })}
           >
-            Start Game
+            เข้าล็อบบี้
           </Link>
         </div>
 
         <p className="text-xs text-[var(--millionaire-silver)]">
-          No account needed · Progress saved locally as guest
+          ไม่ต้องสมัคร · บันทึกความคืบหน้าในเครื่องเป็น Guest
         </p>
       </main>
     </div>

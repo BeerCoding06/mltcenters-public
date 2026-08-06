@@ -13,7 +13,7 @@ export const translations = {
     contact: { en: "Contact", th: "ติดต่อ" },
     assessment: { en: "Chat English", th: "คุยภาษาอังกฤษ" },
     vocab: { en: "Vocab", th: "ศัพท์" },
-    toeicGame: { en: "TOEIC Millionaire", th: "TOEIC Millionaire" },
+    toeicGame: { en: "Quiz", th: "ตอบคำถาม" },
     runner: { en: "3D Runner Game", th: "เกมวิ่ง 3D" },
   },
   assessmentPage: {

@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "TOEIC Millionaire",
-  description: "Monopoly-style TOEIC board game — roll, quiz, win.",
+  title: "ตอบคำถาม | MLTCENTERS",
+  description: "เกมตอบคำถามภาษาอังกฤษแบบกระดาน — ฝึก TOEIC แบบสนุก",
 };
 
 export default function RootLayout({
