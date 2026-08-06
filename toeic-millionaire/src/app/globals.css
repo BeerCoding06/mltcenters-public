@@ -149,6 +149,32 @@
 }
 
 @layer utilities {
+  /**
+   * Force main-site light navbar tokens even when the game shell is `.dark`.
+   * Matches MLTCENTERS `src/index.css` :root (light) values.
+   */
+  .site-navbar,
+  .dark .site-navbar {
+    --background: #f7fafc;
+    --foreground: #29303d;
+    --card: #ffffff;
+    --card-foreground: #29303d;
+    --popover: #ffffff;
+    --popover-foreground: #29303d;
+    --primary: #0e8bb8;
+    --primary-foreground: #ffffff;
+    --secondary: #6ed9a8;
+    --secondary-foreground: #1a2332;
+    --muted: #eef3f7;
+    --muted-foreground: #465466;
+    --accent: #eef3f7;
+    --accent-foreground: #29303d;
+    --border: #dde5ee;
+    --input: #dde5ee;
+    --ring: #0e8bb8;
+    color: var(--foreground);
+  }
+
   .millionaire-studio-bg {
     background:
       radial-gradient(ellipse 80% 50% at 50% 0%, rgb(91 192 255 / 12%), transparent 60%),

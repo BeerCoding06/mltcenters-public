@@ -1,7 +1,5 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { useState } from "react";
 import {
   BookOpen,
@@ -15,291 +13,279 @@ import {
   X,
 } from "lucide-react";
 import { useGameLang } from "@/features/i18n/GameLangProvider";
-import { cn } from "@/lib/utils";
 
-/** Main-site absolute paths (not Next basePath). */
-const SITE = {
-  logo: "/logo-nav.png",
-  krumam: "/assets/img-design-about/krumam.jpg",
-  home: "/",
-  about: "/about",
-  activities: "/activities",
-  schedule: "/schedule",
-  gallery: "/gallery",
-  register: "/register",
-  contact: "/contact",
-  assessment: "/assessment",
-  vocab: "/vocab",
-  runner: "/runner-app/",
-} as const;
+const BRAND_LOGO = "/logo-nav.png";
+const KRUMAM_AVATAR = "/assets/img-design-about/krumam.jpg";
+const TOEIC_GAME_URL = "/millionaire";
 
-const copy = {
+/** Labels match main-site `src/lib/i18n.tsx` nav copy. */
+const navCopy = {
   en: {
+    home: "Home",
     about: "About",
     activities: "Activities",
     schedule: "Schedule",
     gallery: "Gallery",
     register: "Register",
     contact: "Contact",
+    assessment: "Chat English",
     quizMenu: "AI / Vocab",
-    assessment: "English chat",
-    vocab: "Vocab",
+    vocab: "Vocabulary",
     quizBoard: "TOEIC Millionaire",
-    runner: "3D Runner",
-    play: "Play",
+    runner: "3D Runner Game",
+    openMenu: "Open menu",
+    closeMenu: "Close menu",
+    switchToTh: "Switch to Thai",
+    switchToEn: "Switch to English",
+    brandLogo: "MLTCENTERS logo",
+    krumam: "krumam club",
   },
   th: {
+    home: "หน้าแรก",
     about: "เกี่ยวกับเรา",
     activities: "กิจกรรม",
-    schedule: "ตารางเรียน",
+    schedule: "กำหนดการ",
     gallery: "แกลเลอรี",
-    register: "สมัครเรียน",
+    register: "ลงทะเบียน",
     contact: "ติดต่อ",
-    quizMenu: "AI/คำศัพท์",
     assessment: "คุยภาษาอังกฤษ",
+    quizMenu: "AI/คำศัพท์",
     vocab: "ศัพท์",
     quizBoard: "TOEIC เกมส์เศรษฐี",
     runner: "เกมวิ่ง 3D",
-    play: "เล่น",
+    openMenu: "เปิดเมนู",
+    closeMenu: "ปิดเมนู",
+    switchToTh: "เปลี่ยนเป็นภาษาไทย",
+    switchToEn: "Switch to English",
+    brandLogo: "โลโก้ MLTCENTERS",
+    krumam: "krumam club",
   },
 } as const;
 
-function siteLinkClass(active?: boolean) {
-  return cn(
-    "flex items-center gap-1.5 rounded-xl px-3 py-2 text-sm font-medium transition-colors",
-    active
-      ? "bg-[#5bc0ff]/15 font-semibold text-[#0f4c6a]"
-      : "text-zinc-700 hover:bg-zinc-100 hover:text-zinc-900",
-  );
-}
+type NavLink = {
+  label: string;
+  path: string;
+};
 
 /**
- * MLTCENTERS site navbar for the Millionaire app (same-origin links back to main site).
+ * Pixel-matched MLTCENTERS navbar (same markup/classes as main site Navbar).
+ * Uses absolute `/…` links so Next basePath does not rewrite main-site routes.
  */
 export function SiteNavbar() {
-  const { lang, toggleLang, t } = useGameLang();
-  const pathname = usePathname();
+  const { lang, toggleLang } = useGameLang();
   const [open, setOpen] = useState(false);
   const [learnOpen, setLearnOpen] = useState(false);
-  const nav = copy[lang];
+  const t = navCopy[lang];
 
-  const onGame =
-    pathname === "/" ||
-    pathname.startsWith("/play") ||
-    pathname.startsWith("/board") ||
-    pathname.startsWith("/login");
+  const linksBefore: NavLink[] = [
+    { label: t.home, path: "/" },
+    { label: t.about, path: "/about" },
+    { label: t.activities, path: "/activities" },
+    { label: t.schedule, path: "/schedule" },
+    { label: t.gallery, path: "/gallery" },
+  ];
 
-  const close = () => {
+  const linksAfter: NavLink[] = [
+    { label: t.register, path: "/register" },
+    { label: t.contact, path: "/contact" },
+  ];
+
+  const learnActive = true; // always on Millionaire
+
+  const linkClass = (active?: boolean) =>
+    `flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-medium transition-colors ${
+      active
+        ? "text-[#0f4c6a] bg-primary/15 font-semibold"
+        : "text-foreground/80 hover:text-foreground hover:bg-muted"
+    }`;
+
+  const renderLink = (l: NavLink, onNavigate?: () => void) => (
+    <a
+      key={l.path}
+      href={l.path}
+      className={linkClass(false)}
+      onClick={onNavigate}
+    >
+      {l.label}
+    </a>
+  );
+
+  const closeMobile = () => {
     setOpen(false);
     setLearnOpen(false);
   };
 
   return (
-    <nav className="sticky top-0 z-50 border-b border-zinc-200/80 bg-white/90 text-zinc-900 shadow-sm backdrop-blur-lg">
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3 lg:px-6">
-        <div className="flex min-w-0 items-center gap-3 sm:gap-5">
-          <a href={SITE.home} className="flex shrink-0 items-center gap-2">
-            <div className="flex size-9 items-center justify-center rounded-[5px] bg-[#29303d]">
+    <nav className="site-navbar sticky top-0 z-50 border-b border-border/50 bg-card/80 shadow-sm backdrop-blur-lg">
+      <div className="container mx-auto flex items-center justify-between px-4 py-3 lg:px-6">
+        <div className="flex items-center gap-4 sm:gap-6">
+          <a href="/" className="flex shrink-0 items-center gap-2">
+            <div className="flex size-9 items-center justify-center rounded-[5px] bg-[#29303d] text-lg">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src={SITE.logo}
-                alt="MLTCENTERS"
+                src={BRAND_LOGO}
+                alt={t.brandLogo}
                 width={36}
                 height={36}
                 className="size-full object-contain"
               />
             </div>
-            <span className="hidden text-lg font-bold md:inline">
+            <span className="hidden text-lg font-bold text-foreground md:inline">
               MLT<span className="text-[#0f4c6a]">CENTERS</span>
             </span>
           </a>
-          <a href={SITE.home} className="hidden items-center gap-2 sm:flex">
+
+          <a href="/" className="flex shrink-0 items-center gap-2">
             <div className="size-9 shrink-0 overflow-hidden rounded-full ring-2 ring-[#0f4c6a]/20">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src={SITE.krumam}
-                alt="krumam club"
+                src={KRUMAM_AVATAR}
+                alt={t.krumam}
                 width={36}
                 height={36}
                 className="size-full object-cover"
               />
             </div>
-            <span className="hidden text-lg font-bold lg:inline">
+            <span className="hidden text-lg font-bold text-foreground md:inline">
               krumam <span className="text-[#0f4c6a]">club</span>
             </span>
           </a>
         </div>
 
-        <div className="hidden items-center gap-0.5 lg:flex">
-          <a href={SITE.home} className={siteLinkClass()}>
-            {t.home}
-          </a>
-          <a href={SITE.about} className={siteLinkClass()}>
-            {nav.about}
-          </a>
-          <a href={SITE.activities} className={siteLinkClass()}>
-            {nav.activities}
-          </a>
-          <a href={SITE.schedule} className={siteLinkClass()}>
-            {nav.schedule}
-          </a>
-          <a href={SITE.gallery} className={siteLinkClass()}>
-            {nav.gallery}
-          </a>
+        {/* Desktop — same order as main Navbar */}
+        <div className="hidden items-center gap-1 lg:flex">
+          {linksBefore.map((l) => renderLink(l))}
 
           <div className="relative">
             <button
               type="button"
-              className={siteLinkClass(onGame)}
+              className={`${linkClass(learnActive)} outline-none`}
               onClick={() => setLearnOpen((v) => !v)}
               aria-expanded={learnOpen}
             >
               <Sparkles size={16} className="shrink-0" />
-              {nav.quizMenu}
-              <ChevronDown
-                size={14}
-                className={cn("opacity-70 transition", learnOpen && "rotate-180")}
-              />
+              {t.quizMenu}
+              <ChevronDown size={14} className="opacity-70" />
             </button>
             {learnOpen ? (
-              <div className="absolute top-full left-0 z-50 mt-1 min-w-[13rem] rounded-xl border border-zinc-200 bg-white py-1 shadow-lg">
+              <div className="absolute top-full left-0 z-50 mt-1 min-w-[13rem] overflow-hidden rounded-md border border-border bg-popover p-1 text-popover-foreground shadow-md">
                 <a
-                  href={SITE.assessment}
-                  className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-zinc-50"
-                  onClick={close}
+                  href="/assessment"
+                  className="flex cursor-pointer items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-none hover:bg-accent"
+                  onClick={() => setLearnOpen(false)}
                 >
                   <Bot size={16} />
-                  {nav.assessment}
+                  {t.assessment}
                 </a>
                 <a
-                  href={SITE.vocab}
-                  className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-zinc-50"
-                  onClick={close}
+                  href="/vocab"
+                  className="flex cursor-pointer items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-none hover:bg-accent"
+                  onClick={() => setLearnOpen(false)}
                 >
                   <BookOpen size={16} />
-                  {nav.vocab}
+                  {t.vocab}
                 </a>
-                <Link
-                  href="/"
-                  className="flex items-center gap-2 bg-[#5bc0ff]/10 px-3 py-2 text-sm font-semibold text-[#0f4c6a]"
-                  onClick={close}
+                <a
+                  href={TOEIC_GAME_URL}
+                  className="flex cursor-pointer items-center gap-2 rounded-sm bg-primary/15 px-2 py-1.5 text-sm font-semibold text-[#0f4c6a] outline-none"
+                  onClick={() => setLearnOpen(false)}
                 >
                   <Trophy size={16} />
-                  {nav.quizBoard}
-                </Link>
+                  {t.quizBoard}
+                </a>
                 <a
-                  href={SITE.runner}
-                  className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-zinc-50"
-                  onClick={close}
+                  href="/runner-app/"
+                  className="flex cursor-pointer items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-none hover:bg-accent"
+                  onClick={() => setLearnOpen(false)}
                 >
                   <Gamepad2 size={16} />
-                  {nav.runner}
+                  {t.runner}
                 </a>
               </div>
             ) : null}
           </div>
 
-          <a href={SITE.register} className={siteLinkClass()}>
-            {nav.register}
-          </a>
-          <a href={SITE.contact} className={siteLinkClass()}>
-            {nav.contact}
-          </a>
+          {linksAfter.map((l) => renderLink(l))}
         </div>
 
         <div className="flex items-center gap-2">
-          <Link
-            href="/play"
-            className="hidden rounded-full border border-[#fbbf24]/60 bg-[#fbbf24] px-3 py-1.5 text-xs font-bold text-black sm:inline-flex"
-          >
-            {nav.play}
-          </Link>
           <button
             type="button"
             onClick={toggleLang}
-            aria-label={lang === "en" ? "เปลี่ยนเป็นภาษาไทย" : "Switch to English"}
-            className="flex items-center gap-1.5 rounded-xl bg-zinc-100 px-3 py-1.5 text-sm font-semibold text-zinc-800 hover:bg-[#5bc0ff]/15 hover:text-[#0f4c6a]"
+            aria-label={lang === "en" ? t.switchToTh : t.switchToEn}
+            className="flex items-center gap-1.5 rounded-xl bg-muted px-3 py-1.5 text-sm font-semibold text-foreground transition-colors hover:bg-primary/10 hover:text-primary"
           >
             <Globe size={15} />
             {lang === "en" ? "TH" : "EN"}
           </button>
+
           <button
             type="button"
-            className="rounded-lg p-1.5 text-zinc-800 lg:hidden"
-            aria-label={open ? "Close menu" : "Open menu"}
+            onClick={() => setOpen(!open)}
+            aria-label={open ? t.closeMenu : t.openMenu}
             aria-expanded={open}
-            onClick={() => setOpen((v) => !v)}
+            className="p-1 text-foreground lg:hidden"
           >
             {open ? <X size={22} /> : <Menu size={22} />}
           </button>
         </div>
       </div>
 
+      {/* Mobile menu */}
       {open ? (
-        <div className="border-t border-zinc-200 bg-white lg:hidden">
+        <div className="border-t border-border/50 bg-card/95 backdrop-blur-lg lg:hidden">
           <div className="space-y-1 px-4 py-3">
-            <a href={SITE.home} className={siteLinkClass()} onClick={close}>
-              {t.home}
-            </a>
-            <a href={SITE.about} className={siteLinkClass()} onClick={close}>
-              {nav.about}
-            </a>
-            <a href={SITE.activities} className={siteLinkClass()} onClick={close}>
-              {nav.activities}
-            </a>
-            <a href={SITE.schedule} className={siteLinkClass()} onClick={close}>
-              {nav.schedule}
-            </a>
-            <a href={SITE.gallery} className={siteLinkClass()} onClick={close}>
-              {nav.gallery}
-            </a>
+            {linksBefore.map((l) => renderLink(l, closeMobile))}
+
             <button
               type="button"
-              className={`${siteLinkClass(onGame)} w-full justify-between`}
               onClick={() => setLearnOpen((v) => !v)}
+              className={`${linkClass(learnActive)} w-full justify-between`}
+              aria-expanded={learnOpen}
             >
               <span className="flex items-center gap-1.5">
-                <Sparkles size={16} />
-                {nav.quizMenu}
+                <Sparkles size={16} className="shrink-0" />
+                {t.quizMenu}
               </span>
               <ChevronDown
                 size={16}
-                className={cn(learnOpen && "rotate-180")}
+                className={`transition-transform ${learnOpen ? "rotate-180" : ""}`}
               />
             </button>
             {learnOpen ? (
-              <div className="ml-3 space-y-1 border-l border-zinc-200 pl-3">
-                <a href={SITE.assessment} className={siteLinkClass()} onClick={close}>
-                  <Bot size={16} />
-                  {nav.assessment}
+              <div className="ml-4 space-y-1 border-l border-border/60 pl-3">
+                <a
+                  href="/assessment"
+                  onClick={closeMobile}
+                  className={linkClass(false)}
+                >
+                  <Bot size={16} className="shrink-0" />
+                  {t.assessment}
                 </a>
-                <a href={SITE.vocab} className={siteLinkClass()} onClick={close}>
-                  <BookOpen size={16} />
-                  {nav.vocab}
+                <a href="/vocab" onClick={closeMobile} className={linkClass(false)}>
+                  <BookOpen size={16} className="shrink-0" />
+                  {t.vocab}
                 </a>
-                <Link href="/" className={siteLinkClass(true)} onClick={close}>
-                  <Trophy size={16} />
-                  {nav.quizBoard}
-                </Link>
-                <a href={SITE.runner} className={siteLinkClass()} onClick={close}>
-                  <Gamepad2 size={16} />
-                  {nav.runner}
+                <a
+                  href={TOEIC_GAME_URL}
+                  onClick={closeMobile}
+                  className={linkClass(true)}
+                >
+                  <Trophy size={16} className="shrink-0" />
+                  {t.quizBoard}
+                </a>
+                <a
+                  href="/runner-app/"
+                  onClick={closeMobile}
+                  className={linkClass(false)}
+                >
+                  <Gamepad2 size={16} className="shrink-0" />
+                  {t.runner}
                 </a>
               </div>
             ) : null}
-            <a href={SITE.register} className={siteLinkClass()} onClick={close}>
-              {nav.register}
-            </a>
-            <a href={SITE.contact} className={siteLinkClass()} onClick={close}>
-              {nav.contact}
-            </a>
-            <Link
-              href="/play"
-              className="mt-2 flex justify-center rounded-full bg-[#fbbf24] px-3 py-2 text-sm font-bold text-black"
-              onClick={close}
-            >
-              {nav.play} — {t.brand}
-            </Link>
+
+            {linksAfter.map((l) => renderLink(l, closeMobile))}
           </div>
         </div>
       ) : null}
