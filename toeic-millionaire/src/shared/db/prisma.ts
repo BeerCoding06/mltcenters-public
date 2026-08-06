@@ -7,10 +7,17 @@ const globalForPrisma = globalThis as unknown as {
 };
 
 function createPrismaClient() {
+  const connectionString =
+    process.env.DATABASE_URL ?? "postgresql://localhost:5432/toeic_millionaire";
+
   const pool = new pg.Pool({
-    connectionString:
-      process.env.DATABASE_URL ?? "postgresql://localhost:5432/toeic_millionaire",
+    connectionString,
+    // Fail fast in production if DB is unreachable (avoid hung "เริ่มเกม")
+    connectionTimeoutMillis: 8_000,
+    idleTimeoutMillis: 30_000,
+    max: 10,
   });
+
   const adapter = new PrismaPg(pool);
   return new PrismaClient({ adapter });
 }

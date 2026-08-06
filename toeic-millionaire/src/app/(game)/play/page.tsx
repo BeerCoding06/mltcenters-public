@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { ensureGuestId } from "@/features/auth/guest-id";
 import { useGameStore } from "@/features/game/useGameStore";
 import { useGameLang } from "@/features/i18n/GameLangProvider";
+import { apiUrl } from "@/lib/api-url";
 
 type Difficulty = "EASY" | "MEDIUM" | "HARD";
 
@@ -28,7 +29,7 @@ export default function PlayLobbyPage() {
 
     try {
       const guestId = ensureGuestId();
-      const res = await fetch("/api/game/start", {
+      const res = await fetch(apiUrl("/api/game/start"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

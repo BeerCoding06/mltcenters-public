@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { apiUrl } from "@/lib/api-url";
 
 type QuestionCategory =
   | "VOCABULARY"
@@ -94,7 +95,7 @@ export function QuestionsAdminPanel() {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch("/api/admin/questions?limit=100");
+      const res = await fetch(apiUrl("/api/admin/questions?limit=100"));
       if (!res.ok) {
         const payload = (await res.json().catch(() => null)) as {
           error?: string;
@@ -151,7 +152,7 @@ export function QuestionsAdminPanel() {
     };
 
     try {
-      const res = await fetch("/api/admin/questions", {
+      const res = await fetch(apiUrl("/api/admin/questions"), {
         method: form.id ? "PATCH" : "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form.id ? { id: form.id, ...payload } : payload),

@@ -79,17 +79,21 @@ Dropdown **AI/คำศัพท์** → **TOEIC เกมส์เศรษฐ
 
 | Issue | Fix |
 |-------|-----|
+| **เริ่มเกมไม่สำเร็จ** / `Cannot POST /api/game/start` | Client hit Express without basePath — fixed with `apiUrl()`; redeploy |
+| 503 Database unavailable on start | Set runtime `DATABASE_URL` + `prisma migrate deploy` + `db:seed` |
 | Navbar opens `toeic.mltcenters.com` | Old client bundle — redeploy; URL is forced to `/millionaire` |
-| Site 404 page (Oops!) on `/millionaire` | SPA stole the route — redeploy Express proxy (`createMillionaireProxy`) |
-| Branded 503 HTML on `/millionaire` | Next process not running — check Docker logs for `[millionaire] starting` |
+| Site 404 page (Oops!) on `/millionaire` | SPA stole the route — redeploy Express proxy |
+| Branded 503 HTML on `/millionaire` | Next process not running — check Docker logs for `[millionaire]` |
+| Whole site 502 | Express must keep Dokploy `PORT` (3000); Next uses 3002 only internally |
 | Empty quizzes | Run `prisma migrate deploy` + `db:seed` |
 | Build fails on Prisma | Ensure `openssl` in image; `DATABASE_URL` placeholder at build is OK |
 
 ### Dokploy checklist after deploy
 
 1. Remove any `VITE_TOEIC_GAME_URL=https://toeic.mltcenters.com` env/build-arg
-2. Set `DATABASE_URL` + `DIRECT_URL` for the game Postgres
-3. Set `NEXT_PUBLIC_APP_URL=https://www.mltcenters.com/millionaire`
-4. Redeploy full image (`Dockerfile.prod`)
-5. Once: `prisma migrate deploy` + `db:seed` against production DB
-6. Smoke test: open https://www.mltcenters.com/millionaire — expect game landing, not site 404
+2. Set **runtime** env (container env, not only build-arg):
+   - `DATABASE_URL` / `DIRECT_URL` (Postgres for game)
+   - `NEXT_PUBLIC_APP_URL=https://www.mltcenters.com/millionaire`
+3. Redeploy full image (`Dockerfile.prod`) commit with `apiUrl` fix
+4. Once: `cd toeic-millionaire && npx prisma migrate deploy && npm run db:seed`
+5. Smoke test: Start Game → Network tab should show `POST /millionaire/api/game/start` **201**

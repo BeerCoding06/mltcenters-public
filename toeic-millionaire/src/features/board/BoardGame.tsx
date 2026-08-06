@@ -22,6 +22,7 @@ import { useGameLang } from "@/features/i18n/GameLangProvider";
 import { Hud } from "@/features/player/Hud";
 import { QuizModal } from "@/features/quiz/QuizModal";
 import type { QuizModalQuestion } from "@/features/quiz/QuizModal";
+import { apiUrl } from "@/lib/api-url";
 import { cn } from "@/lib/utils";
 
 interface RollResponse {
@@ -124,7 +125,7 @@ export function BoardGame({ sessionId }: BoardGameProps) {
           category: action.category,
           difficulty,
         });
-        const res = await fetch(`/api/quiz/next?${params}`);
+        const res = await fetch(apiUrl(`/api/quiz/next?${params}`));
         if (!res.ok) {
           toast.add({
             title: t.quiz,
@@ -141,7 +142,7 @@ export function BoardGame({ sessionId }: BoardGameProps) {
       if (action.type === "drawCard") {
         openCardDraw(action.deck);
         try {
-          const res = await fetch("/api/cards/draw", {
+          const res = await fetch(apiUrl("/api/cards/draw"), {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -174,7 +175,7 @@ export function BoardGame({ sessionId }: BoardGameProps) {
           category: "RANDOM",
           difficulty,
         });
-        const res = await fetch(`/api/quiz/next?${params}`);
+        const res = await fetch(apiUrl(`/api/quiz/next?${params}`));
         if (res.ok) {
           openQuiz((await res.json()) as QuizModalQuestion);
         } else {
@@ -201,8 +202,8 @@ export function BoardGame({ sessionId }: BoardGameProps) {
 
       try {
         const url = playerId
-          ? `/api/game/${sessionId}/roll?playerId=${playerId}`
-          : `/api/game/${sessionId}/roll`;
+          ? apiUrl(`/api/game/${sessionId}/roll?playerId=${playerId}`)
+          : apiUrl(`/api/game/${sessionId}/roll`);
 
         const res = await fetch(url, { method: "POST" });
         if (!res.ok) {

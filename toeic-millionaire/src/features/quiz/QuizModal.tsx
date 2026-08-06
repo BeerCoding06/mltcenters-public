@@ -17,6 +17,7 @@ import {
   useQuestionTranslation,
 } from "@/features/quiz/components/TranslateThButton";
 import type { QuizChoiceDto } from "@/features/quiz/quiz-service";
+import { apiUrl } from "@/lib/api-url";
 import { cn } from "@/lib/utils";
 
 export interface QuizModalQuestion {
@@ -117,7 +118,7 @@ export function QuizModal({
     setHintError(null);
 
     try {
-      const res = await fetch("/api/quiz/hint", {
+      const res = await fetch(apiUrl("/api/quiz/hint"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -152,7 +153,7 @@ export function QuizModal({
     setSubmitting(true);
 
     try {
-      const res = await fetch("/api/quiz/answer", {
+      const res = await fetch(apiUrl("/api/quiz/answer"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

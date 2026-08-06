@@ -41,6 +41,18 @@ export async function POST(request: Request) {
     const result = await gameService.startGame(body);
     return NextResponse.json(result, { status: 201 });
   } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    if (
+      /ECONNREFUSED|timeout|Can't reach database|Connection terminated|ENOTFOUND/i.test(
+        message,
+      )
+    ) {
+      console.error("[game/start] database error:", message);
+      return jsonError(
+        "Database unavailable. Set DATABASE_URL for the millionaire app and run prisma migrate deploy + db:seed.",
+        503,
+      );
+    }
     return handleError(err);
   }
 }

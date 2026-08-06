@@ -9,6 +9,7 @@ import { safeNextPath } from "@/features/auth/safe-next-path";
 import { createSupabaseBrowserClient } from "@/features/auth/supabase-browser";
 import { isSupabaseConfigured } from "@/features/auth/supabase-config";
 import { useGameLang } from "@/features/i18n/GameLangProvider";
+import { apiUrl } from "@/lib/api-url";
 
 function LoginForm() {
   const { t } = useGameLang();
@@ -54,7 +55,7 @@ function LoginForm() {
 
       try {
         const guestId = ensureGuestId();
-        await fetch("/api/profile/merge", {
+        await fetch(apiUrl("/api/profile/merge"), {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ guestId }),
@@ -115,7 +116,7 @@ function LoginForm() {
       }
 
       const guestId = ensureGuestId();
-      await fetch("/api/profile/merge", {
+      await fetch(apiUrl("/api/profile/merge"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ guestId }),

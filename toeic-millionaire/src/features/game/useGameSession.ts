@@ -1,10 +1,11 @@
 "use client";
 
 import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { apiUrl } from "@/lib/api-url";
 import type { GameStateSnapshot } from "./game-service";
 
 async function fetchGameState(sessionId: string): Promise<GameStateSnapshot> {
-  const res = await fetch(`/api/game/${sessionId}/state`);
+  const res = await fetch(apiUrl(`/api/game/${sessionId}/state`));
   if (!res.ok) {
     const payload = (await res.json().catch(() => null)) as { error?: string } | null;
     throw new Error(payload?.error ?? "Failed to load game state");

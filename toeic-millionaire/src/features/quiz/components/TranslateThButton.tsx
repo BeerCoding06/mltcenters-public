@@ -4,10 +4,11 @@ import { Languages } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import type { TranslationResult } from "@/features/quiz/translate-service";
 import { useGameLang } from "@/features/i18n/GameLangProvider";
+import { apiUrl } from "@/lib/api-url";
 import { cn } from "@/lib/utils";
 
 async function fetchTranslation(questionId: string): Promise<TranslationResult> {
-  const res = await fetch(`/api/quiz/${questionId}/translation`);
+  const res = await fetch(apiUrl(`/api/quiz/${questionId}/translation`));
   if (!res.ok) {
     throw new Error("Failed to load translation");
   }
