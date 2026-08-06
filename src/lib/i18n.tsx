@@ -12,7 +12,7 @@ export const translations = {
     register: { en: "Register", th: "ลงทะเบียน" },
     contact: { en: "Contact", th: "ติดต่อ" },
     assessment: { en: "Chat English", th: "คุยภาษาอังกฤษ" },
-    quizMenu: { en: "Quiz", th: "ตอบคำถาม" },
+    quizMenu: { en: "AI / Vocab", th: "AI/คำศัพท์" },
     vocab: { en: "Vocabulary", th: "ศัพท์" },
     quizBoard: { en: "TOEIC Millionaire", th: "TOEIC เกมส์เศรษฐี" },
     runner: { en: "3D Runner Game", th: "เกมวิ่ง 3D" },

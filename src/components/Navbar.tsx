@@ -10,6 +10,7 @@ import {
   Trophy,
   BookOpen,
   ChevronDown,
+  Sparkles,
 } from 'lucide-react';
 import {
   DropdownMenu,
@@ -35,7 +36,7 @@ type NavLink = {
 const Navbar = () => {
   const { lang, setLang, t } = useI18n();
   const [open, setOpen] = useState(false);
-  const [quizOpen, setQuizOpen] = useState(false);
+  const [learnOpen, setLearnOpen] = useState(false);
   const location = useLocation();
 
   const linksBefore: NavLink[] = [
@@ -44,24 +45,27 @@ const Navbar = () => {
     { label: t.nav.activities[lang], path: '/activities' },
     { label: t.nav.schedule[lang], path: '/schedule' },
     { label: t.nav.gallery[lang], path: '/gallery' },
-    { label: t.nav.assessment[lang], path: '/assessment', icon: Bot },
   ];
 
   const linksAfter: NavLink[] = [
-    { label: t.nav.runner[lang], path: '/runner-app/', icon: Gamepad2, external: true },
     { label: t.nav.register[lang], path: '/register' },
     { label: t.nav.contact[lang], path: '/contact' },
   ];
 
-  const quizActive =
-    location.pathname === '/vocab' || location.pathname.startsWith('/vocab');
+  const learnActive =
+    location.pathname === '/assessment' ||
+    location.pathname.startsWith('/assessment') ||
+    location.pathname === '/vocab' ||
+    location.pathname.startsWith('/vocab') ||
+    location.pathname.startsWith('/runner-app');
 
   const linkClass = (path: string, external?: boolean, active?: boolean) =>
     `flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-medium transition-colors ${
       active ||
       (!external &&
         (location.pathname === path ||
-          (path === '/vocab' && location.pathname.startsWith('/vocab'))))
+          (path === '/vocab' && location.pathname.startsWith('/vocab')) ||
+          (path === '/assessment' && location.pathname.startsWith('/assessment'))))
         ? 'text-[#0f4c6a] bg-primary/15 font-semibold'
         : 'text-foreground/80 hover:text-foreground hover:bg-muted'
     }`;
@@ -94,6 +98,8 @@ const Navbar = () => {
       </Link>
     );
   };
+
+  const closeMobile = () => setOpen(false);
 
   return (
     <nav className="sticky top-0 z-50 bg-card/80 backdrop-blur-lg border-b border-border/50 shadow-sm">
@@ -136,13 +142,19 @@ const Navbar = () => {
 
           <DropdownMenu>
             <DropdownMenuTrigger
-              className={`${linkClass('/vocab', false, quizActive)} outline-none`}
+              className={`${linkClass('/vocab', false, learnActive)} outline-none`}
             >
-              <Trophy size={16} className="shrink-0" />
+              <Sparkles size={16} className="shrink-0" />
               {t.nav.quizMenu[lang]}
               <ChevronDown size={14} className="opacity-70" />
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="start" className="min-w-[11rem]">
+            <DropdownMenuContent align="start" className="min-w-[13rem]">
+              <DropdownMenuItem asChild>
+                <Link to="/assessment" className="flex cursor-pointer items-center gap-2">
+                  <Bot size={16} />
+                  {t.nav.assessment[lang]}
+                </Link>
+              </DropdownMenuItem>
               <DropdownMenuItem asChild>
                 <Link to="/vocab" className="flex cursor-pointer items-center gap-2">
                   <BookOpen size={16} />
@@ -157,6 +169,16 @@ const Navbar = () => {
                 >
                   <Trophy size={16} />
                   {t.nav.quizBoard[lang]}
+                </a>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <a
+                  href="/runner-app/"
+                  rel="noopener noreferrer"
+                  className="flex cursor-pointer items-center gap-2"
+                >
+                  <Gamepad2 size={16} />
+                  {t.nav.runner[lang]}
                 </a>
               </DropdownMenuItem>
             </DropdownMenuContent>
@@ -202,28 +224,36 @@ const Navbar = () => {
       {open && (
         <div className="lg:hidden border-t border-border/50 bg-card/95 backdrop-blur-lg">
           <div className="px-4 py-3 space-y-1">
-            {linksBefore.map((l) => renderLink(l, () => setOpen(false)))}
+            {linksBefore.map((l) => renderLink(l, closeMobile))}
 
             <button
               type="button"
-              onClick={() => setQuizOpen((v) => !v)}
-              className={`${linkClass('/vocab', false, quizActive)} w-full justify-between`}
-              aria-expanded={quizOpen}
+              onClick={() => setLearnOpen((v) => !v)}
+              className={`${linkClass('/vocab', false, learnActive)} w-full justify-between`}
+              aria-expanded={learnOpen}
             >
               <span className="flex items-center gap-1.5">
-                <Trophy size={16} className="shrink-0" />
+                <Sparkles size={16} className="shrink-0" />
                 {t.nav.quizMenu[lang]}
               </span>
               <ChevronDown
                 size={16}
-                className={`transition-transform ${quizOpen ? 'rotate-180' : ''}`}
+                className={`transition-transform ${learnOpen ? 'rotate-180' : ''}`}
               />
             </button>
-            {quizOpen && (
+            {learnOpen && (
               <div className="ml-4 space-y-1 border-l border-border/60 pl-3">
                 <Link
+                  to="/assessment"
+                  onClick={closeMobile}
+                  className={linkClass('/assessment')}
+                >
+                  <Bot size={16} className="shrink-0" />
+                  {t.nav.assessment[lang]}
+                </Link>
+                <Link
                   to="/vocab"
-                  onClick={() => setOpen(false)}
+                  onClick={closeMobile}
                   className={linkClass('/vocab')}
                 >
                   <BookOpen size={16} className="shrink-0" />
@@ -232,16 +262,25 @@ const Navbar = () => {
                 <a
                   href={TOEIC_GAME_URL}
                   rel="noopener noreferrer"
-                  onClick={() => setOpen(false)}
+                  onClick={closeMobile}
                   className={linkClass(TOEIC_GAME_URL, true)}
                 >
                   <Trophy size={16} className="shrink-0" />
                   {t.nav.quizBoard[lang]}
                 </a>
+                <a
+                  href="/runner-app/"
+                  rel="noopener noreferrer"
+                  onClick={closeMobile}
+                  className={linkClass('/runner-app/', true)}
+                >
+                  <Gamepad2 size={16} className="shrink-0" />
+                  {t.nav.runner[lang]}
+                </a>
               </div>
             )}
 
-            {linksAfter.map((l) => renderLink(l, () => setOpen(false)))}
+            {linksAfter.map((l) => renderLink(l, closeMobile))}
           </div>
         </div>
       )}
