@@ -12,8 +12,8 @@ function createPrismaClient() {
 
   const pool = new pg.Pool({
     connectionString,
-    // Fail fast in production if DB is unreachable (avoid hung "เริ่มเกม")
-    connectionTimeoutMillis: 8_000,
+    // Fail fast if DB is unreachable (lobby was stuck on "กำลังเริ่ม…")
+    connectionTimeoutMillis: 4_000,
     idleTimeoutMillis: 30_000,
     max: 10,
   });

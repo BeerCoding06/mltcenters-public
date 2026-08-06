@@ -44,7 +44,11 @@ RUN mkdir -p /out \
      fi \
   && mkdir -p /out/.next \
   && cp -r .next/static /out/.next/static \
-  && if [ -d public ]; then cp -r public /out/public; fi
+  && if [ -d public ]; then cp -r public /out/public; fi \
+  && mkdir -p /migrate-kit \
+  && cp -r prisma /migrate-kit/prisma \
+  && cp prisma.config.ts package.json package-lock.json /migrate-kit/ \
+  && cp -r node_modules /migrate-kit/node_modules
 
 FROM node:20-alpine AS runner
 WORKDIR /app
@@ -60,6 +64,7 @@ COPY mail ./mail
 COPY --from=frontend /app/dist ./dist
 COPY --from=runner-frontend /app/runner-3d/frontend/dist ./dist/runner-app
 COPY --from=millionaire /out ./millionaire
+COPY --from=millionaire /migrate-kit ./millionaire-tools
 RUN chmod +x /app/server/start.sh
 ENV NODE_ENV=production
 ENV USE_PHP_MAILER=true

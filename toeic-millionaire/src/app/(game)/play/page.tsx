@@ -37,13 +37,19 @@ export default function PlayLobbyPage() {
           difficulty,
           botCount,
         }),
+        signal: AbortSignal.timeout(12_000),
       });
 
       if (!res.ok) {
         const payload = (await res.json().catch(() => null)) as {
           error?: string;
         } | null;
-        throw new Error(payload?.error ?? t.failedStart);
+        const msg = payload?.error ?? t.failedStart;
+        throw new Error(
+          /database|DATABASE_URL|ECONNREFUSED|timeout/i.test(msg)
+            ? t.dbHint
+            : msg,
+        );
       }
 
       const data = (await res.json()) as {
@@ -58,7 +64,14 @@ export default function PlayLobbyPage() {
       setDisplayName(displayName.trim() || "Player");
       router.push(`/board/${data.sessionId}`);
     } catch (err) {
-      setError(err instanceof Error ? err.message : t.failedStart);
+      if (
+        err instanceof Error &&
+        (err.name === "TimeoutError" || err.name === "AbortError")
+      ) {
+        setError(t.startTimeout);
+      } else {
+        setError(err instanceof Error ? err.message : t.failedStart);
+      }
     } finally {
       setLoading(false);
     }
