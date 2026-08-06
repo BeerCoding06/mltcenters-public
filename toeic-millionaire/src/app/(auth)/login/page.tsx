@@ -289,15 +289,6 @@ export default function LoginPage() {
 
   return (
     <div className="flex min-h-full flex-col">
-      <header className="flex items-center justify-between px-6 py-4 pr-24">
-        <Link
-          href="/"
-          className="text-sm text-[var(--millionaire-silver)] hover:text-[var(--millionaire-cyan)]"
-        >
-          ← {t.home}
-        </Link>
-      </header>
-
       <main className="mx-auto flex w-full max-w-md flex-1 flex-col gap-6 px-6 py-8">
         <div className="space-y-2 text-center">
           <h1 className="text-2xl font-bold text-[var(--millionaire-gold)]">

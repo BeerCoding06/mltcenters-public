@@ -3,7 +3,7 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ThemeProvider } from "next-themes";
 import { useState } from "react";
-import { LanguageToggleFixed } from "@/components/LanguageToggle";
+import { SiteNavbar } from "@/components/SiteNavbar";
 import { Toaster } from "@/components/ui/toast";
 import { GameLangProvider } from "@/features/i18n/GameLangProvider";
 
@@ -24,8 +24,10 @@ export function Providers({ children }: { children: React.ReactNode }) {
       <QueryClientProvider client={queryClient}>
         <GameLangProvider>
           <Toaster>
-            {children}
-            <LanguageToggleFixed />
+            <div className="flex min-h-full flex-1 flex-col">
+              <SiteNavbar />
+              <div className="flex min-h-0 flex-1 flex-col">{children}</div>
+            </div>
           </Toaster>
         </GameLangProvider>
       </QueryClientProvider>

@@ -33,15 +33,15 @@ export default function LandingPage() {
 
   return (
     <div className="dark millionaire-studio-bg relative flex min-h-full flex-col">
-      <header className="flex items-center justify-between px-6 py-4 pr-24">
-        <span className="text-lg font-bold tracking-tight text-[var(--millionaire-gold)]">
-          {t.brand}
-        </span>
+      <header className="flex items-center justify-end px-6 py-3">
         <ThemeToggle />
       </header>
 
       <main className="mx-auto flex w-full max-w-3xl flex-1 flex-col items-center justify-center gap-8 px-6 pb-16 text-center">
         <div className="space-y-4">
+          <p className="text-sm font-semibold tracking-wide text-[var(--millionaire-gold)]">
+            {t.brand}
+          </p>
           <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl">
             {headline}
           </h1>

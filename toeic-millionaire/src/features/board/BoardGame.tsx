@@ -383,7 +383,7 @@ export function BoardGame({ sessionId }: BoardGameProps) {
 
   return (
     <div className="flex min-h-full flex-col">
-      <header className="flex items-center justify-between px-4 py-3 pr-24 sm:px-6">
+      <header className="flex items-center justify-between px-4 py-3 sm:px-6">
         <Link
           href="/play"
           className="text-sm text-[var(--millionaire-silver)] hover:text-[var(--millionaire-cyan)]"
