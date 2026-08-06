@@ -46,6 +46,21 @@ export function createMillionaireProxy() {
     // Preserve full URL path for Next.js basePath=/millionaire
     pathFilter: (pathname) => isMillionairePath(pathname),
     on: {
+      proxyReq(proxyReq, req) {
+        // If Express already parsed JSON (mis-ordered middleware), re-send body.
+        const body = req.body;
+        if (
+          body != null &&
+          typeof body === 'object' &&
+          !(body instanceof Buffer) &&
+          Object.keys(body).length > 0
+        ) {
+          const data = JSON.stringify(body);
+          proxyReq.setHeader('Content-Type', 'application/json');
+          proxyReq.setHeader('Content-Length', Buffer.byteLength(data));
+          proxyReq.write(data);
+        }
+      },
       error(err, _req, res) {
         console.error('[millionaire] proxy error:', err.message);
         if (res && !res.headersSent && typeof res.writeHead === 'function') {

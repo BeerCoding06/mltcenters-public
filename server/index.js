@@ -103,6 +103,9 @@ app.use((req, res, next) => {
   next();
 });
 app.use(cors({ origin: true }));
+// Proxy /millionaire BEFORE express.json() — parsed bodies leave the stream empty
+// and http-proxy-middleware hangs forever on POST (Start Game timeout).
+app.use(createMillionaireProxy());
 app.use(express.json({ limit: '256kb' }));
 app.use('/api/analytics', createAnalyticsRouter());
 
@@ -352,9 +355,6 @@ app.post('/api/assess', async (req, res) => {
 
 // 3D English Runner game API
 app.use('/runner-api', createRunnerRouter(openai, AI_MODEL));
-
-// TOEIC เกมส์เศรษฐี — Next.js app proxied at /millionaire (before static/SPA)
-app.use(createMillionaireProxy());
 
 const runnerAppPath = path.join(distPath, 'runner-app');
 const indexHtmlPath = path.join(distPath, 'index.html');
