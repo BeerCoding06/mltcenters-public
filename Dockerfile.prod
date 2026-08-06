@@ -22,17 +22,26 @@ FROM node:20-alpine AS millionaire
 WORKDIR /app/toeic-millionaire
 RUN apk add --no-cache openssl
 COPY toeic-millionaire/package.json toeic-millionaire/package-lock.json ./
-RUN npm ci
+# Skip postinstall prisma generate — schema is not copied yet
+RUN npm ci --ignore-scripts
 COPY toeic-millionaire/ .
-# prisma generate needs a placeholder URL
+# prisma generate needs a placeholder URL (no DB at build time)
 ENV DATABASE_URL="postgresql://postgres:postgres@127.0.0.1:5432/toeic"
 ENV DIRECT_URL="postgresql://postgres:postgres@127.0.0.1:5432/toeic"
 ENV NEXT_TELEMETRY_DISABLED=1
 RUN npx prisma generate
 RUN npm run build
-# Standalone nests as .next/standalone/toeic-millionaire/server.js
+# Standalone layout varies: nested (monorepo lockfile) vs flat (Docker-only package)
 RUN mkdir -p /out \
-  && cp -r .next/standalone/toeic-millionaire/. /out/ \
+  && if [ -f .next/standalone/toeic-millionaire/server.js ]; then \
+       cp -r .next/standalone/toeic-millionaire/. /out/; \
+     elif [ -f .next/standalone/server.js ]; then \
+       cp -r .next/standalone/. /out/; \
+     else \
+       echo "[millionaire] standalone server.js not found:" >&2; \
+       find .next -name server.js -print >&2 || true; \
+       exit 1; \
+     fi \
   && mkdir -p /out/.next \
   && cp -r .next/static /out/.next/static \
   && if [ -d public ]; then cp -r public /out/public; fi

@@ -8,6 +8,8 @@ dist
 !.env.example
 server/node_modules
 runner-3d/frontend/node_modules
+toeic-millionaire/node_modules
+toeic-millionaire/.next
 coverage
 .vscode
 .cursor
