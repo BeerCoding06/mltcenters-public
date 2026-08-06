@@ -18,6 +18,7 @@ import {
   useInvalidateGameSession,
 } from "@/features/game/useGameSession";
 import { useGameStore } from "@/features/game/useGameStore";
+import { useGameLang } from "@/features/i18n/GameLangProvider";
 import { Hud } from "@/features/player/Hud";
 import { QuizModal } from "@/features/quiz/QuizModal";
 import type { QuizModalQuestion } from "@/features/quiz/QuizModal";
@@ -54,6 +55,7 @@ function animateDice(finalValue: number, onTick: (n: number) => void) {
 }
 
 export function BoardGame({ sessionId }: BoardGameProps) {
+  const { t } = useGameLang();
   const { data: state, isLoading, error } = useGameSession(sessionId);
   const invalidate = useInvalidateGameSession();
   const botTimerRef = useRef<number | null>(null);
@@ -105,8 +107,9 @@ export function BoardGame({ sessionId }: BoardGameProps) {
       if (isBot) {
         if (action.type === "quiz" || action.type === "drawCard") {
           toast.add({
-            title: "Bot turn",
-            description: `${action.type === "quiz" ? "Quiz" : "Card"} resolved automatically.`,
+            title: t.botTurn,
+            description:
+              action.type === "quiz" ? t.botQuizResolved : t.botCardResolved,
             type: "info",
           });
           return;
@@ -124,8 +127,8 @@ export function BoardGame({ sessionId }: BoardGameProps) {
         const res = await fetch(`/api/quiz/next?${params}`);
         if (!res.ok) {
           toast.add({
-            title: "Quiz unavailable",
-            description: "Could not load a question.",
+            title: t.quiz,
+            description: t.gameNotFound,
             type: "error",
           });
           return;
@@ -158,7 +161,7 @@ export function BoardGame({ sessionId }: BoardGameProps) {
         } catch {
           closeCard();
           toast.add({
-            title: "Card draw failed",
+            title: t.eventCard,
             type: "error",
           });
         }
@@ -182,7 +185,7 @@ export function BoardGame({ sessionId }: BoardGameProps) {
 
       tileActionToast(action, false);
     },
-    [sessionId, openQuiz, openCardDraw, setCardResult, closeCard],
+    [sessionId, openQuiz, openCardDraw, setCardResult, closeCard, t],
   );
 
   const performRoll = useCallback(
@@ -284,7 +287,7 @@ export function BoardGame({ sessionId }: BoardGameProps) {
   if (isLoading) {
     return (
       <div className="flex min-h-full items-center justify-center text-[var(--millionaire-silver)]">
-        Loading board…
+        {t.loadingBoard}
       </div>
     );
   }
@@ -293,7 +296,7 @@ export function BoardGame({ sessionId }: BoardGameProps) {
     return (
       <div className="flex min-h-full flex-col items-center justify-center gap-4">
         <p className="text-[var(--millionaire-wrong)]">
-          {error instanceof Error ? error.message : "Game not found"}
+          {error instanceof Error ? error.message : t.gameNotFound}
         </p>
         <Link
           href="/play"
@@ -303,7 +306,7 @@ export function BoardGame({ sessionId }: BoardGameProps) {
               "border-[var(--millionaire-silver)] text-white hover:bg-black/50",
           })}
         >
-          Back to lobby
+          {t.backToLobby}
         </Link>
       </div>
     );
@@ -330,15 +333,15 @@ export function BoardGame({ sessionId }: BoardGameProps) {
           className="max-w-md space-y-4 rounded-3xl border border-[var(--millionaire-silver)] bg-black p-8 text-center shadow-[0_0_40px_rgb(91_192_255_/_15%)]"
         >
           <h1 className="text-3xl font-bold text-[var(--millionaire-gold)]">
-            {humanWon ? "You win!" : "Game over"}
+            {humanWon ? t.youWin : t.gameOver}
           </h1>
           <p className="text-[var(--millionaire-silver)]">
-            Winner: <strong className="text-white">{winner?.displayName ?? "—"}</strong> with{" "}
-            {winner?.coins ?? 0} coins
+            {t.winner}: <strong className="text-white">{winner?.displayName ?? "—"}</strong>{" "}
+            {winner?.coins ?? 0} {t.coins}
           </p>
           {humanPlayer ? (
             <p className="text-sm text-[var(--millionaire-silver)]">
-              Your score: {humanPlayer.coins} coins · {humanPlayer.exp} EXP · Lap{" "}
+              {t.yourScore}: {humanPlayer.coins} {t.coins} · {humanPlayer.exp} EXP · {t.lap}{" "}
               {humanPlayer.lap}
             </p>
           ) : null}
@@ -350,7 +353,7 @@ export function BoardGame({ sessionId }: BoardGameProps) {
                 "rounded-full border-2 border-[var(--millionaire-cyan)] bg-[var(--millionaire-cyan)] text-black hover:bg-[var(--millionaire-cyan)]/90",
               )}
             >
-              Login to save progress
+              {t.loginToSave}
             </Link>
             <Link
               href="/play"
@@ -359,7 +362,7 @@ export function BoardGame({ sessionId }: BoardGameProps) {
                 "rounded-full border-2 border-[var(--millionaire-gold)] bg-[var(--millionaire-gold)] text-black hover:bg-[var(--millionaire-gold)]/90",
               )}
             >
-              Play again
+              {t.playAgain}
             </Link>
             <Link
               href="/"
@@ -369,7 +372,7 @@ export function BoardGame({ sessionId }: BoardGameProps) {
                   "rounded-full border-[var(--millionaire-silver)] text-white hover:bg-black/50",
               })}
             >
-              Home
+              {t.home}
             </Link>
           </div>
         </motion.div>
@@ -379,12 +382,12 @@ export function BoardGame({ sessionId }: BoardGameProps) {
 
   return (
     <div className="flex min-h-full flex-col">
-      <header className="flex items-center justify-between px-4 py-3 sm:px-6">
+      <header className="flex items-center justify-between px-4 py-3 pr-24 sm:px-6">
         <Link
           href="/play"
           className="text-sm text-[var(--millionaire-silver)] hover:text-[var(--millionaire-cyan)]"
         >
-          Lobby
+          {t.lobby}
         </Link>
       </header>
 
@@ -417,12 +420,12 @@ export function BoardGame({ sessionId }: BoardGameProps) {
             className="gap-2 rounded-full border-2 border-[var(--millionaire-gold)] bg-[var(--millionaire-gold)] text-black hover:bg-[var(--millionaire-gold)]/90 disabled:opacity-50"
           >
             <Dices className="size-5" />
-            {isRolling ? "Rolling…" : isHumanTurn ? "Roll dice" : "Waiting…"}
+            {isRolling ? t.rolling : isHumanTurn ? t.rollDice : t.waiting}
           </Button>
 
           {!isHumanTurn && current?.isBot ? (
             <p className="text-xs text-[var(--millionaire-silver)]">
-              {current.displayName} is thinking…
+              {current.displayName} {t.thinking}
             </p>
           ) : null}
         </div>

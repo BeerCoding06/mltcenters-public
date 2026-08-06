@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { Languages, Lightbulb } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Lightbulb } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -9,6 +9,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { useGameLang } from "@/features/i18n/GameLangProvider";
 import { ExplanationPanel } from "@/features/quiz/components/ExplanationPanel";
 import { QuestionThPanel } from "@/features/quiz/components/QuestionThPanel";
 import {
@@ -63,7 +64,8 @@ export function QuizModal({
   playerId,
   onAnswered,
 }: QuizModalProps) {
-  const [showTh, setShowTh] = useState(false);
+  const { t, isTh, lang } = useGameLang();
+  const [showTh, setShowTh] = useState(isTh);
   const [selectedChoiceId, setSelectedChoiceId] = useState<string | null>(null);
   const [hint, setHint] = useState<string | null>(null);
   const [hintUsed, setHintUsed] = useState(false);
@@ -80,6 +82,12 @@ export function QuizModal({
     showTh && Boolean(questionId),
   );
 
+  useEffect(() => {
+    if (open) {
+      setShowTh(isTh);
+    }
+  }, [open, isTh, questionId]);
+
   const choiceLabels = Object.fromEntries(
     (question?.choices ?? []).map((choice, index) => [
       choice.id,
@@ -90,7 +98,7 @@ export function QuizModal({
   const answered = answerResult !== null;
 
   function resetState() {
-    setShowTh(false);
+    setShowTh(isTh);
     setSelectedChoiceId(null);
     setHint(null);
     setHintUsed(false);
@@ -123,14 +131,14 @@ export function QuizModal({
         const payload = (await res.json().catch(() => null)) as {
           error?: string;
         } | null;
-        throw new Error(payload?.error ?? "Failed to load hint");
+        throw new Error(payload?.error ?? t.translationFailed);
       }
 
       const payload = (await res.json()) as { hint: string; coinsDelta: number };
       setHint(payload.hint);
       setHintUsed(true);
     } catch (err) {
-      setHintError(err instanceof Error ? err.message : "Failed to load hint");
+      setHintError(err instanceof Error ? err.message : t.translationFailed);
     } finally {
       setHintLoading(false);
     }
@@ -180,7 +188,7 @@ export function QuizModal({
     >
       <DialogContent className="border-[var(--millionaire-silver)] bg-black/95 text-white ring-[var(--millionaire-silver)]/30 sm:max-w-xl">
         <DialogHeader className="relative">
-          <DialogTitle className="sr-only">Quiz</DialogTitle>
+          <DialogTitle className="sr-only">{t.quiz}</DialogTitle>
           {question ? (
             <div className="absolute top-0 right-0 flex gap-2">
               <TranslateThButton
@@ -190,7 +198,7 @@ export function QuizModal({
               />
               <button
                 type="button"
-                title="Hint (-5 coins)"
+                title={t.hintTitle}
                 disabled={hintUsed || hintLoading || answered}
                 onClick={() => void handleHint()}
                 className={cn(
@@ -253,7 +261,7 @@ export function QuizModal({
                   onClick={() => void handleSubmit()}
                   className="rounded-full border-2 border-[var(--millionaire-gold)] bg-[var(--millionaire-gold)] px-8 font-semibold text-black hover:bg-[var(--millionaire-gold)]/90"
                 >
-                  {submitting ? "กำลังส่ง..." : "Submit"}
+                  {submitting ? t.submitting : t.submit}
                 </Button>
               </div>
             ) : null}
@@ -267,7 +275,7 @@ export function QuizModal({
             {hint ? (
               <div className="millionaire-pill border-[var(--millionaire-gold)]/60 text-sm">
                 <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-[var(--millionaire-gold)]">
-                  Hint
+                  {t.hint}
                 </p>
                 <p className="leading-relaxed">{hint}</p>
               </div>
@@ -286,7 +294,11 @@ export function QuizModal({
             {answerResult ? (
               <ExplanationPanel
                 isCorrect={answerResult.isCorrect}
-                explanationTh={answerResult.explanationTh}
+                explanation={
+                  lang === "th"
+                    ? answerResult.explanationTh
+                    : answerResult.explanation
+                }
               />
             ) : null}
           </div>

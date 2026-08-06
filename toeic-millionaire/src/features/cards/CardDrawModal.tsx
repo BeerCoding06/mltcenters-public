@@ -10,8 +10,10 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { getCardCopy } from "@/features/cards/card-th";
 import type { CardDto } from "@/features/cards/card-service";
-import type { EffectResult } from "@/features/cards/effects";
+import type { CardEffect, EffectResult } from "@/features/cards/effects";
+import { useGameLang } from "@/features/i18n/GameLangProvider";
 
 interface CardDrawModalProps {
   open: boolean;
@@ -23,6 +25,30 @@ interface CardDrawModalProps {
   onContinue?: () => void;
 }
 
+function localizeEffectSummary(
+  effect: CardEffect | undefined,
+  fallback: string,
+  t: ReturnType<typeof useGameLang>["t"],
+): string {
+  if (!effect) return fallback;
+  switch (effect.type) {
+    case "coins":
+      return t.effectCoins(effect.amount);
+    case "exp":
+      return t.effectExp(effect.amount);
+    case "move":
+      return t.effectMove(effect.steps);
+    case "skipTurn":
+      return t.effectSkip;
+    case "freeHint":
+      return t.effectFreeHint;
+    case "bonusQuiz":
+      return t.effectBonusQuiz;
+    default:
+      return fallback;
+  }
+}
+
 export function CardDrawModal({
   open,
   onOpenChange,
@@ -32,6 +58,7 @@ export function CardDrawModal({
   isLoading = false,
   onContinue,
 }: CardDrawModalProps) {
+  const { t, isTh } = useGameLang();
   const [flipped, setFlipped] = useState(false);
 
   useEffect(() => {
@@ -45,11 +72,21 @@ export function CardDrawModal({
     }
   }, [open, card, isLoading]);
 
-  const deckLabel = deck === "LUCKY" ? "Lucky Card" : "Event Card";
+  const deckLabel = deck === "LUCKY" ? t.luckyCard : t.eventCard;
   const deckAccent =
     deck === "LUCKY"
       ? "from-amber-400 to-yellow-500"
       : "from-violet-500 to-purple-600";
+
+  const copy = card
+    ? getCardCopy(card.id, card.title, card.body, isTh)
+    : null;
+
+  const effectSummary = localizeEffectSummary(
+    card?.effect,
+    effectResult?.summary ?? "",
+    t,
+  );
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -71,7 +108,7 @@ export function CardDrawModal({
                 style={{ backfaceVisibility: "hidden" }}
               >
                 <span className="text-lg font-semibold tracking-wide">
-                  {isLoading ? "Drawing..." : "?"}
+                  {isLoading ? t.drawing : "?"}
                 </span>
               </div>
 
@@ -79,13 +116,13 @@ export function CardDrawModal({
                 className="absolute inset-0 flex flex-col justify-center rounded-2xl border bg-card p-4 text-center shadow-lg"
                 style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
               >
-                {card ? (
+                {copy ? (
                   <>
-                    <p className="text-base font-semibold">{card.title}</p>
-                    <p className="mt-2 text-sm text-muted-foreground">{card.body}</p>
+                    <p className="text-base font-semibold">{copy.title}</p>
+                    <p className="mt-2 text-sm text-muted-foreground">{copy.body}</p>
                     {effectResult ? (
                       <p className="mt-3 text-sm font-medium text-emerald-600">
-                        {effectResult.summary}
+                        {effectSummary}
                       </p>
                     ) : null}
                   </>
@@ -103,7 +140,7 @@ export function CardDrawModal({
               onOpenChange(false);
             }}
           >
-            Continue
+            {t.continue}
           </Button>
         </DialogFooter>
       </DialogContent>

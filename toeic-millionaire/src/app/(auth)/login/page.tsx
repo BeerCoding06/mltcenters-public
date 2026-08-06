@@ -8,8 +8,10 @@ import { ensureGuestId } from "@/features/auth/guest-id";
 import { safeNextPath } from "@/features/auth/safe-next-path";
 import { createSupabaseBrowserClient } from "@/features/auth/supabase-browser";
 import { isSupabaseConfigured } from "@/features/auth/supabase-config";
+import { useGameLang } from "@/features/i18n/GameLangProvider";
 
 function LoginForm() {
+  const { t } = useGameLang();
   const router = useRouter();
   const searchParams = useSearchParams();
   const next = safeNextPath(searchParams.get("next"));
@@ -20,11 +22,17 @@ function LoginForm() {
   const [mode, setMode] = useState<"magic" | "password">("magic");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<string | null>(
-    authError === "auth" ? "Sign-in failed. Please try again." : null,
+    authError === "auth" ? null : null,
   );
   const [checkingSession, setCheckingSession] = useState(true);
 
   const supabaseConfigured = isSupabaseConfigured();
+
+  useEffect(() => {
+    if (authError === "auth") {
+      setMessage(t.signInFailed);
+    }
+  }, [authError, t.signInFailed]);
 
   useEffect(() => {
     if (!supabaseConfigured) {
@@ -147,7 +155,7 @@ function LoginForm() {
   if (checkingSession && supabaseConfigured) {
     return (
       <p className="text-center text-sm text-[var(--millionaire-silver)]">
-        Checking session…
+        {t.checkingSession}
       </p>
     );
   }
@@ -156,14 +164,13 @@ function LoginForm() {
     return (
       <div className="space-y-4 text-center">
         <p className="text-[var(--millionaire-silver)]">
-          Account sign-in is not configured yet. You can still play as a guest —
-          progress is saved on this device only.
+          {t.authNotConfigured}
         </p>
         <Link
           href="/play"
           className="inline-flex text-sm text-[var(--millionaire-cyan)] hover:underline"
         >
-          Continue as guest →
+          {t.continueGuest}
         </Link>
       </div>
     );
@@ -181,7 +188,7 @@ function LoginForm() {
               : "text-[var(--millionaire-silver)]"
           }`}
         >
-          Magic link
+          {t.magicLink}
         </button>
         <button
           type="button"
@@ -192,7 +199,7 @@ function LoginForm() {
               : "text-[var(--millionaire-silver)]"
           }`}
         >
-          Password
+          {t.password}
         </button>
       </div>
 
@@ -201,7 +208,7 @@ function LoginForm() {
         className="space-y-4"
       >
         <label className="block space-y-1.5">
-          <span className="text-sm font-medium text-white">Email</span>
+          <span className="text-sm font-medium text-white">{t.email}</span>
           <input
             type="email"
             required
@@ -214,7 +221,7 @@ function LoginForm() {
 
         {mode === "password" ? (
           <label className="block space-y-1.5">
-            <span className="text-sm font-medium text-white">Password</span>
+            <span className="text-sm font-medium text-white">{t.password}</span>
             <input
               type="password"
               required
@@ -229,7 +236,8 @@ function LoginForm() {
         {message ? (
           <p
             className={`text-sm ${
-              message.includes("Check your email")
+              message.includes("Check your email") ||
+              message.includes("อีเมล")
                 ? "text-[var(--millionaire-correct)]"
                 : "text-[var(--millionaire-wrong)]"
             }`}
@@ -244,10 +252,10 @@ function LoginForm() {
           className="w-full rounded-full border-2 border-[var(--millionaire-gold)] bg-[var(--millionaire-gold)] text-black hover:bg-[var(--millionaire-gold)]/90"
         >
           {loading
-            ? "Working…"
+            ? t.working
             : mode === "magic"
-              ? "Send magic link"
-              : "Sign in"}
+              ? t.sendMagicLink
+              : t.signIn}
         </Button>
       </form>
 
@@ -257,7 +265,7 @@ function LoginForm() {
         </div>
         <div className="relative flex justify-center text-xs uppercase">
           <span className="bg-black px-2 text-[var(--millionaire-silver)]">
-            or
+            {t.or}
           </span>
         </div>
       </div>
@@ -269,31 +277,33 @@ function LoginForm() {
         onClick={() => void handleGoogleSignIn()}
         className="w-full rounded-full border-[var(--millionaire-silver)] text-white hover:bg-black/50"
       >
-        Continue with Google
+        {t.continueGoogle}
       </Button>
     </div>
   );
 }
 
 export default function LoginPage() {
+  const { t } = useGameLang();
+
   return (
     <div className="flex min-h-full flex-col">
-      <header className="flex items-center justify-between px-6 py-4">
+      <header className="flex items-center justify-between px-6 py-4 pr-24">
         <Link
           href="/"
           className="text-sm text-[var(--millionaire-silver)] hover:text-[var(--millionaire-cyan)]"
         >
-          ← Home
+          ← {t.home}
         </Link>
       </header>
 
       <main className="mx-auto flex w-full max-w-md flex-1 flex-col gap-6 px-6 py-8">
         <div className="space-y-2 text-center">
           <h1 className="text-2xl font-bold text-[var(--millionaire-gold)]">
-            Save your progress
+            {t.saveProgress}
           </h1>
           <p className="text-sm text-[var(--millionaire-silver)]">
-            Sign in to sync coins, EXP, and stats across devices.
+            {t.saveProgressSub}
           </p>
         </div>
 
@@ -301,7 +311,7 @@ export default function LoginPage() {
           <Suspense
             fallback={
               <p className="text-center text-sm text-[var(--millionaire-silver)]">
-                Loading…
+                {t.loading}
               </p>
             }
           >

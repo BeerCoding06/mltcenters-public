@@ -86,14 +86,13 @@ Playwright E2E is not bundled by default. Before release, verify manually:
 
 ## Deployment
 
-See [docs/DEPLOY.md](./docs/DEPLOY.md) for Vercel + Supabase setup and `toeic.mltcenters.com` domain steps.
+The game ships **inside** the main MLTCENTERS Docker image and is served at:
+
+**https://www.mltcenters.com/millionaire**
+
+See [docs/DEPLOY.md](./docs/DEPLOY.md). There is **no** `toeic.mltcenters.com` subdomain.
 
 ## Link from MLTCENTERS
 
-Set in the parent app's `.env`:
-
-```
-VITE_TOEIC_GAME_URL=https://toeic.mltcenters.com
-```
-
-The MLTCENTERS navbar opens this URL in a new tab.
+Navbar **AI/คำศัพท์ → TOEIC เกมส์เศรษฐี** always opens `/millionaire` (same origin).
+Do not set `VITE_TOEIC_GAME_URL` to an external host in Dokploy.

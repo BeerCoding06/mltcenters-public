@@ -79,7 +79,17 @@ Dropdown **AI/คำศัพท์** → **TOEIC เกมส์เศรษฐ
 
 | Issue | Fix |
 |-------|-----|
-| 503 on `/millionaire` | Next process not running — check Docker logs for `[millionaire] starting` |
+| Navbar opens `toeic.mltcenters.com` | Old client bundle — redeploy; URL is forced to `/millionaire` |
+| Site 404 page (Oops!) on `/millionaire` | SPA stole the route — redeploy Express proxy (`createMillionaireProxy`) |
+| Branded 503 HTML on `/millionaire` | Next process not running — check Docker logs for `[millionaire] starting` |
 | Empty quizzes | Run `prisma migrate deploy` + `db:seed` |
 | Build fails on Prisma | Ensure `openssl` in image; `DATABASE_URL` placeholder at build is OK |
-| SPA steals `/millionaire` | Express must proxy `/millionaire` **before** SPA `*` route (already wired) |
+
+### Dokploy checklist after deploy
+
+1. Remove any `VITE_TOEIC_GAME_URL=https://toeic.mltcenters.com` env/build-arg
+2. Set `DATABASE_URL` + `DIRECT_URL` for the game Postgres
+3. Set `NEXT_PUBLIC_APP_URL=https://www.mltcenters.com/millionaire`
+4. Redeploy full image (`Dockerfile.prod`)
+5. Once: `prisma migrate deploy` + `db:seed` against production DB
+6. Smoke test: open https://www.mltcenters.com/millionaire — expect game landing, not site 404

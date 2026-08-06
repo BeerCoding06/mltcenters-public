@@ -1,16 +1,19 @@
 "use client";
 
+import { useGameLang } from "@/features/i18n/GameLangProvider";
 import { cn } from "@/lib/utils";
 
 interface ExplanationPanelProps {
-  explanationTh: string;
+  explanation: string;
   isCorrect: boolean;
 }
 
 export function ExplanationPanel({
-  explanationTh,
+  explanation,
   isCorrect,
 }: ExplanationPanelProps) {
+  const { t } = useGameLang();
+
   return (
     <div
       className={cn(
@@ -28,9 +31,9 @@ export function ExplanationPanel({
             : "text-[var(--millionaire-wrong)]",
         )}
       >
-        {isCorrect ? "ถูกต้อง" : "ไม่ถูกต้อง"}
+        {isCorrect ? t.correct : t.incorrect}
       </p>
-      <p className="leading-relaxed">{explanationTh}</p>
+      <p className="leading-relaxed">{explanation}</p>
     </div>
   );
 }

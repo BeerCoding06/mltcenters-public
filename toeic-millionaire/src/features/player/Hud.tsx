@@ -2,6 +2,7 @@
 
 import { Coins, Sparkles, User } from "lucide-react";
 import type { GamePlayerSnapshot, GameStateSnapshot } from "@/features/game/game-service";
+import { useGameLang } from "@/features/i18n/GameLangProvider";
 import { cn } from "@/lib/utils";
 
 interface HudProps {
@@ -10,6 +11,7 @@ interface HudProps {
 }
 
 export function Hud({ state, humanPlayer }: HudProps) {
+  const { t } = useGameLang();
   const current = state.players.find((p) => p.id === state.currentPlayerId);
   const isHumanTurn = current?.id === humanPlayer?.id;
 
@@ -29,7 +31,7 @@ export function Hud({ state, humanPlayer }: HudProps) {
           </span>
         </div>
         <div className="text-xs text-[var(--millionaire-silver)]">
-          Lap {humanPlayer?.lap ?? 0}/{state.lapsToWin}
+          {t.lap} {humanPlayer?.lap ?? 0}/{state.lapsToWin}
         </div>
       </div>
 
@@ -50,12 +52,12 @@ export function Hud({ state, humanPlayer }: HudProps) {
           {current?.displayName ?? "—"}
         </span>
         <span className="text-[var(--millionaire-silver)]">
-          {isHumanTurn ? "(Your turn)" : current?.isBot ? "(Bot)" : ""}
+          {isHumanTurn ? t.yourTurn : current?.isBot ? t.bot : ""}
         </span>
       </div>
 
       <div className="text-xs text-[var(--millionaire-silver)]">
-        Turn {state.turnCount} · {state.difficulty}
+        {t.turn} {state.turnCount} · {state.difficulty}
       </div>
     </div>
   );

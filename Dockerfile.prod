@@ -5,9 +5,8 @@ RUN apk add --no-cache python3 py3-pillow
 COPY package.json package-lock.json ./
 RUN npm ci
 COPY . .
-# Same-origin path (no separate subdomain)
-ARG VITE_TOEIC_GAME_URL=/millionaire
-ENV VITE_TOEIC_GAME_URL=$VITE_TOEIC_GAME_URL
+# Force same-origin path. Do not bake toeic.mltcenters.com into the client bundle.
+ENV VITE_TOEIC_GAME_URL=/millionaire
 RUN npm run build
 
 FROM node:20-alpine AS runner-frontend

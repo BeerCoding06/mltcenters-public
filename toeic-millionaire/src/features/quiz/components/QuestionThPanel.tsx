@@ -1,6 +1,7 @@
 "use client";
 
 import { Skeleton } from "@/components/ui/skeleton";
+import { useGameLang } from "@/features/i18n/GameLangProvider";
 import type { TranslationResult } from "@/features/quiz/translate-service";
 
 interface QuestionThPanelProps {
@@ -18,6 +19,8 @@ export function QuestionThPanel({
   onRetry,
   choiceLabels,
 }: QuestionThPanelProps) {
+  const { t } = useGameLang();
+
   if (isLoading) {
     return (
       <div className="millionaire-pill space-y-2">
@@ -31,13 +34,13 @@ export function QuestionThPanel({
   if (isError) {
     return (
       <div className="millionaire-pill border-[var(--millionaire-wrong)] text-sm">
-        <p className="text-[var(--millionaire-wrong)]">โหลดคำแปลไม่สำเร็จ</p>
+        <p className="text-[var(--millionaire-wrong)]">{t.translationFailed}</p>
         <button
           type="button"
           onClick={onRetry}
           className="mt-2 text-xs font-medium text-[var(--millionaire-cyan)] underline"
         >
-          ลองอีกครั้ง
+          {t.retry}
         </button>
       </div>
     );

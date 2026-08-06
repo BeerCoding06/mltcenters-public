@@ -18,12 +18,13 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { resolveToeicGameUrl } from '@/lib/toeic-game-url';
 
 const BRAND_LOGO = '/logo-nav.png';
 const KRUMAM_AVATAR = '/assets/img-design-about/krumam.jpg';
 
-const TOEIC_GAME_URL =
-  import.meta.env.VITE_TOEIC_GAME_URL || '/millionaire';
+/** Same-origin game path — never the dead toeic.* subdomain. */
+const TOEIC_GAME_URL = resolveToeicGameUrl();
 
 type NavLink = {
   label: string;

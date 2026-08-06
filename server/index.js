@@ -18,7 +18,10 @@ import OpenAI from 'openai';
 import nodemailer from 'nodemailer';
 import compression from 'compression';
 import { createRunnerRouter } from './runner-api.js';
-import { createMillionaireProxy } from './millionaire-proxy.js';
+import {
+  createMillionaireProxy,
+  millionaireUnavailableHandler,
+} from './millionaire-proxy.js';
 import { isPhpMailerReady, sendViaPhpMailer } from './php-mailer.js';
 import {
   buildAssessApiMessages,
@@ -350,7 +353,7 @@ app.post('/api/assess', async (req, res) => {
 // 3D English Runner game API
 app.use('/runner-api', createRunnerRouter(openai, AI_MODEL));
 
-// TOEIC เกมส์เศรษฐี — Next.js app proxied at /millionaire
+// TOEIC เกมส์เศรษฐี — Next.js app proxied at /millionaire (before static/SPA)
 app.use(createMillionaireProxy());
 
 const runnerAppPath = path.join(distPath, 'runner-app');
@@ -408,11 +411,17 @@ if (existsSync(distPath)) {
   }
   app.use(express.static(distPath));
   app.get('*', (req, res, next) => {
+    // Never let the React SPA claim the Next.js game (would show site 404)
+    if (
+      req.path === '/millionaire' ||
+      req.path.startsWith('/millionaire/')
+    ) {
+      return next();
+    }
     if (
       req.path.startsWith('/api') ||
       req.path.startsWith('/runner-api') ||
-      req.path.startsWith('/runner-app') ||
-      req.path.startsWith('/millionaire')
+      req.path.startsWith('/runner-app')
     ) {
       return next();
     }
@@ -432,6 +441,9 @@ if (existsSync(distPath)) {
     res.status(503).send('Runner game is not deployed yet. Please redeploy the application.');
   });
 }
+
+// If proxy did not answer (Next down / missing), show branded 503 — never SPA 404
+app.use(millionaireUnavailableHandler);
 
 const PORT = process.env.PORT || 3000;
 const host = process.env.HOST || '0.0.0.0';

@@ -1,8 +1,9 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
 import { Languages } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
 import type { TranslationResult } from "@/features/quiz/translate-service";
+import { useGameLang } from "@/features/i18n/GameLangProvider";
 import { cn } from "@/lib/utils";
 
 async function fetchTranslation(questionId: string): Promise<TranslationResult> {
@@ -29,15 +30,19 @@ interface TranslateThButtonProps {
   onToggle: (show: boolean) => void;
 }
 
+/** Per-question content translate (stem/choices) — separate from UI language. */
 export function TranslateThButton({
   showTh,
   isLoading = false,
   onToggle,
 }: TranslateThButtonProps) {
+  const { t } = useGameLang();
+
   return (
     <button
       type="button"
-      title={showTh ? "Show English" : "Translate to Thai"}
+      title={showTh ? t.showEnglish : t.translateTh}
+      aria-label={showTh ? t.showEnglish : t.translateTh}
       onClick={() => onToggle(!showTh)}
       disabled={showTh && isLoading}
       className={cn(
