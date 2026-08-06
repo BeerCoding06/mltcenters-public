@@ -342,7 +342,16 @@ export function BoardGame({ sessionId }: BoardGameProps) {
               {humanPlayer.lap}
             </p>
           ) : null}
-          <div className="flex flex-col gap-2 pt-2 sm:flex-row sm:justify-center">
+          <div className="flex flex-col gap-2 pt-2 sm:flex-row sm:flex-wrap sm:justify-center">
+            <Link
+              href={`/login?next=${encodeURIComponent(`/board/${sessionId}`)}`}
+              className={cn(
+                buttonVariants(),
+                "rounded-full border-2 border-[var(--millionaire-cyan)] bg-[var(--millionaire-cyan)] text-black hover:bg-[var(--millionaire-cyan)]/90",
+              )}
+            >
+              Login to save progress
+            </Link>
             <Link
               href="/play"
               className={cn(
