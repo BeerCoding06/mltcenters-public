@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { useGameLang } from "@/features/i18n/GameLangProvider";
 import { cn } from "@/lib/utils";
+import { LifelinesBar } from "./LifelinesBar";
 import { MoneyLadder } from "./MoneyLadder";
 import {
   buildHotseatDeck,
@@ -38,8 +39,10 @@ export function HotseatGame() {
   const [used5050, setUsed5050] = useState(false);
   const [usedAudience, setUsedAudience] = useState(false);
   const [usedPhone, setUsedPhone] = useState(false);
+  const [usedHint, setUsedHint] = useState(false);
   const [audience, setAudience] = useState<AudienceBars | null>(null);
   const [phoneTip, setPhoneTip] = useState<string | null>(null);
+  const [hintTip, setHintTip] = useState<string | null>(null);
 
   useEffect(() => {
     const session = loadHotseatSession();
@@ -63,6 +66,7 @@ export function HotseatGame() {
     setHiddenIds(new Set());
     setAudience(null);
     setPhoneTip(null);
+    setHintTip(null);
     setPhase("playing");
   }, []);
 
@@ -91,13 +95,24 @@ export function HotseatGame() {
 
   function usePhone() {
     if (!question || usedPhone || phase !== "playing") return;
+    const correctIndex = question.choices.findIndex((c) => c.isCorrect);
+    const letter = letterForIndex(correctIndex >= 0 ? correctIndex : 0);
+    const tip = isTh
+      ? `เพื่อนบอกว่าน่าจะเป็นข้อ ${letter}${question.hint ? ` — ${question.hint}` : ""}`
+      : `Your friend leans toward ${letter}${question.hint ? ` — ${question.hint}` : ""}`;
+    setPhoneTip(tip);
+    setUsedPhone(true);
+  }
+
+  function useHint() {
+    if (!question || usedHint || phase !== "playing") return;
     const tip =
       question.hint ||
       (isTh
-        ? "เพื่อนคิดว่าคำตอบที่ถูกต้องน่าจะชัดจากบริบทประโยค"
-        : "Your friend thinks the answer is clear from the sentence context.");
-    setPhoneTip(tip);
-    setUsedPhone(true);
+        ? "อ่านบริบทประโยคให้ดี แล้วตัดคำตอบที่ไม่เข้าไวยากรณ์ออกก่อน"
+        : "Read the sentence context carefully and eliminate grammar mismatches first.");
+    setHintTip(tip);
+    setUsedHint(true);
   }
 
   function lockAnswer() {
@@ -177,25 +192,49 @@ export function HotseatGame() {
 
       <div className="grid flex-1 gap-4 lg:grid-cols-[1fr_220px]">
         <section className="flex flex-col gap-4">
-          <div className="flex flex-wrap gap-2">
-            <LifelineBtn
-              label={t.lifeline5050}
-              used={used5050}
-              disabled={phase !== "playing" || used5050}
-              onClick={use5050}
-            />
-            <LifelineBtn
-              label={t.lifelineAudience}
-              used={usedAudience}
-              disabled={phase !== "playing" || usedAudience}
-              onClick={useAudience}
-            />
-            <LifelineBtn
-              label={t.lifelinePhone}
-              used={usedPhone}
-              disabled={phase !== "playing" || usedPhone}
-              onClick={usePhone}
-            />
+          <LifelinesBar
+            title={t.lifelinesTitle}
+            items={[
+              {
+                kind: "fifty",
+                label: t.lifeline5050,
+                desc: t.lifeline5050Desc,
+                icon: "½",
+                used: used5050,
+                disabled: phase !== "playing" || used5050,
+                onClick: use5050,
+              },
+              {
+                kind: "audience",
+                label: t.lifelineAudience,
+                desc: t.lifelineAudienceDesc,
+                icon: "◎",
+                used: usedAudience,
+                disabled: phase !== "playing" || usedAudience,
+                onClick: useAudience,
+              },
+              {
+                kind: "phone",
+                label: t.lifelinePhone,
+                desc: t.lifelinePhoneDesc,
+                icon: "☎",
+                used: usedPhone,
+                disabled: phase !== "playing" || usedPhone,
+                onClick: usePhone,
+              },
+              {
+                kind: "hint",
+                label: t.lifelineHint,
+                desc: t.lifelineHintDesc,
+                icon: "?",
+                used: usedHint,
+                disabled: phase !== "playing" || usedHint,
+                onClick: useHint,
+              },
+            ]}
+          />
+
+          <div className="flex justify-end">
             <Button
               type="button"
               variant="outline"
@@ -207,6 +246,13 @@ export function HotseatGame() {
             </Button>
           </div>
 
+          {hintTip ? (
+            <p className="rounded-xl border border-[var(--millionaire-gold)]/40 bg-black/60 px-4 py-3 text-sm text-[var(--millionaire-gold)]">
+              <span className="font-semibold">{t.lifelineHint}: </span>
+              {hintTip}
+            </p>
+          ) : null}
+
           {phoneTip ? (
             <p className="rounded-xl border border-[var(--millionaire-cyan)]/40 bg-black/60 px-4 py-3 text-sm text-[var(--millionaire-cyan)]">
               <span className="font-semibold">{t.friendSays}: </span>
@@ -216,7 +262,7 @@ export function HotseatGame() {
 
           {audience ? (
             <div className="grid grid-cols-2 gap-2 rounded-xl border border-[var(--millionaire-silver)]/30 bg-black/50 p-3 sm:grid-cols-4">
-              {audience.map((bar, i) => {
+              {audience.map((bar) => {
                 const choice = question.choices.find((c) => c.id === bar.id);
                 return (
                   <div key={bar.id} className="text-center text-xs">
@@ -226,7 +272,7 @@ export function HotseatGame() {
                     <div className="mx-auto flex h-20 w-8 items-end rounded bg-black/80">
                       <div
                         className="w-full rounded-t bg-[var(--millionaire-cyan)]"
-                        style={{ height: `${bar.pct}%` }}
+                        style={{ height: `${Math.max(bar.pct, 4)}%` }}
                       />
                     </div>
                     <div className="mt-1 tabular-nums text-white">{bar.pct}%</div>
@@ -343,33 +389,6 @@ export function HotseatGame() {
         </div>
       ) : null}
     </div>
-  );
-}
-
-function LifelineBtn({
-  label,
-  used,
-  disabled,
-  onClick,
-}: {
-  label: string;
-  used: boolean;
-  disabled: boolean;
-  onClick: () => void;
-}) {
-  return (
-    <button
-      type="button"
-      disabled={disabled}
-      onClick={onClick}
-      className={cn(
-        "millionaire-lifeline min-w-[3.25rem] px-2 text-[10px] font-bold leading-tight",
-        used && "line-through opacity-40",
-      )}
-      title={label}
-    >
-      {label}
-    </button>
   );
 }
 

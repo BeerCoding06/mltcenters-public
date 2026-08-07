@@ -98,6 +98,12 @@ type StaticMessages = {
   lifeline5050: string;
   lifelineAudience: string;
   lifelinePhone: string;
+  lifelineHint: string;
+  lifelinesTitle: string;
+  lifeline5050Desc: string;
+  lifelineAudienceDesc: string;
+  lifelinePhoneDesc: string;
+  lifelineHintDesc: string;
   walkAway: string;
   walkedAway: string;
   friendSays: string;
@@ -221,8 +227,14 @@ export const messages: Record<GameLang, Messages> = {
     guaranteed: "Guaranteed",
     moneyLadder: "Prize ladder",
     lifeline5050: "50:50",
-    lifelineAudience: "Audience",
-    lifelinePhone: "Phone",
+    lifelineAudience: "Ask audience",
+    lifelinePhone: "Phone a friend",
+    lifelineHint: "Hint",
+    lifelinesTitle: "Lifelines",
+    lifeline5050Desc: "Remove two wrong answers",
+    lifelineAudienceDesc: "See how the audience would vote",
+    lifelinePhoneDesc: "Get a tip from a friend",
+    lifelineHintDesc: "Show a teaching hint",
     walkAway: "Walk away",
     walkedAway: "Walked away",
     friendSays: "Friend says",
@@ -336,7 +348,13 @@ export const messages: Record<GameLang, Messages> = {
     moneyLadder: "บันไดเงินรางวัล",
     lifeline5050: "50:50",
     lifelineAudience: "ถามคนดู",
-    lifelinePhone: "โทรถาม",
+    lifelinePhone: "โทรถามเพื่อน",
+    lifelineHint: "คำใบ้",
+    lifelinesTitle: "ตัวช่วย",
+    lifeline5050Desc: "ตัดคำตอบผิดออก 2 ข้อ",
+    lifelineAudienceDesc: "ดูเปอร์เซ็นต์โหวตจากคนดู",
+    lifelinePhoneDesc: "ให้เพื่อนช่วยแนะนำคำตอบ",
+    lifelineHintDesc: "แสดงคำใบ้จากโจทย์",
     walkAway: "ยอมถอนตัว",
     walkedAway: "ถอนตัวแล้ว",
     friendSays: "เพื่อนบอกว่า",
