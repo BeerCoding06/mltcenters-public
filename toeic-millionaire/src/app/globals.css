@@ -244,6 +244,10 @@
     margin-inline: auto;
   }
 
+  .hotseat-host {
+    mask-image: linear-gradient(to bottom, #000 72%, transparent 100%);
+  }
+
   .hotseat-question {
     position: relative;
     z-index: 2;

@@ -22,6 +22,9 @@ import {
   TOTAL_QUESTIONS,
 } from "./prize-ladder";
 import { clearHotseatSession, loadHotseatSession } from "./session";
+import { APP_BASE_PATH } from "@/lib/api-url";
+
+const KRUMAM_HOST = `${APP_BASE_PATH}/assets/img-design-about/krumam.jpg`;
 
 type Phase = "playing" | "locked" | "revealed" | "won" | "lost" | "walked";
 
@@ -231,8 +234,8 @@ export function HotseatGame() {
   ];
 
   return (
-    <div className="relative mx-auto flex w-full max-w-7xl flex-1 flex-col gap-3 px-3 py-3 md:px-5 md:py-4">
-      <header className="flex flex-wrap items-center justify-between gap-2">
+    <div className="relative mx-auto flex min-h-[calc(100dvh-5.5rem)] w-full max-w-7xl flex-1 flex-col gap-2 px-3 pb-3 pt-2 md:px-5">
+      <header className="z-20 flex flex-wrap items-center justify-between gap-2">
         <div className="flex flex-wrap items-center gap-2">
           <span className="hotseat-status text-[#c9a227]">{t.brand}</span>
           <span className="hotseat-status">
@@ -271,8 +274,8 @@ export function HotseatGame() {
         </div>
       </header>
 
-      <div className="grid flex-1 items-start gap-3 lg:grid-cols-[180px_minmax(0,1fr)_72px]">
-        <aside className="hotseat-ladder order-3 p-2 lg:order-1 lg:sticky lg:top-3">
+      <div className="grid min-h-0 flex-1 gap-2 lg:grid-cols-[160px_minmax(0,1fr)_72px]">
+        <aside className="hotseat-ladder order-3 max-h-[40vh] overflow-y-auto p-2 lg:order-1 lg:max-h-none lg:self-start">
           <p className="mb-1 text-center text-[10px] font-semibold uppercase tracking-wider text-[#c9a227]">
             {t.moneyLadder}
           </p>
@@ -282,36 +285,42 @@ export function HotseatGame() {
           />
         </aside>
 
-        <section className="order-1 flex flex-col gap-3 lg:order-2">
-          <div className="lg:hidden">
-            <LifelinesBar
-              title={t.lifelinesTitle}
-              orientation="horizontal"
-              items={lifelineItems}
+        <section className="order-1 relative flex min-h-[58vh] flex-col lg:order-2 lg:min-h-0">
+          <div className="absolute right-0 top-0 z-20 lg:hidden">
+            <LifelinesBar orientation="horizontal" items={lifelineItems} />
+          </div>
+
+          {/* Host (krumam) — fills center like the TV show */}
+          <div className="hotseat-host pointer-events-none absolute inset-x-0 top-0 bottom-[11.5rem] z-0 flex items-end justify-center sm:bottom-[12.5rem] md:bottom-[13.5rem]">
+            <img
+              src={KRUMAM_HOST}
+              alt="krumam"
+              className="h-full max-h-[min(58vh,520px)] w-auto max-w-[min(92%,420px)] object-contain object-bottom drop-shadow-[0_12px_40px_rgb(0_0_0_/_55%)]"
             />
           </div>
 
-          {hintTip ? (
-            <p className="rounded-full border border-[#c9a227]/50 bg-black px-5 py-2.5 text-center text-sm text-[#fbbf24]">
-              <span className="font-semibold">{t.lifelineHint}: </span>
-              {hintTip}
-            </p>
-          ) : null}
+          <div className="relative z-10 mx-auto mt-2 flex w-full max-w-3xl flex-col gap-2 px-1">
+            {hintTip ? (
+              <p className="rounded-full border border-[#c9a227]/50 bg-black/85 px-5 py-2 text-center text-sm text-[#fbbf24] backdrop-blur-sm">
+                <span className="font-semibold">{t.lifelineHint}: </span>
+                {hintTip}
+              </p>
+            ) : null}
+            {phoneLoading ? (
+              <p className="rounded-full border border-[#e8e8ed]/40 bg-black/85 px-5 py-2 text-center text-sm text-[#93c5fd] backdrop-blur-sm">
+                {t.phoneCalling}
+              </p>
+            ) : null}
+            {phoneTip ? (
+              <p className="rounded-full border border-[#e8e8ed]/40 bg-black/85 px-5 py-2 text-center text-sm text-[#93c5fd] backdrop-blur-sm">
+                <span className="font-semibold">{t.friendSays}: </span>
+                {phoneTip}
+              </p>
+            ) : null}
+          </div>
 
-          {phoneLoading ? (
-            <p className="rounded-full border border-[#e8e8ed]/40 bg-black px-5 py-2.5 text-center text-sm text-[#93c5fd]">
-              {t.phoneCalling}
-            </p>
-          ) : null}
-
-          {phoneTip ? (
-            <p className="rounded-full border border-[#e8e8ed]/40 bg-black px-5 py-2.5 text-center text-sm text-[#93c5fd]">
-              <span className="font-semibold">{t.friendSays}: </span>
-              {phoneTip}
-            </p>
-          ) : null}
-
-          <div className="hotseat-stage flex flex-1 flex-col justify-end pb-2 pt-6 md:pt-10">
+          {/* Question + answers pinned to bottom of stage */}
+          <div className="hotseat-stage relative z-10 mt-auto flex flex-col justify-end pb-1 pt-2">
             <div className="hotseat-question">
               {question.passage ? (
                 <p className="mb-2 whitespace-pre-wrap text-left text-xs text-[#d4d4d8] md:text-sm">
@@ -337,41 +346,41 @@ export function HotseatGame() {
                 />
               ))}
             </div>
-          </div>
 
-          {!ended ? (
-            <div className="flex justify-center pt-1">
-              <Button
-                size="lg"
-                disabled={!selectedId || phase !== "playing"}
-                onClick={lockAnswer}
-                className="min-w-[200px] rounded-full border border-[#e8e8ed] bg-[#c9a227] text-black hover:bg-[#dbb42c]"
+            {!ended ? (
+              <div className="flex justify-center pt-3">
+                <Button
+                  size="lg"
+                  disabled={!selectedId || phase !== "playing"}
+                  onClick={lockAnswer}
+                  className="min-w-[200px] rounded-full border border-[#e8e8ed] bg-[#c9a227] text-black hover:bg-[#dbb42c]"
+                >
+                  {phase === "locked" || phase === "revealed"
+                    ? t.revealing
+                    : t.finalAnswer}
+                </Button>
+              </div>
+            ) : null}
+
+            {phase === "revealed" && selectedId ? (
+              <p
+                className={cn(
+                  "pt-2 text-center text-sm font-semibold",
+                  question.choices.find((c) => c.id === selectedId)?.isCorrect
+                    ? "text-[#34d399]"
+                    : "text-[#f87171]",
+                )}
               >
-                {phase === "locked" || phase === "revealed"
-                  ? t.revealing
-                  : t.finalAnswer}
-              </Button>
-            </div>
-          ) : null}
-
-          {phase === "revealed" && selectedId ? (
-            <p
-              className={cn(
-                "text-center text-sm font-semibold",
-                question.choices.find((c) => c.id === selectedId)?.isCorrect
-                  ? "text-[#34d399]"
-                  : "text-[#f87171]",
-              )}
-            >
-              {question.choices.find((c) => c.id === selectedId)?.isCorrect
-                ? t.correct
-                : t.incorrect}
-              {question.explanation ? ` — ${question.explanation}` : ""}
-            </p>
-          ) : null}
+                {question.choices.find((c) => c.id === selectedId)?.isCorrect
+                  ? t.correct
+                  : t.incorrect}
+                {question.explanation ? ` — ${question.explanation}` : ""}
+              </p>
+            ) : null}
+          </div>
         </section>
 
-        <aside className="order-2 hidden justify-self-center pt-8 lg:order-3 lg:flex lg:sticky lg:top-8">
+        <aside className="order-2 hidden self-start pt-6 lg:order-3 lg:flex">
           <LifelinesBar orientation="vertical" items={lifelineItems} />
         </aside>
       </div>
