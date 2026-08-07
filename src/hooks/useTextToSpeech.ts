@@ -5,6 +5,9 @@ import { track } from '@/analytics/track';
 /** ความเร็วพูดช้า ชัด (สำหรับเด็ก) */
 const CHILD_SPEECH_RATE = 0.72;
 const CHILD_SPEECH_PITCH = 1.08;
+/** Chrome speechSynthesis sometimes never fires onend — force settle */
+const TTS_WATCHDOG_MIN_MS = 8_000;
+const TTS_WATCHDOG_MS_PER_CHAR = 90;
 
 function pickEnglishVoice(voices: SpeechSynthesisVoice[]): SpeechSynthesisVoice | undefined {
   return (
@@ -18,6 +21,8 @@ export function useTextToSpeech() {
   const synth = typeof window !== 'undefined' ? window.speechSynthesis : null;
   const voicesRef = useRef<SpeechSynthesisVoice[]>([]);
   const unlockedRef = useRef(false);
+  const watchdogRef = useRef<number | null>(null);
+  const settledRef = useRef(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
 
   useEffect(() => {
@@ -29,21 +34,50 @@ export function useTextToSpeech() {
     synth.onvoiceschanged = load;
   }, [synth]);
 
+  const clearWatchdog = useCallback(() => {
+    if (watchdogRef.current != null) {
+      window.clearTimeout(watchdogRef.current);
+      watchdogRef.current = null;
+    }
+  }, []);
+
   const unlockAudio = useCallback(() => {
     if (!synth || unlockedRef.current) return;
     unlockedRef.current = true;
-    const u = new SpeechSynthesisUtterance('');
-    u.volume = 0;
-    u.rate = 10;
-    synth.speak(u);
-    synth.cancel();
+    try {
+      const u = new SpeechSynthesisUtterance(' ');
+      u.volume = 0.01;
+      u.rate = 2;
+      u.onend = () => {
+        /* unlocked */
+      };
+      synth.speak(u);
+      window.setTimeout(() => {
+        try {
+          synth.cancel();
+        } catch {
+          /* ignore */
+        }
+      }, 80);
+    } catch {
+      /* ignore */
+    }
   }, [synth]);
 
   const stop = useCallback(() => {
-    if (!synth) return;
-    synth.cancel();
+    clearWatchdog();
+    settledRef.current = true;
+    if (!synth) {
+      setIsSpeaking(false);
+      return;
+    }
+    try {
+      synth.cancel();
+    } catch {
+      /* ignore */
+    }
     setIsSpeaking(false);
-  }, [synth]);
+  }, [synth, clearWatchdog]);
 
   const speak = useCallback(
     (text: string, onEnd?: () => void) => {
@@ -56,7 +90,15 @@ export function useTextToSpeech() {
         onEnd?.();
         return;
       }
-      synth.cancel();
+
+      clearWatchdog();
+      settledRef.current = false;
+      try {
+        synth.cancel();
+      } catch {
+        /* ignore */
+      }
+
       if (voicesRef.current.length === 0) voicesRef.current = synth.getVoices();
       const u = new SpeechSynthesisUtterance(t);
       u.lang = 'en-US';
@@ -65,23 +107,56 @@ export function useTextToSpeech() {
       u.volume = 1;
       const voice = pickEnglishVoice(voicesRef.current);
       if (voice) u.voice = voice;
+
+      const settle = () => {
+        if (settledRef.current) return;
+        settledRef.current = true;
+        clearWatchdog();
+        setIsSpeaking(false);
+        onEnd?.();
+      };
+
       u.onstart = () => {
         setIsSpeaking(true);
         track(ANALYTICS_EVENTS.TTS_STARTED);
       };
       u.onend = () => {
-        setIsSpeaking(false);
         track(ANALYTICS_EVENTS.TTS_COMPLETED);
-        onEnd?.();
+        settle();
       };
       u.onerror = () => {
-        setIsSpeaking(false);
-        onEnd?.();
+        settle();
       };
-      synth.speak(u);
+
+      const watchdogMs = Math.max(
+        TTS_WATCHDOG_MIN_MS,
+        Math.ceil(t.length * TTS_WATCHDOG_MS_PER_CHAR / CHILD_SPEECH_RATE)
+      );
+      watchdogRef.current = window.setTimeout(() => {
+        watchdogRef.current = null;
+        if (import.meta.env.DEV) {
+          console.warn('[tts] watchdog fired — forcing speech end');
+        }
+        try {
+          synth.cancel();
+        } catch {
+          /* ignore */
+        }
+        settle();
+      }, watchdogMs);
+
+      try {
+        synth.speak(u);
+        // Some Chrome builds pause the queue after cancel — nudge resume
+        if (synth.paused) synth.resume();
+      } catch {
+        settle();
+      }
     },
-    [synth]
+    [synth, clearWatchdog]
   );
+
+  useEffect(() => () => clearWatchdog(), [clearWatchdog]);
 
   return { speak, stop, unlockAudio, isSpeaking };
 }

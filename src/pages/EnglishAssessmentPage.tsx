@@ -75,7 +75,8 @@ export default function EnglishAssessmentPage() {
         setAvatarState('idle');
         setSpeakingMessageId(null);
         if (thenListen && voiceModeRef.current && !busyRef.current) {
-          window.setTimeout(() => startListeningRef.current?.(), 950);
+          // Extra gap so mic does not pick up TTS echo
+          window.setTimeout(() => startListeningRef.current?.(), 1200);
         }
       });
     },
@@ -146,6 +147,11 @@ export default function EnglishAssessmentPage() {
     silenceMs: 1800,
     onFinal: onSpeechFinal,
     onInterim: onSpeechInterim,
+    wantListening: () =>
+      voiceModeRef.current &&
+      conversationStarted &&
+      !busyRef.current &&
+      !pendingSpeechRef.current,
   });
 
   const startListeningRef = useRef(startListening);

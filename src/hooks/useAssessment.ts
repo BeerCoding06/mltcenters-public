@@ -163,6 +163,7 @@ export function useAssessment(onComplete: (result: AssessmentResult) => void) {
     abortRef.current?.abort();
     const controller = new AbortController();
     abortRef.current = controller;
+    const timeoutId = window.setTimeout(() => controller.abort(), 25_000);
     inFlightKeyRef.current = requestKey;
     lastUserSentRef.current = trimmed;
 
@@ -265,14 +266,22 @@ export function useAssessment(onComplete: (result: AssessmentResult) => void) {
       }
       return { reply, scores, level, messageId: assistantId };
     } catch (e) {
-      if ((e as Error).name !== 'AbortError') {
-        track(ANALYTICS_EVENTS.ASSESSMENT_FAILED);
-        return appendLocalAssistant(
-          "Oops, something went wrong. No worries—just try again or type your answer!"
-        );
+      if ((e as Error).name === 'AbortError') {
+        // Timed out or superseded — recover with a soft prompt so voice mode can continue
+        if (abortRef.current === controller) {
+          track(ANALYTICS_EVENTS.ASSESSMENT_FAILED, { reason: 'timeout_or_abort' });
+          return appendLocalAssistant(
+            "Hmm, that took too long. Please say that again—I'm listening!"
+          );
+        }
+        return null;
       }
-      return null;
+      track(ANALYTICS_EVENTS.ASSESSMENT_FAILED);
+      return appendLocalAssistant(
+        "Oops, something went wrong. No worries—just try again or type your answer!"
+      );
     } finally {
+      window.clearTimeout(timeoutId);
       if (abortRef.current === controller) abortRef.current = null;
       if (inFlightKeyRef.current === requestKey) inFlightKeyRef.current = null;
       setIsThinking(false);
