@@ -41,8 +41,10 @@ export function HotseatGame() {
   const [used5050, setUsed5050] = useState(false);
   const [usedPhone, setUsedPhone] = useState(false);
   const [usedSwap, setUsedSwap] = useState(false);
+  const [usedHint, setUsedHint] = useState(false);
   const [phoneLoading, setPhoneLoading] = useState(false);
   const [phoneTip, setPhoneTip] = useState<string | null>(null);
+  const [hintTip, setHintTip] = useState<string | null>(null);
 
   useEffect(() => {
     const session = loadHotseatSession();
@@ -66,6 +68,7 @@ export function HotseatGame() {
     setSelectedId(null);
     setHiddenIds(new Set());
     setPhoneTip(null);
+    setHintTip(null);
     setPhase("playing");
   }, []);
 
@@ -130,6 +133,18 @@ export function HotseatGame() {
     });
     setUsedSwap(true);
     resetQuestionUi();
+  }
+
+  /** Hint — show teaching hint from the question bank. */
+  function useHint() {
+    if (!question || usedHint || phase !== "playing") return;
+    const tip =
+      question.hint ||
+      (isTh
+        ? "อ่านบริบทประโยคให้ดี แล้วตัดตัวเลือกที่ไม่เข้าไวยากรณ์ออกก่อน"
+        : "Read the sentence carefully and eliminate options that do not fit the grammar.");
+    setHintTip(tip);
+    setUsedHint(true);
   }
 
   function lockAnswer() {
@@ -219,7 +234,6 @@ export function HotseatGame() {
                 kind: "fifty",
                 label: t.lifeline5050,
                 desc: t.lifeline5050Desc,
-                icon: "½",
                 used: used5050,
                 disabled: phase !== "playing" || used5050,
                 onClick: use5050,
@@ -228,7 +242,6 @@ export function HotseatGame() {
                 kind: "phone",
                 label: t.lifelinePhone,
                 desc: t.lifelinePhoneDesc,
-                icon: "☎",
                 used: usedPhone,
                 loading: phoneLoading,
                 disabled: phase !== "playing" || usedPhone || phoneLoading,
@@ -238,10 +251,17 @@ export function HotseatGame() {
                 kind: "swap",
                 label: t.lifelineSwap,
                 desc: t.lifelineSwapDesc,
-                icon: "⇄",
                 used: usedSwap,
                 disabled: phase !== "playing" || usedSwap,
                 onClick: useSwap,
+              },
+              {
+                kind: "hint",
+                label: t.lifelineHint,
+                desc: t.lifelineHintDesc,
+                used: usedHint,
+                disabled: phase !== "playing" || usedHint,
+                onClick: useHint,
               },
             ]}
           />
@@ -257,6 +277,13 @@ export function HotseatGame() {
               {t.walkAway}
             </Button>
           </div>
+
+          {hintTip ? (
+            <p className="rounded-xl border border-[var(--millionaire-gold)]/45 bg-black/60 px-4 py-3 text-sm text-[var(--millionaire-gold)]">
+              <span className="font-semibold">{t.lifelineHint}: </span>
+              {hintTip}
+            </p>
+          ) : null}
 
           {phoneLoading ? (
             <p className="rounded-xl border border-[var(--millionaire-cyan)]/40 bg-black/60 px-4 py-3 text-sm text-[var(--millionaire-cyan)]">
