@@ -120,3 +120,33 @@ export function buildHotseatDeck(lobby: HotseatDifficulty): HotseatQuestion[] {
 export function letterForIndex(i: number): ChoiceLetter {
   return LETTERS[i] ?? "A";
 }
+
+/** Replace current question with another unused one of similar difficulty. */
+export function pickReplacementQuestion(
+  excludeIds: Set<string> | string[],
+  step: number,
+  lobby: HotseatDifficulty,
+): HotseatQuestion | null {
+  const exclude = excludeIds instanceof Set ? excludeIds : new Set(excludeIds);
+  const all = (bank as typeof bank).map(asQuestion);
+  const want = difficultyForStep(step, lobby);
+  const order: HotseatDifficulty[] =
+    want === "EASY"
+      ? ["EASY", "MEDIUM", "HARD"]
+      : want === "MEDIUM"
+        ? ["MEDIUM", "EASY", "HARD"]
+        : ["HARD", "MEDIUM", "EASY"];
+
+  const pools = order.map((d) =>
+    shuffle(all.filter((q) => q.difficulty === d && !exclude.has(q.id))),
+  );
+  const picked = pools.flat()[0] ?? all.find((q) => !exclude.has(q.id));
+  if (!picked) return null;
+  return {
+    ...picked,
+    choices: shuffle(picked.choices).map((c, i) => ({
+      ...c,
+      sortOrder: i,
+    })),
+  };
+}

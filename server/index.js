@@ -353,6 +353,53 @@ app.post('/api/assess', async (req, res) => {
   }
 });
 
+/** TOEIC Millionaire — Phone a Friend lifeline (AI opinion, does not guarantee correctness). */
+app.post('/api/toeic-friend', async (req, res) => {
+  if (!openai) {
+    return res.status(503).json({
+      error: 'AI API key not configured. Set OPENAI_API_KEY or AI_GATEWAY_API_KEY.',
+    });
+  }
+  const { stem, passage, choices, lang } = req.body || {};
+  if (!stem || !Array.isArray(choices) || choices.length < 2) {
+    return res.status(400).json({ error: 'stem and choices are required' });
+  }
+
+  const th = lang === 'th';  const listed = choices
+    .map((c, i) => `${String.fromCharCode(65 + i)}) ${c?.label ?? ''}`)
+    .join('\n');
+  const system = th
+    ? 'คุณเป็นเพื่อนที่ช่วยตอบคำถาม TOEIC ในเกมเศรษฐี พูดสั้นๆ เป็นภาษาไทย อธิบายเหตุผลคร่าวๆ และบอกว่าคิดว่าข้อไหน (A/B/C/D) แต่ยอมรับว่าอาจผิดได้ อย่าพูดยาวเกิน 4 ประโยค'
+    : 'You are a friend helping on a TOEIC quiz-show question. Reply briefly in English, pick a letter A–D with a short reason, and admit you might be wrong. Max 4 sentences.';
+  const user = [
+    passage ? `Passage:\n${passage}` : null,
+    `Question: ${stem}`,
+    `Choices:\n${listed}`,
+  ]
+    .filter(Boolean)
+    .join('\n\n');
+
+  try {
+    const completion = await openai.chat.completions.create({
+      model: AI_MODEL,
+      temperature: 0.4,
+      max_tokens: 220,
+      messages: [
+        { role: 'system', content: system },
+        { role: 'user', content: user },
+      ],
+    });
+    const advice = completion.choices[0]?.message?.content?.trim();
+    if (!advice) {
+      return res.status(502).json({ error: 'Empty AI response' });
+    }
+    return res.json({ advice });
+  } catch (err) {
+    console.error('[toeic-friend]', err);
+    return res.status(500).json({ error: err.message || 'AI request failed' });
+  }
+});
+
 // 3D English Runner game API
 app.use('/runner-api', createRunnerRouter(openai, AI_MODEL));
 

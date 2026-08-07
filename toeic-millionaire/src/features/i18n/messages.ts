@@ -99,11 +99,16 @@ type StaticMessages = {
   lifelineAudience: string;
   lifelinePhone: string;
   lifelineHint: string;
+  lifelineSwap: string;
   lifelinesTitle: string;
   lifeline5050Desc: string;
   lifelineAudienceDesc: string;
   lifelinePhoneDesc: string;
   lifelineHintDesc: string;
+  lifelineSwapDesc: string;
+  phoneCalling: string;
+  phoneFailed: string;
+  swapFailed: string;
   walkAway: string;
   walkedAway: string;
   friendSays: string;
@@ -228,13 +233,18 @@ export const messages: Record<GameLang, Messages> = {
     moneyLadder: "Prize ladder",
     lifeline5050: "50:50",
     lifelineAudience: "Ask audience",
-    lifelinePhone: "Phone a friend",
+    lifelinePhone: "Phone a Friend",
     lifelineHint: "Hint",
+    lifelineSwap: "Switch question",
     lifelinesTitle: "Lifelines",
-    lifeline5050Desc: "Remove two wrong answers",
+    lifeline5050Desc: "Remove 2 wrong answers",
     lifelineAudienceDesc: "See how the audience would vote",
-    lifelinePhoneDesc: "Get a tip from a friend",
+    lifelinePhoneDesc: "Ask the AI for advice",
     lifelineHintDesc: "Show a teaching hint",
+    lifelineSwapDesc: "Replace this question once",
+    phoneCalling: "Calling your AI friend…",
+    phoneFailed: "Could not reach AI. Try again or answer without help.",
+    swapFailed: "No replacement question left.",
     walkAway: "Walk away",
     walkedAway: "Walked away",
     friendSays: "Friend says",
@@ -346,15 +356,20 @@ export const messages: Record<GameLang, Messages> = {
     playingFor: "เล่นเพื่อ",
     guaranteed: "เงินประกัน",
     moneyLadder: "บันไดเงินรางวัล",
-    lifeline5050: "50:50",
+    lifeline5050: "ตัดคำตอบ 50:50",
     lifelineAudience: "ถามคนดู",
     lifelinePhone: "โทรถามเพื่อน",
     lifelineHint: "คำใบ้",
+    lifelineSwap: "เปลี่ยนคำถาม",
     lifelinesTitle: "ตัวช่วย",
-    lifeline5050Desc: "ตัดคำตอบผิดออก 2 ข้อ",
+    lifeline5050Desc: "สุ่มตัดคำตอบผิด 2 ข้อ เหลือ 2 ตัวเลือก",
     lifelineAudienceDesc: "ดูเปอร์เซ็นต์โหวตจากคนดู",
-    lifelinePhoneDesc: "ให้เพื่อนช่วยแนะนำคำตอบ",
+    lifelinePhoneDesc: "ถาม AI เพื่อนช่วยวิเคราะห์",
     lifelineHintDesc: "แสดงคำใบ้จากโจทย์",
+    lifelineSwapDesc: "เปลี่ยนเป็นคำถามใหม่ 1 ครั้ง",
+    phoneCalling: "กำลังโทรหาเพื่อน AI…",
+    phoneFailed: "ติดต่อ AI ไม่สำเร็จ ลองใหม่หรือตอบเอง",
+    swapFailed: "ไม่มีคำถามสำรองเหลือแล้ว",
     walkAway: "ยอมถอนตัว",
     walkedAway: "ถอนตัวแล้ว",
     friendSays: "เพื่อนบอกว่า",

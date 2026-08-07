@@ -11,7 +11,9 @@ import { MoneyLadder } from "./MoneyLadder";
 import {
   buildHotseatDeck,
   letterForIndex,
+  pickReplacementQuestion,
   type HotseatChoice,
+  type HotseatDifficulty,
   type HotseatQuestion,
 } from "./question-bank";
 import {
@@ -24,25 +26,23 @@ import { clearHotseatSession, loadHotseatSession } from "./session";
 
 type Phase = "playing" | "locked" | "revealed" | "won" | "lost" | "walked";
 
-type AudienceBars = { id: string; pct: number }[];
-
 export function HotseatGame() {
   const router = useRouter();
   const { t, isTh } = useGameLang();
   const [ready, setReady] = useState(false);
   const [displayName, setDisplayName] = useState("Player");
+  const [lobbyDifficulty, setLobbyDifficulty] =
+    useState<HotseatDifficulty>("MEDIUM");
   const [deck, setDeck] = useState<HotseatQuestion[]>([]);
   const [index, setIndex] = useState(0);
   const [phase, setPhase] = useState<Phase>("playing");
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [hiddenIds, setHiddenIds] = useState<Set<string>>(new Set());
   const [used5050, setUsed5050] = useState(false);
-  const [usedAudience, setUsedAudience] = useState(false);
   const [usedPhone, setUsedPhone] = useState(false);
-  const [usedHint, setUsedHint] = useState(false);
-  const [audience, setAudience] = useState<AudienceBars | null>(null);
+  const [usedSwap, setUsedSwap] = useState(false);
+  const [phoneLoading, setPhoneLoading] = useState(false);
   const [phoneTip, setPhoneTip] = useState<string | null>(null);
-  const [hintTip, setHintTip] = useState<string | null>(null);
 
   useEffect(() => {
     const session = loadHotseatSession();
@@ -51,6 +51,7 @@ export function HotseatGame() {
       return;
     }
     setDisplayName(session.displayName);
+    setLobbyDifficulty(session.difficulty);
     setDeck(buildHotseatDeck(session.difficulty));
     setReady(true);
   }, [router]);
@@ -61,58 +62,74 @@ export function HotseatGame() {
   const prizeNow = PRIZE_LADDER[index]?.amount ?? 0;
   const banked = guaranteedPrize(answeredCount);
 
-  const resetForNext = useCallback(() => {
+  const resetQuestionUi = useCallback(() => {
     setSelectedId(null);
     setHiddenIds(new Set());
-    setAudience(null);
     setPhoneTip(null);
-    setHintTip(null);
     setPhase("playing");
   }, []);
 
+  /** 50:50 — randomly drop 2 wrong answers; leave 1 correct + 1 wrong. */
   function use5050() {
     if (!question || used5050 || phase !== "playing") return;
     const wrong = question.choices.filter((c) => !c.isCorrect);
-    const drop = shufflePick(wrong, 2).map((c) => c.id);
+    const drop = shufflePick(wrong, Math.min(2, wrong.length)).map((c) => c.id);
     setHiddenIds(new Set(drop));
     setUsed5050(true);
     if (selectedId && drop.includes(selectedId)) setSelectedId(null);
   }
 
-  function useAudience() {
-    if (!question || usedAudience || phase !== "playing") return;
-    const correct = question.choices.find((c) => c.isCorrect);
-    const bars = question.choices
-      .filter((c) => !hiddenIds.has(c.id))
-      .map((c) => {
-        if (c.id === correct?.id) return { id: c.id, pct: 42 + Math.floor(Math.random() * 28) };
-        return { id: c.id, pct: 5 + Math.floor(Math.random() * 22) };
+  /** Phone a Friend — ask site AI for advice. */
+  async function usePhone() {
+    if (!question || usedPhone || phoneLoading || phase !== "playing") return;
+    setPhoneLoading(true);
+    setPhoneTip(null);
+    try {
+      const visible = question.choices.filter((c) => !hiddenIds.has(c.id));
+      const res = await fetch("/api/toeic-friend", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          stem: question.stem,
+          passage: question.passage,
+          choices: visible.map((c) => ({ label: c.label })),
+          lang: isTh ? "th" : "en",
+        }),
+        signal: AbortSignal.timeout(25_000),
       });
-    const sum = bars.reduce((a, b) => a + b.pct, 0) || 1;
-    setAudience(bars.map((b) => ({ ...b, pct: Math.round((b.pct / sum) * 100) })));
-    setUsedAudience(true);
+      const payload = (await res.json().catch(() => null)) as {
+        advice?: string;
+        error?: string;
+      } | null;
+      if (!res.ok || !payload?.advice) {
+        throw new Error(payload?.error || t.phoneFailed);
+      }
+      setPhoneTip(payload.advice);
+      setUsedPhone(true);
+    } catch {
+      setPhoneTip(t.phoneFailed);
+      // Do not consume lifeline on failure — player can retry
+    } finally {
+      setPhoneLoading(false);
+    }
   }
 
-  function usePhone() {
-    if (!question || usedPhone || phase !== "playing") return;
-    const correctIndex = question.choices.findIndex((c) => c.isCorrect);
-    const letter = letterForIndex(correctIndex >= 0 ? correctIndex : 0);
-    const tip = isTh
-      ? `เพื่อนบอกว่าน่าจะเป็นข้อ ${letter}${question.hint ? ` — ${question.hint}` : ""}`
-      : `Your friend leans toward ${letter}${question.hint ? ` — ${question.hint}` : ""}`;
-    setPhoneTip(tip);
-    setUsedPhone(true);
-  }
-
-  function useHint() {
-    if (!question || usedHint || phase !== "playing") return;
-    const tip =
-      question.hint ||
-      (isTh
-        ? "อ่านบริบทประโยคให้ดี แล้วตัดคำตอบที่ไม่เข้าไวยากรณ์ออกก่อน"
-        : "Read the sentence context carefully and eliminate grammar mismatches first.");
-    setHintTip(tip);
-    setUsedHint(true);
+  /** Change question — swap current item for another unused TOEIC question. */
+  function useSwap() {
+    if (!question || usedSwap || phase !== "playing") return;
+    const exclude = new Set(deck.map((q) => q.id));
+    const next = pickReplacementQuestion(exclude, step, lobbyDifficulty);
+    if (!next) {
+      setPhoneTip(t.swapFailed);
+      return;
+    }
+    setDeck((prev) => {
+      const copy = [...prev];
+      copy[index] = next;
+      return copy;
+    });
+    setUsedSwap(true);
+    resetQuestionUi();
   }
 
   function lockAnswer() {
@@ -128,7 +145,7 @@ export function HotseatGame() {
             setPhase("won");
           } else {
             setIndex((i) => i + 1);
-            resetForNext();
+            resetQuestionUi();
           }
         } else {
           setPhase("lost");
@@ -176,7 +193,10 @@ export function HotseatGame() {
         </div>
         <div className="flex flex-wrap items-center gap-2">
           <span className="millionaire-pill py-1.5 text-xs">
-            {t.playingFor}: <strong className="text-[var(--millionaire-gold)]">{formatPrize(prizeNow)}</strong>
+            {t.playingFor}:{" "}
+            <strong className="text-[var(--millionaire-gold)]">
+              {formatPrize(prizeNow)}
+            </strong>
           </span>
           <span className="millionaire-pill py-1.5 text-xs">
             {t.guaranteed}: <strong>{formatPrize(banked)}</strong>
@@ -205,31 +225,23 @@ export function HotseatGame() {
                 onClick: use5050,
               },
               {
-                kind: "audience",
-                label: t.lifelineAudience,
-                desc: t.lifelineAudienceDesc,
-                icon: "◎",
-                used: usedAudience,
-                disabled: phase !== "playing" || usedAudience,
-                onClick: useAudience,
-              },
-              {
                 kind: "phone",
                 label: t.lifelinePhone,
                 desc: t.lifelinePhoneDesc,
                 icon: "☎",
                 used: usedPhone,
-                disabled: phase !== "playing" || usedPhone,
-                onClick: usePhone,
+                loading: phoneLoading,
+                disabled: phase !== "playing" || usedPhone || phoneLoading,
+                onClick: () => void usePhone(),
               },
               {
-                kind: "hint",
-                label: t.lifelineHint,
-                desc: t.lifelineHintDesc,
-                icon: "?",
-                used: usedHint,
-                disabled: phase !== "playing" || usedHint,
-                onClick: useHint,
+                kind: "swap",
+                label: t.lifelineSwap,
+                desc: t.lifelineSwapDesc,
+                icon: "⇄",
+                used: usedSwap,
+                disabled: phase !== "playing" || usedSwap,
+                onClick: useSwap,
               },
             ]}
           />
@@ -246,10 +258,9 @@ export function HotseatGame() {
             </Button>
           </div>
 
-          {hintTip ? (
-            <p className="rounded-xl border border-[var(--millionaire-gold)]/40 bg-black/60 px-4 py-3 text-sm text-[var(--millionaire-gold)]">
-              <span className="font-semibold">{t.lifelineHint}: </span>
-              {hintTip}
+          {phoneLoading ? (
+            <p className="rounded-xl border border-[var(--millionaire-cyan)]/40 bg-black/60 px-4 py-3 text-sm text-[var(--millionaire-cyan)]">
+              {t.phoneCalling}
             </p>
           ) : null}
 
@@ -258,31 +269,6 @@ export function HotseatGame() {
               <span className="font-semibold">{t.friendSays}: </span>
               {phoneTip}
             </p>
-          ) : null}
-
-          {audience ? (
-            <div className="grid grid-cols-2 gap-2 rounded-xl border border-[var(--millionaire-silver)]/30 bg-black/50 p-3 sm:grid-cols-4">
-              {audience.map((bar) => {
-                const choice = question.choices.find((c) => c.id === bar.id);
-                return (
-                  <div key={bar.id} className="text-center text-xs">
-                    <div className="mb-1 text-[var(--millionaire-silver)]">
-                      {letterForIndex(question.choices.findIndex((c) => c.id === bar.id))}
-                    </div>
-                    <div className="mx-auto flex h-20 w-8 items-end rounded bg-black/80">
-                      <div
-                        className="w-full rounded-t bg-[var(--millionaire-cyan)]"
-                        style={{ height: `${Math.max(bar.pct, 4)}%` }}
-                      />
-                    </div>
-                    <div className="mt-1 tabular-nums text-white">{bar.pct}%</div>
-                    <div className="truncate text-[var(--millionaire-silver)]">
-                      {choice?.label.slice(0, 18)}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
           ) : null}
 
           <div className="hotseat-question relative overflow-hidden px-5 py-6 text-center md:px-10 md:py-8">
@@ -350,7 +336,10 @@ export function HotseatGame() {
           <p className="mb-2 text-center text-xs font-semibold uppercase tracking-wider text-[var(--millionaire-gold)]">
             {t.moneyLadder}
           </p>
-          <MoneyLadder currentStep={ended ? answeredCount || step : step} answeredCount={answeredCount} />
+          <MoneyLadder
+            currentStep={ended ? answeredCount || step : step}
+            answeredCount={answeredCount}
+          />
         </aside>
       </div>
 
