@@ -24,7 +24,7 @@ import {
 import { clearHotseatSession, loadHotseatSession } from "./session";
 import { APP_BASE_PATH } from "@/lib/api-url";
 
-const KRUMAM_HOST = `${APP_BASE_PATH}/assets/img-design-about/krumam.jpg`;
+const KRUMAM_HOST = `${APP_BASE_PATH}/assets/img-design-about/krumam.png`;
 
 type Phase = "playing" | "locked" | "revealed" | "won" | "lost" | "walked";
 
