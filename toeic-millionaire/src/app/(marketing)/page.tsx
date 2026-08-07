@@ -17,16 +17,16 @@ export default function LandingPage() {
 
   const headline = isTh ? (
     <>
-      ทอยลูกเต๋า. เรียนรู้.{" "}
+      15 คำถาม.{" "}
       <span className="bg-gradient-to-r from-[var(--millionaire-gold)] to-[var(--millionaire-cyan)] bg-clip-text text-transparent">
-        ชนะ.
+        หนึ่งเก้าอี้ร้อน.
       </span>
     </>
   ) : (
     <>
-      Roll. Learn.{" "}
+      15 questions.{" "}
       <span className="bg-gradient-to-r from-[var(--millionaire-gold)] to-[var(--millionaire-cyan)] bg-clip-text text-transparent">
-        Win.
+        One hot seat.
       </span>
     </>
   );

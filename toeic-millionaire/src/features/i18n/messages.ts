@@ -92,6 +92,18 @@ type StaticMessages = {
   incorrect: string;
   translationFailed: string;
   retry: string;
+  playingFor: string;
+  guaranteed: string;
+  moneyLadder: string;
+  lifeline5050: string;
+  lifelineAudience: string;
+  lifelinePhone: string;
+  walkAway: string;
+  walkedAway: string;
+  friendSays: string;
+  finalAnswer: string;
+  revealing: string;
+  youTakeHome: string;
 };
 
 type Messages = StaticMessages & {
@@ -101,6 +113,7 @@ type Messages = StaticMessages & {
   effectSkip: string;
   effectFreeHint: string;
   effectBonusQuiz: string;
+  questionOf: (n: number, total: number) => string;
 };
 
 export const messages: Record<GameLang, Messages> = {
@@ -111,14 +124,14 @@ export const messages: Record<GameLang, Messages> = {
     home: "Home",
     lobby: "Lobby",
     backToLobby: "Back to lobby",
-    landingHeadline: "Roll. Learn. Win.",
+    landingHeadline: "15 questions. One hot seat.",
     landingSub:
-      "A Monopoly-style board game mixed with TOEIC practice — answer quizzes, draw lucky cards, and race bots to the finish.",
+      "TOEIC practice in a quiz-show format — climb the money ladder, use lifelines, and lock in your final answer.",
     playNow: "Play now",
     enterLobby: "Enter lobby",
-    landingGuestNote: "No sign-up · Guest progress saved on this device",
-    gameLobby: "Game Lobby",
-    gameLobbySub: "Configure your solo match against AI bots.",
+    landingGuestNote: "No sign-up · Plays on this device · No database required",
+    gameLobby: "Hot seat lobby",
+    gameLobbySub: "Set your name and difficulty, then take the hot seat.",
     displayName: "Display name",
     difficulty: "Difficulty",
     easy: "Easy",
@@ -130,10 +143,10 @@ export const messages: Record<GameLang, Messages> = {
     failedStart: "Failed to start game",
     startTimeout: "Could not start the game. Please try again.",
     dbHint: "Could not start the game. Please try again.",
-    loadingBoard: "Loading board…",
+    loadingBoard: "Loading…",
     gameNotFound: "Game not found",
-    youWin: "You win!",
-    gameOver: "Game over",
+    youWin: "Millionaire!",
+    gameOver: "Wrong answer",
     winner: "Winner",
     coins: "coins",
     yourScore: "Your score",
@@ -204,6 +217,19 @@ export const messages: Record<GameLang, Messages> = {
     incorrect: "Incorrect",
     translationFailed: "Failed to load translation",
     retry: "Retry",
+    playingFor: "Playing for",
+    guaranteed: "Guaranteed",
+    moneyLadder: "Prize ladder",
+    lifeline5050: "50:50",
+    lifelineAudience: "Audience",
+    lifelinePhone: "Phone",
+    walkAway: "Walk away",
+    walkedAway: "Walked away",
+    friendSays: "Friend says",
+    finalAnswer: "Final answer",
+    revealing: "Revealing…",
+    youTakeHome: "You take home",
+    questionOf: (n, total) => `Question ${n} of ${total}`,
   },
   th: {
     brand: "TOEIC เกมส์เศรษฐี",
@@ -212,14 +238,14 @@ export const messages: Record<GameLang, Messages> = {
     home: "หน้าแรก",
     lobby: "ล็อบบี้",
     backToLobby: "กลับล็อบบี้",
-    landingHeadline: "ทอยลูกเต๋า. เรียนรู้. ชนะ.",
+    landingHeadline: "15 คำถาม หนึ่งเก้าอี้ร้อน",
     landingSub:
-      "เกมกระดานสไตล์ Monopoly ผสมฝึก TOEIC — ตอบคำถาม เปิดการ์ดโชคดี และแข่งกับบอทสู่เส้นชัย",
+      "ฝึก TOEIC แบบเกมตอบคำถาม — ปีนบันไดเงิน ใช้ไลฟ์ไลน์ แล้วล็อกคำตอบสุดท้าย",
     playNow: "เล่นเลย",
     enterLobby: "เข้าล็อบบี้",
-    landingGuestNote: "ไม่ต้องสมัคร · บันทึกความคืบหน้าในเครื่องเป็น Guest",
-    gameLobby: "ล็อบบี้เกม",
-    gameLobbySub: "ตั้งค่าแมตช์เดี่ยวแข่งกับบอท AI",
+    landingGuestNote: "ไม่ต้องสมัคร · เล่นในเครื่องนี้ · ไม่ต้องใช้ฐานข้อมูล",
+    gameLobby: "ล็อบบี้เก้าอี้ร้อน",
+    gameLobbySub: "ตั้งชื่อและระดับความยาก แล้วขึ้นเก้าอี้ตอบคำถาม",
     displayName: "ชื่อที่แสดง",
     difficulty: "ระดับความยาก",
     easy: "ง่าย",
@@ -231,10 +257,10 @@ export const messages: Record<GameLang, Messages> = {
     failedStart: "เริ่มเกมไม่สำเร็จ",
     startTimeout: "เริ่มเกมไม่สำเร็จ กรุณาลองใหม่",
     dbHint: "เริ่มเกมไม่สำเร็จ กรุณาลองใหม่",
-    loadingBoard: "กำลังโหลดกระดาน…",
+    loadingBoard: "กำลังโหลด…",
     gameNotFound: "ไม่พบเกม",
-    youWin: "คุณชนะ!",
-    gameOver: "จบเกม",
+    youWin: "เศรษฐี!",
+    gameOver: "ตอบผิด",
     winner: "ผู้ชนะ",
     coins: "เหรียญ",
     yourScore: "คะแนนของคุณ",
@@ -305,5 +331,18 @@ export const messages: Record<GameLang, Messages> = {
     incorrect: "ไม่ถูกต้อง",
     translationFailed: "โหลดคำแปลไม่สำเร็จ",
     retry: "ลองใหม่",
+    playingFor: "เล่นเพื่อ",
+    guaranteed: "เงินประกัน",
+    moneyLadder: "บันไดเงินรางวัล",
+    lifeline5050: "50:50",
+    lifelineAudience: "ถามคนดู",
+    lifelinePhone: "โทรถาม",
+    walkAway: "ยอมถอนตัว",
+    walkedAway: "ถอนตัวแล้ว",
+    friendSays: "เพื่อนบอกว่า",
+    finalAnswer: "คำตอบสุดท้าย",
+    revealing: "กำลังเฉลย…",
+    youTakeHome: "คุณได้รับ",
+    questionOf: (n, total) => `คำถามที่ ${n} จาก ${total}`,
   },
 };

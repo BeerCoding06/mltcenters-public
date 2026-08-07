@@ -1,10 +1,6 @@
-import { BoardGame } from "@/features/board/BoardGame";
+import { redirect } from "next/navigation";
 
-interface BoardPageProps {
-  params: Promise<{ sessionId: string }>;
-}
-
-export default async function BoardPage({ params }: BoardPageProps) {
-  const { sessionId } = await params;
-  return <BoardGame sessionId={sessionId} />;
+/** Legacy Monopoly board route — quiz-show hot seat replaces it. */
+export default function BoardPage() {
+  redirect("/hotseat");
 }
