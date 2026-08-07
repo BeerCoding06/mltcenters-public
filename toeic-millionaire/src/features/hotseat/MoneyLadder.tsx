@@ -42,10 +42,10 @@ function LadderRow({
     <li
       className={cn(
         "flex items-center justify-between rounded-sm px-2 py-1 font-medium transition-colors",
-        isCurrent && "bg-[var(--millionaire-gold)] text-black shadow-[0_0_16px_rgb(251_191_36_/_35%)]",
-        !isCurrent && isWon && "text-[var(--millionaire-gold)]",
-        !isCurrent && !isWon && isSafe && "text-[var(--millionaire-cyan)]",
-        !isCurrent && !isWon && !isSafe && "text-[var(--millionaire-silver)]/70",
+        isCurrent && "bg-[#c9a227] text-black shadow-[0_0_12px_rgb(201_162_39_/_40%)]",
+        !isCurrent && isWon && "text-[#fbbf24]",
+        !isCurrent && !isWon && isSafe && "text-[#93c5fd]",
+        !isCurrent && !isWon && !isSafe && "text-[#a1a1aa]",
       )}
     >
       <span className="tabular-nums opacity-80">{tier.step}</span>

@@ -10,7 +10,6 @@ import { LifelinesBar } from "./LifelinesBar";
 import { MoneyLadder } from "./MoneyLadder";
 import {
   buildHotseatDeck,
-  letterForIndex,
   pickReplacementQuestion,
   type HotseatChoice,
   type HotseatDifficulty,
@@ -195,145 +194,153 @@ export function HotseatGame() {
         ? PRIZE_LADDER[Math.max(index - 1, 0)].amount
         : banked;
 
+  const lifelineItems = [
+    {
+      kind: "fifty" as const,
+      label: t.lifeline5050,
+      desc: t.lifeline5050Desc,
+      used: used5050,
+      disabled: phase !== "playing" || used5050,
+      onClick: use5050,
+    },
+    {
+      kind: "phone" as const,
+      label: t.lifelinePhone,
+      desc: t.lifelinePhoneDesc,
+      used: usedPhone,
+      loading: phoneLoading,
+      disabled: phase !== "playing" || usedPhone || phoneLoading,
+      onClick: () => void usePhone(),
+    },
+    {
+      kind: "swap" as const,
+      label: t.lifelineSwap,
+      desc: t.lifelineSwapDesc,
+      used: usedSwap,
+      disabled: phase !== "playing" || usedSwap,
+      onClick: useSwap,
+    },
+    {
+      kind: "hint" as const,
+      label: t.lifelineHint,
+      desc: t.lifelineHintDesc,
+      used: usedHint,
+      disabled: phase !== "playing" || usedHint,
+      onClick: useHint,
+    },
+  ];
+
   return (
-    <div className="mx-auto flex w-full max-w-6xl flex-1 flex-col gap-4 px-4 py-4 md:px-6">
-      <header className="flex flex-wrap items-center justify-between gap-3">
-        <div>
-          <p className="text-xs font-semibold tracking-wide text-[var(--millionaire-gold)]">
-            {t.brand}
-          </p>
-          <h1 className="text-lg font-bold text-white md:text-xl">
+    <div className="relative mx-auto flex w-full max-w-7xl flex-1 flex-col gap-3 px-3 py-3 md:px-5 md:py-4">
+      <header className="flex flex-wrap items-center justify-between gap-2">
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="hotseat-status text-[#c9a227]">{t.brand}</span>
+          <span className="hotseat-status">
             {displayName} · {t.questionOf(step, TOTAL_QUESTIONS)}
-          </h1>
+          </span>
         </div>
         <div className="flex flex-wrap items-center gap-2">
-          <span className="millionaire-pill py-1.5 text-xs">
+          <span className="hotseat-status">
             {t.playingFor}:{" "}
-            <strong className="text-[var(--millionaire-gold)]">
-              {formatPrize(prizeNow)}
-            </strong>
+            <strong className="text-[#fbbf24]">{formatPrize(prizeNow)}</strong>
           </span>
-          <span className="millionaire-pill py-1.5 text-xs">
+          <span className="hotseat-status">
             {t.guaranteed}: <strong>{formatPrize(banked)}</strong>
           </span>
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            disabled={phase !== "playing" || index === 0}
+            onClick={walkAway}
+            className="rounded-full border-[#d4d4d8]/50 bg-black text-xs text-white"
+          >
+            {t.walkAway}
+          </Button>
           <Link
             href="/play"
-            className="text-xs text-[var(--millionaire-silver)] underline-offset-2 hover:underline"
+            className="text-xs text-[#a1a1aa] underline-offset-2 hover:underline"
           >
             {t.backToLobby}
           </Link>
         </div>
       </header>
 
-      <div className="grid flex-1 gap-4 lg:grid-cols-[1fr_220px]">
-        <section className="flex flex-col gap-4">
-          <LifelinesBar
-            title={t.lifelinesTitle}
-            items={[
-              {
-                kind: "fifty",
-                label: t.lifeline5050,
-                desc: t.lifeline5050Desc,
-                used: used5050,
-                disabled: phase !== "playing" || used5050,
-                onClick: use5050,
-              },
-              {
-                kind: "phone",
-                label: t.lifelinePhone,
-                desc: t.lifelinePhoneDesc,
-                used: usedPhone,
-                loading: phoneLoading,
-                disabled: phase !== "playing" || usedPhone || phoneLoading,
-                onClick: () => void usePhone(),
-              },
-              {
-                kind: "swap",
-                label: t.lifelineSwap,
-                desc: t.lifelineSwapDesc,
-                used: usedSwap,
-                disabled: phase !== "playing" || usedSwap,
-                onClick: useSwap,
-              },
-              {
-                kind: "hint",
-                label: t.lifelineHint,
-                desc: t.lifelineHintDesc,
-                used: usedHint,
-                disabled: phase !== "playing" || usedHint,
-                onClick: useHint,
-              },
-            ]}
+      <div className="grid flex-1 items-start gap-3 lg:grid-cols-[180px_minmax(0,1fr)_72px]">
+        <aside className="hotseat-ladder order-3 p-2 lg:order-1 lg:sticky lg:top-3">
+          <p className="mb-1 text-center text-[10px] font-semibold uppercase tracking-wider text-[#c9a227]">
+            {t.moneyLadder}
+          </p>
+          <MoneyLadder
+            currentStep={ended ? answeredCount || step : step}
+            answeredCount={answeredCount}
           />
+        </aside>
 
-          <div className="flex justify-end">
-            <Button
-              type="button"
-              variant="outline"
-              disabled={phase !== "playing" || index === 0}
-              onClick={walkAway}
-              className="rounded-full border-[var(--millionaire-silver)]/60 text-white"
-            >
-              {t.walkAway}
-            </Button>
+        <section className="order-1 flex flex-col gap-3 lg:order-2">
+          <div className="lg:hidden">
+            <LifelinesBar
+              title={t.lifelinesTitle}
+              orientation="horizontal"
+              items={lifelineItems}
+            />
           </div>
 
           {hintTip ? (
-            <p className="rounded-xl border border-[var(--millionaire-gold)]/45 bg-black/60 px-4 py-3 text-sm text-[var(--millionaire-gold)]">
+            <p className="rounded-full border border-[#c9a227]/50 bg-black px-5 py-2.5 text-center text-sm text-[#fbbf24]">
               <span className="font-semibold">{t.lifelineHint}: </span>
               {hintTip}
             </p>
           ) : null}
 
           {phoneLoading ? (
-            <p className="rounded-xl border border-[var(--millionaire-cyan)]/40 bg-black/60 px-4 py-3 text-sm text-[var(--millionaire-cyan)]">
+            <p className="rounded-full border border-[#e8e8ed]/40 bg-black px-5 py-2.5 text-center text-sm text-[#93c5fd]">
               {t.phoneCalling}
             </p>
           ) : null}
 
           {phoneTip ? (
-            <p className="rounded-xl border border-[var(--millionaire-cyan)]/40 bg-black/60 px-4 py-3 text-sm text-[var(--millionaire-cyan)]">
+            <p className="rounded-full border border-[#e8e8ed]/40 bg-black px-5 py-2.5 text-center text-sm text-[#93c5fd]">
               <span className="font-semibold">{t.friendSays}: </span>
               {phoneTip}
             </p>
           ) : null}
 
-          <div className="hotseat-question relative overflow-hidden px-5 py-6 text-center md:px-10 md:py-8">
-            <p className="mb-2 text-xs uppercase tracking-[0.2em] text-[var(--millionaire-gold)]">
-              {question.category.replaceAll("_", " ")}
-            </p>
-            {question.passage ? (
-              <p className="mb-4 whitespace-pre-wrap text-left text-sm text-[var(--millionaire-silver)] md:text-base">
-                {question.passage}
+          <div className="hotseat-stage flex flex-1 flex-col justify-end pb-2 pt-6 md:pt-10">
+            <div className="hotseat-question">
+              {question.passage ? (
+                <p className="mb-2 whitespace-pre-wrap text-left text-xs text-[#d4d4d8] md:text-sm">
+                  {question.passage}
+                </p>
+              ) : null}
+              <p className="text-base font-medium leading-snug text-white md:text-xl">
+                {question.stem}
               </p>
-            ) : null}
-            <p className="text-lg font-semibold leading-snug text-white md:text-2xl">
-              {question.stem}
-            </p>
-          </div>
+            </div>
 
-          <div className="grid gap-3 sm:grid-cols-2">
-            {question.choices.map((choice, i) => (
-              <AnswerButton
-                key={choice.id}
-                letter={letterForIndex(i)}
-                choice={choice}
-                hidden={hiddenIds.has(choice.id)}
-                selected={selectedId === choice.id}
-                phase={phase}
-                disabled={phase !== "playing" || hiddenIds.has(choice.id)}
-                onSelect={() => setSelectedId(choice.id)}
-              />
-            ))}
+            <div className="hotseat-answers">
+              {question.choices.map((choice, i) => (
+                <AnswerButton
+                  key={choice.id}
+                  letter={`${i + 1}`}
+                  choice={choice}
+                  hidden={hiddenIds.has(choice.id)}
+                  selected={selectedId === choice.id}
+                  phase={phase}
+                  disabled={phase !== "playing" || hiddenIds.has(choice.id)}
+                  onSelect={() => setSelectedId(choice.id)}
+                />
+              ))}
+            </div>
           </div>
 
           {!ended ? (
-            <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+            <div className="flex justify-center pt-1">
               <Button
                 size="lg"
                 disabled={!selectedId || phase !== "playing"}
                 onClick={lockAnswer}
-                className="min-w-[200px] rounded-full border-2 border-[var(--millionaire-gold)] bg-[var(--millionaire-gold)] text-black hover:bg-[var(--millionaire-gold)]/90"
+                className="min-w-[200px] rounded-full border border-[#e8e8ed] bg-[#c9a227] text-black hover:bg-[#dbb42c]"
               >
                 {phase === "locked" || phase === "revealed"
                   ? t.revealing
@@ -347,8 +354,8 @@ export function HotseatGame() {
               className={cn(
                 "text-center text-sm font-semibold",
                 question.choices.find((c) => c.id === selectedId)?.isCorrect
-                  ? "text-[var(--millionaire-correct)]"
-                  : "text-[var(--millionaire-wrong)]",
+                  ? "text-[#34d399]"
+                  : "text-[#f87171]",
               )}
             >
               {question.choices.find((c) => c.id === selectedId)?.isCorrect
@@ -359,21 +366,15 @@ export function HotseatGame() {
           ) : null}
         </section>
 
-        <aside className="rounded-2xl border border-[var(--millionaire-silver)]/30 bg-black/70 p-3 lg:sticky lg:top-4 lg:self-start">
-          <p className="mb-2 text-center text-xs font-semibold uppercase tracking-wider text-[var(--millionaire-gold)]">
-            {t.moneyLadder}
-          </p>
-          <MoneyLadder
-            currentStep={ended ? answeredCount || step : step}
-            answeredCount={answeredCount}
-          />
+        <aside className="order-2 hidden justify-self-center pt-8 lg:order-3 lg:flex lg:sticky lg:top-8">
+          <LifelinesBar orientation="vertical" items={lifelineItems} />
         </aside>
       </div>
 
       {ended ? (
-        <div className="fixed inset-0 z-40 flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm">
-          <div className="w-full max-w-md rounded-2xl border border-[var(--millionaire-gold)]/50 bg-[#05070f] p-6 text-center shadow-[0_0_40px_rgb(251_191_36_/_20%)]">
-            <p className="text-sm text-[var(--millionaire-gold)]">{t.brand}</p>
+        <div className="fixed inset-0 z-40 flex items-center justify-center bg-black/85 p-4 backdrop-blur-sm">
+          <div className="w-full max-w-md rounded-2xl border border-[#c9a227]/50 bg-[#020617] p-6 text-center shadow-[0_0_40px_rgb(201_162_39_/_20%)]">
+            <p className="text-sm text-[#c9a227]">{t.brand}</p>
             <h2 className="mt-2 text-2xl font-bold text-white">
               {phase === "won"
                 ? t.youWin
@@ -381,22 +382,22 @@ export function HotseatGame() {
                   ? t.walkedAway
                   : t.gameOver}
             </h2>
-            <p className="mt-3 text-[var(--millionaire-silver)]">
+            <p className="mt-3 text-[#a1a1aa]">
               {t.youTakeHome}:{" "}
-              <span className="text-xl font-bold text-[var(--millionaire-gold)]">
+              <span className="text-xl font-bold text-[#fbbf24]">
                 {formatPrize(takeHome)}
               </span>
             </p>
             <div className="mt-6 flex flex-col gap-2 sm:flex-row sm:justify-center">
               <Button
                 onClick={playAgain}
-                className="rounded-full bg-[var(--millionaire-gold)] text-black hover:bg-[var(--millionaire-gold)]/90"
+                className="rounded-full bg-[#c9a227] text-black hover:bg-[#dbb42c]"
               >
                 {t.playAgain}
               </Button>
               <Link
                 href="/"
-                className="inline-flex items-center justify-center rounded-full border border-[var(--millionaire-silver)]/50 px-4 py-2 text-sm text-white"
+                className="inline-flex items-center justify-center rounded-full border border-[#d4d4d8]/50 px-4 py-2 text-sm text-white"
               >
                 {t.home}
               </Link>
@@ -445,7 +446,7 @@ function AnswerButton({
         showWrong && "hotseat-choice-wrong",
       )}
     >
-      <span className="hotseat-letter">{letter}:</span>
+      <span className="hotseat-letter">{letter}.</span>
       <span className="flex-1">{choice.label}</span>
     </button>
   );
