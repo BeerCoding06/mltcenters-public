@@ -400,6 +400,73 @@ app.post('/api/toeic-friend', async (req, res) => {
   }
 });
 
+/** TOEIC Millionaire — translate question + choices to Thai (does not reveal answer). */
+app.post('/api/toeic-translate', async (req, res) => {
+  if (!openai) {
+    return res.status(503).json({
+      error: 'AI API key not configured. Set OPENAI_API_KEY or AI_GATEWAY_API_KEY.',
+    });
+  }
+  const { stem, passage, choices } = req.body || {};
+  if (!stem || !Array.isArray(choices) || choices.length < 2) {
+    return res.status(400).json({ error: 'stem and choices are required' });
+  }
+
+  const listed = choices
+    .map((c) => `- id:${c?.id ?? ''} label:${c?.label ?? ''}`)
+    .join('\n');
+  const system = `You translate TOEIC exam content from English to Thai for learners.
+Return ONLY JSON: {"stemTh":"...","passageTh":"...|null","choicesTh":[{"choiceId":"...","labelTh":"..."}]}
+Do NOT reveal which choice is correct. Do NOT add explanations. Keep choiceIds identical.`;
+  const user = [
+    passage ? `Passage:\n${passage}` : null,
+    `Question: ${stem}`,
+    `Choices:\n${listed}`,
+  ]
+    .filter(Boolean)
+    .join('\n\n');
+
+  try {
+    const completion = await openai.chat.completions.create({
+      model: AI_MODEL,
+      temperature: 0.2,
+      max_tokens: 700,
+      response_format: { type: 'json_object' },
+      messages: [
+        { role: 'system', content: system },
+        { role: 'user', content: user },
+      ],
+    });
+    const raw = completion.choices[0]?.message?.content?.trim();
+    if (!raw) {
+      return res.status(502).json({ error: 'Empty AI response' });
+    }
+    let parsed;
+    try {
+      parsed = JSON.parse(raw);
+    } catch {
+      return res.status(502).json({ error: 'Invalid AI JSON' });
+    }
+    if (!parsed?.stemTh || !Array.isArray(parsed?.choicesTh)) {
+      return res.status(502).json({ error: 'Incomplete translation' });
+    }
+    return res.json({
+      stemTh: String(parsed.stemTh),
+      passageTh:
+        parsed.passageTh == null || parsed.passageTh === 'null'
+          ? null
+          : String(parsed.passageTh),
+      choicesTh: parsed.choicesTh.map((c) => ({
+        choiceId: String(c.choiceId ?? c.id ?? ''),
+        labelTh: String(c.labelTh ?? ''),
+      })),
+    });
+  } catch (err) {
+    console.error('[toeic-translate]', err);
+    return res.status(500).json({ error: err.message || 'AI request failed' });
+  }
+});
+
 // 3D English Runner game API
 app.use('/runner-api', createRunnerRouter(openai, AI_MODEL));
 

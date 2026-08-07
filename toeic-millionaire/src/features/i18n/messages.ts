@@ -116,6 +116,13 @@ type StaticMessages = {
   revealing: string;
   youTakeHome: string;
   scorePts: string;
+  reviewAnswers: string;
+  reviewEmpty: string;
+  close: string;
+  yourAnswer: string;
+  correctAnswer: string;
+  whyCorrect: string;
+  nextQuestion: string;
 };
 
 type Messages = StaticMessages & {
@@ -253,6 +260,13 @@ export const messages: Record<GameLang, Messages> = {
     revealing: "Revealing…",
     youTakeHome: "Your score",
     scorePts: "pts",
+    reviewAnswers: "Review answers",
+    reviewEmpty: "No answered questions yet.",
+    close: "Close",
+    yourAnswer: "Your answer",
+    correctAnswer: "Correct answer",
+    whyCorrect: "Why this is correct",
+    nextQuestion: "Next question",
     questionOf: (n, total) => `Question ${n} of ${total}`,
   },
   th: {
@@ -379,6 +393,13 @@ export const messages: Record<GameLang, Messages> = {
     revealing: "กำลังเฉลย…",
     youTakeHome: "คะแนนของคุณ",
     scorePts: "คะแนน",
+    reviewAnswers: "ดูคำตอบย้อนหลัง",
+    reviewEmpty: "ยังไม่มีคำถามที่ตอบแล้ว",
+    close: "ปิด",
+    yourAnswer: "คำตอบของคุณ",
+    correctAnswer: "คำตอบที่ถูก",
+    whyCorrect: "ทำไมถึงถูก",
+    nextQuestion: "ข้อถัดไป",
     questionOf: (n, total) => `คำถามที่ ${n} จาก ${total}`,
   },
 };

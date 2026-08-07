@@ -21,12 +21,32 @@ import {
   PRIZE_LADDER,
   TOTAL_QUESTIONS,
 } from "./prize-ladder";
-import { clearHotseatSession, loadHotseatSession } from "./session";
+import {
+  appendHotseatHistory,
+  clearHotseatSession,
+  loadHotseatHistory,
+  loadHotseatSession,
+  type HotseatReviewItem,
+} from "./session";
+import { ReviewPanel } from "./ReviewPanel";
 import { APP_BASE_PATH } from "@/lib/api-url";
 
 const KRUMAM_HOST = `${APP_BASE_PATH}/assets/img-design-about/krumam.png`;
 
-type Phase = "playing" | "locked" | "revealed" | "won" | "lost" | "walked";
+type Phase =
+  | "playing"
+  | "locked"
+  | "revealed"
+  | "explained"
+  | "won"
+  | "lost"
+  | "walked";
+
+type HotseatTranslation = {
+  stemTh: string;
+  passageTh: string | null;
+  choicesTh: { choiceId: string; labelTh: string }[];
+};
 
 export function HotseatGame() {
   const router = useRouter();
@@ -47,6 +67,18 @@ export function HotseatGame() {
   const [phoneLoading, setPhoneLoading] = useState(false);
   const [phoneTip, setPhoneTip] = useState<string | null>(null);
   const [hintTip, setHintTip] = useState<string | null>(null);
+  const [translation, setTranslation] = useState<HotseatTranslation | null>(null);
+  const [translateLoading, setTranslateLoading] = useState(false);
+  const [showStemTh, setShowStemTh] = useState(false);
+  const [showChoiceTh, setShowChoiceTh] = useState<Set<string>>(() => new Set());
+  const [history, setHistory] = useState<HotseatReviewItem[]>([]);
+  const [reviewOpen, setReviewOpen] = useState(false);
+  const [lastResult, setLastResult] = useState<{
+    isCorrect: boolean;
+    selectedLabel: string;
+    correctLabel: string;
+    explanation: string;
+  } | null>(null);
 
   useEffect(() => {
     const session = loadHotseatSession();
@@ -57,6 +89,7 @@ export function HotseatGame() {
     setDisplayName(session.displayName);
     setLobbyDifficulty(session.difficulty);
     setDeck(buildHotseatDeck(session.difficulty));
+    setHistory(loadHotseatHistory());
     setReady(true);
   }, [router]);
 
@@ -71,6 +104,10 @@ export function HotseatGame() {
     setHiddenIds(new Set());
     setPhoneTip(null);
     setHintTip(null);
+    setTranslation(null);
+    setShowStemTh(false);
+    setShowChoiceTh(new Set());
+    setLastResult(null);
     setPhase("playing");
   }, []);
 
@@ -149,26 +186,123 @@ export function HotseatGame() {
     setUsedHint(true);
   }
 
+  async function ensureTranslation(): Promise<HotseatTranslation | null> {
+    if (!question) return null;
+    if (translation) return translation;
+    setTranslateLoading(true);
+    try {
+      const res = await fetch("/api/toeic-translate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          stem: question.stem,
+          passage: question.passage,
+          choices: question.choices.map((c) => ({ id: c.id, label: c.label })),
+        }),
+        signal: AbortSignal.timeout(30_000),
+      });
+      const payload = (await res.json().catch(() => null)) as HotseatTranslation & {
+        error?: string;
+      } | null;
+      if (!res.ok || !payload?.stemTh) {
+        throw new Error(payload?.error || t.translationFailed);
+      }
+      const next: HotseatTranslation = {
+        stemTh: payload.stemTh,
+        passageTh: payload.passageTh ?? null,
+        choicesTh: payload.choicesTh ?? [],
+      };
+      setTranslation(next);
+      return next;
+    } catch {
+      setPhoneTip(t.translationFailed);
+      return null;
+    } finally {
+      setTranslateLoading(false);
+    }
+  }
+
+  async function toggleStemTh() {
+    if (showStemTh) {
+      setShowStemTh(false);
+      return;
+    }
+    const data = await ensureTranslation();
+    if (data) setShowStemTh(true);
+  }
+
+  async function toggleChoiceTh(choiceId: string) {
+    if (showChoiceTh.has(choiceId)) {
+      setShowChoiceTh((prev) => {
+        const next = new Set(prev);
+        next.delete(choiceId);
+        return next;
+      });
+      return;
+    }
+    const data = await ensureTranslation();
+    if (!data) return;
+    setShowChoiceTh((prev) => new Set(prev).add(choiceId));
+  }
+
+  function choiceLabelTh(choiceId: string): string | null {
+    return translation?.choicesTh.find((c) => c.choiceId === choiceId)?.labelTh ?? null;
+  }
+
   function lockAnswer() {
-    if (!selectedId || phase !== "playing") return;
+    if (!selectedId || !question || phase !== "playing") return;
     setPhase("locked");
     window.setTimeout(() => {
-      const choice = question?.choices.find((c) => c.id === selectedId);
-      const ok = Boolean(choice?.isCorrect);
-      setPhase("revealed");
-      window.setTimeout(() => {
-        if (ok) {
-          if (index + 1 >= TOTAL_QUESTIONS) {
-            setPhase("won");
-          } else {
-            setIndex((i) => i + 1);
-            resetQuestionUi();
-          }
-        } else {
-          setPhase("lost");
-        }
-      }, 1600);
+      const selected = question.choices.find((c) => c.id === selectedId);
+      const correct = question.choices.find((c) => c.isCorrect);
+      if (!selected || !correct) {
+        setPhase("playing");
+        return;
+      }
+      const ok = Boolean(selected.isCorrect);
+      const explanation =
+        question.explanation?.trim() ||
+        (isTh
+          ? `คำตอบที่ถูกคือ “${correct.label}” เพราะเข้ากับบริบทและไวยากรณ์ของประโยค`
+          : `The correct answer is “${correct.label}” because it fits the sentence context and grammar.`);
+
+      const item: HotseatReviewItem = {
+        step,
+        questionId: question.id,
+        stem: question.stem,
+        passage: question.passage,
+        selectedId: selected.id,
+        selectedLabel: selected.label,
+        correctId: correct.id,
+        correctLabel: correct.label,
+        isCorrect: ok,
+        explanation,
+        score: PRIZE_LADDER[index]?.amount ?? 0,
+        at: Date.now(),
+      };
+      setHistory(appendHotseatHistory(item));
+      setLastResult({
+        isCorrect: ok,
+        selectedLabel: selected.label,
+        correctLabel: correct.label,
+        explanation,
+      });
+      setPhase("explained");
     }, 900);
+  }
+
+  function continueAfterExplain() {
+    if (!lastResult) return;
+    if (lastResult.isCorrect) {
+      if (index + 1 >= TOTAL_QUESTIONS) {
+        setPhase("won");
+      } else {
+        setIndex((i) => i + 1);
+        resetQuestionUi();
+      }
+    } else {
+      setPhase("lost");
+    }
   }
 
   function walkAway() {
@@ -190,6 +324,7 @@ export function HotseatGame() {
   }
 
   const ended = phase === "won" || phase === "lost" || phase === "walked";
+  const choicesLocked = phase !== "playing";
   const takeHome =
     phase === "won"
       ? PRIZE_LADDER[14].amount
@@ -271,6 +406,16 @@ export function HotseatGame() {
           >
             {t.backToLobby}
           </Link>
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={() => setReviewOpen(true)}
+            className="rounded-full border-[#c9a227]/60 bg-black text-xs text-[#c9a227]"
+          >
+            {t.reviewAnswers}
+            {history.length > 0 ? ` (${history.length})` : ""}
+          </Button>
         </div>
       </header>
 
@@ -321,14 +466,26 @@ export function HotseatGame() {
 
           {/* Question + answers pinned to bottom of stage */}
           <div className="hotseat-stage relative z-10 mt-auto flex flex-col justify-end pb-1 pt-2">
-            <div className="hotseat-question">
+            <div className="hotseat-question relative">
+              <div className="absolute right-2 top-2 z-10 sm:right-4 sm:top-1/2 sm:-translate-y-1/2">
+                <InlineTranslateBtn
+                  active={showStemTh}
+                  loading={translateLoading && !showStemTh}
+                  label={showStemTh ? t.showEnglish : t.translateTh}
+                  onClick={() => void toggleStemTh()}
+                />
+              </div>
               {question.passage ? (
-                <p className="mb-2 whitespace-pre-wrap text-left text-xs text-[#d4d4d8] md:text-sm">
-                  {question.passage}
+                <p className="mb-2 whitespace-pre-wrap pr-12 text-left text-xs text-[#d4d4d8] md:text-sm">
+                  {showStemTh && translation?.passageTh
+                    ? translation.passageTh
+                    : question.passage}
                 </p>
               ) : null}
-              <p className="text-base font-medium leading-snug text-white md:text-xl">
-                {question.stem}
+              <p className="px-2 text-base font-medium leading-snug text-white md:px-8 md:text-xl">
+                {showStemTh && translation?.stemTh
+                  ? translation.stemTh
+                  : question.stem}
               </p>
             </div>
 
@@ -338,44 +495,93 @@ export function HotseatGame() {
                   key={choice.id}
                   letter={`${i + 1}`}
                   choice={choice}
+                  labelTh={
+                    showChoiceTh.has(choice.id)
+                      ? choiceLabelTh(choice.id)
+                      : null
+                  }
                   hidden={hiddenIds.has(choice.id)}
                   selected={selectedId === choice.id}
                   phase={phase}
-                  disabled={phase !== "playing" || hiddenIds.has(choice.id)}
+                  disabled={choicesLocked || hiddenIds.has(choice.id)}
+                  translateActive={showChoiceTh.has(choice.id)}
+                  translateLoading={
+                    translateLoading && !showChoiceTh.has(choice.id)
+                  }
+                  onTranslate={() => void toggleChoiceTh(choice.id)}
                   onSelect={() => setSelectedId(choice.id)}
+                  translateLabel={
+                    showChoiceTh.has(choice.id) ? t.showEnglish : t.translateTh
+                  }
                 />
               ))}
             </div>
 
-            {!ended ? (
+            {phase === "explained" && lastResult ? (
+              <div className="mt-3 space-y-3 rounded-2xl border border-[#c9a227]/45 bg-black/85 px-4 py-3 backdrop-blur-sm">
+                <p
+                  className={cn(
+                    "text-center text-sm font-bold",
+                    lastResult.isCorrect ? "text-[#34d399]" : "text-[#f87171]",
+                  )}
+                >
+                  {lastResult.isCorrect ? t.correct : t.incorrect}
+                </p>
+                <p className="text-xs text-[#a1a1aa]">
+                  {t.yourAnswer}:{" "}
+                  <span
+                    className={
+                      lastResult.isCorrect ? "text-[#34d399]" : "text-[#f87171]"
+                    }
+                  >
+                    {lastResult.selectedLabel}
+                  </span>
+                </p>
+                <p className="text-xs text-[#a1a1aa]">
+                  {t.correctAnswer}:{" "}
+                  <span className="text-[#34d399]">{lastResult.correctLabel}</span>
+                </p>
+                <p className="rounded-xl border border-[#c9a227]/35 bg-[#c9a227]/10 px-3 py-2 text-sm text-[#fbbf24]">
+                  <span className="font-semibold">{t.whyCorrect}: </span>
+                  {lastResult.explanation}
+                </p>
+                <div className="flex flex-wrap justify-center gap-2 pt-1">
+                  <Button
+                    size="lg"
+                    onClick={continueAfterExplain}
+                    className="min-w-[180px] rounded-full border border-[#e8e8ed] bg-[#c9a227] text-black hover:bg-[#dbb42c]"
+                  >
+                    {lastResult.isCorrect && index + 1 < TOTAL_QUESTIONS
+                      ? t.nextQuestion
+                      : t.continue}
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => setReviewOpen(true)}
+                    className="rounded-full border-[#d4d4d8]/50 bg-black text-white"
+                  >
+                    {t.reviewAnswers}
+                  </Button>
+                </div>
+              </div>
+            ) : null}
+
+            {!ended && phase === "playing" ? (
               <div className="flex justify-center pt-3">
                 <Button
                   size="lg"
-                  disabled={!selectedId || phase !== "playing"}
+                  disabled={!selectedId}
                   onClick={lockAnswer}
                   className="min-w-[200px] rounded-full border border-[#e8e8ed] bg-[#c9a227] text-black hover:bg-[#dbb42c]"
                 >
-                  {phase === "locked" || phase === "revealed"
-                    ? t.revealing
-                    : t.finalAnswer}
+                  {t.finalAnswer}
                 </Button>
               </div>
             ) : null}
 
-            {phase === "revealed" && selectedId ? (
-              <p
-                className={cn(
-                  "pt-2 text-center text-sm font-semibold",
-                  question.choices.find((c) => c.id === selectedId)?.isCorrect
-                    ? "text-[#34d399]"
-                    : "text-[#f87171]",
-                )}
-              >
-                {question.choices.find((c) => c.id === selectedId)?.isCorrect
-                  ? t.correct
-                  : t.incorrect}
-                {question.explanation ? ` — ${question.explanation}` : ""}
-              </p>
+            {phase === "locked" ? (
+              <p className="pt-3 text-center text-sm text-[#c9a227]">{t.revealing}</p>
             ) : null}
           </div>
         </section>
@@ -409,6 +615,14 @@ export function HotseatGame() {
               >
                 {t.playAgain}
               </Button>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setReviewOpen(true)}
+                className="rounded-full border-[#c9a227]/50 bg-black text-[#c9a227]"
+              >
+                {t.reviewAnswers}
+              </Button>
               <Link
                 href="/"
                 className="inline-flex items-center justify-center rounded-full border border-[#d4d4d8]/50 px-4 py-2 text-sm text-white"
@@ -419,50 +633,119 @@ export function HotseatGame() {
           </div>
         </div>
       ) : null}
+
+      <ReviewPanel
+        open={reviewOpen}
+        items={history}
+        onClose={() => setReviewOpen(false)}
+      />
     </div>
+  );
+}
+
+function InlineTranslateBtn({
+  active,
+  loading,
+  label,
+  onClick,
+}: {
+  active: boolean;
+  loading?: boolean;
+  label: string;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      title={label}
+      aria-label={label}
+      aria-pressed={active}
+      onClick={(e) => {
+        e.stopPropagation();
+        onClick();
+      }}
+      disabled={loading}
+      className={cn(
+        "inline-flex size-8 shrink-0 items-center justify-center rounded-md border bg-black text-[10px] font-bold tracking-wide transition",
+        "border-[#c9a227] text-[#c9a227] hover:enabled:bg-[#c9a227]/15",
+        "disabled:cursor-wait disabled:opacity-60",
+        active && "border-[#5bc0ff] text-[#5bc0ff]",
+      )}
+    >
+      {loading ? "…" : "TH"}
+    </button>
   );
 }
 
 function AnswerButton({
   letter,
   choice,
+  labelTh,
   hidden,
   selected,
   phase,
   disabled,
+  translateActive,
+  translateLoading,
+  translateLabel,
+  onTranslate,
   onSelect,
 }: {
   letter: string;
   choice: HotseatChoice;
+  labelTh: string | null;
   hidden: boolean;
   selected: boolean;
   phase: Phase;
   disabled: boolean;
+  translateActive: boolean;
+  translateLoading?: boolean;
+  translateLabel: string;
+  onTranslate: () => void;
   onSelect: () => void;
 }) {
   if (hidden) {
     return <div className="hotseat-choice opacity-20" aria-hidden />;
   }
 
-  const revealed = phase === "revealed" || phase === "won" || phase === "lost";
-  const showCorrect = revealed && choice.isCorrect;
-  const showWrong = revealed && selected && !choice.isCorrect;
+  const revealed =
+    phase === "explained" ||
+    phase === "won" ||
+    phase === "lost" ||
+    phase === "locked";
+  const showCorrect = (phase === "explained" || phase === "won" || phase === "lost") && choice.isCorrect;
+  const showWrong =
+    (phase === "explained" || phase === "won" || phase === "lost") &&
+    selected &&
+    !choice.isCorrect;
 
   return (
-    <button
-      type="button"
-      disabled={disabled}
-      onClick={onSelect}
-      className={cn(
-        "hotseat-choice group text-left",
-        selected && !revealed && "millionaire-choice-selected hotseat-choice-selected",
-        showCorrect && "hotseat-choice-correct",
-        showWrong && "hotseat-choice-wrong",
-      )}
-    >
-      <span className="hotseat-letter">{letter}.</span>
-      <span className="flex-1">{choice.label}</span>
-    </button>
+    <div className="relative">
+      <button
+        type="button"
+        disabled={disabled}
+        onClick={onSelect}
+        className={cn(
+          "hotseat-choice group w-full pr-11 text-left",
+          selected && !revealed && "millionaire-choice-selected hotseat-choice-selected",
+          showCorrect && "hotseat-choice-correct",
+          showWrong && "hotseat-choice-wrong",
+        )}
+      >
+        <span className="hotseat-letter">{letter}.</span>
+        <span className="flex-1">
+          {labelTh ?? choice.label}
+        </span>
+      </button>
+      <div className="absolute right-2 top-1/2 z-10 -translate-y-1/2">
+        <InlineTranslateBtn
+          active={translateActive}
+          loading={translateLoading}
+          label={translateLabel}
+          onClick={onTranslate}
+        />
+      </div>
+    </div>
   );
 }
 
