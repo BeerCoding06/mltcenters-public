@@ -115,6 +115,7 @@ type StaticMessages = {
   finalAnswer: string;
   revealing: string;
   youTakeHome: string;
+  scorePts: string;
 };
 
 type Messages = StaticMessages & {
@@ -229,8 +230,8 @@ export const messages: Record<GameLang, Messages> = {
     translationFailed: "Failed to load translation",
     retry: "Retry",
     playingFor: "Playing for",
-    guaranteed: "Guaranteed",
-    moneyLadder: "Prize ladder",
+    guaranteed: "Safe score",
+    moneyLadder: "Score ladder",
     lifeline5050: "50:50",
     lifelineAudience: "Ask audience",
     lifelinePhone: "Phone a Friend",
@@ -250,7 +251,8 @@ export const messages: Record<GameLang, Messages> = {
     friendSays: "Friend says",
     finalAnswer: "Final answer",
     revealing: "Revealing…",
-    youTakeHome: "You take home",
+    youTakeHome: "Your score",
+    scorePts: "pts",
     questionOf: (n, total) => `Question ${n} of ${total}`,
   },
   th: {
@@ -354,8 +356,8 @@ export const messages: Record<GameLang, Messages> = {
     translationFailed: "โหลดคำแปลไม่สำเร็จ",
     retry: "ลองใหม่",
     playingFor: "เล่นเพื่อ",
-    guaranteed: "เงินประกัน",
-    moneyLadder: "บันไดเงินรางวัล",
+    guaranteed: "คะแนนประกัน",
+    moneyLadder: "บันไดคะแนน",
     lifeline5050: "50:50",
     lifelineAudience: "ถามคนดู",
     lifelinePhone: "โทรถามเพื่อน",
@@ -375,7 +377,8 @@ export const messages: Record<GameLang, Messages> = {
     friendSays: "เพื่อนบอกว่า",
     finalAnswer: "คำตอบสุดท้าย",
     revealing: "กำลังเฉลย…",
-    youTakeHome: "คุณได้รับ",
+    youTakeHome: "คะแนนของคุณ",
+    scorePts: "คะแนน",
     questionOf: (n, total) => `คำถามที่ ${n} จาก ${total}`,
   },
 };

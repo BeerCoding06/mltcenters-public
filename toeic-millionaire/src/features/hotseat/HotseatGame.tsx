@@ -242,10 +242,15 @@ export function HotseatGame() {
         <div className="flex flex-wrap items-center gap-2">
           <span className="hotseat-status">
             {t.playingFor}:{" "}
-            <strong className="text-[#fbbf24]">{formatPrize(prizeNow)}</strong>
+            <strong className="text-[#fbbf24]">
+              {formatPrize(prizeNow)} {t.scorePts}
+            </strong>
           </span>
           <span className="hotseat-status">
-            {t.guaranteed}: <strong>{formatPrize(banked)}</strong>
+            {t.guaranteed}:{" "}
+            <strong>
+              {formatPrize(banked)} {t.scorePts}
+            </strong>
           </span>
           <Button
             type="button"
@@ -385,7 +390,7 @@ export function HotseatGame() {
             <p className="mt-3 text-[#a1a1aa]">
               {t.youTakeHome}:{" "}
               <span className="text-xl font-bold text-[#fbbf24]">
-                {formatPrize(takeHome)}
+                {formatPrize(takeHome)} {t.scorePts}
               </span>
             </p>
             <div className="mt-6 flex flex-col gap-2 sm:flex-row sm:justify-center">
