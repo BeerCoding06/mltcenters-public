@@ -17,6 +17,7 @@ export type HotseatQuestion = {
   stem: string;
   passage: string | null;
   explanation: string | null;
+  explanationTh: string | null;
   hint: string | null;
   stemTh: string | null;
   choices: HotseatChoice[];
@@ -63,6 +64,7 @@ function asQuestion(raw: (typeof bank)[number]): HotseatQuestion {
     stem: raw.stem,
     passage: raw.passage ?? null,
     explanation: raw.explanation ?? null,
+    explanationTh: raw.explanationTh ?? null,
     hint: raw.hint ?? null,
     stemTh: raw.stemTh ?? null,
     choices: raw.choices.map((c) => ({

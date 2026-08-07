@@ -13,7 +13,7 @@ type Props = {
 };
 
 export function ReviewPanel({ open, items, onClose }: Props) {
-  const { t } = useGameLang();
+  const { t, isTh } = useGameLang();
   if (!open) return null;
 
   return (
@@ -74,7 +74,9 @@ export function ReviewPanel({ open, items, onClose }: Props) {
                 </p>
                 <p className="mt-2 rounded-lg border border-[#c9a227]/30 bg-[#c9a227]/10 px-3 py-2 text-sm text-[#fbbf24]">
                   <span className="font-semibold">{t.whyCorrect}: </span>
-                  {item.explanation}
+                  {isTh && item.explanationTh?.trim()
+                    ? item.explanationTh
+                    : item.explanation}
                 </p>
                 <p className="mt-1 text-[11px] text-[#71717a]">
                   {formatPrize(item.score)} {t.scorePts}

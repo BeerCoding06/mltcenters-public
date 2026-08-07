@@ -79,6 +79,7 @@ export function HotseatGame() {
     correctLabel: string;
     explanation: string;
   } | null>(null);
+  const [explainLoading, setExplainLoading] = useState(false);
 
   useEffect(() => {
     const session = loadHotseatSession();
@@ -108,6 +109,7 @@ export function HotseatGame() {
     setShowStemTh(false);
     setShowChoiceTh(new Set());
     setLastResult(null);
+    setExplainLoading(false);
     setPhase("playing");
   }, []);
 
@@ -249,45 +251,84 @@ export function HotseatGame() {
     return translation?.choicesTh.find((c) => c.choiceId === choiceId)?.labelTh ?? null;
   }
 
+  async function translateExplanation(english: string): Promise<string | null> {
+    try {
+      const res = await fetch("/api/toeic-translate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          mode: "explanation",
+          explanation: english,
+        }),
+        signal: AbortSignal.timeout(20_000),
+      });
+      const payload = (await res.json().catch(() => null)) as {
+        explanationTh?: string;
+        error?: string;
+      } | null;
+      if (!res.ok || !payload?.explanationTh?.trim()) return null;
+      return payload.explanationTh.trim();
+    } catch {
+      return null;
+    }
+  }
+
   function lockAnswer() {
     if (!selectedId || !question || phase !== "playing") return;
     setPhase("locked");
     window.setTimeout(() => {
-      const selected = question.choices.find((c) => c.id === selectedId);
-      const correct = question.choices.find((c) => c.isCorrect);
-      if (!selected || !correct) {
-        setPhase("playing");
-        return;
-      }
-      const ok = Boolean(selected.isCorrect);
-      const explanation =
-        question.explanation?.trim() ||
-        (isTh
-          ? `คำตอบที่ถูกคือ “${correct.label}” เพราะเข้ากับบริบทและไวยากรณ์ของประโยค`
-          : `The correct answer is “${correct.label}” because it fits the sentence context and grammar.`);
+      void (async () => {
+        const selected = question.choices.find((c) => c.id === selectedId);
+        const correct = question.choices.find((c) => c.isCorrect);
+        if (!selected || !correct) {
+          setPhase("playing");
+          return;
+        }
+        const ok = Boolean(selected.isCorrect);
+        const explanationEn =
+          question.explanation?.trim() ||
+          `The correct answer is “${correct.label}” because it fits the sentence context and grammar.`;
+        const explanationFallbackTh = `คำตอบที่ถูกคือ “${correct.label}” เพราะเข้ากับบริบทและไวยากรณ์ของประโยค`;
 
-      const item: HotseatReviewItem = {
-        step,
-        questionId: question.id,
-        stem: question.stem,
-        passage: question.passage,
-        selectedId: selected.id,
-        selectedLabel: selected.label,
-        correctId: correct.id,
-        correctLabel: correct.label,
-        isCorrect: ok,
-        explanation,
-        score: PRIZE_LADDER[index]?.amount ?? 0,
-        at: Date.now(),
-      };
-      setHistory(appendHotseatHistory(item));
-      setLastResult({
-        isCorrect: ok,
-        selectedLabel: selected.label,
-        correctLabel: correct.label,
-        explanation,
-      });
-      setPhase("explained");
+        let explanationTh =
+          question.explanationTh?.trim() ||
+          (isTh ? explanationFallbackTh : null);
+
+        if (isTh && !question.explanationTh?.trim() && question.explanation?.trim()) {
+          setExplainLoading(true);
+          const translated = await translateExplanation(explanationEn);
+          setExplainLoading(false);
+          if (translated) explanationTh = translated;
+        }
+
+        const explanation = isTh
+          ? explanationTh || explanationFallbackTh
+          : explanationEn;
+
+        const item: HotseatReviewItem = {
+          step,
+          questionId: question.id,
+          stem: question.stem,
+          passage: question.passage,
+          selectedId: selected.id,
+          selectedLabel: selected.label,
+          correctId: correct.id,
+          correctLabel: correct.label,
+          isCorrect: ok,
+          explanation: explanationEn,
+          explanationTh: explanationTh,
+          score: PRIZE_LADDER[index]?.amount ?? 0,
+          at: Date.now(),
+        };
+        setHistory(appendHotseatHistory(item));
+        setLastResult({
+          isCorrect: ok,
+          selectedLabel: selected.label,
+          correctLabel: correct.label,
+          explanation,
+        });
+        setPhase("explained");
+      })();
     }, 900);
   }
 
@@ -543,7 +584,7 @@ export function HotseatGame() {
                 </p>
                 <p className="rounded-xl border border-[#c9a227]/35 bg-[#c9a227]/10 px-3 py-2 text-sm text-[#fbbf24]">
                   <span className="font-semibold">{t.whyCorrect}: </span>
-                  {lastResult.explanation}
+                  {explainLoading ? t.loading : lastResult.explanation}
                 </p>
                 <div className="flex flex-wrap justify-center gap-2 pt-1">
                   <Button

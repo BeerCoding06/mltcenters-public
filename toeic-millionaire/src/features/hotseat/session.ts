@@ -18,6 +18,7 @@ export type HotseatReviewItem = {
   correctLabel: string;
   isCorrect: boolean;
   explanation: string;
+  explanationTh: string | null;
   score: number;
   at: number;
 };
