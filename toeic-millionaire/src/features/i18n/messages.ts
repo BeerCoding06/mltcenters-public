@@ -138,7 +138,7 @@ export const messages: Record<GameLang, Messages> = {
     backToLobby: "Back to lobby",
     landingHeadline: "15 questions. One hot seat.",
     landingSub:
-      "TOEIC practice in a quiz-show format — climb the money ladder, use lifelines, and lock in your final answer.",
+      "TOEIC practice in a quiz-show format — climb the score ladder, use lifelines, and lock in your final answer.",
     playNow: "Play now",
     enterLobby: "Enter lobby",
     landingGuestNote: "No sign-up · Plays on this device · No database required",
@@ -264,7 +264,7 @@ export const messages: Record<GameLang, Messages> = {
     backToLobby: "กลับล็อบบี้",
     landingHeadline: "15 คำถาม หนึ่งเก้าอี้ร้อน",
     landingSub:
-      "ฝึก TOEIC แบบเกมตอบคำถาม — ปีนบันไดเงิน ใช้ไลฟ์ไลน์ แล้วล็อกคำตอบสุดท้าย",
+      "ฝึก TOEIC แบบเกมตอบคำถาม — ปีนบันไดคะแนน ใช้ไลฟ์ไลน์ แล้วล็อกคำตอบสุดท้าย",
     playNow: "เล่นเลย",
     enterLobby: "เข้าล็อบบี้",
     landingGuestNote: "ไม่ต้องสมัคร · เล่นในเครื่องนี้ · ไม่ต้องใช้ฐานข้อมูล",
