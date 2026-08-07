@@ -746,7 +746,7 @@ function InlineTranslateBtn({
       }}
       disabled={loading}
       className={cn(
-        "inline-flex size-8 shrink-0 items-center justify-center rounded-md border bg-black text-[10px] font-bold tracking-wide transition",
+        "inline-flex size-6 shrink-0 items-center justify-center rounded-md border bg-black text-[10px] font-bold tracking-wide transition",
         "border-[#c9a227] text-[#c9a227] hover:enabled:bg-[#c9a227]/15",
         "disabled:cursor-wait disabled:opacity-60",
         active && "border-[#5bc0ff] text-[#5bc0ff]",
