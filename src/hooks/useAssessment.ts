@@ -163,7 +163,7 @@ export function useAssessment(onComplete: (result: AssessmentResult) => void) {
     abortRef.current?.abort();
     const controller = new AbortController();
     abortRef.current = controller;
-    const timeoutId = window.setTimeout(() => controller.abort(), 25_000);
+    const timeoutId = window.setTimeout(() => controller.abort(), 35_000);
     inFlightKeyRef.current = requestKey;
     lastUserSentRef.current = trimmed;
 

@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef, useEffect } from 'react';
+import { useState, useCallback, useRef, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Volume2 } from 'lucide-react';
@@ -19,15 +19,28 @@ const XP_STORAGE_KEY = 'mlt-assessment-xp';
 export default function EnglishAssessmentPage() {
   const { lang, t } = useI18n();
   const navigate = useNavigate();
-  const [avatarState, setAvatarState] = useState<AvatarState>('idle');
   const [conversationStarted, setConversationStarted] = useState(false);
   const [voiceMode, setVoiceMode] = useState(true);
   const [speakingMessageId, setSpeakingMessageId] = useState<string | null>(null);
   const voiceModeRef = useRef(voiceMode);
   const busyRef = useRef(false);
   const conversationStartedRef = useRef(false);
+  const listenTimerRef = useRef<number | null>(null);
+  const mountedRef = useRef(true);
 
   const { speak, stop, unlockAudio, isSpeaking } = useTextToSpeech();
+
+  useEffect(() => {
+    mountedRef.current = true;
+    return () => {
+      mountedRef.current = false;
+      if (listenTimerRef.current != null) {
+        window.clearTimeout(listenTimerRef.current);
+        listenTimerRef.current = null;
+      }
+      stop();
+    };
+  }, [stop]);
 
   useEffect(() => {
     voiceModeRef.current = voiceMode;
@@ -37,8 +50,16 @@ export default function EnglishAssessmentPage() {
     conversationStartedRef.current = conversationStarted;
   }, [conversationStarted]);
 
+  const clearListenTimer = useCallback(() => {
+    if (listenTimerRef.current != null) {
+      window.clearTimeout(listenTimerRef.current);
+      listenTimerRef.current = null;
+    }
+  }, []);
+
   const handleComplete = useCallback(
     (r: AssessmentResult) => {
+      clearListenTimer();
       stop();
       try {
         localStorage.setItem(ASSESSMENT_STORAGE_KEY, JSON.stringify(r));
@@ -50,7 +71,7 @@ export default function EnglishAssessmentPage() {
       }
       navigate('/assessment/dashboard', { state: { result: r }, replace: true });
     },
-    [navigate, stop]
+    [navigate, stop, clearListenTimer]
   );
 
   const {
@@ -69,22 +90,33 @@ export default function EnglishAssessmentPage() {
   const startListeningRef = useRef<() => Promise<boolean> | boolean>(() => false);
   const cancelListeningRef = useRef<() => Promise<void>>(async () => undefined);
 
+  const scheduleListen = useCallback(
+    (delayMs: number) => {
+      clearListenTimer();
+      listenTimerRef.current = window.setTimeout(() => {
+        listenTimerRef.current = null;
+        if (!mountedRef.current) return;
+        if (!voiceModeRef.current || !conversationStartedRef.current || busyRef.current) return;
+        void startListeningRef.current?.();
+      }, delayMs);
+    },
+    [clearListenTimer]
+  );
+
   const speakReply = useCallback(
     (text: string, messageId?: string, thenListen = false) => {
-      setAvatarState('speaking');
+      busyRef.current = true;
+      clearListenTimer();
       if (messageId) setSpeakingMessageId(messageId);
       speak(text, () => {
-        setAvatarState('idle');
         setSpeakingMessageId(null);
-        if (thenListen && voiceModeRef.current && !busyRef.current) {
-          // Gap so echoCancellation settles after TTS
-          window.setTimeout(() => {
-            void startListeningRef.current?.();
-          }, 700);
+        busyRef.current = false;
+        if (thenListen && voiceModeRef.current && mountedRef.current) {
+          scheduleListen(750);
         }
       });
     },
-    [speak]
+    [speak, clearListenTimer, scheduleListen]
   );
 
   const handleSend = useCallback(
@@ -93,22 +125,25 @@ export default function EnglishAssessmentPage() {
       if (!text || busyRef.current) return;
 
       busyRef.current = true;
+      clearListenTimer();
       await cancelListeningRef.current?.();
       unlockAudio();
-      setAvatarState('thinking');
       stop();
 
       const out = await sendToAPI(text);
-      busyRef.current = false;
+      if (!mountedRef.current) {
+        busyRef.current = false;
+        return;
+      }
 
       if (out?.reply) {
         speakReply(out.reply, out.messageId, voiceModeRef.current);
       } else {
-        setAvatarState('idle');
-        if (voiceModeRef.current) void startListeningRef.current?.();
+        busyRef.current = false;
+        if (voiceModeRef.current) scheduleListen(400);
       }
     },
-    [input, sendToAPI, speakReply, stop, unlockAudio]
+    [input, sendToAPI, speakReply, stop, unlockAudio, clearListenTimer, scheduleListen]
   );
 
   const onUtterance = useCallback(
@@ -134,9 +169,7 @@ export default function EnglishAssessmentPage() {
     onPreview: setInput,
     onNoSpeech: () => {
       if (!voiceModeRef.current || !conversationStartedRef.current || busyRef.current) return;
-      window.setTimeout(() => {
-        if (voiceModeRef.current && !busyRef.current) void startListeningRef.current?.();
-      }, 500);
+      scheduleListen(500);
     },
     silenceMs: 1100,
     maxUtteranceMs: 14_000,
@@ -147,6 +180,13 @@ export default function EnglishAssessmentPage() {
     startListeningRef.current = startListening;
     cancelListeningRef.current = cancelListening;
   }, [startListening, cancelListening]);
+
+  const avatarState: AvatarState = useMemo(() => {
+    if (isTranscribing || isThinking) return 'thinking';
+    if (isListening) return 'listening';
+    if (isSpeaking || speakingMessageId) return 'speaking';
+    return 'idle';
+  }, [isTranscribing, isThinking, isListening, isSpeaking, speakingMessageId]);
 
   const startConversation = useCallback(() => {
     unlockAudio();
@@ -164,7 +204,7 @@ export default function EnglishAssessmentPage() {
     (text: string) => {
       unlockAudio();
       void cancelListening();
-      speakReply(text);
+      speakReply(text, undefined, false);
     },
     [unlockAudio, cancelListening, speakReply]
   );
@@ -176,13 +216,6 @@ export default function EnglishAssessmentPage() {
   }, [unlockAudio, isListening, isTranscribing, stopListening, startListening]);
 
   useEffect(() => {
-    if (isTranscribing || isThinking) setAvatarState('thinking');
-    else if (isListening) setAvatarState('listening');
-    else if (isSpeaking || speakingMessageId) setAvatarState('speaking');
-    else setAvatarState('idle');
-  }, [isListening, isTranscribing, isThinking, isSpeaking, speakingMessageId]);
-
-  useEffect(() => {
     if (!conversationStarted) return;
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
@@ -191,20 +224,22 @@ export default function EnglishAssessmentPage() {
     };
   }, [conversationStarted]);
 
-  const statusText = isThinking || isTranscribing
-    ? isTranscribing
-      ? t.assessmentPage.status.transcribing[lang]
-      : t.assessmentPage.status.thinking[lang]
-    : isSpeaking || speakingMessageId
-      ? t.assessmentPage.status.speaking[lang]
-      : isListening
-        ? t.assessmentPage.status.listening[lang]
-        : voiceError
-          ? t.assessmentPage.status.micError[lang]
-          : t.assessmentPage.status.idle[lang];
+  const statusText =
+    isThinking || isTranscribing
+      ? isTranscribing
+        ? t.assessmentPage.status.transcribing[lang]
+        : t.assessmentPage.status.thinking[lang]
+      : isSpeaking || speakingMessageId
+        ? t.assessmentPage.status.speaking[lang]
+        : isListening
+          ? t.assessmentPage.status.listening[lang]
+          : voiceError
+            ? t.assessmentPage.status.micError[lang]
+            : t.assessmentPage.status.idle[lang];
 
   const chatLabels = {
     placeholder: t.assessmentPage.chat.placeholder[lang],
+    send: t.assessmentPage.chat.send[lang],
     micOn: t.assessmentPage.chat.micOn[lang],
     micOff: t.assessmentPage.chat.micOff[lang],
     replay: t.assessmentPage.chat.replay[lang],
@@ -222,8 +257,8 @@ export default function EnglishAssessmentPage() {
       }
     >
       <div
-        className={`container mx-auto px-3 sm:px-4 max-w-5xl w-full ${
-          conversationStarted ? 'flex flex-1 min-h-0 flex-col' : ''
+        className={`container mx-auto w-full max-w-5xl px-3 sm:px-4 lg:max-w-6xl ${
+          conversationStarted ? 'flex min-h-0 flex-1 flex-col' : ''
         }`}
       >
         {!conversationStarted ? (
@@ -232,23 +267,23 @@ export default function EnglishAssessmentPage() {
             animate={{ opacity: 1, y: 0 }}
             className="mb-5 sm:mb-8"
           >
-            <div className="flex flex-col items-center gap-2 mb-3 sm:gap-3 sm:mb-4">
+            <div className="mb-3 flex flex-col items-center gap-2 sm:mb-4 sm:gap-3">
               <AIIcon size="lg" className="h-11 w-11 sm:h-14 sm:w-14" />
-              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center leading-tight heading-gradient px-2">
+              <h1 className="heading-gradient px-2 text-center text-2xl font-bold leading-tight sm:text-3xl md:text-4xl">
                 {t.assessmentPage.title[lang]}
               </h1>
-              <p className="text-center text-sm text-muted-foreground px-2 max-w-md">
+              <p className="max-w-md px-2 text-center text-sm text-muted-foreground">
                 {t.assessmentPage.subtitle[lang]}
               </p>
             </div>
 
-            <h2 className="text-center text-sm font-semibold text-[#5BC0FF] mb-1">
+            <h2 className="mb-1 text-center text-sm font-semibold text-[#5BC0FF]">
               {t.assessmentPage.scenarios.title[lang]}
             </h2>
-            <p className="text-center text-xs sm:text-sm text-muted-foreground mb-3 sm:mb-4 px-1">
+            <p className="mb-3 px-1 text-center text-xs text-muted-foreground sm:mb-4 sm:text-sm">
               {t.assessmentPage.scenarios.hint[lang]}
             </p>
-            <div className="grid grid-cols-3 sm:grid-cols-4 gap-2 sm:gap-3 mb-5 sm:mb-6">
+            <div className="mb-5 grid grid-cols-2 gap-2 sm:mb-6 sm:grid-cols-3 md:grid-cols-4 sm:gap-3">
               {ASSESSMENT_SCENARIOS.map((scenario) => {
                 const selected = scenarioId === scenario.id;
                 const label = t.assessmentPage.scenarios[scenario.id][lang];
@@ -256,61 +291,80 @@ export default function EnglishAssessmentPage() {
                   <button
                     key={scenario.id}
                     type="button"
+                    aria-pressed={selected}
                     onClick={() => selectScenario(scenario.id)}
-                    className={`min-h-[5.25rem] sm:min-h-[5.5rem] rounded-xl sm:rounded-2xl border px-1.5 py-2.5 sm:px-3 sm:py-4 text-center transition-all touch-manipulation flex flex-col items-center justify-center gap-1 ${
+                    className={`flex min-h-[4.75rem] touch-manipulation flex-col items-center justify-center gap-1 rounded-xl border px-2 py-2.5 text-center transition-all sm:min-h-[5.5rem] sm:rounded-2xl sm:px-3 sm:py-4 ${
                       selected
                         ? 'border-[#5BC0FF] bg-[#5BC0FF]/10 shadow-md ring-2 ring-[#5BC0FF]/30'
                         : 'border-white/80 bg-white/90 shadow-sm hover:border-[#5BC0FF]/40 active:scale-[0.98]'
                     }`}
                   >
-                    <span className="text-xl sm:text-2xl leading-none" aria-hidden>
+                    <span className="text-xl leading-none sm:text-2xl" aria-hidden>
                       {scenario.icon}
                     </span>
-                    <span className="text-[11px] sm:text-sm font-medium text-foreground leading-snug line-clamp-2 px-0.5">
+                    <span className="line-clamp-2 px-0.5 text-[11px] font-medium leading-snug text-foreground sm:text-sm">
                       {label}
                     </span>
                   </button>
                 );
               })}
             </div>
-            <div className="text-center px-1">
+            <div className="px-1 text-center">
               <button
                 type="button"
                 onClick={startConversation}
-                className="w-full max-w-md mx-auto rounded-2xl bg-gradient-to-r from-[#5BC0FF] to-[#6EE7B7] px-6 py-4 sm:px-8 sm:py-5 text-base sm:text-lg font-bold text-white shadow-xl hover:shadow-2xl transition-all flex items-center justify-center gap-2 sm:gap-3 touch-manipulation"
+                className="mx-auto flex w-full max-w-md touch-manipulation items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-[#5BC0FF] to-[#6EE7B7] px-6 py-4 text-base font-bold text-white shadow-xl transition-all hover:shadow-2xl sm:gap-3 sm:px-8 sm:py-5 sm:text-lg"
               >
-                <Volume2 className="h-5 w-5 sm:h-6 sm:w-6 shrink-0" />
+                <Volume2 className="h-5 w-5 shrink-0 sm:h-6 sm:w-6" />
                 {t.assessmentPage.startVoice[lang]}
               </button>
-              <p className="mt-2 sm:mt-3 text-xs sm:text-sm text-muted-foreground">
+              <p className="mt-2 text-xs text-muted-foreground sm:mt-3 sm:text-sm">
                 {t.assessmentPage.startHint[lang]}
               </p>
             </div>
           </motion.div>
         ) : (
-          <div className="flex flex-1 min-h-0 flex-col">
-            <div className="mb-2 sm:mb-3 shrink-0 flex items-center gap-3 rounded-2xl border border-[#5BC0FF]/15 bg-white/90 px-3 py-2.5 shadow-sm">
-              <AIAssistantAvatar state={avatarState} className="w-14 h-14 sm:w-16 sm:h-16 shrink-0" />
+          <div className="flex min-h-0 flex-1 flex-col lg:mx-auto lg:w-full lg:max-w-4xl">
+            <div className="mb-2 flex shrink-0 items-center gap-3 rounded-2xl border border-[#5BC0FF]/15 bg-white/90 px-3 py-2.5 shadow-sm sm:mb-3">
+              <AIAssistantAvatar state={avatarState} className="h-12 w-12 shrink-0 sm:h-16 sm:w-16" />
               <div className="min-w-0 flex-1">
-                <p className="text-sm font-semibold text-foreground truncate">
+                <p className="truncate text-sm font-semibold text-foreground">
                   {t.assessmentPage.title[lang]}
                 </p>
-                <p className="text-xs text-[#5BC0FF] font-medium truncate">{statusText}</p>
+                <p
+                  className="truncate text-xs font-medium text-[#5BC0FF]"
+                  role="status"
+                  aria-live="polite"
+                >
+                  {statusText}
+                </p>
                 {voiceMode && (
-                  <p className="text-[10px] text-muted-foreground truncate mt-0.5">
+                  <p className="mt-0.5 truncate text-[10px] text-muted-foreground">
                     {t.assessmentPage.chat.voiceMode[lang]}
                   </p>
                 )}
+                {voiceError ? (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setVoiceMode(false);
+                      void cancelListening();
+                    }}
+                    className="mt-1 text-[11px] font-medium text-[#c9184a] underline-offset-2 hover:underline"
+                  >
+                    {t.assessmentPage.chat.typeMode[lang]}
+                  </button>
+                ) : null}
               </div>
               <div className="shrink-0 text-right">
-                <span className="text-[10px] text-muted-foreground block">
+                <span className="block text-[10px] text-muted-foreground">
                   {t.assessmentPage.points[lang]}
                 </span>
-                <p className="text-lg font-bold text-[#5BC0FF] leading-none">{xp}</p>
+                <p className="text-lg font-bold leading-none text-[#5BC0FF]">{xp}</p>
               </div>
             </div>
 
-            <div className="mb-2 sm:mb-3 shrink-0 h-2 rounded-full bg-white/80 shadow-inner overflow-hidden">
+            <div className="mb-2 h-2 shrink-0 overflow-hidden rounded-full bg-white/80 shadow-inner sm:mb-3">
               <motion.div
                 className="h-full rounded-full bg-gradient-to-r from-[#5BC0FF] to-[#6EE7B7]"
                 initial={{ width: 0 }}
@@ -326,7 +380,7 @@ export default function EnglishAssessmentPage() {
               onSend={() => void handleSend()}
               isListening={isListening}
               onToggleMic={handleToggleMic}
-              micSupported={micSupported}
+              micSupported={micSupported && voiceMode}
               disabled={isThinking || isSpeaking || isTranscribing}
               statusText={statusText}
               avatarState={avatarState}
@@ -336,14 +390,17 @@ export default function EnglishAssessmentPage() {
               compact
             />
 
-            <div className="mt-2 sm:mt-3 shrink-0 flex flex-col items-stretch sm:items-center justify-center gap-1 sm:gap-4 sm:flex-row">
+            <div className="mt-2 flex shrink-0 flex-col items-stretch justify-center gap-1 sm:mt-3 sm:flex-row sm:items-center sm:gap-4">
               <button
                 type="button"
                 onClick={() => {
-                  setVoiceMode((v) => !v);
+                  const next = !voiceMode;
+                  setVoiceMode(next);
+                  clearListenTimer();
                   void cancelListening();
+                  if (next && !busyRef.current) scheduleListen(300);
                 }}
-                className="text-sm text-muted-foreground hover:text-[#5BC0FF] py-2 touch-manipulation"
+                className="touch-manipulation py-2 text-sm text-muted-foreground hover:text-[#5BC0FF]"
               >
                 {voiceMode
                   ? t.assessmentPage.chat.typeMode[lang]
@@ -352,10 +409,12 @@ export default function EnglishAssessmentPage() {
               <button
                 type="button"
                 onClick={() => {
+                  clearListenTimer();
+                  stop();
                   if (messages.length >= 2) completeWithCurrent();
                   else navigate('/assessment/dashboard');
                 }}
-                className="text-sm text-muted-foreground hover:text-[#5BC0FF] underline py-2 touch-manipulation"
+                className="touch-manipulation py-2 text-sm text-muted-foreground underline hover:text-[#5BC0FF]"
               >
                 {t.assessmentPage.done[lang]}
               </button>

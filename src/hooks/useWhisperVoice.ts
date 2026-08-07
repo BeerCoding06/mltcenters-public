@@ -8,17 +8,14 @@ export type VoicePhase = 'idle' | 'listening' | 'transcribing';
 type Options = {
   onUtterance: (text: string) => void;
   onPreview?: (text: string) => void;
-  /** Called when recording ended with no usable speech (retry listen) */
   onNoSpeech?: () => void;
-  /** RMS threshold 0–1. Higher = less sensitive. */
   silenceThreshold?: number;
-  /** Silence after speech before cutting (ms) */
   silenceMs?: number;
-  /** Max single utterance (ms) */
   maxUtteranceMs?: number;
-  /** Min speech before allowing silence cut (ms) */
   minSpeechMs?: number;
 };
+
+const MAX_UPLOAD_BYTES = 6_000_000;
 
 function pickMimeType(): string {
   if (typeof MediaRecorder === 'undefined') return '';
@@ -31,21 +28,8 @@ function pickMimeType(): string {
   return candidates.find((t) => MediaRecorder.isTypeSupported(t)) || '';
 }
 
-async function blobToBase64(blob: Blob): Promise<string> {
-  const buffer = await blob.arrayBuffer();
-  let binary = '';
-  const bytes = new Uint8Array(buffer);
-  const chunk = 0x8000;
-  for (let i = 0; i < bytes.length; i += chunk) {
-    binary += String.fromCharCode(...bytes.subarray(i, i + chunk));
-  }
-  return btoa(binary);
-}
-
 /**
- * Professional assessment voice input:
- * MediaRecorder + WebAudio VAD → Whisper (/api/transcribe).
- * Independent of flaky browser Web Speech API.
+ * MediaRecorder + WebAudio VAD → Whisper (/api/transcribe) as raw audio body.
  */
 export function useWhisperVoice({
   onUtterance,
@@ -75,6 +59,9 @@ export function useWhisperVoice({
   const listeningStartedAtRef = useRef<number>(0);
   const stoppingRef = useRef(false);
   const mutedRef = useRef(false);
+  const mountedRef = useRef(true);
+  const abortRef = useRef<AbortController | null>(null);
+  const stopRef = useRef<() => Promise<void>>(async () => undefined);
 
   useEffect(() => {
     onUtteranceRef.current = onUtterance;
@@ -87,12 +74,17 @@ export function useWhisperVoice({
   }, [phase]);
 
   useEffect(() => {
+    mountedRef.current = true;
     const ok =
       typeof window !== 'undefined' &&
       !!navigator.mediaDevices?.getUserMedia &&
       typeof MediaRecorder !== 'undefined' &&
       !!pickMimeType();
     setSupported(ok);
+    return () => {
+      mountedRef.current = false;
+      abortRef.current?.abort();
+    };
   }, []);
 
   const cleanupAudioGraph = useCallback(() => {
@@ -112,35 +104,53 @@ export function useWhisperVoice({
     streamRef.current = null;
   }, []);
 
+  const setPhaseSafe = useCallback((next: VoicePhase) => {
+    phaseRef.current = next;
+    if (mountedRef.current) setPhase(next);
+  }, []);
+
   const transcribeBlob = useCallback(async (blob: Blob): Promise<string> => {
     if (blob.size < 800) return '';
-    const audioBase64 = await blobToBase64(blob);
-    const res = await fetch('/api/transcribe', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        audioBase64,
-        mimeType: blob.type || 'audio/webm',
-        language: 'en',
-      }),
-      signal: AbortSignal.timeout(45_000),
-    });
-    const data = (await res.json().catch(() => null)) as
-      | { text?: string; error?: string }
-      | null;
-    if (!res.ok) {
-      throw new Error(data?.error || 'Transcription failed');
+    if (blob.size > MAX_UPLOAD_BYTES) {
+      throw new Error('Audio too large — please speak a shorter sentence');
     }
-    return dedupeSpeechTranscript(data?.text || '');
+
+    abortRef.current?.abort();
+    const controller = new AbortController();
+    abortRef.current = controller;
+    const timeout = window.setTimeout(() => controller.abort(), 40_000);
+
+    try {
+      const mime = blob.type || 'audio/webm';
+      const res = await fetch('/api/transcribe', {
+        method: 'POST',
+        headers: {
+          'Content-Type': mime,
+          'X-Speech-Language': 'en',
+        },
+        body: blob,
+        signal: controller.signal,
+      });
+      const data = (await res.json().catch(() => null)) as
+        | { text?: string; error?: string }
+        | null;
+      if (!res.ok) {
+        throw new Error(data?.error || 'Transcription failed');
+      }
+      return dedupeSpeechTranscript(data?.text || '');
+    } finally {
+      window.clearTimeout(timeout);
+      if (abortRef.current === controller) abortRef.current = null;
+    }
   }, []);
 
   const finishUtterance = useCallback(
     async (blob: Blob) => {
-      setPhase('transcribing');
-      phaseRef.current = 'transcribing';
-      setError(null);
+      setPhaseSafe('transcribing');
+      if (mountedRef.current) setError(null);
       try {
         const text = await transcribeBlob(blob);
+        if (!mountedRef.current) return;
         track(ANALYTICS_EVENTS.SPEECH_COMPLETED, { chars: text.length, engine: 'whisper' });
         if (!text || shouldIgnoreTranscript(text)) {
           onPreviewRef.current?.('');
@@ -150,18 +160,17 @@ export function useWhisperVoice({
         onPreviewRef.current?.(text);
         onUtteranceRef.current(text);
       } catch (e) {
+        if (!mountedRef.current) return;
+        if ((e as Error).name === 'AbortError') return;
         const msg = e instanceof Error ? e.message : 'Transcription failed';
         setError(msg);
         track(ANALYTICS_EVENTS.SPEECH_FAILED, { error: 'whisper_failed' });
         onNoSpeechRef.current?.();
       } finally {
-        if (phaseRef.current === 'transcribing') {
-          setPhase('idle');
-          phaseRef.current = 'idle';
-        }
+        if (phaseRef.current === 'transcribing') setPhaseSafe('idle');
       }
     },
-    [transcribeBlob]
+    [setPhaseSafe, transcribeBlob]
   );
 
   const stopRecorder = useCallback(async (): Promise<Blob | null> => {
@@ -201,14 +210,17 @@ export function useWhisperVoice({
       if (blob && blob.size > 800 && !mutedRef.current) {
         await finishUtterance(blob);
       } else {
-        setPhase('idle');
-        phaseRef.current = 'idle';
+        setPhaseSafe('idle');
         if (!mutedRef.current) onNoSpeechRef.current?.();
       }
     } finally {
       stoppingRef.current = false;
     }
-  }, [finishUtterance, stopRecorder]);
+  }, [finishUtterance, setPhaseSafe, stopRecorder]);
+
+  useEffect(() => {
+    stopRef.current = stop;
+  }, [stop]);
 
   const monitorLevels = useCallback(() => {
     const analyser = analyserRef.current;
@@ -245,27 +257,30 @@ export function useWhisperVoice({
     const shouldCutForMax = elapsed >= maxUtteranceMs && speechStartedAtRef.current != null;
 
     if (shouldCutForSilence || shouldCutForMax) {
-      void stop();
+      void stopRef.current();
       return;
     }
 
-    // Auto-stop empty listen after max window with no speech
     if (speechStartedAtRef.current == null && elapsed >= maxUtteranceMs) {
-      void stopRecorder().then(() => {
-        setPhase('idle');
-        phaseRef.current = 'idle';
-      });
+      void stopRecorder().then(() => setPhaseSafe('idle'));
       return;
     }
 
     rafRef.current = requestAnimationFrame(monitorLevels);
-  }, [maxUtteranceMs, minSpeechMs, silenceMs, silenceThreshold, stop, stopRecorder]);
+  }, [
+    maxUtteranceMs,
+    minSpeechMs,
+    setPhaseSafe,
+    silenceMs,
+    silenceThreshold,
+    stopRecorder,
+  ]);
 
   const start = useCallback(async () => {
     if (!supported || stoppingRef.current) return false;
     if (phaseRef.current === 'listening' || phaseRef.current === 'transcribing') return false;
 
-    setError(null);
+    if (mountedRef.current) setError(null);
     mutedRef.current = false;
     speechStartedAtRef.current = null;
     lastLoudAtRef.current = performance.now();
@@ -280,6 +295,10 @@ export function useWhisperVoice({
           autoGainControl: true,
         },
       });
+      if (!mountedRef.current) {
+        stream.getTracks().forEach((t) => t.stop());
+        return false;
+      }
       streamRef.current = stream;
 
       const mimeType = pickMimeType();
@@ -304,39 +323,39 @@ export function useWhisperVoice({
         analyserRef.current = analyser;
       }
 
-      setPhase('listening');
-      phaseRef.current = 'listening';
+      setPhaseSafe('listening');
       track(ANALYTICS_EVENTS.SPEECH_STARTED, { engine: 'whisper' });
       rafRef.current = requestAnimationFrame(monitorLevels);
       return true;
     } catch (e) {
       stopTracks();
       cleanupAudioGraph();
-      setPhase('idle');
-      phaseRef.current = 'idle';
-      setError(e instanceof Error ? e.message : 'Microphone blocked');
+      setPhaseSafe('idle');
+      if (mountedRef.current) {
+        setError(e instanceof Error ? e.message : 'Microphone blocked');
+      }
       track(ANALYTICS_EVENTS.SPEECH_FAILED, { error: 'mic_blocked' });
       return false;
     }
-  }, [cleanupAudioGraph, monitorLevels, stopTracks, supported]);
+  }, [cleanupAudioGraph, monitorLevels, setPhaseSafe, stopTracks, supported]);
 
-  /** Cancel without sending (e.g. when AI starts talking) */
   const cancel = useCallback(async () => {
     mutedRef.current = true;
     stoppingRef.current = true;
+    abortRef.current?.abort();
     try {
       await stopRecorder();
-      setPhase('idle');
-      phaseRef.current = 'idle';
+      setPhaseSafe('idle');
     } finally {
       stoppingRef.current = false;
       mutedRef.current = false;
     }
-  }, [stopRecorder]);
+  }, [setPhaseSafe, stopRecorder]);
 
   useEffect(
     () => () => {
       mutedRef.current = true;
+      abortRef.current?.abort();
       void stopRecorder();
     },
     [stopRecorder]

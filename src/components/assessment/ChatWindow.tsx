@@ -8,6 +8,7 @@ import type { AvatarState } from '@/types/assessment';
 
 interface ChatLabels {
   placeholder: string;
+  send: string;
   micOn: string;
   micOff: string;
   replay: string;
@@ -73,6 +74,8 @@ export function ChatWindow({
     >
       {!compact && (
         <div
+          role="status"
+          aria-live="polite"
           className={cn(
             'flex items-center gap-2 border-b px-4 py-2.5 text-sm font-medium transition-colors',
             avatarState === 'listening' && 'bg-[#FF8FAB]/15 text-[#c9184a]',
@@ -82,7 +85,7 @@ export function ChatWindow({
           )}
         >
           {avatarState === 'listening' && (
-            <span className="flex gap-0.5">
+            <span className="flex gap-0.5" aria-hidden>
               {[0, 1, 2].map((i) => (
                 <motion.span
                   key={i}
@@ -93,7 +96,7 @@ export function ChatWindow({
               ))}
             </span>
           )}
-          {avatarState === 'speaking' && <Volume2 className="h-4 w-4 shrink-0 animate-pulse" />}
+          {avatarState === 'speaking' && <Volume2 className="h-4 w-4 shrink-0 animate-pulse" aria-hidden />}
           <span className="truncate">{statusText}</span>
         </div>
       )}
@@ -159,7 +162,7 @@ export function ChatWindow({
           onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && onSend()}
           placeholder={labels.placeholder}
           disabled={disabled || isListening}
-          className="min-w-0 flex-1 rounded-xl border border-border bg-background px-3 py-2.5 sm:px-4 sm:py-3 text-base text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-[#5BC0FF]/50 disabled:opacity-50"
+          className="min-w-0 flex-1 rounded-xl border border-border bg-background px-3 py-2.5 text-base text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-[#5BC0FF]/50 disabled:opacity-50 sm:px-4 sm:py-3"
         />
         {micSupported && (
           <button
@@ -167,10 +170,11 @@ export function ChatWindow({
             onClick={onToggleMic}
             disabled={disabled}
             className={cn(
-              'shrink-0 rounded-xl p-2.5 sm:p-3 transition-all touch-manipulation',
+              'shrink-0 rounded-xl p-3 transition-all touch-manipulation sm:p-3',
+              'min-h-11 min-w-11',
               isListening
                 ? 'bg-[#FF8FAB] text-white shadow-lg shadow-[#FF8FAB]/30'
-                : 'bg-muted hover:bg-[#5BC0FF]/20 text-foreground'
+                : 'bg-muted text-foreground hover:bg-[#5BC0FF]/20'
             )}
             aria-label={isListening ? labels.micOn : labels.micOff}
           >
@@ -181,8 +185,8 @@ export function ChatWindow({
           type="button"
           onClick={onSend}
           disabled={disabled || !inputValue.trim()}
-          className="shrink-0 rounded-xl bg-gradient-to-r from-[#5BC0FF] to-[#6EE7B7] p-2.5 sm:p-3 text-white shadow-md hover:shadow-lg disabled:opacity-50 transition-all touch-manipulation"
-          aria-label={labels.placeholder}
+          className="min-h-11 min-w-11 shrink-0 rounded-xl bg-gradient-to-r from-[#5BC0FF] to-[#6EE7B7] p-3 text-white shadow-md transition-all touch-manipulation hover:shadow-lg disabled:opacity-50"
+          aria-label={labels.send}
         >
           <Send className="h-5 w-5" />
         </button>

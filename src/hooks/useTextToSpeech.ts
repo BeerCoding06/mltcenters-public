@@ -25,21 +25,33 @@ export function useTextToSpeech() {
   const settledRef = useRef(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
 
-  useEffect(() => {
-    if (!synth) return;
-    const load = () => {
-      voicesRef.current = synth.getVoices();
-    };
-    load();
-    synth.onvoiceschanged = load;
-  }, [synth]);
-
   const clearWatchdog = useCallback(() => {
     if (watchdogRef.current != null) {
       window.clearTimeout(watchdogRef.current);
       watchdogRef.current = null;
     }
   }, []);
+
+  useEffect(() => {
+    if (!synth) return;
+    const load = () => {
+      voicesRef.current = synth.getVoices();
+    };
+    load();
+    synth.addEventListener?.('voiceschanged', load);
+    // Safari / older Chrome
+    synth.onvoiceschanged = load;
+    return () => {
+      clearWatchdog();
+      try {
+        synth.cancel();
+      } catch {
+        /* ignore */
+      }
+      synth.onvoiceschanged = null;
+      synth.removeEventListener?.('voiceschanged', load);
+    };
+  }, [synth, clearWatchdog]);
 
   const unlockAudio = useCallback(() => {
     if (!synth || unlockedRef.current) return;
@@ -48,9 +60,6 @@ export function useTextToSpeech() {
       const u = new SpeechSynthesisUtterance(' ');
       u.volume = 0.01;
       u.rate = 2;
-      u.onend = () => {
-        /* unlocked */
-      };
       synth.speak(u);
       window.setTimeout(() => {
         try {
@@ -130,7 +139,7 @@ export function useTextToSpeech() {
 
       const watchdogMs = Math.max(
         TTS_WATCHDOG_MIN_MS,
-        Math.ceil(t.length * TTS_WATCHDOG_MS_PER_CHAR / CHILD_SPEECH_RATE)
+        Math.ceil((t.length * TTS_WATCHDOG_MS_PER_CHAR) / CHILD_SPEECH_RATE)
       );
       watchdogRef.current = window.setTimeout(() => {
         watchdogRef.current = null;
@@ -147,7 +156,6 @@ export function useTextToSpeech() {
 
       try {
         synth.speak(u);
-        // Some Chrome builds pause the queue after cancel — nudge resume
         if (synth.paused) synth.resume();
       } catch {
         settle();
@@ -155,8 +163,6 @@ export function useTextToSpeech() {
     },
     [synth, clearWatchdog]
   );
-
-  useEffect(() => () => clearWatchdog(), [clearWatchdog]);
 
   return { speak, stop, unlockAudio, isSpeaking };
 }

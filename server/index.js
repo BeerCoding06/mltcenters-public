@@ -120,10 +120,16 @@ const openai = AI_API_KEY
     })
   : null;
 
-// Large body only for Whisper audio uploads (base64)
+// Whisper audio: prefer raw binary body (mobile-friendly). JSON base64 still accepted as fallback.
 app.post(
   '/api/transcribe',
-  express.json({ limit: '8mb' }),
+  (req, res, next) => {
+    const ct = String(req.headers['content-type'] || '');
+    if (ct.startsWith('audio/') || ct === 'application/octet-stream') {
+      return express.raw({ type: () => true, limit: '8mb' })(req, res, next);
+    }
+    return express.json({ limit: '8mb' })(req, res, next);
+  },
   createTranscribeHandler(openai)
 );
 app.use(express.json({ limit: '256kb' }));
@@ -336,13 +342,20 @@ app.post('/api/assess', async (req, res) => {
 
     logAssessPrompt(apiMessages);
 
+    const startedAt = Date.now();
     let completion = await createAssessCompletion(openai, apiMessages);
     let parsed = parseAssessResponse(completion.choices[0]?.message?.content?.trim() || '');
 
     const priorAssistant = getPreviousAssistantReply(history);
     parsed.reply = postProcessReply(parsed.reply, priorAssistant);
 
-    if (priorAssistant && isSubstantiallySimilar(parsed.reply, priorAssistant)) {
+    // Skip rewrite retry if the first call already used most of the UX budget
+    const elapsedMs = Date.now() - startedAt;
+    if (
+      priorAssistant &&
+      isSubstantiallySimilar(parsed.reply, priorAssistant) &&
+      elapsedMs < 10_000
+    ) {
       const retryMessages = [
         ...apiMessages,
         { role: 'system', content: buildRewriteInstruction(priorAssistant, latestUser) },
