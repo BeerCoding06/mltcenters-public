@@ -83,6 +83,9 @@ export function looksIncompleteUtterance(text) {
   if (shouldIgnoreTranscript(text)) return true;
   const normalized = normalizeTranscript(text);
   const words = tokenizeTranscript(normalized);
+  if (words.length >= 2 && words.length <= 4 && !TRAILING_INCOMPLETE.test(normalized)) {
+    return false;
+  }
   if (words.length <= 2 && TRAILING_INCOMPLETE.test(normalized)) return true;
   if (TRAILING_INCOMPLETE.test(normalized) && !/[.!?]$/.test(normalized)) return true;
   return false;

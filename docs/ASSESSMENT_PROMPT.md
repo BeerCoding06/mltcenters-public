@@ -30,9 +30,11 @@ The AI is instructed to:
 
 ## Voice
 
-- **Input:** Web Speech API `SpeechRecognition` (en-US, one-shot). Mic button toggles; transcript is inserted into the chat input.
-- **Output:** `SpeechSynthesis` speaks the AI `reply` (en-US voice, rate ~1.05). Previous utterance is cancelled when a new one starts.
-- **Fallback:** If the browser doesn’t support recognition, the mic button is hidden; user types only.
+- **Input (production):** `MediaRecorder` + Web Audio VAD → `POST /api/transcribe` (Whisper).
+  Independent of browser Web Speech API flakiness.
+- **Output:** `SpeechSynthesis` with watchdog so `onend` cannot hang the turn.
+- **Fallback:** If mic unsupported, mic button hidden; user types only.
+- **Flow:** AI speaks → short gap → listen → silence cut → Whisper → `/api/assess` → TTS.
 
 ## Gamification
 

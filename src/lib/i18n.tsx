@@ -25,16 +25,21 @@ export const translations = {
     },
     startVoice: { en: "Start talking", th: "เริ่มคุย" },
     startHint: {
-      en: "Tap to listen — speak slowly. The AI will wait for you.",
-      th: "แตะเพื่อฟัง AI แล้วพูดช้า ๆ ชัด ๆ — ระบบจะรอให้พูดจบ",
+      en: "Allow the microphone, then speak after the AI finishes. We’ll wait until you pause.",
+      th: "อนุญาตไมโครโฟน รอให้ AI พูดจบ แล้วพูดได้เลย — ระบบจะรอจนคุณหยุดพูด",
     },
     points: { en: "Points", th: "คะแนน" },
     done: { en: "I'm done — show my results", th: "จบแล้ว — ดูผลประเมิน" },
     status: {
       idle: { en: "Ready to chat", th: "พร้อมคุย" },
-      listening: { en: "Listening… speak slowly", th: "กำลังฟัง… พูดช้า ๆ ได้เลย" },
+      listening: { en: "Listening… speak now", th: "กำลังฟัง… พูดได้เลย" },
+      transcribing: { en: "Understanding your voice…", th: "กำลังแปลงเสียงเป็นข้อความ…" },
       thinking: { en: "Thinking…", th: "กำลังคิด…" },
       speaking: { en: "AI is speaking…", th: "AI กำลังพูด…" },
+      micError: {
+        en: "Mic blocked — allow microphone or type instead",
+        th: "ไมค์ถูกบล็อก — อนุญาตไมโครโฟน หรือพิมพ์แทน",
+      },
     },
     chat: {
       placeholder: { en: "Speak slowly or type…", th: "พูดช้า ๆ หรือพิมพ์…" },
@@ -44,7 +49,7 @@ export const translations = {
       replay: { en: "Hear again", th: "ฟังอีกครั้ง" },
       you: { en: "You", th: "คุณ" },
       ai: { en: "AI Tutor", th: "AI ติวเตอร์" },
-      voiceMode: { en: "Voice conversation on", th: "โหมดคุยด้วยเสียงเปิดอยู่" },
+      voiceMode: { en: "Stable voice mode on", th: "โหมดเสียงเสถียรเปิดอยู่" },
       typeMode: { en: "Type to reply", th: "พิมพ์เพื่อตอบ" },
     },
     scenarios: {

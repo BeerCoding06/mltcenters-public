@@ -14,16 +14,13 @@ export interface SpeechResultMeta {
 
 interface Options {
   lang?: string;
-  /** Longer continuous listening + 1.5–2s silence endpoint before final emit */
+  /** Longer continuous listening + silence endpoint before final emit */
   childMode?: boolean;
   /** Silence before treating speech as finished (ms). Default: child 1800 / adult 1200 */
   silenceMs?: number;
   onFinal?: (text: string, meta?: SpeechResultMeta) => void;
   onInterim?: (text: string) => void;
-  /**
-   * When true after recognition ends unexpectedly (Chrome timeout / network blip),
-   * restart listening after a short backoff.
-   */
+  /** Keep mic alive after Chrome ends the session unexpectedly */
   wantListening?: () => boolean;
 }
 
@@ -51,11 +48,12 @@ export function useSpeechRecognition({
   const onInterimRef = useRef(onInterim);
   const wantListeningRef = useRef(wantListening);
   const bufferRef = useRef('');
+  const interimRef = useRef('');
   const altsRef = useRef<string[]>([]);
   const flushTimerRef = useRef<number | null>(null);
   const restartTimerRef = useRef<number | null>(null);
+  const startRetryTimerRef = useRef<number | null>(null);
   const lastFinalEmittedRef = useRef('');
-  /** True while we intentionally stop (silence endpoint / user / send) — ignore aborted errors. */
   const intentionalStopRef = useRef(false);
   const listeningRef = useRef(false);
   const endpointMs = silenceMs ?? (childMode ? 1800 : 1200);
@@ -80,8 +78,19 @@ export function useSpeechRecognition({
     }
   }, []);
 
+  const clearStartRetryTimer = useCallback(() => {
+    if (startRetryTimerRef.current != null) {
+      window.clearTimeout(startRetryTimerRef.current);
+      startRetryTimerRef.current = null;
+    }
+  }, []);
+
   const flushBuffer = useCallback(() => {
-    const text = dedupeSpeechTranscript(bufferRef.current);
+    // Chrome often keeps speech as interim until stop — promote interim if no finals
+    const raw = bufferRef.current.trim()
+      ? bufferRef.current
+      : interimRef.current;
+    const text = dedupeSpeechTranscript(raw);
     const alternatives = [
       ...new Set(
         altsRef.current
@@ -90,9 +99,9 @@ export function useSpeechRecognition({
       ),
     ];
     bufferRef.current = '';
+    interimRef.current = '';
     altsRef.current = [];
 
-    // Never send interim leftovers or filler-only finals to the LLM pipeline
     if (!text || shouldIgnoreTranscript(text)) {
       if (import.meta.env.DEV && text) {
         console.info('[speech] ignored filler/partial final transcript:', text);
@@ -100,7 +109,6 @@ export function useSpeechRecognition({
       return;
     }
 
-    // Deduplicate identical consecutive finals (interrupted / double fire)
     if (text.toLowerCase() === lastFinalEmittedRef.current.toLowerCase()) {
       if (import.meta.env.DEV) {
         console.info('[speech] ignored duplicate final transcript:', text);
@@ -116,37 +124,60 @@ export function useSpeechRecognition({
     onFinalRef.current?.(text, { alternatives });
   }, []);
 
+  const tryStartRecognition = useCallback(
+    (attempt = 0): boolean => {
+      const rec = recognitionRef.current;
+      if (!rec) return false;
+      intentionalStopRef.current = false;
+      try {
+        rec.start();
+        listeningRef.current = true;
+        setIsListening(true);
+        track(ANALYTICS_EVENTS.SPEECH_STARTED);
+        return true;
+      } catch {
+        // InvalidStateError right after stop/onend — retry briefly
+        if (attempt < 5) {
+          clearStartRetryTimer();
+          startRetryTimerRef.current = window.setTimeout(() => {
+            startRetryTimerRef.current = null;
+            if (!wantListeningRef.current || wantListeningRef.current()) {
+              tryStartRecognition(attempt + 1);
+            }
+          }, 200 + attempt * 150);
+          return false;
+        }
+        listeningRef.current = false;
+        setIsListening(false);
+        track(ANALYTICS_EVENTS.SPEECH_FAILED, { error: 'start_failed' });
+        return false;
+      }
+    },
+    [clearStartRetryTimer]
+  );
+
   const scheduleRestart = useCallback(() => {
     clearRestartTimer();
     if (!wantListeningRef.current?.()) return;
     restartTimerRef.current = window.setTimeout(() => {
       restartTimerRef.current = null;
       if (!wantListeningRef.current?.() || listeningRef.current) return;
-      const rec = recognitionRef.current;
-      if (!rec) return;
-      try {
-        intentionalStopRef.current = false;
-        rec.start();
-        listeningRef.current = true;
-        setIsListening(true);
-        track(ANALYTICS_EVENTS.SPEECH_STARTED);
-      } catch {
-        /* already started or not allowed */
-      }
-    }, 450);
-  }, [clearRestartTimer]);
+      tryStartRecognition(0);
+    }, 500);
+  }, [clearRestartTimer, tryStartRecognition]);
 
   const scheduleFlush = useCallback(() => {
     clearFlushTimer();
-    // Endpoint detection: wait for silence after final chunks, then emit once
     flushTimerRef.current = window.setTimeout(() => {
       flushTimerRef.current = null;
       flushBuffer();
       intentionalStopRef.current = true;
+      listeningRef.current = false;
+      setIsListening(false);
       try {
         recognitionRef.current?.stop();
       } catch {
-        /* ignore */
+        intentionalStopRef.current = false;
       }
     }, endpointMs);
   }, [clearFlushTimer, flushBuffer, endpointMs]);
@@ -154,12 +185,12 @@ export function useSpeechRecognition({
   useEffect(() => {
     const SpeechRecognitionAPI =
       (window as Window & { SpeechRecognition?: typeof SpeechRecognition }).SpeechRecognition ||
-      (window as Window & { webkitSpeechRecognition?: typeof SpeechRecognition }).webkitSpeechRecognition;
+      (window as Window & { webkitSpeechRecognition?: typeof SpeechRecognition })
+        .webkitSpeechRecognition;
     if (!SpeechRecognitionAPI) return;
 
     const rec = new SpeechRecognitionAPI();
     rec.continuous = childMode;
-    // Keep interim for UI preview only — never flushed as final
     rec.interimResults = true;
     rec.lang = lang;
     rec.maxAlternatives = childMode ? 5 : 3;
@@ -173,14 +204,15 @@ export function useSpeechRecognition({
           const parts = collectAlternatives(result);
           bufferRef.current = mergeSpeechChunks(bufferRef.current, chunk);
           altsRef.current.push(...parts);
+          interimRef.current = '';
           scheduleFlush();
         } else {
-          // Interim only — never appended to the final buffer
           interim += chunk;
         }
       }
+      if (interim) interimRef.current = interim;
       const preview = dedupeSpeechTranscript(
-        normalizeTranscript(`${bufferRef.current} ${interim}`)
+        normalizeTranscript(`${bufferRef.current} ${interim || interimRef.current}`)
       );
       if (preview) onInterimRef.current?.(preview);
     };
@@ -189,17 +221,14 @@ export function useSpeechRecognition({
       listeningRef.current = false;
       setIsListening(false);
       clearFlushTimer();
-      // Only flush accumulated FINAL chunks after silence / stop
-      if (bufferRef.current.trim()) flushBuffer();
+      if (bufferRef.current.trim() || interimRef.current.trim()) flushBuffer();
       const wasIntentional = intentionalStopRef.current;
       intentionalStopRef.current = false;
-      // Chrome often ends continuous sessions (~60s) or after silence — keep mic alive in voice mode
       if (!wasIntentional) scheduleRestart();
     };
 
     rec.onerror = (event: SpeechRecognitionErrorEvent) => {
       const err = event.error || '';
-      // Intentional stop() often fires "aborted" — keep buffer and let onend flush
       if (err === 'aborted' && intentionalStopRef.current) {
         return;
       }
@@ -208,11 +237,10 @@ export function useSpeechRecognition({
       setIsListening(false);
       clearFlushTimer();
 
-      // Soft errors: keep any finals we already have, then optionally restart
       if (err === 'aborted' || err === 'no-speech') {
-        if (bufferRef.current.trim()) flushBuffer();
+        if (bufferRef.current.trim() || interimRef.current.trim()) flushBuffer();
         intentionalStopRef.current = false;
-        if (err === 'no-speech') scheduleRestart();
+        scheduleRestart();
         return;
       }
 
@@ -221,18 +249,18 @@ export function useSpeechRecognition({
         console.warn('[speech] recognition error:', err);
       }
 
-      // Hard errors clear buffer (permission / audio-capture)
       if (err === 'not-allowed' || err === 'service-not-allowed' || err === 'audio-capture') {
         bufferRef.current = '';
+        interimRef.current = '';
         altsRef.current = [];
         intentionalStopRef.current = false;
         return;
       }
 
-      // network / other: flush what we have, then retry listening
-      if (bufferRef.current.trim()) flushBuffer();
+      if (bufferRef.current.trim() || interimRef.current.trim()) flushBuffer();
       else {
         bufferRef.current = '';
+        interimRef.current = '';
         altsRef.current = [];
       }
       intentionalStopRef.current = false;
@@ -245,6 +273,7 @@ export function useSpeechRecognition({
     return () => {
       clearFlushTimer();
       clearRestartTimer();
+      clearStartRetryTimer();
       intentionalStopRef.current = true;
       try {
         recognitionRef.current?.abort();
@@ -252,43 +281,43 @@ export function useSpeechRecognition({
         /* ignore */
       }
     };
-  }, [lang, childMode, scheduleFlush, clearFlushTimer, clearRestartTimer, flushBuffer, scheduleRestart]);
+  }, [
+    lang,
+    childMode,
+    scheduleFlush,
+    clearFlushTimer,
+    clearRestartTimer,
+    clearStartRetryTimer,
+    flushBuffer,
+    scheduleRestart,
+  ]);
 
   const start = useCallback(() => {
     if (!recognitionRef.current) return false;
     clearRestartTimer();
+    clearStartRetryTimer();
     bufferRef.current = '';
+    interimRef.current = '';
     altsRef.current = [];
     clearFlushTimer();
-    intentionalStopRef.current = false;
-    try {
-      recognitionRef.current.start();
-      listeningRef.current = true;
-      setIsListening(true);
-      track(ANALYTICS_EVENTS.SPEECH_STARTED);
-      return true;
-    } catch {
-      // Already started — treat as listening
-      listeningRef.current = true;
-      setIsListening(true);
-      return true;
-    }
-  }, [clearFlushTimer, clearRestartTimer]);
+    return tryStartRecognition(0);
+  }, [clearFlushTimer, clearRestartTimer, clearStartRetryTimer, tryStartRecognition]);
 
   const stop = useCallback(() => {
     clearRestartTimer();
+    clearStartRetryTimer();
     clearFlushTimer();
-    intentionalStopRef.current = true;
-    // Flush BEFORE stop so aborted races cannot wipe the transcript
-    if (bufferRef.current.trim()) flushBuffer();
+    const hadSession = listeningRef.current;
+    intentionalStopRef.current = hadSession;
+    if (bufferRef.current.trim() || interimRef.current.trim()) flushBuffer();
     try {
       recognitionRef.current?.stop();
     } catch {
-      /* ignore */
+      intentionalStopRef.current = false;
     }
     listeningRef.current = false;
     setIsListening(false);
-  }, [clearFlushTimer, clearRestartTimer, flushBuffer]);
+  }, [clearFlushTimer, clearRestartTimer, clearStartRetryTimer, flushBuffer]);
 
   const toggle = useCallback(() => {
     if (isListening) stop();

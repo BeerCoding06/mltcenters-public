@@ -22,6 +22,7 @@ import {
   createMillionaireProxy,
   millionaireUnavailableHandler,
 } from './millionaire-proxy.js';
+import { createTranscribeHandler } from './transcribe.js';
 import { isPhpMailerReady, sendViaPhpMailer } from './php-mailer.js';
 import {
   buildAssessApiMessages,
@@ -106,8 +107,6 @@ app.use(cors({ origin: true }));
 // Proxy /millionaire BEFORE express.json() — parsed bodies leave the stream empty
 // and http-proxy-middleware hangs forever on POST (Start Game timeout).
 app.use(createMillionaireProxy());
-app.use(express.json({ limit: '256kb' }));
-app.use('/api/analytics', createAnalyticsRouter());
 
 const AI_API_KEY = process.env.OPENAI_API_KEY || process.env.AI_GATEWAY_API_KEY;
 const AI_BASE_URL = process.env.OPENAI_BASE_URL || process.env.AI_GATEWAY_BASE_URL;
@@ -120,6 +119,15 @@ const openai = AI_API_KEY
       ...(AI_BASE_URL ? { baseURL: AI_BASE_URL } : {}),
     })
   : null;
+
+// Large body only for Whisper audio uploads (base64)
+app.post(
+  '/api/transcribe',
+  express.json({ limit: '8mb' }),
+  createTranscribeHandler(openai)
+);
+app.use(express.json({ limit: '256kb' }));
+app.use('/api/analytics', createAnalyticsRouter());
 
 const VOCAB_ENABLED =
   process.env.VOCAB_ENABLED !== 'false' && process.env.VOCAB_ENABLED !== '0';

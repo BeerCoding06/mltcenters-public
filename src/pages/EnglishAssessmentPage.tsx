@@ -8,14 +8,9 @@ import { AIIcon } from '@/components/assessment/AIIcon';
 import { ChatWindow } from '@/components/assessment/ChatWindow';
 import { useAssessment } from '@/hooks/useAssessment';
 import { useTextToSpeech } from '@/hooks/useTextToSpeech';
-import { useSpeechRecognition } from '@/hooks/useSpeechRecognition';
+import { useWhisperVoice } from '@/hooks/useWhisperVoice';
 import { ASSESSMENT_SCENARIOS } from '@/constants/assessmentScenarios';
-import {
-  dedupeSpeechTranscript,
-  filterSpeechAlternatives,
-  shouldIgnoreTranscript,
-} from '@/lib/speechTranscript';
-import { refineChildTranscript } from '@/lib/childSpeech';
+import { shouldIgnoreTranscript } from '@/lib/speechTranscript';
 import type { AvatarState, AssessmentResult } from '@/types/assessment';
 
 const ASSESSMENT_STORAGE_KEY = 'mlt-assessment-result';
@@ -30,13 +25,17 @@ export default function EnglishAssessmentPage() {
   const [speakingMessageId, setSpeakingMessageId] = useState<string | null>(null);
   const voiceModeRef = useRef(voiceMode);
   const busyRef = useRef(false);
-  const pendingSpeechRef = useRef<{ text: string; alternatives: string[] } | null>(null);
+  const conversationStartedRef = useRef(false);
 
   const { speak, stop, unlockAudio, isSpeaking } = useTextToSpeech();
 
   useEffect(() => {
     voiceModeRef.current = voiceMode;
   }, [voiceMode]);
+
+  useEffect(() => {
+    conversationStartedRef.current = conversationStarted;
+  }, [conversationStarted]);
 
   const handleComplete = useCallback(
     (r: AssessmentResult) => {
@@ -67,6 +66,9 @@ export default function EnglishAssessmentPage() {
     selectScenario,
   } = useAssessment(handleComplete);
 
+  const startListeningRef = useRef<() => Promise<boolean> | boolean>(() => false);
+  const cancelListeningRef = useRef<() => Promise<void>>(async () => undefined);
+
   const speakReply = useCallback(
     (text: string, messageId?: string, thenListen = false) => {
       setAvatarState('speaking');
@@ -75,8 +77,10 @@ export default function EnglishAssessmentPage() {
         setAvatarState('idle');
         setSpeakingMessageId(null);
         if (thenListen && voiceModeRef.current && !busyRef.current) {
-          // Extra gap so mic does not pick up TTS echo
-          window.setTimeout(() => startListeningRef.current?.(), 1200);
+          // Gap so echoCancellation settles after TTS
+          window.setTimeout(() => {
+            void startListeningRef.current?.();
+          }, 700);
         }
       });
     },
@@ -84,93 +88,65 @@ export default function EnglishAssessmentPage() {
   );
 
   const handleSend = useCallback(
-    async (textOverride?: string, speechContext?: { raw: string; alternatives: string[] }) => {
+    async (textOverride?: string) => {
       const text = (textOverride ?? input).trim();
       if (!text || busyRef.current) return;
 
       busyRef.current = true;
-      stopListeningRef.current?.();
+      await cancelListeningRef.current?.();
       unlockAudio();
       setAvatarState('thinking');
       stop();
 
-      const out = await sendToAPI(text, speechContext);
+      const out = await sendToAPI(text);
       busyRef.current = false;
 
       if (out?.reply) {
         speakReply(out.reply, out.messageId, voiceModeRef.current);
       } else {
         setAvatarState('idle');
-        if (voiceModeRef.current) startListeningRef.current?.();
+        if (voiceModeRef.current) void startListeningRef.current?.();
       }
     },
     [input, sendToAPI, speakReply, stop, unlockAudio]
   );
 
-  const onSpeechFinal = useCallback(
-    (text: string, meta?: { alternatives: string[] }) => {
-      const spoken = refineChildTranscript(text, meta?.alternatives);
-      // Interim never reaches here; still hard-block filler finals
-      if (!spoken || shouldIgnoreTranscript(spoken)) {
-        setInput('');
-        pendingSpeechRef.current = null;
-        return;
-      }
-      setInput(spoken);
-      if (voiceModeRef.current && conversationStarted) {
-        pendingSpeechRef.current = {
-          text: spoken,
-          alternatives: filterSpeechAlternatives(spoken, meta?.alternatives ?? []),
-        };
-      }
-    },
-    [setInput, conversationStarted]
-  );
-
-  const onSpeechInterim = useCallback(
+  const onUtterance = useCallback(
     (text: string) => {
-      // Preview only — never queued for LLM
-      setInput(dedupeSpeechTranscript(text));
+      if (!conversationStartedRef.current || !voiceModeRef.current) return;
+      if (shouldIgnoreTranscript(text) || busyRef.current) return;
+      setInput(text);
+      void handleSend(text);
     },
-    [setInput]
+    [handleSend, setInput]
   );
 
   const {
     supported: micSupported,
     isListening,
+    isTranscribing,
+    error: voiceError,
     start: startListening,
     stop: stopListening,
-    toggle: toggleMic,
-  } = useSpeechRecognition({
-    lang: 'en-US',
-    childMode: true,
-    silenceMs: 1800,
-    onFinal: onSpeechFinal,
-    onInterim: onSpeechInterim,
-    wantListening: () =>
-      voiceModeRef.current &&
-      conversationStarted &&
-      !busyRef.current &&
-      !pendingSpeechRef.current,
+    cancel: cancelListening,
+  } = useWhisperVoice({
+    onUtterance,
+    onPreview: setInput,
+    onNoSpeech: () => {
+      if (!voiceModeRef.current || !conversationStartedRef.current || busyRef.current) return;
+      window.setTimeout(() => {
+        if (voiceModeRef.current && !busyRef.current) void startListeningRef.current?.();
+      }, 500);
+    },
+    silenceMs: 1100,
+    maxUtteranceMs: 14_000,
+    minSpeechMs: 400,
   });
 
-  const startListeningRef = useRef(startListening);
-  const stopListeningRef = useRef(stopListening);
   useEffect(() => {
     startListeningRef.current = startListening;
-    stopListeningRef.current = stopListening;
-  }, [startListening, stopListening]);
-
-  useEffect(() => {
-    if (!pendingSpeechRef.current || isListening || isThinking || isSpeaking) return;
-    const pending = pendingSpeechRef.current;
-    pendingSpeechRef.current = null;
-    if (shouldIgnoreTranscript(pending.text)) return;
-    void handleSend(pending.text, {
-      raw: pending.text,
-      alternatives: filterSpeechAlternatives(pending.text, pending.alternatives),
-    });
-  }, [isListening, isThinking, isSpeaking, handleSend]);
+    cancelListeningRef.current = cancelListening;
+  }, [startListening, cancelListening]);
 
   const startConversation = useCallback(() => {
     unlockAudio();
@@ -180,35 +156,31 @@ export default function EnglishAssessmentPage() {
     if (welcome?.role === 'assistant') {
       speakReply(welcome.content, welcome.id, true);
     } else {
-      startListening();
+      void startListening();
     }
   }, [unlockAudio, messages, speakReply, startListening]);
 
   const handleReplay = useCallback(
     (text: string) => {
       unlockAudio();
-      stopListening();
+      void cancelListening();
       speakReply(text);
     },
-    [unlockAudio, stopListening, speakReply]
+    [unlockAudio, cancelListening, speakReply]
   );
 
   const handleToggleMic = useCallback(() => {
     unlockAudio();
-    if (isListening) stopListening();
-    else startListening();
-  }, [unlockAudio, isListening, stopListening, startListening]);
+    if (isListening || isTranscribing) void stopListening();
+    else void startListening();
+  }, [unlockAudio, isListening, isTranscribing, stopListening, startListening]);
 
   useEffect(() => {
-    if (isListening) setAvatarState('listening');
-    else if (avatarState === 'listening' && !isSpeaking && !isThinking) {
-      setAvatarState('idle');
-    }
-  }, [isListening, isSpeaking, isThinking, avatarState]);
-
-  useEffect(() => {
-    if (isThinking) setAvatarState('thinking');
-  }, [isThinking]);
+    if (isTranscribing || isThinking) setAvatarState('thinking');
+    else if (isListening) setAvatarState('listening');
+    else if (isSpeaking || speakingMessageId) setAvatarState('speaking');
+    else setAvatarState('idle');
+  }, [isListening, isTranscribing, isThinking, isSpeaking, speakingMessageId]);
 
   useEffect(() => {
     if (!conversationStarted) return;
@@ -219,13 +191,17 @@ export default function EnglishAssessmentPage() {
     };
   }, [conversationStarted]);
 
-  const statusText = isThinking
-    ? t.assessmentPage.status.thinking[lang]
+  const statusText = isThinking || isTranscribing
+    ? isTranscribing
+      ? t.assessmentPage.status.transcribing[lang]
+      : t.assessmentPage.status.thinking[lang]
     : isSpeaking || speakingMessageId
       ? t.assessmentPage.status.speaking[lang]
       : isListening
         ? t.assessmentPage.status.listening[lang]
-        : t.assessmentPage.status.idle[lang];
+        : voiceError
+          ? t.assessmentPage.status.micError[lang]
+          : t.assessmentPage.status.idle[lang];
 
   const chatLabels = {
     placeholder: t.assessmentPage.chat.placeholder[lang],
@@ -351,7 +327,7 @@ export default function EnglishAssessmentPage() {
               isListening={isListening}
               onToggleMic={handleToggleMic}
               micSupported={micSupported}
-              disabled={isThinking || isSpeaking}
+              disabled={isThinking || isSpeaking || isTranscribing}
               statusText={statusText}
               avatarState={avatarState}
               speakingMessageId={speakingMessageId}
@@ -360,12 +336,12 @@ export default function EnglishAssessmentPage() {
               compact
             />
 
-            <div className="mt-2 sm:mt-3 shrink-0 flex flex-col items-stretch sm:items-center justify-center gap-1 sm:gap-3 sm:flex-row sm:gap-4">
+            <div className="mt-2 sm:mt-3 shrink-0 flex flex-col items-stretch sm:items-center justify-center gap-1 sm:gap-4 sm:flex-row">
               <button
                 type="button"
                 onClick={() => {
                   setVoiceMode((v) => !v);
-                  stopListening();
+                  void cancelListening();
                 }}
                 className="text-sm text-muted-foreground hover:text-[#5BC0FF] py-2 touch-manipulation"
               >

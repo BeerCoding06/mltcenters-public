@@ -248,45 +248,27 @@
     position: relative;
     z-index: 2;
     width: 100%;
-    border-radius: 9999px;
+    border-radius: 1.25rem;
     border: 1.5px solid #e8e8ed;
     background: #000;
     color: #fff;
     box-shadow: 0 0 24px rgb(0 0 0 / 55%);
-    padding: 1.1rem 1.75rem;
-    text-align: center;
+    padding: 0.85rem 2.75rem 0.85rem 1rem;
+    text-align: left;
   }
 
   .hotseat-answers {
     position: relative;
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.85rem 1.5rem;
-    margin-top: 1.35rem;
-    padding-top: 0.35rem;
+    grid-template-columns: 1fr;
+    gap: 0.55rem;
+    margin-top: 0.75rem;
+    padding-top: 0;
   }
 
-  /* Vertical connector from question to answer row */
-  .hotseat-answers::before {
-    content: "";
-    position: absolute;
-    top: -1.15rem;
-    left: 50%;
-    width: 1px;
-    height: 1.15rem;
-    background: #c0c0c8;
-    transform: translateX(-50%);
-  }
-
-  /* Horizontal connector across answers */
+  .hotseat-answers::before,
   .hotseat-answers::after {
-    content: "";
-    position: absolute;
-    top: -0.05rem;
-    left: 12%;
-    right: 12%;
-    height: 1px;
-    background: #c0c0c8;
+    display: none;
   }
 
   .hotseat-choice {
@@ -294,15 +276,16 @@
     z-index: 1;
     display: flex;
     align-items: center;
-    gap: 0.65rem;
-    min-height: 3.1rem;
+    gap: 0.55rem;
+    min-height: 3rem;
     width: 100%;
-    padding: 0.7rem 1.35rem;
+    padding: 0.65rem 2.75rem 0.65rem 0.9rem;
     border-radius: 9999px;
     border: 1.5px solid #e8e8ed;
     background: #000;
     color: #fff;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
+    line-height: 1.25;
     text-align: left;
     transition:
       border-color 0.2s ease,
@@ -347,14 +330,77 @@
     border: 1px solid #d4d4d8;
     background: #000;
     color: #fff;
-    padding: 0.35rem 0.9rem;
-    font-size: 0.75rem;
+    padding: 0.25rem 0.65rem;
+    font-size: 0.7rem;
+    white-space: nowrap;
   }
 
   .hotseat-ladder {
     border: 1px solid rgb(212 212 216 / 35%);
     background: rgb(0 0 0 / 75%);
     border-radius: 0.75rem;
+  }
+
+  .hotseat-lifelines-mobile {
+    border: 1px solid rgb(201 162 39 / 45%);
+    background: rgb(0 0 0 / 92%);
+    border-radius: 0.85rem;
+    padding: 0.45rem 0.35rem 0.35rem;
+  }
+
+  @media (min-width: 640px) {
+    .hotseat-question {
+      border-radius: 9999px;
+      padding: 1rem 3rem 1rem 1.5rem;
+      text-align: center;
+    }
+
+    .hotseat-answers {
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem 1.25rem;
+      margin-top: 1.1rem;
+      padding-top: 0.35rem;
+    }
+
+    .hotseat-answers::before {
+      display: block;
+      content: "";
+      position: absolute;
+      top: -1rem;
+      left: 50%;
+      width: 1px;
+      height: 1rem;
+      background: #c0c0c8;
+      transform: translateX(-50%);
+    }
+
+    .hotseat-answers::after {
+      display: block;
+      content: "";
+      position: absolute;
+      top: -0.05rem;
+      left: 12%;
+      right: 12%;
+      height: 1px;
+      background: #c0c0c8;
+    }
+
+    .hotseat-choice {
+      min-height: 3.1rem;
+      padding: 0.7rem 2.85rem 0.7rem 1.2rem;
+      font-size: 0.95rem;
+    }
+
+    .hotseat-status {
+      padding: 0.35rem 0.9rem;
+      font-size: 0.75rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .hotseat-question {
+      padding: 1.1rem 1.75rem;
+    }
   }
 }
 

@@ -80,6 +80,7 @@ export function HotseatGame() {
     explanation: string;
   } | null>(null);
   const [explainLoading, setExplainLoading] = useState(false);
+  const [ladderOpen, setLadderOpen] = useState(false);
 
   useEffect(() => {
     const session = loadHotseatSession();
@@ -410,58 +411,98 @@ export function HotseatGame() {
   ];
 
   return (
-    <div className="relative mx-auto flex min-h-[calc(100dvh-5.5rem)] w-full max-w-7xl flex-1 flex-col gap-2 px-3 pb-3 pt-2 md:px-5">
-      <header className="z-20 flex flex-wrap items-center justify-between gap-2">
-        <div className="flex flex-wrap items-center gap-2">
-          <span className="hotseat-status text-[#c9a227]">{t.brand}</span>
-          <span className="hotseat-status">
-            {displayName} · {t.questionOf(step, TOTAL_QUESTIONS)}
-          </span>
-        </div>
-        <div className="flex flex-wrap items-center gap-2">
-          <span className="hotseat-status">
-            {t.playingFor}:{" "}
-            <strong className="text-[#fbbf24]">
+    <div className="relative mx-auto flex min-h-[calc(100dvh-4.75rem)] w-full max-w-7xl flex-1 flex-col gap-1.5 px-2.5 pb-[max(0.5rem,env(safe-area-inset-bottom))] pt-1.5 sm:gap-2 sm:px-4 sm:pt-2 md:px-5">
+      {/* Compact mobile header */}
+      <header className="z-20 shrink-0 space-y-1.5">
+        <div className="flex items-center justify-between gap-2">
+          <div className="min-w-0">
+            <p className="truncate text-[11px] font-semibold uppercase tracking-wide text-[#c9a227]">
+              {t.brand}
+            </p>
+            <p className="truncate text-sm font-medium text-white">
+              {displayName} · {t.questionOf(step, TOTAL_QUESTIONS)}
+            </p>
+          </div>
+          <div className="flex shrink-0 items-center gap-1.5">
+            <span className="rounded-full border border-[#c9a227]/50 bg-black px-2.5 py-1 text-[11px] font-bold text-[#fbbf24]">
               {formatPrize(prizeNow)} {t.scorePts}
-            </strong>
-          </span>
-          <span className="hotseat-status">
+            </span>
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={() => setLadderOpen((v) => !v)}
+              className="h-8 rounded-full border-[#d4d4d8]/40 bg-black px-2.5 text-[11px] text-white lg:hidden"
+            >
+              {t.moneyLadder}
+            </Button>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-2 overflow-x-auto pb-0.5 text-[11px] [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <span className="shrink-0 text-[#a1a1aa]">
             {t.guaranteed}:{" "}
-            <strong>
+            <strong className="text-white">
               {formatPrize(banked)} {t.scorePts}
             </strong>
           </span>
-          <Button
+          <span className="text-[#3f3f46]">·</span>
+          <button
             type="button"
-            variant="outline"
-            size="sm"
             disabled={phase !== "playing" || index === 0}
             onClick={walkAway}
-            className="rounded-full border-[#d4d4d8]/50 bg-black text-xs text-white"
+            className="shrink-0 text-[#d4d4d8] underline-offset-2 hover:underline disabled:opacity-40"
           >
             {t.walkAway}
-          </Button>
+          </button>
+          <span className="text-[#3f3f46]">·</span>
           <Link
             href="/play"
-            className="text-xs text-[#a1a1aa] underline-offset-2 hover:underline"
+            className="shrink-0 text-[#a1a1aa] underline-offset-2 hover:underline"
           >
             {t.backToLobby}
           </Link>
-          <Button
+          <span className="text-[#3f3f46]">·</span>
+          <button
             type="button"
-            variant="outline"
-            size="sm"
             onClick={() => setReviewOpen(true)}
-            className="rounded-full border-[#c9a227]/60 bg-black text-xs text-[#c9a227]"
+            className="shrink-0 font-medium text-[#c9a227] underline-offset-2 hover:underline"
           >
             {t.reviewAnswers}
             {history.length > 0 ? ` (${history.length})` : ""}
-          </Button>
+          </button>
+        </div>
+
+        {/* Mobile lifelines — solid bar, not over the host face */}
+        <div className="hotseat-lifelines-mobile lg:hidden">
+          <LifelinesBar orientation="horizontal" items={lifelineItems} />
         </div>
       </header>
 
+      {/* Mobile ladder drawer */}
+      {ladderOpen ? (
+        <div className="hotseat-ladder z-20 max-h-[36vh] shrink-0 overflow-y-auto p-2 lg:hidden">
+          <div className="mb-1 flex items-center justify-between">
+            <p className="text-[10px] font-semibold uppercase tracking-wider text-[#c9a227]">
+              {t.moneyLadder}
+            </p>
+            <button
+              type="button"
+              onClick={() => setLadderOpen(false)}
+              className="text-[11px] text-[#a1a1aa]"
+            >
+              {t.close}
+            </button>
+          </div>
+          <MoneyLadder
+            currentStep={ended ? answeredCount || step : step}
+            answeredCount={answeredCount}
+          />
+        </div>
+      ) : null}
+
       <div className="grid min-h-0 flex-1 gap-2 lg:grid-cols-[160px_minmax(0,1fr)_72px]">
-        <aside className="hotseat-ladder order-3 max-h-[40vh] overflow-y-auto p-2 lg:order-1 lg:max-h-none lg:self-start">
+        <aside className="hotseat-ladder order-3 hidden max-h-none self-start overflow-y-auto p-2 lg:order-1 lg:block">
           <p className="mb-1 text-center text-[10px] font-semibold uppercase tracking-wider text-[#c9a227]">
             {t.moneyLadder}
           </p>
@@ -471,44 +512,40 @@ export function HotseatGame() {
           />
         </aside>
 
-        <section className="order-1 relative flex min-h-[58vh] flex-col lg:order-2 lg:min-h-0">
-          <div className="absolute right-0 top-0 z-20 lg:hidden">
-            <LifelinesBar orientation="horizontal" items={lifelineItems} />
-          </div>
-
-          {/* Host (krumam) — fills center like the TV show */}
-          <div className="hotseat-host pointer-events-none absolute inset-x-0 top-0 bottom-[11.5rem] z-0 flex items-end justify-end sm:bottom-[12.5rem] md:bottom-[13.5rem]">
+        <section className="order-1 relative flex min-h-0 flex-1 flex-col lg:order-2">
+          {/* Host — decorative, smaller on mobile so Q&A stays primary */}
+          <div className="hotseat-host pointer-events-none absolute inset-x-0 top-0 bottom-[42%] z-0 flex items-end justify-center opacity-45 sm:bottom-[38%] sm:justify-end sm:opacity-70 lg:bottom-[11.5rem] lg:opacity-100">
             <img
               src={KRUMAM_HOST}
-              alt="krumam"
-              className="h-full max-h-[min(58vh,520px)] w-auto max-w-[min(92%,420px)] object-contain object-bottom drop-shadow-[0_12px_40px_rgb(0_0_0_/_55%)]"
+              alt=""
+              className="h-full max-h-[min(32vh,280px)] w-auto max-w-[min(70%,280px)] object-contain object-bottom drop-shadow-[0_12px_40px_rgb(0_0_0_/_55%)] sm:max-h-[min(42vh,380px)] sm:max-w-[min(85%,360px)] lg:max-h-[min(58vh,520px)] lg:max-w-[min(92%,420px)]"
             />
           </div>
 
-          <div className="relative z-10 mx-auto mt-2 flex w-full max-w-3xl flex-col gap-2 px-1">
+          <div className="relative z-10 mx-auto mt-1 flex w-full max-w-3xl flex-col gap-1.5 px-0.5 sm:mt-2 sm:gap-2 sm:px-1">
             {hintTip ? (
-              <p className="rounded-full border border-[#c9a227]/50 bg-black/85 px-5 py-2 text-center text-sm text-[#fbbf24] backdrop-blur-sm">
+              <p className="rounded-xl border border-[#c9a227]/50 bg-black/90 px-3 py-2 text-center text-xs text-[#fbbf24] backdrop-blur-sm sm:rounded-full sm:px-5 sm:text-sm">
                 <span className="font-semibold">{t.lifelineHint}: </span>
                 {hintTip}
               </p>
             ) : null}
             {phoneLoading ? (
-              <p className="rounded-full border border-[#e8e8ed]/40 bg-black/85 px-5 py-2 text-center text-sm text-[#93c5fd] backdrop-blur-sm">
+              <p className="rounded-xl border border-[#e8e8ed]/40 bg-black/90 px-3 py-2 text-center text-xs text-[#93c5fd] backdrop-blur-sm sm:rounded-full sm:px-5 sm:text-sm">
                 {t.phoneCalling}
               </p>
             ) : null}
             {phoneTip ? (
-              <p className="rounded-full border border-[#e8e8ed]/40 bg-black/85 px-5 py-2 text-center text-sm text-[#93c5fd] backdrop-blur-sm">
+              <p className="rounded-xl border border-[#e8e8ed]/40 bg-black/90 px-3 py-2 text-center text-xs text-[#93c5fd] backdrop-blur-sm sm:rounded-full sm:px-5 sm:text-sm">
                 <span className="font-semibold">{t.friendSays}: </span>
                 {phoneTip}
               </p>
             ) : null}
           </div>
 
-          {/* Question + answers pinned to bottom of stage */}
-          <div className="hotseat-stage relative z-10 mt-auto flex flex-col justify-end pb-1 pt-2">
+          {/* Question + answers — primary mobile surface */}
+          <div className="hotseat-stage relative z-10 mt-auto flex flex-col justify-end pb-1 pt-1 sm:pt-2">
             <div className="hotseat-question relative">
-              <div className="absolute right-2 top-2 z-10 sm:right-4 sm:top-1/2 sm:-translate-y-1/2">
+              <div className="absolute right-1.5 top-1.5 z-10 sm:right-3 sm:top-1/2 sm:-translate-y-1/2">
                 <InlineTranslateBtn
                   active={showStemTh}
                   loading={translateLoading && !showStemTh}
@@ -517,13 +554,13 @@ export function HotseatGame() {
                 />
               </div>
               {question.passage ? (
-                <p className="mb-2 whitespace-pre-wrap pr-12 text-left text-xs text-[#d4d4d8] md:text-sm">
+                <p className="mb-1.5 max-h-[4.5rem] overflow-y-auto whitespace-pre-wrap pr-9 text-left text-[11px] leading-snug text-[#d4d4d8] sm:mb-2 sm:max-h-none sm:pr-12 sm:text-xs md:text-sm">
                   {showStemTh && translation?.passageTh
                     ? translation.passageTh
                     : question.passage}
                 </p>
               ) : null}
-              <p className="px-2 text-base font-medium leading-snug text-white md:px-8 md:text-xl">
+              <p className="pr-9 text-[0.95rem] font-medium leading-snug text-white sm:px-2 sm:pr-12 sm:text-base md:px-8 md:text-xl">
                 {showStemTh && translation?.stemTh
                   ? translation.stemTh
                   : question.stem}
@@ -559,7 +596,7 @@ export function HotseatGame() {
             </div>
 
             {phase === "explained" && lastResult ? (
-              <div className="mt-3 space-y-3 rounded-2xl border border-[#c9a227]/45 bg-black/85 px-4 py-3 backdrop-blur-sm">
+              <div className="mt-2 space-y-2 rounded-2xl border border-[#c9a227]/45 bg-black/90 px-3 py-3 backdrop-blur-sm sm:mt-3 sm:space-y-3 sm:px-4">
                 <p
                   className={cn(
                     "text-center text-sm font-bold",
@@ -586,11 +623,11 @@ export function HotseatGame() {
                   <span className="font-semibold">{t.whyCorrect}: </span>
                   {explainLoading ? t.loading : lastResult.explanation}
                 </p>
-                <div className="flex flex-wrap justify-center gap-2 pt-1">
+                <div className="flex flex-col gap-2 pt-1 sm:flex-row sm:flex-wrap sm:justify-center">
                   <Button
                     size="lg"
                     onClick={continueAfterExplain}
-                    className="min-w-[180px] rounded-full border border-[#e8e8ed] bg-[#c9a227] text-black hover:bg-[#dbb42c]"
+                    className="w-full rounded-full border border-[#e8e8ed] bg-[#c9a227] text-black hover:bg-[#dbb42c] sm:min-w-[180px] sm:w-auto"
                   >
                     {lastResult.isCorrect && index + 1 < TOTAL_QUESTIONS
                       ? t.nextQuestion
@@ -600,7 +637,7 @@ export function HotseatGame() {
                     type="button"
                     variant="outline"
                     onClick={() => setReviewOpen(true)}
-                    className="rounded-full border-[#d4d4d8]/50 bg-black text-white"
+                    className="w-full rounded-full border-[#d4d4d8]/50 bg-black text-white sm:w-auto"
                   >
                     {t.reviewAnswers}
                   </Button>
@@ -609,12 +646,12 @@ export function HotseatGame() {
             ) : null}
 
             {!ended && phase === "playing" ? (
-              <div className="flex justify-center pt-3">
+              <div className="flex justify-center pt-2 sm:pt-3">
                 <Button
                   size="lg"
                   disabled={!selectedId}
                   onClick={lockAnswer}
-                  className="min-w-[200px] rounded-full border border-[#e8e8ed] bg-[#c9a227] text-black hover:bg-[#dbb42c]"
+                  className="h-12 w-full max-w-md rounded-full border border-[#e8e8ed] bg-[#c9a227] text-base font-bold text-black hover:bg-[#dbb42c] sm:min-w-[200px] sm:w-auto"
                 >
                   {t.finalAnswer}
                 </Button>
@@ -622,7 +659,9 @@ export function HotseatGame() {
             ) : null}
 
             {phase === "locked" ? (
-              <p className="pt-3 text-center text-sm text-[#c9a227]">{t.revealing}</p>
+              <p className="pt-2 text-center text-sm text-[#c9a227] sm:pt-3">
+                {t.revealing}
+              </p>
             ) : null}
           </div>
         </section>
@@ -767,18 +806,18 @@ function AnswerButton({
         disabled={disabled}
         onClick={onSelect}
         className={cn(
-          "hotseat-choice group w-full pr-11 text-left",
+          "hotseat-choice group w-full text-left",
           selected && !revealed && "millionaire-choice-selected hotseat-choice-selected",
           showCorrect && "hotseat-choice-correct",
           showWrong && "hotseat-choice-wrong",
         )}
       >
         <span className="hotseat-letter">{letter}.</span>
-        <span className="flex-1">
+        <span className="min-w-0 flex-1 break-words">
           {labelTh ?? choice.label}
         </span>
       </button>
-      <div className="absolute right-2 top-1/2 z-10 -translate-y-1/2">
+      <div className="absolute right-1.5 top-1/2 z-10 -translate-y-1/2 sm:right-2">
         <InlineTranslateBtn
           active={translateActive}
           loading={translateLoading}
