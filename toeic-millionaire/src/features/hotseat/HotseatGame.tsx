@@ -291,7 +291,7 @@ export function HotseatGame() {
           </div>
 
           {/* Host (krumam) — fills center like the TV show */}
-          <div className="hotseat-host pointer-events-none absolute inset-x-0 top-0 bottom-[11.5rem] z-0 flex items-end justify-center sm:bottom-[12.5rem] md:bottom-[13.5rem]">
+          <div className="hotseat-host pointer-events-none absolute inset-x-0 top-0 bottom-[11.5rem] z-0 flex items-end justify-end sm:bottom-[12.5rem] md:bottom-[13.5rem]">
             <img
               src={KRUMAM_HOST}
               alt="krumam"
