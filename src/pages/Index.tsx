@@ -163,8 +163,6 @@ const HomePage = () => {
           </div>
         </section>
 
-        <ProgramVideoSection />
-
         {/* 3) บรรยากาศในงาน */}
         <section className="py-20 bg-[#F8FAFC]">
           <div className="container mx-auto px-6">
@@ -226,6 +224,8 @@ const HomePage = () => {
                 </Reveal>
               ))}
             </div>
+
+            <ProgramVideoSection variant="embedded" />
           </div>
         </section>
 
