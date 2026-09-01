@@ -6,6 +6,7 @@ import { useParallax } from '@/hooks/useParallax';
 import { galleryPreviewImages } from '@/lib/gallery-preview';
 import { getGalleryImage } from '@/lib/gallery-images';
 import { Reveal } from '@/components/Reveal';
+import { ProgramVideoSection } from '@/components/ProgramVideoSection';
 import { HOME_FAQ } from '@/constants/seo-content';
 
 const HomeContactSection = lazy(() => import('@/components/HomeContactSection'));
@@ -161,6 +162,8 @@ const HomePage = () => {
             </div>
           </div>
         </section>
+
+        <ProgramVideoSection />
 
         {/* 3) บรรยากาศในงาน */}
         <section className="py-20 bg-[#F8FAFC]">

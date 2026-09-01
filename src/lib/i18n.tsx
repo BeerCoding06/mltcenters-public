@@ -254,6 +254,21 @@ export const translations = {
       },
     ],
   },
+  programVideo: {
+    title: { en: "15 Lessons English Program", th: "15 Lessons English Program" },
+    subtitle: {
+      en: "Watch the full overview of our 15-lesson English program",
+      th: "ดูภาพรวมหลักสูตรภาษาอังกฤษ 15 บทเรียน — จาก MLTCENTERS",
+    },
+    cta: { en: "Register now", th: "ลงทะเบียนเลย" },
+    playLabel: { en: "Play program video", th: "เล่นวิดีโอแนะนำหลักสูตร" },
+    closeLabel: { en: "Close video", th: "ปิดวิดีโอ" },
+    unavailable: { en: "Video coming soon", th: "วิดีโอกำลังจะเปิดให้ชมเร็ว ๆ นี้" },
+    posterAlt: {
+      en: "Preview of the 15 Lessons English Program video from MLTCENTERS",
+      th: "ตัวอย่างวิดีโอหลักสูตร 15 Lessons English Program จาก MLTCENTERS",
+    },
+  },
   galleryPreview: {
     title: { en: "Workshop Moments", th: "บรรยากาศในงาน" },
     viewAll: { en: "View full gallery", th: "ดูแกลเลอรีทั้งหมด" },

@@ -1,6 +1,7 @@
 node_modules
 dist
 .env
+public/assets/video/*.mp4
 mail/vendor
 server/data/analytics.sqlite
 server/data/analytics.sqlite-*

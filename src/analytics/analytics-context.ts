@@ -29,6 +29,9 @@ export const ANALYTICS_EVENTS = {
   VOCAB_SESSION_STARTED: 'vocab_session_started',
   VOCAB_WORD_LEARNED: 'vocab_word_learned',
   VOCAB_QUIZ_ANSWERED: 'vocab_quiz_answered',
+  PROGRAM_VIDEO_PLAY_CLICK: 'program_video_play_click',
+  PROGRAM_VIDEO_MODAL_CLOSE: 'program_video_modal_close',
+  PROGRAM_VIDEO_REGISTER_CLICK: 'program_video_register_click',
 } as const;
 
 export type AnalyticsEventName = (typeof ANALYTICS_EVENTS)[keyof typeof ANALYTICS_EVENTS] | string;
