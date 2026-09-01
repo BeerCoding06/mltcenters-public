@@ -268,6 +268,10 @@ export const translations = {
       en: "Preview of the 15 Lessons English Program video from MLTCENTERS",
       th: "ตัวอย่างวิดีโอหลักสูตร 15 Lessons English Program จาก MLTCENTERS",
     },
+    ebook: { en: "Ebook", th: "Ebook" },
+    ebookTitle: { en: "MLTCENTERS Ebook", th: "Ebook MLTCENTERS" },
+    ebookClose: { en: "Close ebook", th: "ปิด Ebook" },
+    ebookDownload: { en: "Download ebook PDF", th: "ดาวน์โหลด Ebook PDF" },
   },
   galleryPreview: {
     title: { en: "Workshop Moments", th: "บรรยากาศในงาน" },

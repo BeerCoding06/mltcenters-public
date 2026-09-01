@@ -1,8 +1,9 @@
 import { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Play } from 'lucide-react';
+import { BookOpen, Play } from 'lucide-react';
 import { useI18n } from '@/lib/i18n';
 import { Reveal } from '@/components/Reveal';
+import { ProgramEbookModal } from '@/components/ProgramEbookModal';
 import { ProgramVideoModal } from '@/components/ProgramVideoModal';
 import { getProgramVideoSource, PROGRAM_VIDEO_POSTER } from '@/constants/program-video';
 import { ANALYTICS_EVENTS } from '@/analytics/analytics-context';
@@ -15,7 +16,9 @@ type Props = {
 export function ProgramVideoSection({ variant = 'embedded' }: Props) {
   const { lang, t } = useI18n();
   const [open, setOpen] = useState(false);
+  const [ebookOpen, setEbookOpen] = useState(false);
   const playBtnRef = useRef<HTMLButtonElement>(null);
+  const ebookBtnRef = useRef<HTMLButtonElement>(null);
   const source = getProgramVideoSource();
   const pv = t.programVideo;
 
@@ -27,6 +30,16 @@ export function ProgramVideoSection({ variant = 'embedded' }: Props) {
   const handleClose = (method: 'button' | 'escape' | 'backdrop') => {
     track(ANALYTICS_EVENTS.PROGRAM_VIDEO_MODAL_CLOSE, { method });
     setOpen(false);
+  };
+
+  const handleEbookOpen = () => {
+    track(ANALYTICS_EVENTS.PROGRAM_EBOOK_OPEN);
+    setEbookOpen(true);
+  };
+
+  const handleEbookClose = (method: 'button' | 'escape' | 'backdrop') => {
+    track(ANALYTICS_EVENTS.PROGRAM_EBOOK_MODAL_CLOSE, { method });
+    setEbookOpen(false);
   };
 
   const videoBlock = (
@@ -62,28 +75,48 @@ export function ProgramVideoSection({ variant = 'embedded' }: Props) {
           </span>
         </button>
 
-        <div className="mt-8 text-center">
+        <div className="mt-8 flex flex-col items-stretch justify-center gap-3 px-2 sm:flex-row sm:items-center sm:px-0">
           <Link
             to="/register"
             onClick={() => track(ANALYTICS_EVENTS.PROGRAM_VIDEO_REGISTER_CLICK)}
-            className="inline-block rounded-2xl bg-gradient-to-r from-[#5BC0FF] to-[#6EE7B7] px-10 py-4 text-lg font-semibold text-white shadow-xl transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-[#5BC0FF]/30 focus:outline-none focus:ring-2 focus:ring-[#5BC0FF]/50"
+            className="inline-flex items-center justify-center rounded-2xl bg-gradient-to-r from-[#5BC0FF] to-[#6EE7B7] px-10 py-4 text-lg font-semibold text-white shadow-xl transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-[#5BC0FF]/30 focus:outline-none focus:ring-2 focus:ring-[#5BC0FF]/50 touch-manipulation"
           >
             {pv.cta[lang]}
           </Link>
+          <button
+            ref={ebookBtnRef}
+            type="button"
+            onClick={handleEbookOpen}
+            className="inline-flex items-center justify-center gap-2 rounded-2xl border border-white/80 bg-white/90 px-8 py-4 text-lg font-semibold text-foreground shadow-lg transition-all duration-300 hover:scale-105 hover:border-[#5BC0FF]/40 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-[#5BC0FF]/50 touch-manipulation"
+          >
+            <BookOpen className="h-5 w-5 shrink-0 text-[#5BC0FF]" aria-hidden />
+            {pv.ebook[lang]}
+          </button>
         </div>
       </div>
     </Reveal>
   );
 
   const modal = (
-    <ProgramVideoModal
-      open={open}
-      source={open ? source : null}
-      onClose={handleClose}
-      closeLabel={pv.closeLabel[lang]}
-      unavailableLabel={pv.unavailable[lang]}
-      returnFocusRef={playBtnRef}
-    />
+    <>
+      <ProgramVideoModal
+        open={open}
+        source={open ? source : null}
+        onClose={handleClose}
+        closeLabel={pv.closeLabel[lang]}
+        unavailableLabel={pv.unavailable[lang]}
+        returnFocusRef={playBtnRef}
+      />
+      <ProgramEbookModal
+        open={ebookOpen}
+        onClose={handleEbookClose}
+        title={pv.ebookTitle[lang]}
+        closeLabel={pv.ebookClose[lang]}
+        downloadLabel={pv.ebookDownload[lang]}
+        returnFocusRef={ebookBtnRef}
+        onDownload={() => track(ANALYTICS_EVENTS.PROGRAM_EBOOK_DOWNLOAD)}
+      />
+    </>
   );
 
   if (variant === 'embedded') {
