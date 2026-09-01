@@ -73,3 +73,5 @@ docker run -p 3000:3000 -e OPENAI_API_KEY=sk-... mltcenters
 ```
 
 บน **Dokploy**: ผูก repo, ใช้ **`Dockerfile.prod`** หรือ **Compose** จาก `docker-compose.yml`, ตั้ง environment (`OPENAI_API_KEY`, `SMTP_*`, …) แล้ว redeploy หลังแก้ Traefik labels
+
+วิดีโอหลักสูตรบนหน้าแรก (~3.1 GB, ไม่ได้อยู่ใน git): mount volume ที่ `/app/dist/assets/video` แล้วอัปโหลด MP4 — ดู **[docs/DEPLOY_PROGRAM_VIDEO.md](docs/DEPLOY_PROGRAM_VIDEO.md)**

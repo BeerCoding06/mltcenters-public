@@ -60,6 +60,8 @@ COPY mail ./mail
 COPY --from=frontend /app/dist ./dist
 COPY --from=runner-frontend /app/runner-3d/frontend/dist ./dist/runner-app
 COPY --from=millionaire /out ./millionaire
+RUN mkdir -p /app/dist/assets/video
+VOLUME ["/app/dist/assets/video"]
 RUN chmod +x /app/server/start.sh
 ENV NODE_ENV=production
 ENV USE_PHP_MAILER=true

@@ -40,6 +40,8 @@ services:
       ANALYTICS_SQLITE_PATH: ${ANALYTICS_SQLITE_PATH:-}
     env_file:
       - .env
+    volumes:
+      - program_video:/app/dist/assets/video
     networks:
       - dokploy-network
     deploy:
@@ -56,3 +58,6 @@ services:
 networks:
   dokploy-network:
     external: true
+
+volumes:
+  program_video:

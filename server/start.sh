@@ -1,6 +1,9 @@
 #!/bin/sh
 set -e
 
+# Persistent mount for large program video (see docs/DEPLOY_PROGRAM_VIDEO.md).
+mkdir -p /app/dist/assets/video
+
 # Start Next.js TOEIC game (in-memory questions — no DATABASE_URL required).
 # Do NOT export PORT into this shell — Express must keep Dokploy PORT (3000).
 if [ -f /app/millionaire/server.js ]; then

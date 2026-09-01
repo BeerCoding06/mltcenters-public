@@ -600,7 +600,7 @@ if (existsSync(distPath)) {
       return next();
     }
     // Never serve SPA shell for static/agent files (llms.txt, sw.js, sitemap, etc.)
-    if (/\.(txt|xml|json|js|webmanifest|png|jpe?g|webp|ico|svg|woff2?|css)$/i.test(req.path)) {
+    if (/\.(txt|xml|json|js|webmanifest|png|jpe?g|webp|ico|svg|woff2?|css|mp4|webm|pdf)$/i.test(req.path)) {
       return next();
     }
     if (!existsSync(indexHtmlPath)) return next();
